@@ -8,6 +8,4 @@ type LZBufferItem=
 	|LZModeAfterItem
 	|LZBeforeItem
 	|["1","data",number,string]
-	|LZRestItem
-	;
-;
+	|LZRestItem;

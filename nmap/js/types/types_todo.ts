@@ -34,9 +34,7 @@ export type ip_addr_0=
 	|173
 	|199207|208|
 	209
-	|216
-	;
-;
+	|216;
 export type ip_addr_idx_1=
 	|32
 	|36
@@ -54,9 +52,7 @@ export type ip_addr_idx_1=
 	|239
 	|250
 	|251
-	|253
-	;
-;
+	|253;
 export type ip_addr_idx_2=
 	0|1|2|4|6|
 	|8
@@ -96,9 +92,7 @@ export type ip_addr_idx_2=
 	|224
 	|232
 	|235
-	|240
-	;
-;
+	|240;
 export type ip_range_in_type=([ip_addr_idx_2,ip_addr_idx_2]|lit_valueT<ip_addr_idx_2[]>)[];
 
 export type type_at_ip_2=ip_addr_idx_2|

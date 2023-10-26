@@ -44,34 +44,26 @@ export type G_EY_Entity=
 			key: string;
 			state: "SUBSCRIPTION_NOTIFICATION_STATE_OCCASIONAL";
 		};
-	}
-	;
-;
+	};
 //#endregion
 //#region Panel Section (from G_SI.ts)
 export type G_SI_DB_EngagementPanel=
 	|SI_DB_EngagementPanel_Ads
 	|SI_DB_EngagementPanel_MacroMarkers_DescriptionChapters
 	|SI_DB_EngagementPanel_ClipCreate
-	|SI_DB_EngagementPanel_MacroMarkers_AutoChapters
-	;
-;
+	|SI_DB_EngagementPanel_MacroMarkers_AutoChapters;
 //#endregion
 //#region Action Renderers and Actions (from G_RA.ts)
 export type G_RA_LiveChatContinuationActions=
 	|A_ReplayChatItem
-	|A_AddChatItem
-	;
-;
+	|A_AddChatItem;
 //#endregion
 //#region (from G.ts)
 //#region done
 export type G_LiveChatContinuationItem=
 	|CD_Invalidation
 	|CD_LiveChatReplay
-	|CD_PlayerSeek
-	;
-;
+	|CD_PlayerSeek;
 export type G_SettingItemIdEnum=
 	|"NOTIFICATION_SUBSCRIPTION_NOTIFICATIONS"
 	|"NOTIFICATION_RECOMMENDATION_WEB_CONTROL"
@@ -83,9 +75,7 @@ export type G_SettingItemIdEnum=
 	|"EMAIL_BLOCK_ALL"
 	|"EMAIL_MARKETING_NEWSLETTER"
 	|"EMAIL_PAID_NEWSLETTER"
-	|"EMAIL_CREATOR_NEWSLETTER"
-	;
-;
+	|"EMAIL_CREATOR_NEWSLETTER";
 export type G_CardList_StyleType="HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION";
 export type G_AccountItemSection=R_AccountItem|R_CompactLink;
 export type G_AccountPageSettingsSections=
@@ -94,9 +84,7 @@ export type G_AccountPageSettingsSections=
 	|"notifications"
 	|"privacy"
 	|"sharing"
-	|"playback"
-	;
-;
+	|"playback";
 export type G_Actions=
 	|A_AddToGuideSection
 	|A_GetMultiPageMenu
@@ -106,46 +94,34 @@ export type G_Actions=
 	|AU_SubscribeButton
 	|C_RefreshPlaylist
 	|C_RunAttestation
-	|TA_OpenPopup_Empty
-	;
-;
+	|TA_OpenPopup_Empty;
 export type G_Browse_MD=R_Channel_MD|R_Playlist_MD;
 export type G_BrowseContents=R_TwoColumnBrowseResults|R_FeedFilterChipBar;
 export type G_BrowseFeedContent=R_SearchBox|R_SubFeedSelector|R_Button|R_CompactLink;
 export type G_BrowseHeader=R_FeedTabbedHeader|R_C4TabbedHeader;
 export type G_BrowseSidebar=
 	|R_SettingsSidebar
-	|R_PlaylistSidebar
-	;
-;
+	|R_PlaylistSidebar;
 export type G_ChannelSwitcherContent=R_Button|A_AccountItem;
 export type G_ChatItem=
 	|R_LiveChatTextMessage
 	|R_LiveChatPlaceholderItem
-	|R_LiveChatViewerEngagementMessage
-	;
-;
+	|R_LiveChatViewerEngagementMessage;
 export type G_CodecType=
 	|G_CodecTypeStr
-	|T_SplitOnce<G_GenericCodecType,".">[0]
-	;
-;
+	|T_SplitOnce<G_GenericCodecType,".">[0];
 export type G_CodecTypeStr="opus"|"vp9";
 export type G_EngagementPanelMenu=R_Menu|R_SortFilterSubMenu;
 export type G_ExtraUrlParamItem={key: "inline";};
 export type G_FollowUpOption=R_RadioButtonSurveyOption|R_CheckboxSurveyOption;
 export type G_FormatQuality=
 	|"hd2160"|"hd1440"|"hd1080"|"hd720"
-	|"large"|"medium"|"small"|"tiny"
-	;
-;
+	|"large"|"medium"|"small"|"tiny";
 export type G_GenericCodecType=
 	|S_acv1_codec
 	|"mp4a.40.2"
 	// av1 profile=0 level_id=08M bit_depth=8-bit
-	|"av01.0.08M.08"
-	;
-;
+	|"av01.0.08M.08";
 export type G_GuideItem=R_GuideSection|R_GuideSubscriptionsSection;
 export type G_GuideSectionItem=
 	|R_GuideCollapsibleEntry
@@ -153,14 +129,10 @@ export type G_GuideSectionItem=
 	|R_GuideDownloadsEntry
 	|R_GuideEntry
 	|R_GuideSection
-	|R_GuideSubscriptionsSection
-	;
-;
+	|R_GuideSubscriptionsSection;
 export type G_GuideSubscriptionsSectionItem=
 	|R_GuideEntry
-	|R_GuideCollapsibleEntry
-	;
-;
+	|R_GuideCollapsibleEntry;
 export type G_HexNibbleStr=T_Split<"abcdef0123456789","">[number];
 export type G_ItemSectionItems=R_CompactRadio|R_ContinuationItem|R_CompactVideo|R_CompactPlaylist|R_AdSlot;
 export type G_MenuItem=R_MenuServiceItem|R_ToggleMenuServiceItem|R_MenuNavigationItem;
@@ -169,18 +141,14 @@ export type G_MimeTypeFormat=
 	|`video/mp4; codecs="av01.0.08M.08"`
 	|`video/webm; codecs="vp9"`
 	|`audio/mp4; codecs="mp4a.40.2"`
-	|`audio/webm; codecs="opus"`
-	;
-;
+	|`audio/webm; codecs="opus"`;
 export type G_PopupItem=
 	|R_ConfirmDialog
 	|TR_MultiPageMenu_Empty
 	|RA_Notification
 	|R_PdgBuyFlow
 	|R_UnifiedSharePanel
-	|R_VoiceSearchDialog
-	;
-;
+	|R_VoiceSearchDialog;
 export type G_ProfileColumnItem=R_ProfileColumnUserInfo|R_ProfileColumnStats;
 export type G_EngagementPanelSectionShowCommands=A_ChangeEngagementPanelVisibility|A_ShowEngagementPanelScrim|C_ScrollToEngagementPanel;
 export type G_ClientSignal={signal: "CLIENT_SIGNAL"; actions: G_ClientSignal_Item[];};
@@ -189,9 +157,7 @@ export type G_ClientSignal_Item=
 	|A_Signal
 	|C_AddToPlaylist
 	|E_ShowEngagementPanel
-	|A_ClientSignal
-	;
-;
+	|A_ClientSignal;
 export type G_RichSection=R_RichShelf|R_InlineSurvey|R_SourcePivotHeader;
 export type G_Text={
 	runs?: D_TextRun[];
@@ -203,23 +169,17 @@ export type G_PlaylistPanel_Item=R_AutomixPreviewVideo|R_PlaylistPanelVideo;
 export type G_AllSignalTypes=
 	|Signal_GetNotificationsMenu
 	|G_ClientSignal
-	|G_AllSignalServiceEndpoint['signalServiceEndpoint']
-	;
-;
+	|G_AllSignalServiceEndpoint['signalServiceEndpoint'];
 export type G_AllSignalServiceEndpoint=D_NotificationTopbarButton['updateUnseenCountEndpoint'];
 export type G_AdditionalDataItem=
 	|T_UserFeedbackEndpointProductSpecificValueData<"lockup","player">
-	|T_UserFeedbackEndpointProductSpecificValueData<"video_id",string>
-	;
-;
+	|T_UserFeedbackEndpointProductSpecificValueData<"video_id",string>;
 export type G_ResponseActions=
 	|TA_OpenPopup_Empty
 	|AU_NotificationsUnseenCount
 	|A_RemoveFromGuideSection
 	|A_AddToGuideSection
-	|never
-	;
-;
+	|never;
 export type G_ResponseTypes=
 	|B_GenericResponseType
 	|WD_account_account_menu
@@ -255,9 +215,7 @@ export type G_ResponseTypes=
 	|WD_share_get_share_panel
 	|WD_subscription_subscribe
 	|WD_subscription_unsubscribe
-	|WD_update_metadata
-	;
-;
+	|WD_update_metadata;
 export type G_RichGridContent=R_RichItem|R_ContinuationItem;
 export type G_RichItemContent=R_AdSlot|R_Video|R_Radio|R_FeedNudge;
 export type G_SecondaryContents=R_ProfileColumn|R_BrowseFeedActions;
@@ -267,30 +225,22 @@ export type G_SectionItem=
 	|R_CommentsHeader
 	|R_CommentThread
 	|R_CompactVideo
-	|R_ContinuationItem
-	;
-;
+	|R_ContinuationItem;
 export type G_SettingsOptionItem=
 	|R_ChannelOptions
 	|R_SettingsSwitch
 	|R_SettingsCheckbox
 	|R_SettingsRadioOption
-	|R_CopyLink
-	;
-;
+	|R_CopyLink;
 export type G_ShortsSurfaceIdentifier_ValidTag=
 	|"engagement-panel-structured-description"
-	|"shorts-comments-panel"
-	;
-;
+	|"shorts-comments-panel";
 export type G_StructuredDescriptionContentItem=
 	|R_ExpandableVideoDescriptionBody
 	|R_HorizontalCardList
 	|R_VideoDescriptionHeader
 	|R_VideoDescriptionMusicSection
-	|R_VideoDescriptionCourseSection
-	;
-;
+	|R_VideoDescriptionCourseSection;
 export type G_ThumbnailOverlayItem=
 	|R_ThumbnailOverlayBottomPanel
 	|R_ThumbnailOverlayHoverText
@@ -301,34 +251,24 @@ export type G_ThumbnailOverlayItem=
 	|R_ThumbnailOverlayResumePlayback
 	|R_ThumbnailOverlayEndorsement
 	|R_ThumbnailOverlaySidePanel
-	|R_ThumbnailOverlayInlineUnplayable
-	;
-;
+	|R_ThumbnailOverlayInlineUnplayable;
 export type G_TopbarButtonItem=R_TopbarMenuButton|R_NotificationTopbarButton;
 export type G_WatchNext=
 	|R_CompactPlaylist
 	|R_CompactVideo
-	|R_ContinuationItem
-	;
-;
+	|R_ContinuationItem;
 export type G_WatchNextEndScreenItem=
 	|R_EndScreenPlaylist
-	|R_EndScreenVideo
-	;
-;
+	|R_EndScreenVideo;
 export type G_YtWatchUrl=
 	|D_PlayerParamsUrl
-	|D_WatchPlaylistUrlFormat
-	;
-;
+	|D_WatchPlaylistUrlFormat;
 export type G_PlaylistSidebarItem=R_PlaylistSidebarPrimaryInfo|R_PlaylistSidebarSecondaryInfo;
 export type G_AdPlacementRendererItem=
 	|R_AdBreakService
 	|R_ClientForecastingAd
 	|R_InstreamVideoAd
-	|R_LinearAdSequence
-	;
-;
+	|R_LinearAdSequence;
 export type G_NextContents=R_TwoColumnWatchNextResults|R_SingleColumnMusicWatchNextResults;
 //#endregion
 export type G_RendererContentItem=
@@ -338,9 +278,7 @@ export type G_RendererContentItem=
 	|R_CommentThread
 	|R_ContinuationItem
 	|R_CompactVideo
-	|R_CompactPlaylist
-	;
-;
+	|R_CompactPlaylist;
 //#endregion
 //#region (from G_SE.ts)
 export type G_SE_MenuService=
@@ -350,9 +288,7 @@ export type G_SE_MenuService=
 	|E_Feedback
 	|E_SignalService_SendPost
 	|E_ShareEntityService
-	|E_GetReportForm
-	;
-;
+	|E_GetReportForm;
 //#endregion
 
 export type G_NavFinishDetail=
@@ -362,9 +298,7 @@ export type G_NavFinishDetail=
 	|NavFinishDetail_Settings
 	|NavFinishDetail_Shorts
 	|NavFinishDetail_Watch
-	|NavFinishDetail_Search
-	;
-;
+	|NavFinishDetail_Search;
 //#region derived
 export type E_Page=G_NavFinishDetail['endpoint'];
 export type S_PageTypeStr=G_NavFinishDetail["pageType"];
@@ -376,9 +310,7 @@ export type G_DE_UserFeedback=DE_AdditionalDatas|DE_BucketIdentifier;
 //#region g.mod
 export type G_UrlInfoSrc=
 	|{b: "playlist_id"; id: DU_Playlist_Id;}
-	|{b: "browse_id"; id: string;}
-	;
-;
+	|{b: "browse_id"; id: string;};
 export type G_Boxed_StrArr=[
 	Join<Extract<G_Boxed_StrExtract,[any,any]>,":">,
 	// 3
@@ -396,9 +328,7 @@ export type G_Boxed_StrExtract=G_BoxedDatabaseData['key'] extends infer I?
 	I extends `${infer f0}:${infer f1}:${infer f2}:${infer f3}:${infer f4}`? [f0,f1,f2,f3,f4]:
 	I extends `${infer f0}:${infer f1}:${infer f2}:${infer f3}`? [f0,f1,f2,f3]:
 	I extends `${infer f0}:${infer f1}:${infer f2}`? [f0,f1,f2]:
-	I extends `${infer f0}:${infer f1}`? [f0,f1]:[I]:never
-	;
-;
+	I extends `${infer f0}:${infer f1}`? [f0,f1]:[I]:never;
 //#region G_BoxedDatabaseData
 export type D_ManyValue={
 	l: "many";
@@ -451,9 +381,7 @@ export type Ret_w_dst=
 	]
 	|[false,4,[x1: ""],[any,any]]
 	|[false,5,[],[any,any]]
-	|[false,6,[],[]]
-	;
-;
+	|[false,6,[],[]];
 export type U1=Ret_w_dst[2];
 //#endregion g.mod
 //#region GR_EY
@@ -475,9 +403,7 @@ export type GU_VE3611_Url=
 	|`/c/${string}`
 	|`/channel/UC${string}`
 	|`/source/${string}/shorts?bp=${string}`
-	|`/user/${string}`
-	;
-;
+	|`/user/${string}`;
 export type GU_VE6827_Id=
 	|"FEguide_builder"
 	|"FEhashtag"
@@ -486,9 +412,7 @@ export type GU_VE6827_Id=
 	|"FEsfv_audio_pivot"
 	|"FEstorefront"
 	|"FEtrending"
-	|"SPreport_history"
-	;
-;
+	|"SPreport_history";
 export type GU_VE6827_Url=
 	|"/feed/guide_builder"
 	|`/feed/history`
@@ -498,9 +422,7 @@ export type GU_VE6827_Url=
 	|`/hashtag/${string}`
 	|"/hashtag/shorts/shorts"
 	|`/reporthistory`
-	|`/source/${string}/shorts`
-	;
-;
+	|`/source/${string}/shorts`;
 export type GU_VE11487_Url="/premium";
 export type GU_VE23462_Url=
 	|"/account_advanced"
@@ -509,9 +431,7 @@ export type GU_VE23462_Url=
 	|"/account_playback"
 	|"/account_privacy"
 	|"/account_sharing"
-	|"/account"
-	;
-;
+	|"/account";
 export type GU_VE23462_Id=
 	|"SPaccount_advanced"
 	|"SPaccount_billing"
@@ -519,24 +439,18 @@ export type GU_VE23462_Id=
 	|"SPaccount_overview"
 	|"SPaccount_playback"
 	|"SPaccount_privacy"
-	|"SPaccount_sharing"
-	;
-;
+	|"SPaccount_sharing";
 export type GU_VE37414_Url="/shorts/"|`/shorts/${string}`;
 export type GU_VE42352_Url="/feed/downloads";
 export type GU_VE83769_Url_Internal=
 	|"/upload"
-	|`https://youtube.com/${string}`
-	;
-;
+	|`https://youtube.com/${string}`;
 export type GU_VE83769_Url=
 	|GU_VE83769_Url_Internal
 	|GU_VE83769_Url_Redirect
 	|GU_VE83769_Url_External
 	|`https://support.google.com/youtube/answer/${number}`
-	|`https://myaccount.google.com/u/${number}/b/${bigint}/?${string}`
-	;
-;
+	|`https://myaccount.google.com/u/${number}/b/${bigint}/?${string}`;
 export type GU_VE96368_Url="/feed/subscriptions";
 export type ST_EncodedURIComponent=string&{type: "EncodedURIComponent";};
 export type D_UrlInfoMap={
@@ -555,9 +469,7 @@ export type GU_YoutubeUrlRedirect_Event=
 	;
 export type GU_VE83769_Url_Redirect=
 	|`https://www.youtube.com/redirect?event=${GU_YoutubeUrlRedirect_Event}&redir_token=${string}&q=${string}&v=${string}`
-	|`https://www.youtube.com/redirect?event=${GU_YoutubeUrlRedirect_Event}&redir_token=${string}&q=${string}`
-	;
-;
+	|`https://www.youtube.com/redirect?event=${GU_YoutubeUrlRedirect_Event}&redir_token=${string}&q=${string}`;
 export type D_StrOnlyLen<T extends number,U extends string>=T_Split<U,"">['length'] extends T? U:never;
 export type GU_VE83769_Url_External=
 	|"https://music.youtube.com"
@@ -574,9 +486,7 @@ export type GU_VE83769_Url_External=
 	|`https://studio.youtube.com/channel/UC${D_StrOnlyLen<24,"AAAAAAAAAAAAAAAAAAAAAAAA">}`
 	|`https://www.googleadservices.com/pagead/aclk?${string}`
 	|`https://googleads.g.doubleclick.net/aclk?sa=l&ai=${string}&ae=1&num=1&cid=${string}&sig=${string}&client=${string}&rf=3&adurl=${string}`
-	|`https://googleads.g.doubleclick.net/aclk?adurl=${string}&rf=3&client=ca-pub-${number}&sig=${string}&cid=${string}&num=1&ae=1&ai=${string}&sa=l`
-	;
-;
+	|`https://googleads.g.doubleclick.net/aclk?adurl=${string}&rf=3&client=ca-pub-${number}&sig=${string}&cid=${string}&num=1&ae=1&ai=${string}&sa=l`;
 export type GU_VE5754_Url=`/playlist?list=${"WL"|"LL"|T_IdTemplate<"PL">}`;
 export type GU_VE3611_2=
 	|`/@${string}/about`
@@ -588,9 +498,7 @@ export type GU_VE3611_2=
 	|`/@${string}/shorts`
 	|`/@${string}/videos`
 	|`/@${string}`
-	|`/c/${string}`
-	;
-;
+	|`/c/${string}`;
 export type GU_VE3611_3=
 	|`/@${string}/about`
 	|`/@${string}/channels`
@@ -600,18 +508,14 @@ export type GU_VE3611_3=
 	|`/@${string}/shorts`
 	|`/@${string}/videos`
 	|`/@${string}`
-	|`/channel/UC${string}`
-	;
-;
+	|`/channel/UC${string}`;
 //#region Url Templates
 export type GU_CaptionTrackItem_BaseUrl=`https://www.youtube.com/api/timedtext?v=${D_TimedTextApi["v"]}&caps=${D_TimedTextApi_Req["caps"]}&xoaf=${D_TimedTextApi["xoaf"]}&xoadf=${D_TimedTextApi_Req["xoadf"]}&xosf=${D_TimedTextApi_Req["xosf"]}&hl=${D_TimedTextApi["hl"]}&ip=${D_IpFormat}&ipbits=${D_TimedTextApi["ipbits"]}&expire=${D_TimedTextApi["expire"]}&sparams=${D_TimedTextApi["sparams"]}&signature=${D_TimedTextApi["signature"]}&key=${D_TimedTextApi["key"]}&kind=${D_TimedTextApi_Req["kind"]}&lang=${D_TimedTextApi["lang"]}`;
 export type GU_RadioShareUrl=
 	|`https://www.youtube.com/watch?v=${string}&playnext=1&list=RDCMUC${string}`
 	|`https://www.youtube.com/playlist?list=PL${string}`
 	|`https://www.youtube.com/watch?v=${string}&playnext=1&list=PL${string}`
-	|`https://www.youtube.com/watch?v=${string}&playnext=1&list=RD${string}`
-	;
-;
+	|`https://www.youtube.com/watch?v=${string}&playnext=1&list=RD${string}`;
 export type GU_InitPlaybackUrl=`https://${GV_SubDomain}.googlevideo.com/initplayback?source=youtube&oeis=1&c=WEB&oad=3200&ovd=3200&oaad=11000&oavd=11000&ocs=700&oewis=1&oputc=1&ofpcc=1&msp=1&odepv=1&id=55c84a1a739ba4f3&ip=${D_IpFormat}&initcwndbps=581250&mt=1677051923&oweuc=`;
 export type D_IpFormat=`${number}.${number}.${number}.${number}`;
 // ApiStatsAdsArgs
@@ -632,9 +536,7 @@ export type GU_ExternalUrl=
 	|`https://www.youtube.com/api/stats/ads?${string}`
 	|`https://www.youtubekids.com/?source=youtube_web`
 	|`https://www.youtubekids.com?source=youtube_web`
-	|`https://yt${number}.ggpht.com/${string}=s88-c-k-c0x00ffffff-no-rj`
-	;
-;
+	|`https://yt${number}.ggpht.com/${string}=s88-c-k-c0x00ffffff-no-rj`;
 export type D_GoodPut_ProbeUrl_SP=`id=${string}&source=${string}&range=${string}&expire=${number}&ip=${D_IpFormat}&ms=${string}&mm=${string}&pl=${string}&nh=${string}&sparams=${string}&signature=${D_TimedTextApi["signature"]}&key=${string}`;
 export type GU_GoodPut_ProbeUrl=`https://${GV_SubDomain}.googlevideo.com/videogoodput?${D_GoodPut_ProbeUrl_SP}`;
 export type D_VideoPlayback_SP=`expire=${number}&ei=${string}&ip=${D_IpFormat}&id=${string}&itag=${number}&aitags=${string}&source=youtube&requiressl=yes&mh=B2&mm=${string}&mn=${string}&ms=${string}&mv=m&mvi=3&pl=24&initcwndbps=${number}&spc=${string}&vprv=1&mime=${string}&ns=${string}&gir=yes&clen=${number}&dur=${number}&lmt=${number}&mt=${number}&fvip=4&keepalive=yes&fexp=24007246&c=WEB&txp=number&n=${string}&sparams=expire,ei,ip,id,itag,source,requiressl,vprv,mime,ns,cnr,ratebypass,dur,lmt&sig=${string}&lsparams=mh,mm,mn,ms,mv,mvi,pl,initcwndbps&lsig=${string}`;
@@ -830,9 +732,7 @@ export type GM_VE=
 	|GM_VE23462
 	|GM_VE37414
 	|GM_VE42352
-	|GM_VE96368
-	;
-;
+	|GM_VE96368;
 export type D_GM_VeNum=GM_VE['rootVe'];
 export type GM_PostApi=
 	|GM_SetSetting
@@ -859,9 +759,7 @@ export type GM_PostApi=
 	|GM_GetSharePanel
 	|GM_Subscribe
 	|GM_YpcGetOffers
-	|GM_YpcGetCart
-	;
-;
+	|GM_YpcGetCart;
 //#endregion
 //#endregion
 
@@ -919,9 +817,7 @@ export type VW_BinaryTimestamp=T_VW<V_BinaryTimestamp>;
 export type T_Base64Str=string;
 export type G_BrowseFeed=
 	|R_RichItem
-	|R_ContinuationItem
-	;
-;
+	|R_ContinuationItem;
 export type G_BrowseIdStr_SP_Inner="unlimited"|"account_advanced"|"account_billing"|"account_notifications"|"account_privacy"|"account_sharing"|"account_playback"|"account"|"account_downloads"|"account_overview"|"report_history";
 export type G_CacheSetItems=
 	|make_item_group<bigint>|G_BoxedDatabaseData|G_BoxedDatabaseData["z"][0]
@@ -929,9 +825,7 @@ export type G_CacheSetItems=
 	|make_item_group<string|number>
 	|make_item_group<number>
 	|make_item_group<string>
-	|{type: "store"; z: [make_item_group<bigint>];}
-	;
-;
+	|{type: "store"; z: [make_item_group<bigint>];};
 export type CacheTreeDepth1=G_BoxedDatabaseData["z"][0];
 export type G_CommentsSection=R_CommentThread|R_ContinuationItem;
 export type G_IdSrc=B_IdSrcNum|B_IdSrcStr;
@@ -964,9 +858,7 @@ export type GE_Browse=
 	|E_VE23462
 	|E_VE42352
 	|E_VE96368
-	|E_VE6827
-	;
-;
+	|E_VE6827;
 export type GE_Continuation=E_GetNotificationMenu|C_Continuation|E_GetTranscript;
 export type GE_ResponseReceived=
 	|A_AppendContinuationItems
@@ -975,9 +867,7 @@ export type GE_ResponseReceived=
 	|C_LoadMarkers
 	|C_ReloadContinuationItems
 	|C_ReloadContinuationItems
-	|E_SignalService_SendPost
-	;
-;
+	|E_SignalService_SendPost;
 export type GR_MP_MenuNotificationSection_Item=R_Notification|R_ContinuationItem;
 export type GE_Browse_WCM=GE_Browse["commandMetadata"];
 //#endregion GE
@@ -989,9 +879,7 @@ export type GD_RC_SectionList=
 	|DC_SectionList_SearchFeed
 	|G_DC_SectionList_BrowseFeed_ChannelFeatured
 	|DC_SectionList_BrowseFeed_Subscriptions
-	|DC_SectionList_BrowseFeed_History
-	;
-;
+	|DC_SectionList_BrowseFeed_History;
 export type GD_EngagementPanelMenu={
 	title: G_Text;
 	contextualInfo: G_Text;
@@ -1001,9 +889,7 @@ export type GD_EngagementPanelMenu={
 };
 export type GC_EngagementPanelSectionShow=A_ChangeEngagementPanelVisibility|
 	A_ShowEngagementPanelScrim
-	|C_ScrollToEngagementPanel
-	;
-;
+	|C_ScrollToEngagementPanel;
 export type GA_FormatItagNum=
 	|18
 	|133|134|135|136|137|140|160
@@ -1015,17 +901,13 @@ export type GA_ResponseReceived=
 	|A_AppendContinuationItems
 	|C_AdsControlFlowOpportunityReceived
 	|C_ReloadContinuationItems
-	|C_ResetChannelUnreadCount
-	;
-;
+	|C_ResetChannelUnreadCount;
 export type GRC_ServiceTrackingParams=
 	|RC_Csi_SPs
 	|RC_ECatcher_SPs
 	|RC_GFeedback_SPs
 	|RC_GoogleHelp_SPs
-	|SP_GuidedHelp_SPs
-	;
-;
+	|SP_GuidedHelp_SPs;
 export type GC_Button=
 	|A_ChangeEngagementPanelVisibility
 	|C_CommandExecutor
@@ -1038,9 +920,7 @@ export type GC_Button=
 	|E_ShareEntityService
 	|E_SignalService_SendPost
 	|E_Url
-	|TA_OpenPopup_Empty
-	;
-;
+	|TA_OpenPopup_Empty;
 export type GA_MenuNavigationPopup=A_FancyDismissibleDialog|A_AboutThisAd;
 export type GB_A1_J_Base="user_id"|"channel_id:UC"|"guide_entry_id:PL"|"guide_entry_id:UC";
 export type GB_A1_J_Shape=
@@ -1058,9 +938,7 @@ export type GB_A1_J_Shape=
 	|"video_id"
 	|"video_time"
 	|"guide_entry_id:LL"
-	|"guide_entry_id:VL:LL"
-	;
-;
+	|"guide_entry_id:VL:LL";
 export type GB_A1_Keys=G_BoxedDatabaseData extends infer V? V extends infer I? T_DistributedKeyof<Omit<I,"key"|"a"|"b"|"j"|"w"|"z">>:[]:[];
 export type GB_A1_KS1=Extract<G_BoxedDatabaseData,{w: any;}>;
 export type GB_A1_KS2=Extract<G_BoxedDatabaseData,{k: any;}>;
@@ -1084,9 +962,7 @@ export type G_DC_CommandExecutor_CommandItem=
 	|C_ScrollToEngagementPanel
 	|C_UpdateToggleButtonState
 	|E_Like
-	|TA_OpenPopup_Empty
-	;
-;
+	|TA_OpenPopup_Empty;
 export type G_DC_GetSurvey_Endpoint=D_Survey_Watch|D_PaidDigitalGoods;
 export type G_DC_Innertube=
 	|A_ChangeEngagementPanelVisibility
@@ -1096,9 +972,7 @@ export type G_DC_Innertube=
 	|E_VE5754
 	|E_VE6827
 	|E_Watch
-	|E_YpcGetOfflineUpsell
-	;
-;
+	|E_YpcGetOfflineUpsell;
 //#endregion
 export type G_ShortTypeName=
 	|"R_TwoColumnBrowseResults"
@@ -1106,14 +980,10 @@ export type G_ShortTypeName=
 	|`C_${T_Split<Extract<Ret_json_auto_replace_1,`${string}Command`>,"Command">[0]}`
 	|`R_${T_Split<Extract<Ret_json_auto_replace_1,`${string}Renderer`>,"Renderer">[0]}`
 	|"GE_Browse"
-	|"RMD_Badge"
-	;
-;
+	|"RMD_Badge";
 export type G_Ret_get_auto_type_name=
 	|"{}"
 	|`D_${"PrefetchHintConfig"}`
 	|`TA_OpenPopup<T_OpenPopup_Dialog<${string}>>`
 	|`TA_OpenPopup<T_OpenPopup_Toast<${string}>>`
-	|G_ShortTypeName
-	;
-;
+	|G_ShortTypeName;

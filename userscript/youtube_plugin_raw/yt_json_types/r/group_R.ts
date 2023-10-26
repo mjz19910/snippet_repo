@@ -559,9 +559,7 @@ export type RS_VE3854_BrowsePage={
 export type G_ResponseBrowse=
 	|RS_VE3854_BrowsePage
 	|RS_VE6827_BrowsePage
-	|RS_VE96368_BrowsePage
-	;
-;
+	|RS_VE96368_BrowsePage;
 export type G_RS_ByPageType=G_RS_WatchPage|RS_ChannelPage|G_RS_Page_Playlist|G_RS_SettingsPage|RS_SearchPage|RS_Page_Browse|G_RS_ShortsPage|RS_VE6827_BrowsePage|RS_VE96368_BrowsePage;
 //#endregion
 //#region RA_
@@ -1005,9 +1003,7 @@ export type RS_ChannelPage=
 		};
 		url: "/@SBMowingShorts/featured";
 		expirationTime: number;
-	}
-	;
-;
+	};
 export type RS_Page_Playlist_R={
 	page: "playlist";
 	endpoint: E_VE5754;

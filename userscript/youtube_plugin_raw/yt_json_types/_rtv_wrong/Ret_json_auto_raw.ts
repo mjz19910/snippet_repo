@@ -7,6 +7,4 @@ export type Ret_json_auto_raw=
 	|keyof R_TwoColumnBrowseResults
 	|"browseEndpoint"
 	|"innertubeCommand"
-	|"reelItemRenderer"
-	;
-;
+	|"reelItemRenderer";

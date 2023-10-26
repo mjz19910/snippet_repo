@@ -135,9 +135,7 @@ export type SU_SignalStr=
 	|"HISTORY_BACK"
 	|"HISTORY_FORWARD"
 	|"SKIP_NAVIGATION"
-	|"TOGGLE_TRANSCRIPT_TIMESTAMPS"
-	;
-;
+	|"TOGGLE_TRANSCRIPT_TIMESTAMPS";
 //#endregion
 
 export interface S_MapState {

@@ -1,6 +1,4 @@
-type ReactFiber=import("./react_fiber_impl.js").Fiber
-	|import("./react_fiber.js").ReactFiberHostComponent
-	|import("./react_fiber.js").ReactFiberForwardRef
-	|import("./react_fiber.js").ReactFiberFragment
-	;
-;
+export type ReactFiber=import("./react_fiber_impl.ts").Fiber
+	|import("./react_fiber.ts").ReactFiberHostComponent
+	|import("./react_fiber.ts").ReactFiberForwardRef
+	|import("./react_fiber.ts").ReactFiberFragment;

@@ -18,9 +18,7 @@ export type MC_Continuation=M_Next|M_Browse;
 export type C_Continuation=
 	|TE_Endpoint_Opt_3<"continuationCommand",DC_Continuation_WatchNext,M_Next>
 	|TE_Endpoint_Opt_3<"continuationCommand",DC_Continuation_ReelWatchSeq,M_Next>
-	|TE_Endpoint_Opt_3<"continuationCommand",DC_Continuation_Browse,M_Browse>
-	;
-;
+	|TE_Endpoint_Opt_3<"continuationCommand",DC_Continuation_Browse,M_Browse>;
 export type C_AddToPlaylist=TE_Endpoint_2<"addToPlaylistCommand",DC_AddToPlaylist>;
 export type C_AdsControlFlowOpportunityReceived=TE_Endpoint_2<"adsControlFlowOpportunityReceivedCommand",DC_AdsControlFlowOpportunityReceived>;
 export type C_ChangeKeyedMarkersVisibility=TE_Endpoint_2<"changeKeyedMarkersVisibilityCommand",DC_ChangeKeyedMarkersVisibility>;
@@ -124,9 +122,7 @@ export type GCF_M_k=
 	|CF_M_HD
 	|CF_M_s
 	|CF_M_w
-	|CF_M_wn
-	;
-;
+	|CF_M_wn;
 export type CF_M_k=T_ExtractImport<"CF_M_k">|"CF_M_k"|GCF_M_k;
 export type CF_M_rl=T_ExtractImport<"CF_M_rl">|"CF_M_rl"|CF_D_Video_Handle;
 export type CF_M_s=T_ExtractImport<"CF_M_s">|"CF_M_s"|CF_s;
@@ -161,26 +157,20 @@ export type CF_s=
 	|CF_TE_Endpoint_3
 	|CF_TE_Endpoint_Opt_3
 	|CF_TE_TrackedObj_2
-	|CF_GetAutoTypename
-	;
-;
+	|CF_GetAutoTypename;
 export type CF_GetAutoTypename=
 	|"{}"
 	|`D_${"PrefetchHintConfig"}`
 	|`TA_OpenPopup<T_OpenPopup_Dialog<${string}>>`
 	|`TA_OpenPopup<T_OpenPopup_Toast<${string}>>`
-	|CF_ShortTypeName
-	;
-;
+	|CF_ShortTypeName;
 export type CF_ShortTypeName=
 	|"R_TwoColumnBrowseResults"
 	|"A_OpenPopup"
 	|`C_${T_Split<Extract<Ret_json_auto_replace_1,`${string}Command`>,"Command">[0]}`
 	|`R_${T_Split<Extract<Ret_json_auto_replace_1,`${string}Renderer`>,"Renderer">[0]}`
 	|"GE_Browse"
-	|"RMD_Badge"
-	;
-;
+	|"RMD_Badge";
 export type CF_w=
 	|CF_M_y
 	|CF_M_zy
@@ -189,9 +179,7 @@ export type CF_w=
 	|CF_T_Items_TP
 	|CF_T_Signal
 	|CF_TA_Page
-	|CF_TR_MultiPageMenu
-	;
-;
+	|CF_TR_MultiPageMenu;
 export type CF_M_wn=T_ExtractImport<"CF_M_wn">|"CF_M_wn";
 export type CF_M_y=T_ExtractImport<"CF_M_y">|"CF_M_y";
 export type CF_M_zy=T_ExtractImport<"CF_M_zy">|"CF_M_zy";
@@ -229,9 +217,7 @@ export type CF_P_ParamParse=
 	|"_level_1_0"
 	|"_level_2_0._level_2_1"
 	|T_ExtractImport<"CF_P_ParamParse">
-	|P_param_category
-	;
-;
+	|P_param_category;
 
 export type GCF_D_Menu=CF_D_Video_Handle|CF_D_Playlist_Omit;
 

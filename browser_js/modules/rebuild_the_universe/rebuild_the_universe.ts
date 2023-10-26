@@ -18,11 +18,11 @@
 // @grant			none
 // ==/UserScript==
 
-import captureStackTrace from "../../src/capture-stack-trace.js";
-import {CompressDual} from "../DebugApi/types/CompressDual";
-import {AltPair} from "./AltPair";
-import {AnyOrRepeat2} from "./AnyOrRepeat2";
-import {CompressStateBase} from "./CompressStateBase";
+import captureStackTrace from "../../src/capture-stack-trace.ts";
+import {CompressDual} from "../DebugApi/types/CompressDual.ts";
+import {AltPair} from "./AltPair.ts";
+import {AnyOrRepeat2} from "./AnyOrRepeat2.ts";
+import {CompressStateBase} from "./CompressStateBase.ts";
 
 export interface AbstractVM {
 	halt(): void;
@@ -656,9 +656,7 @@ type BoxImpl=
 	// Generic boxes
 	|NewableInstancePackObjectBox
 	|DomElementBox
-	|never
-	;
-;
+	|never;
 
 
 class InstructionCastImpl {

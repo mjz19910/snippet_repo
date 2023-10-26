@@ -20,9 +20,7 @@ export type MakeInfoInput_Len2=
 		type: "UU";
 		arr: ["playlist_id","UU"];
 		raw_id: `UU${string}`;
-	}
-	;
-;
+	};
 
 //#endregion
 
@@ -89,9 +87,7 @@ export type DI_SrcArr=
 	|["key","video_id",DU_VideoId]
 	|["key","channel_id",DU_ChannelId]
 	|["key","guide_entry_id:playlist_id",`PL${string}`]
-	|["key","guide_entry_id:playlist_id",DU_Playlist_Static]
-	;
-;
+	|["key","guide_entry_id:playlist_id",DU_Playlist_Static];
 export type DI_SrcInfo=
 	|MK_DIInfo1<DU_Browse_Id>
 	|MK_DIInfo1<DU_GuideEntry_Id>
@@ -101,9 +97,7 @@ export type DI_SrcInfo=
 	|MK_DIInfo1<string>
 	|MK_DIInfo1<DU_VideoId>
 	|MK_DIInfo1<DU_ChannelId>
-	|MK_DIInfo1<T_IdTemplate<"PL">|DU_Playlist_Static>
-	;
-;
+	|MK_DIInfo1<T_IdTemplate<"PL">|DU_Playlist_Static>;
 export type MK_DIInfo4<T extends keyof B_IdTemplateArgs>={
 	z: [T_IdTemplate<T>];
 };
@@ -148,9 +142,7 @@ export type DI_RetInfo=
 	|{type: "WL"; exact: true; z: ["WL"];}
 	|{type: "LL"; exact: true; z: ["LL"];}
 	|{type: "string"; exact: false; z: [string];}
-	|{type: "number"; exact: false; z: [number];}
-	;
-;
+	|{type: "number"; exact: false; z: [number];};
 export type DI_RetInfo_Test1=Exclude<DU_ChannelId,"RDGM"|"RDCMUC"|"RDMM"|"PL"|"RD"|"UU">;
 
 //#endregion

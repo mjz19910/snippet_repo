@@ -45,9 +45,7 @@ export type GA_Playlist=
 	|AS_PlaylistDescription
 	|AS_PlaylistName
 	|AS_PlaylistPrivacy
-	|AS_PlaylistVideoOrder
-	;
-;
+	|AS_PlaylistVideoOrder;
 //#endregion
 //#region AU_
 export type AU_ChannelSwitcherPage={updateChannelSwitcherPageAction: AD_UpdateChannelSwitcherPage;};

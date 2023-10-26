@@ -59,8 +59,6 @@ export type MG_AdLayout=
 	|MG_AdLayout_DisplayBillboardImageButtoned
 	|MG_AdLayout_CompositePlayerBytes
 	|MG_AdLayout_DisplayTopLandscapeImage
-	|MG_AdLayout_DisplaySquareImage
-	;
-;
+	|MG_AdLayout_DisplaySquareImage;
 
 //#endregion

@@ -34,9 +34,7 @@ export type H_TrackingObj_f6_Str=
 	|"related"
 	|"rellist"
 	|"shortswatch"
-	|"watch"
-	;
-;
+	|"watch";
 export type H_TrackingObj_f3=T_D32<0>;
 export type H_TrackingObj_f21={
 	6: T_FD32<1315653944>;
@@ -153,9 +151,7 @@ export type P_EntityKey=
 	|P_repeat_state_entity_key
 	|P_subscribe_button_entity_key
 	|P_transcript_track_selection_entity_key
-	|P_view_count_entity_key
-	;
-;
+	|P_view_count_entity_key;
 export type V_BinaryTimestamp={
 	1: T_D32<number>;
 	2: T_FD32<number>;
@@ -495,9 +491,7 @@ export type P_continuation_params={0x94d81d4: T_VW<PD_continuation_params>;};
 export type PR_continuation_params=
 	|P_continuation_params
 	|P_invalidation_continuation
-	|P_timed_continuation_data
-	;
-;
+	|P_timed_continuation_data;
 export type P_create_comment_params={
 	2: TV_Str<DU_VideoId>;
 	5: T_VW<{1: T_D32<0>;}>;

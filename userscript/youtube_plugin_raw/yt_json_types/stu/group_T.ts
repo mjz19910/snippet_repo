@@ -109,9 +109,7 @@ export type T_SplitIntoGroups<S extends string,D extends string>=
 	string extends S? string[]:
 	S extends ''? []:
 	S extends `${infer T}${infer X extends D}${infer U}`? [`${T}${X}`,...T_SplitIntoGroups<U,D>]:
-	[S]
-	;
-;
+	[S];
 export type T_SplitOnce_Helper<S extends string,D extends string>=S extends `${infer T}${D}${infer U}`? string extends U? never:[T,U]:[S];
 export type T_SplitOnce_Helper2<S extends string,D extends string>=S extends `${infer T}${D}${infer U}`? [T,U]:[S];
 export type T_SplitOnce<S extends string,D extends string>=string extends S?
@@ -341,16 +339,12 @@ export type T_Split_Helper<S extends string,D extends string=",">=
 	[T,U,...T_Split_Helper<X,D>]:
 	S extends `${infer T}${D}${infer U}`?
 	[T,...T_Split_Helper<U,D>]:
-	[S]
-	;
-;
+	[S];
 export type T_Split<S extends string,D extends string=",">=
 	string extends S? string[]:
 	S extends ''? []:
 	S extends `${infer T}${D}${infer U}`? U extends ""? [T,""]:
-	T_Split_Helper<S,D>:T_Split_Helper<S,D>
-	;
-;
+	T_Split_Helper<S,D>:T_Split_Helper<S,D>;
 export type TS_Test2=T_Split<"g","">;
 export type T_StringWhitespace=" "|"\n"|"\t";
 export type T_StringTrimStart<T extends string>=T extends `${T_StringWhitespace}${infer P}`? T_StringTrimStart<P>:T;
@@ -376,9 +370,7 @@ export type T_GetPrimitiveTag<T>=
 	T extends undefined? |"undefined":
 	T extends Function? |"function":
 	T extends object? |"object":
-	"unknown"
-	;
-;
+	"unknown";
 export type G_PrimitiveTag=
 	|"bigint"
 	|"boolean"
@@ -388,9 +380,7 @@ export type G_PrimitiveTag=
 	|"symbol"
 	|"undefined"
 	|"function"
-	|"unknown"
-	;
-;
+	|"unknown";
 export type T_IdBox<SV extends G_IdSrc,T_IdType extends string,T extends SV["key_type"]=SV["key_type"],V=SV["type"]>={
 	b: "boxed_id"; c: T; d: T_IdType;
 	key: `boxed_id:${T}:${T_IdType}`;

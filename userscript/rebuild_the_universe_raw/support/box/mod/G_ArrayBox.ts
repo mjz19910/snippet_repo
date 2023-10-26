@@ -5,6 +5,4 @@ import {InstructionTypeArrayBox} from "./InstructionTypeArrayBox.ts";
 export type G_ArrayBox=
 	|ArrayBox
 	|EmptyArrayBox
-	|InstructionTypeArrayBox
-	;
-;
+	|InstructionTypeArrayBox;

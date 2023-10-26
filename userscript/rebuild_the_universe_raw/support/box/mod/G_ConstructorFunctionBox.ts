@@ -11,6 +11,4 @@ export type G_ConstructorFunctionBox=
 	|NewableFunctionBox
 	|NewableInstancePackBox
 	|AsyncFunctionBox
-	|FunctionConstructorBox
-	;
-;
+	|FunctionConstructorBox;

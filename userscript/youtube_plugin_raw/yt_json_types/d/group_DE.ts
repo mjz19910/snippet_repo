@@ -2,9 +2,7 @@
 export type DE_VE<T>={browseId: T;};
 export type DE_VE3611_BaseUrl=
 	|`/@${string}`
-	|`/channel/UC${string}`
-	;
-;
+	|`/channel/UC${string}`;
 export type DE_VE3611={
 	params?: string; browseId: T_IdTemplate<"UC",D_UserIdStr>;
 	canonicalBaseUrl?: DE_VE3611_BaseUrl;
@@ -43,9 +41,7 @@ export type DE_OpportunityType=T_EnumStr<"OPPORTUNITY_TYPE",T_EnumStr<"ORGANIC",
 export type DE_IconType_Button=
 	|"SETTINGS"|"DELETE"
 	|"NOTIFICATIONS_ACTIVE"|"NOTIFICATIONS_NONE"|"NOTIFICATIONS_OFF"
-	|"CHEVRON_RIGHT"|"CHEVRON_LEFT"|"REMOVE"|"INFO"|"CLOSE"|"MICROPHONE_ON"
-	;
-;
+	|"CHEVRON_RIGHT"|"CHEVRON_LEFT"|"REMOVE"|"INFO"|"CLOSE"|"MICROPHONE_ON";
 export type DE_MP_MenuStyle=T_EnumStr<"MULTI_PAGE_MENU_STYLE_TYPE",
 	|"SWITCHER"
 	|"CREATION"
@@ -100,9 +96,7 @@ export type DE_Url=
 	|DE_U_RedirectUrl
 	|DE_U_ExternalUrl
 	|DE_U_ChannelUrl
-	|DE_U_ExternalUrl_GRU_Open
-	;
-;
+	|DE_U_ExternalUrl_GRU_Open;
 export type DE_U_ExternalUrl_GRU_Open={
 	url: `https://support.google.com/youtube?${string}`;
 	grwOpenInOverride: "GRW_OPEN_IN_OVERRIDE_USE_PREFERRED_APP_NO_PROMPT";

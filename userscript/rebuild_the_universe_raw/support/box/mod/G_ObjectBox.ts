@@ -8,7 +8,6 @@ import {G_PromiseBox} from "./G_PromiseBox.ts";
 import {G_PromiseReturnBox} from "./G_PromiseReturnBox.ts";
 import {G_StackVMSupportBox} from "../../G_StackVMSupportBox.ts";
 import {G_BaseObjectBox} from "./G_BaseObjectBox.ts";
-
 export type G_ObjectBox=
 	|G_BaseObjectBox
 	|G_FunctionBox
@@ -19,6 +18,4 @@ export type G_ObjectBox=
 	|G_ObjectInstanceBox
 	|G_StackVMSupportBox
 	|G_PromiseBox
-	|G_GenericBox
-	;
-;
+	|G_GenericBox;

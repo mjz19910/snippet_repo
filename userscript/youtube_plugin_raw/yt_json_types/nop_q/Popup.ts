@@ -52,18 +52,14 @@ export type G_OpenPopup_All=
 	|A_NotificationMenuPopup
 	|A_NotificationToast
 	|A_PdgBuyFlow
-	|A_ShareEntityService
-	;
-;
+	|A_ShareEntityService;
 
 //#endregion
 //#region Popup_
 export type Popup_ClientSignal=
 	|Popup_DL_ConfirmDialog
 	|Popup_TT_NotificationToast
-	|Popup_TAD_VoiceSearch
-	;
-;
+	|Popup_TAD_VoiceSearch;
 export type Popup_LoadingAccountMenu=T_OpenPopup_Dropdown<R_LoadingAccountMenu>;
 export type Popup_DD_LoadingNotificationsMenu=T_OpenPopup_Dropdown<R_LoadingNotificationsMenu>;
 export type Popup_DD_MenuPopup=T_OpenPopup_Dropdown<R_MenuPopup>;
@@ -89,9 +85,7 @@ export type G_Popup_All=
 	|Popup_DL_PdgBuyFlow
 	|Popup_DL_ShareEntityService
 	|Popup_TAD_VoiceSearch
-	|Popup_TT_NotificationToast
-	;
-;
+	|Popup_TT_NotificationToast;
 //#endregion
 //#region MultiPageMenu
 export type R_LoadingAccountMenu=TR_MultiPageMenu<MP_LoadingAccountMenu>;

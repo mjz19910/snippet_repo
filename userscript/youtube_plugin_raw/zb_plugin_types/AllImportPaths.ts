@@ -11,6 +11,4 @@ export type AllImportPaths=
 	|"./YTPlugin_ServiceLoader_Plugin.user"
 	|"./YTPlugin_ServiceMethods.user"
 	|"./YTPlugin_Support_Service.user"
-	|"moment"
-	;
-;
+	|"moment";

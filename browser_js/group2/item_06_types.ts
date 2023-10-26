@@ -5,18 +5,14 @@ type ToFunctionImpl<T extends {
 },Acc extends any[]=[]>=
 	T extends {length: Acc["length"];}? (...args: Acc) => any:
 	T extends {length: [...Acc,any]["length"];}? (...args: [any,...Acc]) => any:
-	ToFunctionImpl<T,[...Acc,any]>
-	;
-;
+	ToFunctionImpl<T,[...Acc,any]>;
 export type ToFunction<T extends {
 	type: "function";
 	length: number;
 	name: string;
 }>=
 	T extends {length: 0;}? () => any:
-	ToFunctionImpl<T>
-	;
-;
+	ToFunctionImpl<T>;
 
 type JobManager={
 	cancelDebouncedJobMap: {};

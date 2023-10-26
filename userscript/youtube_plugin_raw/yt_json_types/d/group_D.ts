@@ -26,11 +26,11 @@ import {R_SimpleCardTeaser} from "../r/r_sub/r/R_SimpleCardTeaser.ts";
 import {SI_DB_EngagementPanel_ClipCreate,SI_DB_EngagementPanel_MacroMarkers_AutoChapters,SI_DB_EngagementPanel_MacroMarkers_DescriptionChapters,SI_VE124975_EngagementPanel,SI_VE126250_EngagementPanel,SI_VE139722_EngagementPanel,SI_VE76278_EngagementPanel,SI_VE99999_EngagementPanel,S_GetAccountMenu} from "../stu/group_S.ts";
 import {TD_GuideEntry_Simple,TD_Label,TM_Visibility,TP_Color,TR_MultiPageMenuSection,T_Actions,T_BaseUrl,T_Dialog,T_DistributedKeyof,T_ElementId,T_EnumStr,T_ExtractIconType,T_Icon,T_MaybeTemplatedText,T_OmitKey,T_SE_Signal,T_Setting_AutoNavForDesktop,T_Signal,T_Split,T_SplitOnce,T_StoreCacheIndex,T_StringTrim,T_StyleType,T_TargetIdStr,T_TrackedItems,T_Types,T_UrlWrappedValue} from "../stu/group_T.ts";
 import {V_Uint8Array} from "../vw/group_V.ts";
-import {G_MenuItem_2} from "./group_D/G_MenuItem_2.js";
+import {G_MenuItem_2} from "./group_D/G_MenuItem_2.ts";
 import {DC_ReloadContinuationItems} from "./group_DC.ts";
 import {DE_AdPlacementKind,DE_IconType_Button,DE_MP_MenuStyle,DE_SubmitFeedback,DE_SuperThanksSelectedTier,DE_VE83769_Url_1} from "./group_DE.ts";
-import {DStr_DI_AKZ,T_PrimitiveBox} from "./mod_D/DI_T/DI_T_move.js";
-import {DT_DatabaseStoreTypes} from "./mod_D/_T/DT_DatabaseStoreTypes.js";
+import {DStr_DI_AKZ,T_PrimitiveBox} from "./mod_D/DI_T/DI_T_move.ts";
+import {DT_DatabaseStoreTypes} from "./mod_D/_T/DT_DatabaseStoreTypes.ts";
 
 //#region String data, ie `D_${string}`
 export type D_EndpointLikeEndings="Endpoint"|"Command"|"Action"|"Renderer";
@@ -45,9 +45,7 @@ export type D_AddToOfflineButtonState=T_EnumStr<
 export type D_UiTargetId=
 	|SI_VE76278_EngagementPanel["targetId"]
 	|A_WatchNextContinuation["targetId"]
-	|DC_ReloadContinuationItems['targetId']
-	;
-;
+	|DC_ReloadContinuationItems['targetId'];
 //#endregion
 //#region String data
 export type WatchUrlFormat=
@@ -55,9 +53,7 @@ export type WatchUrlFormat=
 	|`/watch?${D_WatchUrlStr}`
 	|`/watch?v=${string}&list=RD${string}&start_radio=1&rv=${string}`
 	|`/watch?v=${string}&list=RDGMEM${string}&start_radio=1&rv=${string}`
-	|`/watch?v=${string}&playnext=1&list=${DU_Playlist_Radio_Id}`
-	;
-;
+	|`/watch?v=${string}&playnext=1&list=${DU_Playlist_Radio_Id}`;
 export type D_WatchPageUrl=
 	|`/watch?v=${string}&list=RD${string}&index=${number}&pp=${string}`
 	|`/watch?v=${string}&list=RD${string}&index=${number}`
@@ -65,33 +61,23 @@ export type D_WatchPageUrl=
 	|`/watch?v=${string}&pp=${string}`
 	|`/watch?v=${string}&t=${number}s`
 	|`/watch?v=${string}`
-	|`/v/${string}`
-	;
-;
+	|`/v/${string}`;
 export type D_WatchPlaylistUrlFormat=
 	|`list=${DU_Playlist_Id}`
 	|`list=${DU_Playlist_Id}&index=${number}`
-	|`list=${DU_Playlist_Radio_Id}&start_radio=${DU_StartRadio}`
-	;
-;
+	|`list=${DU_Playlist_Radio_Id}&start_radio=${DU_StartRadio}`;
 export type D_WatchUrlStr=
 	|`v=${string}`
-	|`v=${string}&${G_YtWatchUrl}`
-	;
-;
+	|`v=${string}&${G_YtWatchUrl}`;
 export type D_ChannelPageGridStyleType=
 	|"FEED_FILTER_CHIP_BAR_STYLE_TYPE_CHANNEL_PAGE_GRID"
-	|"FEED_FILTER_CHIP_BAR_STYLE_TYPE_DEFAULT"
-	;
-;
+	|"FEED_FILTER_CHIP_BAR_STYLE_TYPE_DEFAULT";
 export type D_ContextTypeStr=
 	|"channel_creator"
 	|"yt_web_remix_unlimited"
 	|"yt_web_search"
 	|"yt_web_unknown_form_factor_kevlar_w2w"
-	|"yt_web_unlimited"
-	;
-;
+	|"yt_web_unlimited";
 export type D_Settings_Id=
 	|"account_advanced"
 	|"account_billing"
@@ -103,9 +89,7 @@ export type D_Settings_Id=
 	|"account_sharing"
 	|"account"
 	|"report_history"
-	|"unlimited"
-	;
-;
+	|"unlimited";
 export type D_VideoCategory=
 	|"Autos & Vehicles"
 	|"Comedy"
@@ -121,14 +105,10 @@ export type D_VideoCategory=
 	|"Pets & Animals"
 	|"Science & Technology"
 	|"Sports"
-	|"Travel & Events"
-	;
-;
+	|"Travel & Events";
 export type D_VE6827_PageLocation=
 	|"history"
-	|"library"
-	;
-;
+	|"library";
 export type D_FE_SectionId=T_FeedEntry<"trending"|"history"|"library"|"storefront"|"guide_builder">;
 export type D_EngagementPanelTargetId=
 	|"engagement-panel-clip-view"
@@ -140,9 +120,7 @@ export type D_EngagementPanelTargetId=
 	|SI_DB_EngagementPanel_MacroMarkers_DescriptionChapters["targetId"]
 	|SI_VE76278_EngagementPanel["targetId"]
 	|SI_VE124975_EngagementPanel["targetId"]
-	|SI_VE126250_EngagementPanel["targetId"]
-	;
-;
+	|SI_VE126250_EngagementPanel["targetId"];
 export type D_EngagementPanelVisibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"|"ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 export type D_ButtonSizeType="SIZE_DEFAULT"|"SIZE_SMALL";
 export type D_ChannelSwitcherUrlFormat="/channel_switcher";
@@ -183,9 +161,7 @@ export type D_EngagementPanelSectionList=
 	|SI_VE99999_EngagementPanel
 	|SI_VE124975_EngagementPanel
 	|SI_VE126250_EngagementPanel
-	|SI_VE139722_EngagementPanel
-	;
-;
+	|SI_VE139722_EngagementPanel;
 export type D_EngagementPanelSectionShortsComments=Record<"content",R_SectionList>&{
 	continuationService: "ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE";
 	header: {};
@@ -873,9 +849,7 @@ export type D_PlaylistPanelVideo_Base={
 export type D_PlaylistPanelVideo=
 	|never
 	|D_PlaylistPanelVideo_Base
-	|(D_PlaylistPanelVideo_Base&{indexText: G_Text;})
-	;
-;
+	|(D_PlaylistPanelVideo_Base&{indexText: G_Text;});
 export type D_Radio={
 	playlistId: `RD${string}`;
 	title: G_Text;
@@ -1006,9 +980,7 @@ export type D_VE_TextRun=
 	|D_VE5754_TextRun
 	|D_VE6827_TextRun
 	|D_VE11487_TextRun
-	|D_VE83769_TextRun
-	;
-;
+	|D_VE83769_TextRun;
 export type D_TextRun_NavEP_1=E_VE37414_ReelWatch|E_Watch|E_VE3611|E_VE5754|E_VE6827|E_VE11487|E_Url;
 export type D_TextRun=|{
 	text: "☹";
@@ -1300,9 +1272,7 @@ export type D_GuideEntry=
 		trackingParams: string;
 		formattedTitle: G_Text;
 		accessibility: TD_Accessibility<"YouTube Premium">;
-	}
-	;
-;
+	};
 //#endregion
 export type D_GuideEntryData={guideEntryId: DU_GuideEntry_Id;};
 // COMPLETED: #13
@@ -1368,9 +1338,7 @@ export type ApiNotificationLast=
 	|"get_unseen_count"
 	|"get_notification_menu"
 	|"record_interactions"
-	|"modify_channel_preference"
-	;
-;
+	|"modify_channel_preference";
 export type DG_ApiUrl=T_Split<T_SplitOnce<D_ApiPathFormat_1,"/">[1],"/">;
 export type D_ApiPathFormat_1=
 	|"/getAccountSwitcherEndpoint"
@@ -1398,9 +1366,7 @@ export type D_ApiPathFormat_1=
 	|`/youtubei/v1/share/get_share_panel`
 	|`/youtubei/v1/subscription/${"subscribe"|"unsubscribe"}`
 	|`/youtubei/v1/updated_metadata`
-	|`/s/i/youtube_outline/bars_3/v2/24px.svg`
-	;
-;
+	|`/s/i/youtube_outline/bars_3/v2/24px.svg`;
 export type D_AttBgChallenge={
 	interpreterUrl?: T_UrlWrappedValue<`//www.google.com/js/th/${string}.js`>;
 	interpreterHash: string;
@@ -1481,9 +1447,7 @@ export type D_ButtonStyleType=
 	|"STYLE_TEXT"
 	|"STYLE_UNKNOWN"
 	|"STYLE_VISIBLY_DISABLED"
-	|"STYLE_WHITE_WITH_BORDER"
-	;
-;
+	|"STYLE_WHITE_WITH_BORDER";
 export type D_Cache_MD={isCacheHit: true;};
 export type D_CanShare={canShare: boolean;};
 export type D_CanonicalBaseUrl={canonicalBaseUrl: string;};
@@ -2191,9 +2155,7 @@ export type D_LiveStreamability={
 export type R_LiveStreamability={liveStreamabilityRenderer: D_LiveStreamability;};
 export type D_PlayabilityOkReason=
 	|"This live event has ended."
-	|"We're experiencing technical difficulties."
-	;
-;
+	|"We're experiencing technical difficulties.";
 export type D_PlaybackTracking={
 	atrUrl: D_UrlAndElapsedMediaTime<`https://s.youtube.com/api/stats/atr?${string}`>;
 	ptrackingUrl: T_BaseUrl<`https://www.youtube.com/ptracking?${string}`>;
@@ -2678,9 +2640,7 @@ export type D_ThumbnailOverlayTimeStatus=
 	|{
 		text: G_Text;
 		style: "UPCOMING";
-	}
-	;
-;
+	};
 export type D_ThumbnailOverlayTimeStatus_1={
 	text: G_Text;
 	style: "DEFAULT";
@@ -2955,9 +2915,7 @@ export type D_Button_With_TargetId=
 		trackingParams: string;
 		accessibilityData: TD_Accessibility<"Join this channel">;
 		targetId: "sponsorships-button";
-	}
-	;
-;
+	};
 //#endregion
 export type D_TrackedThumbnail={thumbnail: D_Thumbnail; trackingParams?: string;};
 export type D_Thumbnail={
@@ -3176,9 +3134,7 @@ export type D_UrlFormat=
 	|NonNullable<D_Channel_MD["channelConversionUrl"]>
 	|NonNullable<D_CommentsHeader["unicodeEmojisUrl"]>
 	|NonNullable<D_FormatItem["url"]>
-	|S_YtUrlHttp_Watch
-	;
-;
+	|S_YtUrlHttp_Watch;
 //#endregion
 //#region group_D
 export type D_TrafficType={trafficType: "ACTIVE_VIEW_TRAFFIC_TYPE_VIDEO";};
@@ -3392,9 +3348,7 @@ export type D_Menu_Button=
 	|R_PlaylistLoopButton
 	|R_Button
 	|R_ToggleButton
-	|R_SegmentedLikeDislikeButton
-	;
-;
+	|R_SegmentedLikeDislikeButton;
 export type D_Menu_old={
 	items?: G_MenuItem[];
 	trackingParams: string;
@@ -3692,9 +3646,7 @@ export type G_GV_0=
 	|"tt1e7" // 2 [dig_final] [dig_user@tt1:e7:[7,l]]
 	|"tt1el" // 2 [dig_final] [dig_user@tt1:el:[7,e]]
 	|"vgqsk" // 2 [dig_final] [dig_user@vgq:sk:[6,e,l,s,z]]
-	|"vgqsr" // 2 [dig_final] [dig_user@vgq:sr:[e,l,s,z]]
-	;
-;
+	|"vgqsr" // 2 [dig_final] [dig_user@vgq:sr:[e,l,s,z]];
 // cSpell:ignoreRegExp /rr1.sn-\w+?\.googlevideo\.com\. \d+ IN A\s+\d+\.\d+\.\d+\.\d+/
 // cSpell:ignoreRegExp /sn-\w+?\.googlevideo\.com.?"/
 export type PT_DigDomain=[
@@ -3903,9 +3855,7 @@ export type G_GV_1=
 	|`l${G_GV_11}`
 	|`r${Extract<G_GV_11,"6"|"l"|"r">|" "}`
 	|`s${G_GV_11}`
-	|`z${G_GV_11}`
-	;
-;
+	|`z${G_GV_11}`;
 export type D_GoogleVideoHostPartition={
 	parts: ["sn","-",G_GV_0,"n",G_GV_1],
 	partition: G_GV_0,
@@ -3971,9 +3921,7 @@ export type D_Button_style=
 	|"STYLE_OPACITY"
 	|"STYLE_PRIMARY"
 	|"STYLE_SUGGESTIVE"
-	|"STYLE_TEXT"
-	;
-;
+	|"STYLE_TEXT";
 export type W_Some_r=Some_A<W_Some_s>;
 export type W_Some_f=T_Str_Some<W_Some_s>;
 export type W_Some_e="https://www.youtube.com/channel/UC";
@@ -3988,16 +3936,12 @@ export type Some_A<T extends string,A extends any[]=[]>=
 	Some_A<E,[...A,[S,V[0]]]>
 	:A
 	:A;
-;
-
 export type T_Str_Some<T extends string>=Some_t<T>[0] extends 0? "":T extends `${infer S}${infer E}`? `${S}${T_Str_Some<E>}`:T;
 export type D_Button_targetId=
 	|"sponsorships-button"
 	|"create-clip-button-action-bar"
 	|"clip-info-button"
-	|"watch-supervod-button"
-	;
-;
+	|"watch-supervod-button";
 // cSpell:ignoreRegExp /(?<=")[^"]{40,}/
 export type D_Button={
 	style?: D_Button_style;
@@ -4029,9 +3973,7 @@ export type D_Button_NavEP=
 	|E_ShareEntityService
 	|E_Url
 	|E_VE23462
-	|E_Watch
-	;
-;
+	|E_Watch;
 export type D_Button_SE=
 	|C_GetPdgBuyFlow
 	|E_CreateComment
@@ -4040,16 +3982,12 @@ export type D_Button_SE=
 	|E_ShareEntityService
 	|E_SignalService_SendPost
 	|E_Unsubscribe
-	|E_YpcGetOffers
-	;
-;
+	|E_YpcGetOffers;
 export type D_Card_Content=
 	|R_SimpleCardContent
 	|R_CollaboratorInfoCardContent
 	|R_PlaylistInfoCardContent
-	|R_VideoInfoCardContent
-	;
-;
+	|R_VideoInfoCardContent;
 export type D_ChipColorPalette={
 	backgroundColor: 4280191205;
 	foregroundTitleColor: 4294967295;
@@ -4275,9 +4213,7 @@ export type D_FormatFps=
 	|25
 	|30
 	|50
-	|60
-	;
-;
+	|60;
 export type D_FormatItem={
 	itag: number;
 	url: GU_VideoPlaybackUrl;
@@ -4554,9 +4490,7 @@ export type D_SubscribeButton=
 		targetId?: "watch-subscribe";
 		onSubscribeEndpoints?: E_Subscribe[];
 		onUnsubscribeEndpoints?: E_SignalService_SendPost[];
-	}
-	;
-;
+	};
 export type D_Tab_History={
 	selected: true;
 	content: R_SectionList;
@@ -4751,9 +4685,7 @@ export type G_MenuNavigationItem_NavEP=
 	|E_Url
 	|E_UserFeedback
 	|GA_MenuNavigationPopup
-	|E_AdFeedback
-	;
-;
+	|E_AdFeedback;
 export type DU_UrlParams_PageAd_AClk={
 	sa: "L";
 	ai: string;
@@ -4823,9 +4755,7 @@ export type DU_TargetId=
 	|DC_SectionList_TargetId
 	|G_SI_DB_EngagementPanel['targetId']
 	|RS_Search['targetId']
-	|TA_Continuation<"browse-feedFEwhat_to_watch",G_BrowseFeed>['targetId']
-	;
-;
+	|TA_Continuation<"browse-feedFEwhat_to_watch",G_BrowseFeed>['targetId'];
 //#endregion
 //#region Key type
 export type DU_EndpointKey=`${string}${D_EndpointLikeEndings}`;
@@ -4872,16 +4802,12 @@ export type DU_Str_ChannelUrl=`https://www.youtube.com/${string}`;
 export type DFU_GoogleVideoUrl_Hostname=UrlParse<GU_GoogleVideoUrl>["host"];
 export type GU_InternalUrl=
 	|`https://www.youtube.com/channel/UC${string}/join`
-	|"https://www.youtube.com/t/creative_commons"
-	;
-;
+	|"https://www.youtube.com/t/creative_commons";
 export type GU_GoogleVideoUrl=
 	|DU_VE3832_PreconnectUrl
 	|GU_GoodPut_ProbeUrl
 	|GU_InitPlaybackUrl
-	|GU_VideoPlaybackUrl
-	;
-;
+	|GU_VideoPlaybackUrl;
 //#endregion
 export type DU_IdCacheItem=
 	|`video_id:${string}`
@@ -4893,9 +4819,7 @@ export type DU_IdCacheItem=
 	|`channel_id:${T_IdTemplate<"UC",D_UserIdStr>}`
 	|`key:start_radio:${0|1}`
 	|`video_time:${number}s`
-	|`exact:play_next:${1}`
-	;
-;
+	|`exact:play_next:${1}`;
 
 //#region Aliases
 export type DU_UserId=string;
@@ -4932,9 +4856,7 @@ export type DU_PlaylistId_Base=
 	|"RDCMUC"
 	|"RDGMEM"
 	|"RDMM"
-	|"UU"
-	;
-;
+	|"UU";
 //#region DU Template String
 export type DU_Browse_Id=T_IdTemplate<"FE">|T_IdTemplate<"VL">|T_IdTemplate<"UC">|T_IdTemplate<"MP">|T_IdTemplate<"SP">;
 export type DU_ChannelId=T_IdTemplate<"UC">;

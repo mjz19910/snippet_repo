@@ -7,6 +7,4 @@ export type G_ObjectInstanceBox=
 	|StackVMBox
 	|NodeBox
 	|CSSStyleSheetBox
-	|MediaListBox
-	;
-;
+	|MediaListBox;

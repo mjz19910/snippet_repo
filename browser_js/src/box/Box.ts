@@ -23,7 +23,7 @@ import {NullBox} from "./NullBox.ts";
 import {NumberBox} from "./NumberBox.ts";
 import {ObjectBox} from "./ObjectBox.ts";
 import {PromiseBox} from "./PromiseBox.ts";
-import {RawBoxes} from "./RawBoxes";
+import {RawBoxes} from "./RawBoxes.ts";
 import {RealVoidBox} from "./RealVoidBox.ts";
 import {StackVMBox} from "./StackVMBox.ts";
 import {StringBox} from "./StringBox.ts";
@@ -77,7 +77,5 @@ export type Box=
 	// Generic boxes
 	|NewableInstancePackObjectBox
 	|DomElementBox
-	|never
-	;
-;
+	|never;
 

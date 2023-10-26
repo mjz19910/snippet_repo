@@ -82,9 +82,7 @@ export type DC_Continuation=
 	|{
 		token: string;
 		request: "CONTINUATION_REQUEST_TYPE_BROWSE";
-	}
-	;
-;
+	};
 export type DC_EngagementPanelHeaderShowNavigationButton={
 	targetId: "engagement-panel-macro-markers-description-chapters";
 	navigationButton: R_Button;
@@ -95,9 +93,7 @@ export type DC_Continuation_Omit_Return<T>=
 	|["REEL_WATCH_SEQUENCE",y]
 	|["WATCH_NEXT",y]
 	|[null,y]:
-	never
-	;
-;
+	never;
 export type DC_Invalidation={
 	invalidationId: D_InvalidationId;
 	timeoutMs: 10000;
@@ -133,9 +129,7 @@ export type DC_AddToPlaylist=
 		listType: "PLAYLIST_EDIT_LIST_TYPE_QUEUE";
 		onCreateListCommand: E_CreatePlaylistService;
 		videoIds: DU_VideoId[];
-	}
-	;
-;
+	};
 export type DC_GetDownload={
 	videoId: string;
 	params: "CAE%3D";

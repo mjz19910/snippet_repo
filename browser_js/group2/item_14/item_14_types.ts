@@ -47,15 +47,11 @@ type JsonUnpackValue =
 	| ["Node", Node[]]
 	| JsonEventResult
 	| ["VueVnode", VueVnode[]]
-	| ["any", any[]]
-	;
-;
+	| ["any", any[]];
 type UnpackCommand = ["COMMAND::unpack", JsonUnpackValue];
 type PendingCommandItem =
 	| ["unpack", UnpackCommand]
-	| ["unit", UnpackUnitCommand]
-	;
-;
+	| ["unit", UnpackUnitCommand];
 type UnpackUnitArgs = {
 	[U in JsonUnpackValue[0]]: Extract<JsonUnpackValue, [U, any]> extends infer V extends Extract<JsonUnpackValue, [U, any]> ? [V[0], V[1][number]] : never;
 }[JsonUnpackValue[0]];
@@ -83,9 +79,7 @@ type DataItemReturn =
 	| ["RESULT::handle_json_event", JsonEventResult]
 	| ["TAG::result_data", import("./item_14.js").HistoryResultData]
 	| UnpackCommand
-	| UnpackUnitCommand
-	;
-;
+	| UnpackUnitCommand;
 type MakeTagBoxForNonObject<V, K> = { _inner_tag: K, value: V & { _tag: K } }
 type IndexBoxMap = {
 	InputObjBox: MakeTagBoxForNonObject<number, "InputObjBox">;

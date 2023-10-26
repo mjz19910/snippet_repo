@@ -208,18 +208,14 @@ export type DispatchMessageType=
 	|MessageWorkerUpdateMessageHandlerReplyT
 	|ReplyToWorkerStateMessageT
 	|ReplyToLocalTimerMessageT
-	|MessageReplyFromWorkerData
-	;
-;
+	|MessageReplyFromWorkerData;
 
 export type WorkerReplyTypes=
 	|ReplyFromWorkerMessage
 	|ReplyToLocalTimerMessageT
 	|ReplyToWorkerStateMessageT
 	|WorkerDestroyTypeMessageT
-	|TimeoutFireSingleMessageT
-	;
-;
+	|TimeoutFireSingleMessageT;
 
 export type WorkerSendTypes=
 	|TimeoutSetSingleMessageT
@@ -228,9 +224,7 @@ export type WorkerSendTypes=
 	|TimeoutSingleReplyMessageT
 	|TimeoutClearAnyMessageT
 	|TimeoutClearSingleMessageT
-	|TimeoutClearRepeatingMessageT
-	;
-;
+	|TimeoutClearRepeatingMessageT;
 
 export type SetSingleMessageDataT={
 	t: number;
