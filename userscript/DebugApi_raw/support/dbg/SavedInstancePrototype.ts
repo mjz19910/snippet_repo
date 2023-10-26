@@ -1,2 +1,2 @@
 
-export type SavedInstancePrototype={};
+export type SavedInstancePrototype=Record<never,never>;

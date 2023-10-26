@@ -6,6 +6,6 @@ export type dbg_unexpected={
 			type: "hidden-var";
 			var: string;
 		}|{type: "no-var";};
-		return: any;
+		return: unknown;
 	};
 };

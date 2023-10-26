@@ -1,6 +1,6 @@
-import {IterableIteratorPrototype} from "./IterableIteratorPrototype.js";
-import {IteratorPrototype} from "./IteratorPrototype.js";
+import {IterableIteratorPrototype} from "./IterableIteratorPrototype.ts";
+import {IteratorPrototype} from "./IteratorPrototype.ts";
 
-export function get_prototype<T>(x: T): T extends IteratorPrototype? Object:T extends IterableIteratorPrototype? IteratorPrototype:T extends IterableIterator<any>? IterableIteratorPrototype:Object {
+export function get_prototype<T>(x: T): T extends IteratorPrototype? Record<string, unknown>:T extends IterableIteratorPrototype? IteratorPrototype:T extends IterableIterator<unknown>? IterableIteratorPrototype:Record<string, unknown> {
 	return Object.getPrototypeOf(x);
 }

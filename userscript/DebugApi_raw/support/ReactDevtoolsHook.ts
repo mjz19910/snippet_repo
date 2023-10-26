@@ -1,6 +1,4 @@
-export type ReactDispatcher={
-
-};
+export type ReactDispatcher=Record<never, never>;
 export type ReactDispatcherRef={
 	current: ReactDispatcher;
 };

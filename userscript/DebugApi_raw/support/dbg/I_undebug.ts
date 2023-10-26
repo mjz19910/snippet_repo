@@ -1,1 +1,1 @@
-export interface I_undebug {(fn: (...x: any[]) => any): void;}
+export interface I_undebug {(fn: (...x: unknown[]) => unknown): void;}

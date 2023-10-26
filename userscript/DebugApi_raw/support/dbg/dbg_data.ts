@@ -1,6 +1,6 @@
 
 export type dbg_data={
 	type: "data";
-	result: [string,any];
-	return: any;
+	result: [string,unknown];
+	return: unknown;
 };
