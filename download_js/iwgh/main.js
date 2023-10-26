@@ -368,6 +368,13 @@ async function read_json_array_file(file) {
   if (data === "") return [];
   return JSON.parse(data);
 }
+function peek_description_arr(description_arr) {
+  const description_arr2 = description_arr.slice(0, 5);
+  for (const description of description_arr2) {
+    console.log("%o", description);
+  }
+}
+export { peek_description_arr };
 async function run() {
   const arr = [];
   const description_file = await deno_default_open("./description_cache.json");
@@ -383,6 +390,7 @@ async function run() {
     parse_rng_word(word);
   }
   let before_wait = dict.size;
+  const request_log_interval = 10;
   for (let j = 0; j < (10 * 20); j++) {
     const request_count = 20;
     for (let i = 0; i < request_count; i++) {
@@ -390,17 +398,13 @@ async function run() {
     }
     await Promise.all(arr);
     arr.length = 0;
-    if (j % 5 === 0) {
+    if (j % request_log_interval === (request_log_interval - 1)) {
       console.log("dict word num", dict.size - before_wait);
       before_wait = dict.size;
     }
   }
   const description_arr = [...description_set.values()].sort();
   const dictionary_arr = [...dict.values()].sort();
-  const description_arr2 = description_arr.slice(0, 5);
-  for (const description of description_arr2) {
-    console.log("%o", description);
-  }
   console.log("description_arr.length", description_arr.length);
   console.log("dictionary.length", dictionary_arr.length);
   await write_entire_file(description_file, description_arr);
