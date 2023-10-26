@@ -86,6 +86,11 @@ function parse_sentence(str) {
 	 * @param {(ParsedArrItem)[]} parsed
 	 * @param {string[]} parsed_src
 	 */
+	function parse_next_word(parsed,parsed_src) {}
+	/**
+	 * @param {(ParsedArrItem)[]} parsed
+	 * @param {string[]} parsed_src
+	 */
 	function parse_a(parsed,parsed_src) {
 		parsed.push({type: "a"});
 		let word1=next_word(parsed_src);
@@ -123,25 +128,6 @@ function parse_sentence(str) {
 					break x;
 				}
 				if(parsed_src.length==0) break x;
-				let word4=next_word(parsed_src);
-				switch(word4) {
-					case "...": break x;
-					case ",": {
-						let word5=next_word(parsed_src);
-						console.log(["w5",word5],parsed_src);
-					} break x;
-					case "of": break x;
-					case "which":
-					case "art":
-					case "but":
-					case "in":
-					case "pipe":
-					case "though":
-					case "instrument":
-					case "when":
-						break x;
-				}
-				console.log(["w4",word4]);
 			} break x;
 			default: {
 				console.log(["w1",word1]);
