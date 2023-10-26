@@ -250,6 +250,28 @@ function parse_sentence(str) {
   parse_next_word(parsed, parsed_src);
   return str;
 }
+/** @arg {string} prefix @arg {string} word */
+function strip_vowel(prefix, word) {
+  if (word.startsWith(prefix + "a")) {
+    word = "!" + word.slice(prefix.length + 1);
+  }
+  if (word.startsWith(prefix + "e")) {
+    word = "!" + word.slice(prefix.length + 1);
+  }
+  if (word.startsWith(prefix + "i")) {
+    word = "!" + word.slice(prefix.length + 1);
+  }
+  if (word.startsWith(prefix + "o")) {
+    word = "!" + word.slice(prefix.length + 1);
+  }
+  if (word.startsWith(prefix + "u")) {
+    word = "!" + word.slice(prefix.length + 1);
+  }
+  if (word.startsWith(prefix + "y")) {
+    word = "!" + word.slice(prefix.length + 1);
+  }
+  return word;
+}
 /** @type {Map<string,number>} */
 const rng_word_num_map = new Map();
 /**
@@ -257,23 +279,19 @@ const rng_word_num_map = new Map();
  */
 function parse_rng_word(word) {
   word = word.toLowerCase();
-  if (word.startsWith("a")) {
-    word = "!" + word.slice(1);
-  }
-  if (word.startsWith("ba")) {
+  word = strip_vowel("", word);
+  word = strip_vowel("b", word);
+  if (word.startsWith("ca")) {
     word = "!" + word.slice(2);
   }
-  if (word.startsWith("be")) {
+  if (word.startsWith("ce")) {
     word = "!" + word.slice(2);
   }
-  if (word.startsWith("bi")) {
-    word = "!" + word.slice(2);
+  if (word.startsWith("cha")) {
+    word = "!" + word.slice(3);
   }
-  if (word.startsWith("bo")) {
-    word = "!" + word.slice(2);
-  }
-  if (word.startsWith("bu")) {
-    word = "!" + word.slice(2);
+  if (word.startsWith("che")) {
+    word = "!" + word.slice(3);
   }
   dict.add(word);
   const word_chars = word.split("");
