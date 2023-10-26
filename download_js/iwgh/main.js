@@ -281,6 +281,8 @@ function parse_rng_word(word) {
   word = word.toLowerCase();
   word = strip_vowel("", word);
   word = strip_vowel("b", word);
+  word = strip_vowel("c", word);
+  word = strip_vowel("ch", word);
   if (word.startsWith("ca")) {
     word = "!" + word.slice(2);
   }
