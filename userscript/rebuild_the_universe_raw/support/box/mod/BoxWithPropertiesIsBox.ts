@@ -14,7 +14,7 @@ class TemplateDescription<T extends string,U extends string> {
 		return `TYPE::${this._template_description}`;
 	}
 }
-export class ObjectBox_WithPropertyList extends BoxTemplate<"object",{}> {
+export class ObjectBox_WithPropertyList extends BoxTemplate<"object",Record<never,never>> {
 	readonly type="object";
 	readonly requires=new MakeRequirements("property_is_box").result;
 	readonly types: {readonly list: TemplateDescription<"Array","string">;}={list: new TemplateDescription("Array","string")};
