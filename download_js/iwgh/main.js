@@ -51,6 +51,8 @@ function parse_sentence(str) {
 			case "national": break x;
 			case "popular": break x;
 			case "plant": break x;
+			case "kind": break x;
+			case "type": break x;
 			default: {
 				console.log(["w1",word1]);
 			} break;
@@ -58,7 +60,7 @@ function parse_sentence(str) {
 	}
 	if(str.startsWith("This is ")) {
 		let parsed=[];
-		let parsed_src=str.split(/[ ,]/);
+		let parsed_src=str.split(/(?:[ ,]|\.\.\.)/);
 		parsed_src.shift(); parsed_src.shift();
 		parsed.push({type: "this_is"});
 		switch(parsed_src[0]) {
