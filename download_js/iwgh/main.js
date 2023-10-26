@@ -125,7 +125,7 @@ function parse_sentence(str) {
 				if(parsed_src.length==0) break x;
 				let word4=next_word(parsed_src);
 				switch(word4) {
-					case "...":
+					case "...": break x;
 					case ",": {
 						let word5=next_word(parsed_src);
 						console.log(["w5",word5],parsed_src);
