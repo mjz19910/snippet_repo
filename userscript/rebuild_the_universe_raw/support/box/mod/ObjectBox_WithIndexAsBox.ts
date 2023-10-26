@@ -2,7 +2,7 @@ import {Box} from "./Box.ts";
 import {BoxTemplate} from "../template/BoxTemplate.ts";
 import {IndexAccess} from "../../IndexAccess.ts";
 
-export class ObjectIndexWithBox extends BoxTemplate<"object_box",IndexAccess<Box>> {
+export class ObjectBox_WithIndexAsBox extends BoxTemplate<"object_box",IndexAccess<Box>> {
 	readonly type="object_box";
 	readonly like_type="object_box";
 	readonly extension="index";
