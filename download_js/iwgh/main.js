@@ -344,6 +344,19 @@ function deno_default_open(filename) {
     create: true,
   });
 }
+function show_rng_map() {
+  const rng_map = [...rng_word_num_map.entries()].sort((a, b) => b[1] - a[1]);
+  const arr = [];
+  let cur_item = [];
+  for (let i = 0; i < rng_map.length; i++) {
+    if (i % 5 === 0) arr.push(cur_item = []);
+    cur_item.push(rng_map[i]);
+  }
+  for (const part of arr) {
+    console.log(part);
+  }
+}
+export { show_rng_map };
 async function run() {
   const arr = [];
   const description_file = await deno_default_open("./description_cache.json");
@@ -377,18 +390,6 @@ async function run() {
   const description_arr2 = description_arr.slice(0, 5);
   for (const description of description_arr2) {
     console.log("%o", description);
-  }
-  const rng_map = [...rng_word_num_map.entries()].sort((a, b) => b[1] - a[1]);
-  {
-    const arr = [];
-    let cur_item = [];
-    for (let i = 0; i < rng_map.length; i++) {
-      if (i % 5 === 0) arr.push(cur_item = []);
-      cur_item.push(rng_map[i]);
-    }
-    for (const part of arr) {
-      console.log(part);
-    }
   }
   console.log("description_arr.length", description_arr.length);
   console.log("dictionary.length", dictionary_arr.length);
