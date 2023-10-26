@@ -4,6 +4,9 @@ const word_list_1=[
 const word_list_2=[
 	"traditional",
 ];
+const word3_dict=[
+	"traditional",
+];
 /**
  * @template T
  * @param {T[]} arr
@@ -34,14 +37,11 @@ function parse_sentence(str) {
 				let word2=parsed_src.shift();
 				if(word2!=="of") throw new Error("word2 not of");
 				let word3=parsed_src.shift();
-				switch(word3) {
-					case "clothing": break x;
-					case "plant": break x;
-					case "book": break x;
-					case "profession": break x;
-					case "weapon": break x;
+				if(word3===void 0) throw new Error("word3 null");
+				if(!word3_dict.includes(word3)) {
+					console.log(["w3",word3]);
+					break x;
 				}
-				console.log(["w3",word3]);
 				break x;
 			}
 			case "traditional": break x;
