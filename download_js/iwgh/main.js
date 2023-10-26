@@ -332,7 +332,7 @@ async function write_entire_file(file, obj) {
   const buf = encoder.encode(data);
   const n_written = await file.write(buf);
   if (n_written !== buf.length) {
-		await file.truncate(n_written);
+    await file.truncate(n_written);
     throw new Error("partial write");
   }
   await file.truncate(buf.length);
@@ -381,6 +381,7 @@ async function run() {
   const rng_map = [...rng_word_num_map.entries()].sort((a, b) => b[1] - a[1]);
   console.log(rng_map);
   const dictionary_arr = [...dict.values()].sort();
+  console.log("description_set_arr.length", description_set_arr.length);
   await write_entire_file(description_file, description_set_arr);
   await write_entire_file(dictionary_file, dictionary_arr);
   description_file.close();
