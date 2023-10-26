@@ -1,4 +1,16 @@
-function parse_sentence() {
+
+/**
+ * @param {string} str
+ */
+function parse_sentence(str) {
+	// remove period
+	if(str.endsWith(".")) {
+		str=str.slice(0,-1);
+	}
+	if(str.endsWith("")) {
+
+	}
+	return str;
 }
 /**
  * @param {string} str
@@ -37,6 +49,7 @@ async function run() {
 					let [word,description]=v.split(" - ");
 					word=word.slice(3,-4);
 					dict.add(word);
+					description=parse_sentence(description);
 					description_set.add(description);
 				});
 			}
@@ -48,7 +61,9 @@ async function run() {
 		arr.length=0;
 	}
 	let description_arr=[...description_set.values()].sort();
-	console.log(description_arr);
+	for(let description of description_arr) {
+		console.log(description);
+	}
 }
 await run();
 
