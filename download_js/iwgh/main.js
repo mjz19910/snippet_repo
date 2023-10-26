@@ -78,7 +78,11 @@ function parse_sentence(str) {
 				let word2=parsed_src.shift();
 				if(word2!=="of") throw new Error("word2 not of");
 				let word3=parsed_src.shift();
-				console.log(["w3",word3]);
+				if(word3===void 0) throw new Error("word3 null");
+				if(!word3_dict.includes(word3)) {
+					console.log(["w3",word3]);
+					break x;
+				}
 			} break x;
 			default: {
 				console.log(["w1",word1]);
