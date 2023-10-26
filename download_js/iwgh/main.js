@@ -337,16 +337,23 @@ async function run() {
     write: true,
     create: true,
   });
-  const dictionary_file = await Deno.open("./random_dictionary.json", {
-    read: true,
-    write: true,
-    create: true,
-  });
   let description_str = await read_entire_file(description_file);
   if (description_str !== "") {
     const description_load_arr = JSON.parse(description_str);
     for (const description_item of description_load_arr) {
       description_set.add(description_item);
+    }
+  }
+  const dictionary_file = await Deno.open("./random_dictionary.json", {
+    read: true,
+    write: true,
+    create: true,
+  });
+  let dictionary_str = await read_entire_file(dictionary_file);
+  if (dictionary_str !== "") {
+    const load_arr = JSON.parse(dictionary_str);
+    for (const item of load_arr) {
+      dict.add(item);
     }
   }
   const before_wait = dict.size;
@@ -374,6 +381,14 @@ async function run() {
   console.log(n_written, description_data.length);
   await description_file.truncate(description_data.length);
   description_file.close();
+  await dictionary_file.seek(0, 0);
+  const dictionary_arr = [...dict.values()].sort();
+  dictionary_str = JSON.stringify(dictionary_arr, void 0, "\t");
+  const dictionary_data = encoder.encode(dictionary_arr);
+  const n_written2 = await dictionary_file.write(dictionary_data);
+  console.log(n_written2, dictionary_data.length);
+  await dictionary_file.truncate(dictionary_data.length);
+  dictionary_file.close();
 }
 await run();
 
