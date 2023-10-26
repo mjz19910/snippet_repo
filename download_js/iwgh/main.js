@@ -14,7 +14,7 @@ function parse_sentence(str) {
 	}
 	if(str.startsWith("This is ")) {
 		let parsed=[];
-		let parsed_src=str.split(" ");
+		let parsed_src=str.split(/[ ,]/);
 		parsed_src.shift(); parsed_src.shift();
 		x: switch(parsed_src[0]) {
 			case "a": {
