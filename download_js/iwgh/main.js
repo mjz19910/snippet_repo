@@ -18,9 +18,8 @@ function parse_sentence(str) {
 		parsed_src.shift(); parsed_src.shift();
 		x: switch(parsed_src[0]) {
 			case "a": {
-				parsed.push({
-					type: "this_is_a",
-				});
+				parsed.push({type: "this_is"});
+				parsed.push({type: "a"});
 				parsed_src.shift();
 				let word1=parsed_src.shift();
 				switch(word1) {
@@ -40,9 +39,8 @@ function parse_sentence(str) {
 				}
 			}
 			case "usually": {
-				parsed.push({
-					type: "this_is_usually",
-				});
+				parsed.push({type: "this_is"});
+				parsed.push({type: "usually"});
 				parsed_src.shift();
 				console.log([parsed[0].type,parsed_src[0]]);
 				throw 1;
