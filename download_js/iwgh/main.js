@@ -38,6 +38,7 @@ const word3_dict=[
 	"philosophy",
 	"club",
 	"treehouse",
+	"political",
 ];
 /**
  * @template T
