@@ -141,7 +141,6 @@ function parse_sentence(str) {
 			}
 			case "generally": {
 				parsed.push({type: "generally"});
-				parsed_src.shift();
 				let next=parsed_src.shift();
 				if(next==="a") {
 					parsed_src.unshift(next);
