@@ -55,7 +55,7 @@ function parse_sentence(str) {
 				let word3=parsed_src.shift();
 				if(word3===void 0) throw new Error("word3 null");
 				if(!word3_dict.includes(word3)) {
-					console.log(["w3",word3]);
+					console.log("@w3",["w3",word3]);
 					break x;
 				}
 				break x;
@@ -85,7 +85,7 @@ function parse_sentence(str) {
 				let word3=parsed_src.shift();
 				if(word3===void 0) throw new Error("word3 null");
 				if(!word3_dict.includes(word3)) {
-					console.log(["w3",word3]);
+					console.log("@w3",["w3",word3]);
 					break x;
 				}
 			} break x;
