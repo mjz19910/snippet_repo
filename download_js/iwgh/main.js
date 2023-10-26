@@ -104,6 +104,10 @@ function parse_sentence(str) {
 			return parse_next_word(parsed,parsed_src);
 		}
 		switch(cur_word) {
+			case "might":
+			case "lied":
+			case "cases":
+			case "16":
 			case "sound":
 			case "most":
 			case "different":
