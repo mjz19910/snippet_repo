@@ -290,7 +290,9 @@ function split_at(str, needle) {
   } while (idx !== -1);
   return arr;
 }
+/** @type {Set<string>} */
 const dict = new Set();
+/** @type {Set<string>} */
 const description_set = new Set();
 async function one_page() {
   const res = await fetch("https://louigiverona.com/iwgh/?page=dictionary");
