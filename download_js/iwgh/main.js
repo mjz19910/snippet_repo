@@ -17,9 +17,17 @@ function parse_sentence(str) {
 					type: "this_is_a",
 				});
 				parsed_src.shift();
-				console.log(parsed_src);
+				console.log(parsed_src[0]);
 				throw 1;
 			}
+			case "usually": {
+				parsed.push({
+					type: "this_is_usually",
+				});
+				parsed_src.shift();
+				console.log(parsed[0].type,parsed_src[0]);
+				throw 1;
+			} break;
 			default: {
 				console.log("parsed default:",parsed_src[0]);
 				throw 1;
