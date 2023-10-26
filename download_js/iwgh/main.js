@@ -456,7 +456,7 @@ async function run() {
   let before_wait = dict.size;
   const request_log_interval = 10;
   for (let j = 0; j < 2; j++) {
-    const request_count = 20;
+    const request_count = 4;
     for (let i = 0; i < request_count; i++) {
       arr.push(fetch_one_dictionary_page());
     }
