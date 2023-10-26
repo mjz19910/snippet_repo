@@ -344,7 +344,7 @@ function parse_rng_word(word) {
       word_arr.push(w2.slice(0, seq_len));
       w2 = w2.slice(seq_len);
     } while (w2 !== "");
-    if (word_arr.length > 8) {
+    if (word_arr.length > 7) {
       console.log(word_arr.length);
     }
   }
