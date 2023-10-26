@@ -344,9 +344,7 @@ function parse_rng_word(word) {
       word_arr.push("c:" + w2.slice(0, seq_len));
       w2 = w2.slice(seq_len);
     } while (w2 !== "");
-    if (word_arr.length > 6) {
-      console.log(word_arr.length, word_arr.join(","));
-    }
+    console.log(word_arr.length, word_arr.join(","));
   }
   if (word_starts_with_vowel(word)) {
     word = strip_vowel("", word);
