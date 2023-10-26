@@ -64,8 +64,11 @@ function parse_sentence(str) {
 			case "rare":
 			case "sort":
 			case "local":
-			case "national":
-			case "popular": break x;
+			case "national": break x;
+			case "popular": {
+				let word2=parsed_src.shift();
+				console.log(["w1",word1,"w2",word2]);
+			} break x;
 			case "plant": {
 				let word2=parsed_src.shift();
 				console.log(["w1",word1,"w2",word2]);
