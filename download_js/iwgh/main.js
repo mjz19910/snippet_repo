@@ -357,6 +357,7 @@ function show_rng_map() {
   }
 }
 export { show_rng_map };
+/** @returns {Promise<any[]>} */
 async function read_json_array_file(file) {
   const data = await read_entire_file(file);
   if (data === "") return [];
@@ -366,9 +367,9 @@ async function run() {
   const arr = [];
   const description_file = await deno_default_open("./description_cache.json");
   const description_load_arr = await read_json_array_file(description_file);
-	for (const description_item of description_load_arr) {
-		description_set.add(description_item);
-	}
+  for (const description_item of description_load_arr) {
+    description_set.add(description_item);
+  }
   const dictionary_file = await deno_default_open("./random_dictionary.json");
   const load_arr2 = await read_json_array_file(dictionary_file);
   for (const word of load_arr2) {
