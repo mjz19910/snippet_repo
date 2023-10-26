@@ -15,6 +15,9 @@ const word3_dict=[
 	"pastime",
 	"plant",
 	"landscape",
+	"melody",
+	"building",
+	"company",
 ];
 /**
  * @template T
