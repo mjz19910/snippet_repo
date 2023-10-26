@@ -127,44 +127,18 @@ function parse_sentence(str) {
 				switch(word4) {
 					case ",": {
 						let word5=next_word(parsed_src);
-						console.log("@1",["w5",word5]);
+						console.log(["w5",word5]);
 					} break x;
-					case "which": {
-						let word5=next_word(parsed_src);
-						console.log("@2",["w5",word5]);
-					} break x;
-					case "...": {
-						let word5=next_word(parsed_src);
-						console.log("@3",["w5",word5]);
-					} break x;
-					case "art": {
-						let word5=next_word(parsed_src);
-						console.log("@4",["w5",word5]);
-					} break x;
-					case "but": {
-						let word5=next_word(parsed_src);
-						console.log("@5",["w5",word5]);
-					} break x;
-					case "in": {
-						let word5=next_word(parsed_src);
-						console.log("@6",["w5",word5]);
-					} break x;
-					case "pipe": {
-						let word5=next_word(parsed_src);
-						console.log("@7",["w5",word5]);
-					} break x;
-					case "though": {
-						let word5=next_word(parsed_src);
-						console.log("@8",["w5",word5]);
-					} break x;
-					case "instrument": {
-						let word5=next_word(parsed_src);
-						console.log("@9",["w5",word5]);
-					} break x;
-					case "when": {
-						let word5=next_word(parsed_src);
-						console.log("@10",["w5",word5]);
-					} break x;
+					case "which":
+					case "...":
+					case "art":
+					case "but":
+					case "in":
+					case "pipe":
+					case "though":
+					case "instrument":
+					case "when":
+						break x;
 				}
 				console.log(["w4",word4]);
 			} break x;
