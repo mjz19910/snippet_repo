@@ -301,7 +301,7 @@ async function run() {
 	let description_set=new Set;
 	let arr=[];
 	let before_wait=dict.size;
-	for(let j=0;j<5;j++) {
+	for(let j=0;j<10;j++) {
 		const request_count=20;
 		for(let i=0;i<request_count;i++) {
 			async function one_page() {
