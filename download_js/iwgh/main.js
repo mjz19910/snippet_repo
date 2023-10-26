@@ -70,7 +70,7 @@ function parse_sentence(str) {
 				parsed_src.shift();
 				let next=parsed_src.shift();
 				if(next==="a") {
-					parsed_src.unshift("a");
+					parsed_src.unshift(next);
 					parse_a(parsed,parsed_src);
 					break;
 				}
@@ -82,6 +82,7 @@ function parse_sentence(str) {
 				parsed_src.shift();
 				let next=parsed_src.shift();
 				if(next==="a") {
+					parsed_src.unshift(next);
 					parse_a(parsed,parsed_src);
 					break;
 				}
