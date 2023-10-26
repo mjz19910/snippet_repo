@@ -145,21 +145,12 @@ function parse_sentence(str) {
 			case "a": {
 				parse_a(parsed,parsed_src);
 			} break;
-			case "usually": {
-				parsed.push({type: "usually"});
-				let next=parsed_src.shift();
-				if(next==="a") {
-					parse_a(parsed,parsed_src);
-					break;
-				}
-				console.log([arr_end(parsed).type,parsed_src[0]]);
-				throw 1;
-			}
+			case "usually":
 			case "generally": {
-				parsed.push({type: "generally"});
-				let next=parsed_src.shift();
-				if(next==="a") {
-					parsed_src.unshift(next);
+				parsed.push({type: word3});
+				let word4=parsed_src.shift();
+				if(word4==="a") {
+					parsed_src.unshift(word4);
 					parse_a(parsed,parsed_src);
 					break;
 				}
