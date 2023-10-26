@@ -334,6 +334,10 @@ async function run() {
   } while (true);
   let description_str = new TextDecoder().decode(description_data);
   console.log(["description_cache.json", description_str]);
+  const description_load_arr = JSON.parse(description_str);
+  for (const description_item of description_load_arr) {
+    description_set.add(description_item);
+  }
   const before_wait = dict.size;
   for (let j = 0; j < 2; j++) {
     const request_count = 20;
