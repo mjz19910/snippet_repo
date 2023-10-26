@@ -382,7 +382,7 @@ async function run() {
   for (const word of load_arr2) {
     parse_rng_word(word);
   }
-  const before_wait = dict.size;
+  let before_wait = dict.size;
   for (let j = 0; j < (10 * 20); j++) {
     const request_count = 20;
     for (let i = 0; i < request_count; i++) {
@@ -390,8 +390,11 @@ async function run() {
     }
     await Promise.all(arr);
     arr.length = 0;
+    if (j % 5 === 0) {
+      console.log("dict word num", dict.size - before_wait);
+      before_wait = dict.size;
+    }
   }
-  console.log("dict word num", dict.size - before_wait);
   const description_arr = [...description_set.values()].sort();
   const dictionary_arr = [...dict.values()].sort();
   const description_arr2 = description_arr.slice(0, 5);
