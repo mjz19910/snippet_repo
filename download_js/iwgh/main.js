@@ -331,7 +331,10 @@ async function write_entire_file(file, obj) {
   const encoder = new TextEncoder();
   const buf = encoder.encode(data);
   const n_written = await file.write(buf);
-  console.log(n_written, buf.length);
+  if (n_written !== buf.length) {
+		await file.truncate(n_written);
+    throw new Error("partial write");
+  }
   await file.truncate(buf.length);
 }
 async function run() {
