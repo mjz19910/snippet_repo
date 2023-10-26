@@ -2577,7 +2577,7 @@ class AutoBuyImplR {
 	}
 	save_timeout_arr() {
 		let forced_action, action_count;
-		let action_data = localStorage["auto_buy_forced_action"];
+		const action_data = localStorage["auto_buy_forced_action"];
 		if (action_data) [forced_action, action_count] = action_data.split(",");
 		localStorage["auto_buy_timeout_str"] = this.get_timeout_arr_data(
 			forced_action,
@@ -2610,69 +2610,66 @@ class AutoBuyImplR {
 		}`;
 		/** @arg {any} obj @arg {HTMLElement} parent @arg {string} tag_name @arg {string} id @arg {string|undefined} [content] */
 		function create_element(obj, parent, tag_name, id, content) {
-			let ele = document.createElement(tag_name);
+			const ele = document.createElement(tag_name);
 			ele.id = id;
 			obj.dom_map.set(id, ele);
 			if (content !== void 0) ele.innerHTML = content;
 			parent.append(ele);
 			return ele;
 		}
-		let state_log = create_element(this, document.body, "div", "state_log");
+		const state_log = create_element(this, document.body, "div", "state_log");
 		create_element(this, state_log, "div", "history", "?3");
 		create_element(this, state_log, "div", "timeout_element", "0");
 		create_element(this, state_log, "div", "hours_played", "0.000 hours");
 		create_element(this, state_log, "div", "ratio", 0..toFixed(2) + "%");
 		create_element(this, state_log, "div", "ratio_change", 0..toExponential(3));
-		let sheet = new CSSStyleSheet();
+		const sheet = new CSSStyleSheet();
 		sheet.replace(css_display_style).then((e) => {
 			this.adopt_styles(e);
 		});
 	}
 	/** @arg {CSSStyleSheet[]} styles */
 	adopt_styles(...styles) {
-		let dom_styles = document.adoptedStyleSheets;
+		const dom_styles = document.adoptedStyleSheets;
 		document.adoptedStyleSheets = [...dom_styles, ...styles];
 	}
 	init_dom() {
 		const font_size_px = 22;
-		let t = this;
 		this.state_history_arr_max_len = Math.floor(
 			document.body.getClientRects()[0].width / (font_size_px * 0.55) / 2.1,
 		);
-		let history = this.dom_map.get("history");
+		const history = this.dom_map.get("history");
 		if (history && typeof history == "object") {
 			history.addEventListener(
 				"click",
 				new EventHandlerDispatch(this, "history_element_click_handler"),
 			);
 		}
-		let ratio = this.dom_map.get("ratio");
+		const ratio = this.dom_map.get("ratio");
 		if (ratio && typeof ratio == "object") {
 			ratio.addEventListener("click", function () {
-				t.state.reset();
+				this.state.reset();
 			});
 		}
-		let state_log = this.dom_map.get("state_log");
+		const state_log = this.dom_map.get("state_log");
 		if (state_log instanceof HTMLElement) {
 			state_log.style.fontSize = font_size_px + "px";
 		}
-		window.addEventListener("unload", function () {
-			t.save_state_history_arr();
-			t.save_timeout_arr();
+		self.addEventListener("unload", function () {
+			this.save_state_history_arr();
+			this.save_timeout_arr();
 		});
 	}
 	global_init() {
-		/** @type {any} */
-		let this_any = this;
-		if (window.g_auto_buy && window.g_auto_buy !== this_any) {
+		if (window.g_auto_buy && window.g_auto_buy !== this) {
 			window.g_auto_buy.destroy();
 		}
-		window.g_auto_buy = this_any;
+		window.g_auto_buy = this;
 	}
 	destroy() {
 		this.root_node.destroy();
 		for (let i = 0; i < this.cint_arr.length; i += 2) {
-			let cint_item = this.cint_arr[i];
+			const cint_item = this.cint_arr[i];
 			switch (cint_item[0]) {
 				case 1:
 					clearTimeout(cint_item[1]);
@@ -2688,9 +2685,9 @@ class AutoBuyImplR {
 	}
 	update_timeout_element() {
 		if (this.timeout_ms) {
-			let element = this.dom_map.get("timeout_element");
+			const element = this.dom_map.get("timeout_element");
 			if (element instanceof HTMLElement) {
-				let acc = 2; // 0;
+				const acc = 2; // 0;
 				element.innerText = this.get_millis_as_pretty_str(this.timeout_ms, acc);
 			}
 		}
@@ -2706,11 +2703,11 @@ class AutoBuyImplR {
 	/** @arg {number} timeout_milli @arg {number} milli_acc */
 	get_millis_as_pretty_str(timeout_milli, milli_acc) {
 		const number_stringify_debug = false;
-		let time_arr = [];
-		let float_milliseconds = timeout_milli % 1000;
+		const time_arr = [];
+		const float_milliseconds = timeout_milli % 1000;
 		let milli_len = 4 + milli_acc;
 		if (milli_acc === 0) milli_len = 3 + milli_acc;
-		if (number_stringify_debug) debugger;
+		if (number_stringify_debug) trigger_debug_breakpoint();
 		time_arr[3] = this.do_zero_pad(
 			float_milliseconds.toFixed(milli_acc),
 			"0",
@@ -2718,15 +2715,15 @@ class AutoBuyImplR {
 		);
 		timeout_milli -= float_milliseconds;
 		timeout_milli /= 1000;
-		let int_seconds = timeout_milli % 60;
+		const int_seconds = timeout_milli % 60;
 		time_arr[2] = this.do_zero_pad(int_seconds, "0", 2);
 		timeout_milli -= int_seconds;
 		timeout_milli /= 60;
-		let int_minutes = timeout_milli % 60;
+		const int_minutes = timeout_milli % 60;
 		time_arr[1] = this.do_zero_pad(int_minutes, "0", 2);
 		timeout_milli -= int_minutes;
 		timeout_milli /= 60;
-		let int_hours = timeout_milli;
+		const int_hours = timeout_milli;
 		time_arr[0] = this.do_zero_pad(int_hours, "0", 2);
 		int_hours === 0 &&
 			(time_arr.shift(),
@@ -2747,24 +2744,27 @@ class AutoBuyImplR {
 	/** @arg {number} hours_num */
 	get_hours_num_as_pretty_str(hours_num) {
 		let int_hours = ~~hours_num;
-		let time_arr = [];
+		const time_arr = [];
 		time_arr[0] = this.do_zero_pad(int_hours, "0", 2);
-		let float_minutes = (hours_num - int_hours) * 60;
+		const float_minutes = (hours_num - int_hours) * 60;
 		let int_minutes = ~~float_minutes;
 		time_arr[1] = this.do_zero_pad(int_minutes, "0", 2);
-		let float_seconds = (float_minutes - int_minutes) * 60;
+		const float_seconds = (float_minutes - int_minutes) * 60;
 		let int_seconds = ~~float_seconds;
 		time_arr[2] = this.do_zero_pad(int_seconds, "0", 2);
-		let float_milliseconds = (float_seconds - int_seconds) * 1000;
-		let float_milli_from_prev = float_milliseconds - 1000;
+		const float_milliseconds = (float_seconds - int_seconds) * 1000;
+		const float_milli_from_prev = float_milliseconds - 1000;
 		if (float_milliseconds > 100 && float_milliseconds < 900) {
 			this.has_real_time = true;
 		}
 		x:
-		if (this.has_real_time) {}
-		else if (float_milliseconds < 3e-9 && float_milliseconds > -3e-9) {}
-		else if (float_milli_from_prev < 3e-9 && float_milli_from_prev > -3e-9) {}
-		else {
+		if (this.has_real_time) {
+			//
+		} else if (float_milliseconds < 3e-9 && float_milliseconds > -3e-9) {
+			//
+		} else if (float_milli_from_prev < 3e-9 && float_milli_from_prev > -3e-9) {
+			//
+		} else {
 			break x;
 			// console.log(float_milliseconds, float_milliseconds - 1000);
 		}
@@ -2803,37 +2803,37 @@ class AutoBuyImplR {
 		return time_arr.join(":");
 	}
 	update_hours_played() {
-		let float_hours = ((window.timeplayed / 30) / 60);
-		let time_played_str = this.get_hours_num_as_pretty_str(float_hours);
-		let hours_played_e = this.dom_map.get("hours_played");
+		const float_hours = ((window.timeplayed / 30) / 60);
+		const time_played_str = this.get_hours_num_as_pretty_str(float_hours);
+		const hours_played_e = this.dom_map.get("hours_played");
 		if (hours_played_e instanceof HTMLElement) {
 			hours_played_e.innerText = time_played_str;
 		}
 		this.dom_map.set("time_played_str", time_played_str);
 	}
 	update_ratio_element() {
-		let ratio = this.dom_map.get("ratio");
+		const ratio = this.dom_map.get("ratio");
 		if (!ratio) return;
 		if (!(ratio instanceof HTMLElement)) return;
 		ratio.innerText = (this.state.ratio * 100).toFixed(2) + "%";
 	}
 	update_ratio_change_element() {
-		let last_ratio = this.state.last_ratio * 100;
-		let cur_ratio = this.state.ratio * 100;
-		let ratio_diff = cur_ratio - last_ratio;
+		const last_ratio = this.state.last_ratio * 100;
+		const cur_ratio = this.state.ratio * 100;
+		const ratio_diff = cur_ratio - last_ratio;
 		let char_value = "+";
 		if (ratio_diff < 0) char_value = "";
-		let ratio_change = this.dom_map.get("ratio_change");
+		const ratio_change = this.dom_map.get("ratio_change");
 		if (ratio_change && ratio_change instanceof HTMLElement) {
 			ratio_change.innerText = char_value + ratio_diff.toExponential(3);
 		}
 	}
 	update_history_element() {
-		let history = this.dom_map.get("history");
+		const history = this.dom_map.get("history");
 		if (history && history instanceof HTMLElement) {
-			let sample_len = this.state_history_arr_max_len;
+			const sample_len = this.state_history_arr_max_len;
 			if (!sample_len) return;
-			let end_sample = array_sample_end(this.state_history_arr, sample_len)
+			const end_sample = array_sample_end(this.state_history_arr, sample_len)
 				.join(" ");
 			history.innerText = end_sample;
 		}
@@ -2863,16 +2863,16 @@ class AutoBuyImplR {
 		this.next_timeout(this.init_impl, 200, "init", true);
 	}
 	set_secondinterval() {
-		let disabled = false;
+		const disabled = false;
 		if (disabled) return;
 		//spell:words secondinterval
 		if (window.secondinterval !== void 0) clearInterval(window.secondinterval);
 		let time_base = performance.now();
-		let interval_id = setInterval(function () {
-			let real_time = performance.now();
-			let time_diff = real_time - time_base;
+		const interval_id = setInterval(function () {
+			const real_time = performance.now();
+			const time_diff = real_time - time_base;
 			time_base = real_time;
-			let real_rate = time_diff / 2000;
+			const real_rate = time_diff / 2000;
 			// we lost some time here, the diff was too large (got a 10 hours playtime from putting my pc to sleep)
 			if (time_diff > 2000) {
 				// assume a max of 2 seconds passed
@@ -2890,23 +2890,23 @@ class AutoBuyImplR {
 	}
 	set_timeplayed_update_interval() {
 		this.root_node.append_raw_interval(setInterval(function () {
-			let doc = window.doc;
-			let rounding = window.rounding;
-			let totalAtome = window.totalAtome;
-			let timeplayed = window.timeplayed;
-			let calcPres = window.calcPres;
+			const doc = window.doc;
+			const rounding = window.rounding;
+			const totalAtome = window.totalAtome;
+			const timeplayed = window.timeplayed;
+			const calcPres = window.calcPres;
 			doc.title = rounding(totalAtome, false, 1).toString() + " atoms";
 			//spell:words atomsaccu presnbr
-			let atomsaccu_e = doc.getElementById("atomsaccu");
+			const atomsaccu_e = doc.getElementById("atomsaccu");
 			if (atomsaccu_e) {
 				atomsaccu_e.innerHTML = rounding(window.atomsaccu, false, 0);
 			}
-			let timeplayed_e = doc.getElementById("timeplayed");
+			const timeplayed_e = doc.getElementById("timeplayed");
 			if (timeplayed_e) {
 				timeplayed_e.innerHTML = (Math.round(timeplayed / 30) / 60).toFixed(2) +
 					" hours";
 			}
-			let presnbr_e = doc.getElementById("presnbr");
+			const presnbr_e = doc.getElementById("presnbr");
 			if (presnbr_e) {
 				presnbr_e.innerHTML = "<br>" + (calcPres() * 100).toFixed(0) +
 					" % APS boost";
@@ -2920,8 +2920,8 @@ class AutoBuyImplR {
 	// spell:words constel2
 	edit_fns() {
 		// lightreset();
-		let original_code = '&& a != encrypt("Py")';
-		let temp = window.lightreset.toString().replace(
+		const original_code = '&& a != encrypt("Py")';
+		const temp = window.lightreset.toString().replace(
 			original_code,
 			original_code + " " +
 				'&& a != encrypt("noti") ' +
@@ -2929,7 +2929,7 @@ class AutoBuyImplR {
 				'&& a != "constel2"',
 		);
 		/** @type {any} */
-		let temp_function = new Function(
+		const temp_function = new Function(
 			temp.substring(
 				temp.indexOf("{") + 1,
 				temp.lastIndexOf("}"),
@@ -2964,7 +2964,7 @@ class AutoBuyImplR {
 			return;
 		}
 		if (!value) throw new Error("Invalid state append requested");
-		let last = this.state_history_arr.at(-1);
+		const last = this.state_history_arr.at(-1);
 		this.state_history_arr.push(value);
 		this.state_history_arr = this.stats_calculator.compress_array(
 			this.state_history_arr,
@@ -2990,12 +2990,12 @@ class AutoBuyImplR {
 		this.start_main_async(true);
 	}
 	timeout_avg() {
-		let first = this.timeout_arr[0];
+		const first = this.timeout_arr[0];
 		let min = first;
 		let max = first;
 		let total = 0;
-		for (var i = 0; i < this.timeout_arr.length; i++) {
-			let cur = this.timeout_arr[i];
+		for (let i = 0; i < this.timeout_arr.length; i++) {
+			const cur = this.timeout_arr[i];
 			total += cur;
 			if (cur > max) max = cur;
 			if (cur < min) min = cur;
@@ -3011,17 +3011,17 @@ class AutoBuyImplR {
 		while (this.timeout_arr.length > 60) this.timeout_arr.shift();
 		let max = 0;
 		let total = 0;
-		for (var i = 0; i < this.timeout_arr.length; i++) {
+		for (let i = 0; i < this.timeout_arr.length; i++) {
 			total += this.timeout_arr[i];
 			max = Math.max(this.timeout_arr[i], max);
 		}
 		const val = total / this.timeout_arr.length;
-		let num = val; // max / val;
+		const num = val; // max / val;
 		this.last_value ??= num;
-		let diff = this.last_value - num;
+		const diff = this.last_value - num;
 		this.last_value = num;
 		this.large_diff.push(num);
-		let sorted_diff_arr = this.large_diff.map((e) => e - num).sort((a, b) =>
+		const sorted_diff_arr = this.large_diff.map((e) => e - num).sort((a, b) =>
 			a - b
 		);
 		let diff_want_mul = 1;
@@ -3031,14 +3031,14 @@ class AutoBuyImplR {
 			diff_want_mul *= 10;
 		}
 		diff_want_mul *= 1000;
-		let zero_idx = sorted_diff_arr.indexOf(0);
+		const zero_idx = sorted_diff_arr.indexOf(0);
 		let zs = zero_idx - 8;
 		let z_loss = 0;
 		if (zs < 0) {
 			z_loss = zs * -1;
 			zs = 0;
 		}
-		let ez_log = sorted_diff_arr.map((e) => {
+		const ez_log = sorted_diff_arr.map((e) => {
 			if (e === 0) return e;
 			return this.round(e * diff_want_mul);
 		});
@@ -3056,11 +3056,12 @@ class AutoBuyImplR {
 			ez_log.slice(-8),
 			ez_log.slice(zs, zero_idx + z_loss + 8),
 		);
+		// deno-lint-ignore no-debugger
 		if (val <= 1) debugger;
 		return this.round(val);
 	}
 	is_epoch_over() {
-		let epoch_diff = Date.now() - this.epoch_start_time;
+		const epoch_diff = Date.now() - this.epoch_start_time;
 		return epoch_diff > 60 * 5 * 1000;
 	}
 	start_main_async(no_wait = false) {
@@ -3095,12 +3096,12 @@ class AutoBuyImplR {
 		this.pre_total = window.totalAtome;
 		await do_auto_unit_promote();
 		const money_diff = this.pre_total - window.totalAtome;
-		let loss_rate = money_diff / this.pre_total;
+		const loss_rate = money_diff / this.pre_total;
 		if (this.pre_total != window.totalAtome) this.unit_upgradable_count++;
 		if (this.pre_total != window.totalAtome && this.debug) {
-			let log_args = [];
-			let percent_change = (loss_rate * 100).toFixed(5);
-			let money_str = window.totalAtome.toExponential(3);
+			const log_args = [];
+			const percent_change = (loss_rate * 100).toFixed(5);
+			const money_str = window.totalAtome.toExponential(3);
 			log_args.push(this.iter_count);
 			log_args.push(percent_change);
 			log_args.push(money_str);
@@ -3112,15 +3113,15 @@ class AutoBuyImplR {
 	/** @arg {number} pow_base @arg {number} pow_num @arg {number} div */
 	get_timeout_change(pow_base, pow_num, div) {
 		if (!this.timeout_ms) throw new Error("Invalid");
-		let pow_res = Math.pow(pow_base, pow_num);
-		let res = this.timeout_ms * pow_res;
+		const pow_res = Math.pow(pow_base, pow_num);
+		const res = this.timeout_ms * pow_res;
 		return res / div;
 	}
 	/** @arg {number} change */
 	update_timeout_inc(change) {
 		if (window.__testing__) return;
 		if (!this.timeout_ms) throw new Error("Invalid");
-		let value = this.round(this.timeout_ms + change);
+		const value = this.round(this.timeout_ms + change);
 		log_if_impl_r(
 			LOG_LEVEL_INFO_IMPL,
 			"update_timeout_inc_tag inc",
@@ -3150,7 +3151,7 @@ class AutoBuyImplR {
 	}
 	/** @arg {number[]} pow_terms @arg {number} div */
 	do_timeout_dec(pow_terms, div) {
-		let change = this.get_timeout_change(
+		const change = this.get_timeout_change(
 			pow_terms[0],
 			Math.log(window.totalAtome),
 			div,
@@ -3164,8 +3165,8 @@ class AutoBuyImplR {
 	}
 	/** @arg {number[]} pow_terms @arg {number} div */
 	do_timeout_inc(pow_terms, div) {
-		let iter_term = Math.pow(pow_terms[1], this.iter_count);
-		let change = this.get_timeout_change(
+		const iter_term = Math.pow(pow_terms[1], this.iter_count);
+		const change = this.get_timeout_change(
 			pow_terms[0],
 			Math.log(window.totalAtome),
 			div,
@@ -3191,12 +3192,12 @@ class AutoBuyImplR {
 	/** @arg {number|undefined} timeout @arg {string} char */
 	[labeled_sym("next_timeout_async")](timeout, char) {
 		console.log("next_timeout_async", char, timeout);
-		let err = new Error();
+		const err = new Error();
 		this.next_timeout_async_err_log("next_timeout_async stk", err);
 	}
 	/** @arg {()=>void} trg_fn @arg {number} timeout @arg {string} char */
 	next_timeout(trg_fn, timeout, char, silent = false) {
-		let node = new TimeoutNode(timeout);
+		const node = new TimeoutNode(timeout);
 		this.root_node.append_child(node);
 		node.start(new TimeoutTarget(this, trg_fn));
 		if (!silent) {
@@ -3278,7 +3279,7 @@ class AutoBuyImplR {
 	}
 	game_reset_finish() {
 		this.update_hours_played();
-		let str = this.dom_map.get("time_played_str");
+		const str = this.dom_map.get("time_played_str");
 		if (typeof str == "string") this.dispatch_on_game_reset_finish(str);
 		else this.dispatch_on_game_reset_finish("0.000");
 	}
@@ -3290,10 +3291,10 @@ class AutoBuyImplR {
 	/** @arg {string} time_played */
 	on_game_reset_finish(time_played) {
 		console.info("fire lightreset at %s", time_played);
-		let prestige_acc = 10000;
-		let real_val = calcPres() * 100;
-		let [_real, num, exponent] = this.state.calc_near_val(real_val);
-		let near_val = (~~(num * prestige_acc)) / prestige_acc;
+		const prestige_acc = 10000;
+		const real_val = calcPres() * 100;
+		const [_real, num, exponent] = this.state.calc_near_val(real_val);
+		const near_val = (~~(num * prestige_acc)) / prestige_acc;
 		if (exponent <= -2 || exponent >= 2) {
 			console.info("p_calc_1:expected prestige (%o,%o)%%", near_val, exponent);
 		} else {console.info(
@@ -3314,9 +3315,9 @@ function wait(delay) {
 }
 /** @arg {number} id */
 async function tonext_async(id) {
-	var next = Find_ToNext(id);
+	const next = Find_ToNext(id);
 	if (arUnit[id][16] || arUnit[id][8] == "quantum foam") {
-		for (var y = 0; y < next; y++) {
+		for (let y = 0; y < next; y++) {
 			await wait(40);
 			mainCalc(id);
 		}
@@ -3324,38 +3325,38 @@ async function tonext_async(id) {
 }
 tonext_async;
 async function do_auto_unit_promote() {
-	let do_unit_see = false;
-	let arUnit = window.arUnit;
-	let Get_Unit_Type = window.Get_Unit_Type;
-	let getUnitPromoCost = window.getUnitPromoCost;
-	let Find_ToNext = window.Find_ToNext;
-	let totalAtome = window.totalAtome;
-	let _targets = window._targets;
-	let _targets_achi = window._targets_achi;
-	let totalAchi = window.totalAchi;
-	let mainCalc = window.mainCalc;
-	let tonext = window.tonext;
-	var out = [], maxed = [];
-	for (var k = 0; k < arUnit.length; k++) {
-		var afford = false;
+	const do_unit_see = false;
+	const arUnit = window.arUnit;
+	const Get_Unit_Type = window.Get_Unit_Type;
+	const getUnitPromoCost = window.getUnitPromoCost;
+	const Find_ToNext = window.Find_ToNext;
+	const totalAtome = window.totalAtome;
+	const _targets = window._targets;
+	const _targets_achi = window._targets_achi;
+	const totalAchi = window.totalAchi;
+	const mainCalc = window.mainCalc;
+	const tonext = window.tonext;
+	const out = [], maxed = [];
+	for (let k = 0; k < arUnit.length; k++) {
+		let afford = false;
 		if (arUnit[k][16] == true || k == 0) {
-			var type = Get_Unit_Type(k);
-			var tmp = getUnitPromoCost(k);
-			var cost = tmp;
-			var next = Find_ToNext(k);
+			const type = Get_Unit_Type(k);
+			let tmp = getUnitPromoCost(k);
+			let cost = tmp;
+			const next = Find_ToNext(k);
 			if (next < 0) maxed[k] = true;
-			for (var i = 1; i <= 100; i++) {
+			for (let i = 1; i <= 100; i++) {
 				if (totalAtome >= cost) {
 					tmp = tmp + (tmp * arUnit[k][3]) / 100;
-					var tar = (arUnit[k][4] * 1) + i;
-					var a = _targets.indexOf(tar);
-					var reduction = 1;
+					const tar = (arUnit[k][4] * 1) + i;
+					const a = _targets.indexOf(tar);
+					let reduction = 1;
 					ib:
 					if (a > -1 && tar <= 1000) {
-						for (var k2 in type[2]) {
+						for (const k2 in type[2]) {
 							if (type[2][k2] != k && arUnit[type[2][k2]][4] < tar) break ib;
 						}
-						var c = _targets_achi.indexOf(totalAchi() + 1);
+						const c = _targets_achi.indexOf(totalAchi() + 1);
 						if (c > -1) reduction *= 1 - ((c + 1) * 0.01);
 						reduction *= 1 - ((a + 1) * 0.01);
 					}
@@ -3368,11 +3369,11 @@ async function do_auto_unit_promote() {
 			else out[k] = false;
 		}
 	}
-	let res = out.lastIndexOf(true);
+	const res = out.lastIndexOf(true);
 	if (res < 0) return;
 	if (do_unit_see) window.seeUnit(res);
 	if (maxed[res]) {
-		for (var y = 0; y < 100; y++) {
+		for (let y = 0; y < 100; y++) {
 			await wait(0);
 			mainCalc(res);
 		}
@@ -3385,7 +3386,7 @@ function array_sample_end(arr, rem_target_len) {
 	let rem_len = char_len_of(arr);
 	while (rem_len > rem_target_len) {
 		if (!arr.length) break;
-		let val = arr.shift();
+		const val = arr.shift();
 		if (val === void 0) continue;
 		rem_len -= val.length + 1;
 	}
@@ -3398,11 +3399,11 @@ function char_len_of(arr) {
 function lightreset_inject() {
 	window.g_auto_buy.state_history_clear_for_reset();
 	window.g_auto_buy.skip_save = true;
-	window.addEventListener("unload", function () {
+	self.addEventListener("unload", function () {
 		window.g_auto_buy.skip_save = false;
 		localStorage["long_wait"] = 12000;
 	});
-	let original = window.g_auto_buy.original_map.get("lightreset");
+	const original = window.g_auto_buy.original_map.get("lightreset");
 	if (!original) {
 		alert("unable to light reset game");
 		throw new Error("Missing original lightreset");
@@ -3411,42 +3412,44 @@ function lightreset_inject() {
 }
 /** @arg {number} that */
 function specialclick_inject(that) {
-	let allspec = window.allspec;
+	const allspec = window.allspec;
 	let totalAtome = window.totalAtome;
 	let atomsinvest = window.atomsinvest;
-	let doc = window.doc;
-	let gritter = window.gritter;
-	let specialsbought = window.specialsbought, noti = window.noti;
-	let rounding = window.rounding,
+	const doc = window.doc;
+	const gritter = window.gritter;
+	let specialsbought = window.specialsbought;
+	const noti = window.noti;
+	const rounding = window.rounding,
 		calcDiff = window.calcDiff,
 		arUnit = window.arUnit,
 		atomepersecond = window.atomepersecond;
-	let arrayNames = window.arrayNames,
+	const arrayNames = window.arrayNames,
 		plurials = window.plurials,
 		toTitleCase = window.toTitleCase;
-	let updateprogress = window.updateprogress,
+	const updateprogress = window.updateprogress,
 		seeUnit = window.seeUnit,
 		checkspec = window.checkspec,
 		achiSpec = window.achiSpec;
 	if (allspec[that].done == undefined) allspec[that].done = false;
 	if (allspec[that].cost <= totalAtome && allspec[that].done == false) {
-		let specialsbought_e = doc.getElementById("specialsbought");
+		const specialsbought_e = doc.getElementById("specialsbought");
 		if (specialsbought_e) {
 			specialsbought_e.innerText = rounding(++specialsbought, false, 0);
 		}
 		if (that == 74) {
+			//
 		}
 		atomsinvest += allspec[that].cost;
-		let atomsinvest_e = doc.getElementById("atomsinvest");
+		const atomsinvest_e = doc.getElementById("atomsinvest");
 		if (atomsinvest_e) {
 			atomsinvest_e.innerText = rounding(atomsinvest, false, 0);
 		}
 		allspec[that].done = true;
 		totalAtome -= allspec[that].cost;
-		var diff1 = calcDiff(that);
-		for (var a in arUnit[that][17]) arUnit[that][17][a] *= 100;
+		const diff1 = calcDiff(that);
+		for (const a in arUnit[that][17]) arUnit[that][17][a] *= 100;
 		arUnit[that][5] *= 100;
-		var spec_aps = 0;
+		const spec_aps = 0;
 		if (arUnit[that][4] > 0) {
 			spec_aps = calcDiff(that) - diff1;
 			atomepersecond += spec_aps;
@@ -3491,22 +3494,22 @@ function got_jquery(value) {
 /** @template U @template {U} T @arg {U} e @returns {T} */
 function cast_as(e) {
 	/** @type {any} */
-	let x = e;
+	const x = e;
 	return x;
 }
 function use_jquery() {
 	/** @type {typeof window&{$:any}} */
-	let win_jquery = cast_as(window);
-	let jq = win_jquery.$;
+	const win_jquery = cast_as(window);
+	const jq = win_jquery.$;
 	if (!jq) return;
 	if (typeof jq != "function") return;
-	let res = jq("head");
-	let r_proto = Object.getPrototypeOf(res);
+	const res = jq("head");
+	const r_proto = Object.getPrototypeOf(res);
 	r_proto.lazyload = function (/** @type {any} */ ..._a) {};
 	return jq;
 }
 function proxy_jquery() {
-	let val = use_jquery();
+	const val = use_jquery();
 	set_jq_proxy(val);
 }
 /** @arg {{}|undefined} value */
@@ -3525,7 +3528,7 @@ function set_jq_proxy(value) {
 		configurable: true,
 	});
 }
-let seen_elements = new WeakSet();
+const seen_elements = new WeakSet();
 /** @arg {HTMLScriptElement} node */
 function remove_html_nodes(node) {
 	if (seen_elements.has(node)) return;
@@ -3590,7 +3593,7 @@ function dom_add_elm_filter(elm) {
 }
 
 function enable_jquery_proxy_if_needed() {
-	let enable_proxy = true;
+	const enable_proxy = true;
 	if (enable_proxy) proxy_jquery();
 }
 
@@ -3608,14 +3611,17 @@ function page_url_no_protocol() {
 function popstate_event_handler(e) {
 	console.log("popstate", e.state, location.href);
 	if (e.state === null) {
-		let non_proto_url = page_url_no_protocol();
+		const non_proto_url = page_url_no_protocol();
 		if (non_proto_url == "//rebuildtheuniverse.com/mjz_version") history.go(-1);
 		else if (non_proto_url == "//rebuildtheuniverse.com/?type=mjz_version") {
 			history.go(-1);
 		}
 	}
-	if (e.state) {}
-	else {}
+	if (e.state) {
+		//
+	} else {
+		//
+	}
 }
 
 function reset_global_event_handlers() {
@@ -3637,8 +3643,8 @@ class DetachedMutationObserver extends BaseMutationObserver {
 	/** @arg {Node} target */
 	constructor(target) {
 		super();
-		let mutationObserver = new MutationObserver(this.callback);
-		let options = {
+		const mutationObserver = new MutationObserver(this.callback);
+		const options = {
 			subtree: true,
 			childList: true,
 			attributes: true,
@@ -3660,8 +3666,8 @@ class LoadMutationObserver extends BaseMutationObserver {
 	constructor(target, callback) {
 		super();
 		this.m_callback = callback;
-		let mutationObserver = new MutationObserver(this.callback.bind(this));
-		let options = {
+		const mutationObserver = new MutationObserver(this.callback.bind(this));
+		const options = {
 			childList: true,
 			subtree: true,
 		};
@@ -3675,16 +3681,16 @@ class LoadMutationObserver extends BaseMutationObserver {
 	}
 }
 /** @type {BaseMutationObserver[]} */
-let mut_observers = [];
+const mut_observers = [];
 window.g_mut_observers = mut_observers;
 /** @type {(node: Node, child: Node|null)=>boolean}*/
 function insert_before_enabled(node, child) {
 	if (node instanceof HTMLScriptElement) {
-		let should_insert_1 = dom_add_elm_filter(node);
+		const should_insert_1 = dom_add_elm_filter(node);
 		if (!should_insert_1) return false;
 	}
 	if (child instanceof HTMLScriptElement) {
-		let should_insert_2 = dom_add_elm_filter(child);
+		const should_insert_2 = dom_add_elm_filter(child);
 		if (!should_insert_2) return false;
 	}
 	return true;
@@ -3703,7 +3709,7 @@ function main() {
 			return null;
 		},
 	});
-	let document_write_list = new DocumentWriteListImpl();
+	const document_write_list = new DocumentWriteListImpl();
 	document_write_list.attach_proxy(document);
 	document_write_list.document_write_proxy;
 	window.document_write_list = document_write_list;
@@ -3712,37 +3718,37 @@ function main() {
 		console.log("nop timeout");
 		return -1;
 	}
-	let real_st = setTimeout;
-	let real_si = setInterval;
+	const real_st = setTimeout;
+	const real_si = setInterval;
 	/** @type {any} */
-	let any_nop = nop_timeout;
-	window.setTimeout = any_nop;
-	window.setInterval = any_nop;
+	const any_nop = nop_timeout;
+	self.setTimeout = any_nop;
+	self.setInterval = any_nop;
 	/** @arg {any[]} v */
 	function no_aev(...v) {
 		console.log("aev", v);
 	}
-	let orig_aev = EventTarget.prototype.addEventListener;
+	const orig_aev = EventTarget.prototype.addEventListener;
 	EventTarget.prototype.addEventListener = no_aev;
 	async function do_fetch_load() {
 		reset_global_event_handlers();
-		window.setTimeout = real_st;
-		window.setInterval = real_si;
+		self.setTimeout = real_st;
+		self.setInterval = real_si;
 		EventTarget.prototype.addEventListener = orig_aev;
 		await new Promise(function (a) {
-			window.addEventListener("load", function lis() {
+			self.addEventListener("load", function lis() {
 				setTimeout(a);
-				window.removeEventListener("load", lis);
+				self.removeEventListener("load", lis);
 			});
 		});
 		reset_global_event_handlers();
-		let orig_url = location.href;
-		let loc_url = location.origin + location.pathname;
-		let prev_state = history.state;
+		const orig_url = location.href;
+		const loc_url = location.origin + location.pathname;
+		const prev_state = history.state;
 		let next_gen = 0;
 		if (prev_state && prev_state.gen) next_gen = prev_state.gen + 1;
-		let hist_state = { gen: next_gen };
-		let skip = true;
+		const hist_state = { gen: next_gen };
+		const skip = true;
 		x: {
 			if (skip) break x;
 			await new Promise(function (a) {
@@ -3759,29 +3765,29 @@ function main() {
 		history.pushState(hist_state, "", orig_url);
 		const rb_html = await (await fetch(loc_url)).text();
 		{
-			let la = mut_observers.pop();
+			const la = mut_observers.pop();
 			if (!la) throw new Error("mut_observers underflow");
 			la.disconnect();
 		}
 		/** @type {typeof window&{$:any}} */
-		let win_jquery = cast_as(window);
-		let jq = win_jquery.$;
+		const win_jquery = cast_as(window);
+		const jq = win_jquery.$;
 		set_jq_proxy(jq);
 		/** @type {any[]} */
-		let arr = [];
+		const arr = [];
 		/** @type {any} */
-		let any_cur = arr;
+		const any_cur = arr;
 		window.adsbygoogle = any_cur;
 		window.adsbygoogle.op = window.adsbygoogle.push;
 		window.adsbygoogle.push = function (e) {
 			// console.log("ads by google push");
-			let cs = document.currentScript;
+			const cs = document.currentScript;
 			/** @type {Element|null} */
 			let ls = null;
 			if (!cs) return;
-			let prev = cs.previousElementSibling;
+			const prev = cs.previousElementSibling;
 			if (prev && prev instanceof HTMLElement && prev.dataset["adSlot"]) {
-				let ad_slot = cs.previousElementSibling;
+				const ad_slot = cs.previousElementSibling;
 				if (prev.previousElementSibling) ls = prev.previousElementSibling;
 				if (ad_slot) ad_slot.remove();
 				cs.remove();
@@ -3789,7 +3795,7 @@ function main() {
 					ls && ls instanceof HTMLScriptElement && ls.src &&
 					ls.src.includes("adsbygoogle")
 				) {
-					let ls_tmp = ls.previousElementSibling;
+					const ls_tmp = ls.previousElementSibling;
 					ls.remove();
 					ls = ls_tmp;
 				}
@@ -3814,9 +3820,9 @@ function main() {
 			return "";
 		}
 		//spell:disable-next-line
-		let json_rep_1 =
+		const json_rep_1 =
 			`"\x3Cscript>\\n  (function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){\\n  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\\n  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\\n  })(window,document,"script","//www.google-analytics.com/analytics.js","ga");\\n\\n  ga("create","UA-63134422-1","auto");\\n  ga("send","pageview");\\n\\n\x3C/script>"`;
-		let rem_str_1 = JSON.parse(json_rep_1);
+		const rem_str_1 = JSON.parse(json_rep_1);
 		while (did_rep) {
 			did_rep = false;
 			//spell:disable-next-line
@@ -3827,23 +3833,24 @@ function main() {
 			if (did_rep) continue;
 			rb_html_tmp = rb_html_tmp.replace(rem_str_1, on_html_replace);
 		}
-		let script_num = [...rb_html_tmp.matchAll(/<\s*script.*?>/g)].length;
+		const script_num = [...rb_html_tmp.matchAll(/<\s*script.*?>/g)].length;
 		let loaded_scripts_count = 0;
 		console.log(rc);
 		mut_observers.push(
 			new LoadMutationObserver(document, function (mut_vec, mut_observer) {
-				let log_data_vec = [];
+				const log_data_vec = [];
 				log_data_vec.push(mut_vec.length, document.body != null);
 				/** @type {HTMLScriptElement[]} */
-				let added_scripts = [];
+				const added_scripts = [];
 				/** @type {HTMLScriptElement[]} */
-				let removed_scripts = [];
+				const removed_scripts = [];
 				for (let i = 0; i < mut_vec.length; i++) {
-					let mut_rec = mut_vec[i];
-					let add_node_list = mut_rec.addedNodes;
+					const mut_rec = mut_vec[i];
+					const add_node_list = mut_rec.addedNodes;
 					for (let j = 0; j < add_node_list.length; j++) {
-						let cur_node = add_node_list[j];
+						const cur_node = add_node_list[j];
 						if (!cur_node) {
+							// deno-lint-ignore no-debugger
 							debugger;
 							continue;
 						}
@@ -3851,9 +3858,9 @@ function main() {
 							added_scripts.push(cur_node);
 						}
 					}
-					let remove_node_list = mut_rec.removedNodes;
+					const remove_node_list = mut_rec.removedNodes;
 					for (let j = 0; j < remove_node_list.length; j++) {
-						let cur_node = remove_node_list[j];
+						const cur_node = remove_node_list[j];
 						if (cur_node instanceof HTMLScriptElement) {
 							removed_scripts.push(cur_node);
 						}
@@ -3904,8 +3911,8 @@ function main() {
 		};
 	}
 	function on_dom_load() {
-		window.setTimeout = real_st;
-		window.setInterval = real_si;
+		self.setTimeout = real_st;
+		self.setInterval = real_si;
 		EventTarget.prototype.addEventListener = orig_aev;
 		document.addEventListener("DOMContentLoaded", function () {
 			setTimeout(action_1, 300);
@@ -3918,8 +3925,8 @@ function main() {
 		do_fetch_load();
 		document.close();
 	}
-	let page_url = location.href;
-	let non_proto_url = page_url_no_protocol();
+	const page_url = location.href;
+	const non_proto_url = page_url_no_protocol();
 	if (non_proto_url == "//rebuildtheuniverse.com/mjz_version") {
 		do_page_replace();
 	} else if (non_proto_url == "//rebuildtheuniverse.com/?type=mjz_version") {
@@ -3942,15 +3949,15 @@ function main() {
 		on_dom_load();
 		document_write_list.destroy();
 	} else if (non_proto_url == "//rebuildtheuniverse.com/") {
-		window.setTimeout = real_st;
-		window.setInterval = real_si;
+		self.setTimeout = real_st;
+		self.setInterval = real_si;
 		EventTarget.prototype.addEventListener = orig_aev;
 		document_write_list.destroy();
 	} else if (
 		page_url === "https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/"
 	) {
-		window.setTimeout = real_st;
-		window.setInterval = real_si;
+		self.setTimeout = real_st;
+		self.setInterval = real_si;
 		EventTarget.prototype.addEventListener = orig_aev;
 		document_write_list.destroy();
 	} else console.log("handle location pathname", location.pathname);
@@ -3971,7 +3978,7 @@ function get_exports() {
 }
 
 if (typeof exports === "object") {
-	let exports = get_exports();
+	const exports = get_exports();
 	exports.rebuild_the_universe_plugin = {
 		AutoBuyImplR: AutoBuyImplR,
 		DocumentWriteListImpl: DocumentWriteListImpl,
