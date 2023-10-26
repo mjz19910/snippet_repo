@@ -309,6 +309,18 @@ const rng_word_num_map = new Map();
 function parse_rng_word(word) {
   word = word.toLowerCase();
   if (word.startsWith("!")) word = word.slice(1);
+  {
+    const word_arr = [];
+    let w2 = word;
+    do {
+      if (word_starts_with_vowel(w2)) {
+        word_arr.push(w2[0]);
+        w2 = w2.slice(1);
+      }
+      break;
+    } while (w2 !== "");
+    console.log(word_arr);
+  }
   if (word_starts_with_vowel(word)) {
     word = strip_vowel("", word);
   } else {
