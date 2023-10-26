@@ -1,3 +1,9 @@
+import {
+  deno_default_open,
+  read_json_array_file,
+  write_entire_file,
+} from "./deno_support.js";
+
 const word3_dict = [
   "art",
   "boat",
@@ -407,42 +413,6 @@ async function fetch_one_dictionary_page() {
     }
   });
 }
-/** @arg {Deno.FsFile} file */
-async function read_entire_file(file) {
-  await file.seek(0, 0);
-  let buf = new Uint8Array(0);
-  const tmp_buf = new Uint8Array(1024 * 8);
-  do {
-    const n = await file.read(tmp_buf);
-    if (n === null) break;
-    const prev_end = buf.length;
-    const prev_data = buf;
-    buf = new Uint8Array(prev_end + n);
-    buf.set(prev_data, 0);
-    buf.set(tmp_buf.slice(0, n), prev_end);
-  } while (true);
-  return new TextDecoder().decode(buf);
-}
-/** @arg {Deno.FsFile} file @arg {any} obj */
-async function write_entire_file(file, obj) {
-  const data = JSON.stringify(obj, void 0, "\t");
-  await file.seek(0, 0);
-  const encoder = new TextEncoder();
-  const buf = encoder.encode(data);
-  const n_written = await file.write(buf);
-  if (n_written !== buf.length) {
-    await file.truncate(n_written);
-    throw new Error("partial write");
-  }
-  await file.truncate(buf.length);
-}
-function deno_default_open(filename) {
-  return Deno.open(filename, {
-    read: true,
-    write: true,
-    create: true,
-  });
-}
 function show_rng_map() {
   const rng_map = [...rng_word_num_map.entries()].sort((a, b) => b[1] - a[1]);
   const arr = [];
@@ -456,12 +426,6 @@ function show_rng_map() {
   }
 }
 export { show_rng_map };
-/** @template T @arg {Deno.FsFile} file @returns {Promise<T[]>} */
-async function read_json_array_file(file) {
-  const data = await read_entire_file(file);
-  if (data === "") return [];
-  return JSON.parse(data);
-}
 function peek_description_arr(description_arr) {
   const description_arr2 = description_arr.slice(0, 5);
   for (const description of description_arr2) {
@@ -509,7 +473,6 @@ async function run() {
     await write_entire_file(dictionary_file, dictionary_arr);
   }
   dictionary_file.close();
-  show_rng_map();
 }
 await run();
 
