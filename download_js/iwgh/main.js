@@ -1,9 +1,3 @@
-const word_list_1=[
-	"popular",
-];
-const word_list_2=[
-	"traditional",
-];
 const word3_dict=[
 	"company",
 	"symbol",
