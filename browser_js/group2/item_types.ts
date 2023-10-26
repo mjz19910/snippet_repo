@@ -240,16 +240,16 @@ class AddEventListenerExtension {
 		}
 	}
 }
-export let inject_api={
+export const inject_api={
 	addEventListenerExt: new AddEventListenerExtension,
 	reversePrototypeChain: new class {
-		add_target(_v: {}) {}
+		add_target(_v: Record<never,never>) {}
 		generate() {}
 	},
 };
 function overwrite_addEventListener<T extends AddEventListenerExtension>(arg0: T) {
 	arg0;
 }
-function define_property_as_value<T>(val: {}|CallableFunction,namespace_key: string,namespace: T) {
+function define_property_as_value<T>(val: Record<never,never>|CallableFunction,namespace_key: string,namespace: T) {
 	val; namespace_key; namespace;
 }
