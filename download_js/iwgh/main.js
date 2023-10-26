@@ -88,10 +88,10 @@ function parse_sentence(str) {
 	 */
 	function parse_a(parsed,parsed_src) {
 		parsed.push({type: "a"});
-		let word1=parsed_src.shift();
+		let word1=next_word(parsed_src);
 		if(word1===void 0) throw new Error("word1 null");
 		if(word3_dict.includes(word1)) {
-			let word2=parsed_src.shift();
+			let word2=next_word(parsed_src);
 			console.log(["w2",word2]);
 			return;
 		}
@@ -101,7 +101,7 @@ function parse_sentence(str) {
 			case "traditional":
 			case "national":
 			case "popular": {
-				let word2=parsed_src.shift();
+				let word2=next_word(parsed_src);
 				if(word2===void 0) throw new Error("word2 null");
 				if(!word3_dict.includes(word2)) {
 					console.log("@w3",["w2",word2]);
@@ -112,17 +112,17 @@ function parse_sentence(str) {
 			case "sort":
 			case "kind":
 			case "type": {
-				let word2=parsed_src.shift();
+				let word2=next_word(parsed_src);
 				if(word2!=="of") throw new Error("word2 not of");
 				parsed.push({type: "section",value: word1});
-				let word3=parsed_src.shift();
+				let word3=next_word(parsed_src);
 				if(word3===void 0) throw new Error("word3 null");
 				if(!word3_dict.includes(word3)) {
 					console.log("@w3",["w3",word3]);
 					break x;
 				}
-				let word4=parsed_src.shift();
-				if(word4===void 0) break x;
+				if(parsed_src.length==0) break x;
+				let word4=next_word(parsed_src);
 				console.log(["w4",word4]);
 			} break x;
 			default: {
