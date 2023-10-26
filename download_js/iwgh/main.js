@@ -56,11 +56,10 @@ function parse_sentence(str) {
 		let parsed_src=str.split(/[ ,]/);
 		parsed_src.shift(); parsed_src.shift();
 		parsed.push({type: "this_is"});
-		x: switch(parsed_src[0]) {
+		switch(parsed_src[0]) {
 			case "a": {
 				parse_a(parsed,parsed_src);
-				break x;
-			}
+			} break;
 			case "usually": {
 				parsed.push({type: "usually"});
 				parsed_src.shift();
