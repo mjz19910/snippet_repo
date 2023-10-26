@@ -4511,7 +4511,7 @@ add_function(cast_to_record_with_key_and_string_type);
 //#endregion
 
 /** @readonly @type {"CrossOriginConnection"} */
-const post_message_connect_message_type ="CrossOriginConnection";
+const post_message_connect_message_type = "CrossOriginConnection";
 export_((exports) => {
 	exports.post_message_connect_message_type = post_message_connect_message_type;
 });
@@ -4706,12 +4706,13 @@ class Socket {
 			seq = (Math.random() * ack_win) % ack_win | 0;
 			if (testing_tcp) seq = 300;
 		}
+		flags.push("ack");
 		this.push_tcp_message({
 			type: "tcp",
 			client_id: this.m_client_id,
 			ack: tcp_message.seq + 1,
 			seq,
-			flags: flags | tcp_ack,
+			flags,
 			data: null,
 		});
 	}
