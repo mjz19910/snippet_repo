@@ -128,8 +128,9 @@ function parse_sentence(str) {
 					case "...":
 					case ",": {
 						let word5=next_word(parsed_src);
-						console.log(["w5",word5]);
+						console.log(["w5",word5],parsed_src);
 					} break x;
+					case "of": break x;
 					case "which":
 					case "art":
 					case "but":
