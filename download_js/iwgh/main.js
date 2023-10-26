@@ -23,7 +23,6 @@ function parse_sentence(str) {
 				});
 				parsed_src.shift();
 				let word=parsed_src.shift();
-				if(word===void 0) throw new Error();
 				switch(word) {
 					case "category": {
 						let word2=parsed_src.shift();
@@ -35,7 +34,6 @@ function parse_sentence(str) {
 					case "traditional": break x;
 					case "rare": break x;
 				}
-				parsed_src.unshift(word);
 				console.log([parsed[0].type,parsed_src]);
 				throw 1;
 			}
