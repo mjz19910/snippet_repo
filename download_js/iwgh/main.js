@@ -353,6 +353,7 @@ async function run() {
   if (dictionary_str !== "") {
     const load_arr = JSON.parse(dictionary_str);
     for (const item of load_arr) {
+			parse_rng_word(word);
       dict.add(item);
     }
   }
