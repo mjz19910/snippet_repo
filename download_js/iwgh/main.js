@@ -391,7 +391,8 @@ async function run() {
 			console.log(part);
 		}
   }
-  console.log("description_set_arr.length", description_arr.length);
+  console.log("description_arr.length", description_arr.length);
+  console.log("dictionary.length", dictionary_arr.length);
   await write_entire_file(description_file, description_arr);
   await write_entire_file(dictionary_file, dictionary_arr);
   description_file.close();
