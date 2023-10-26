@@ -5,6 +5,15 @@ const word_list_2=[
 	"traditional",
 ];
 /**
+ * @template T
+ * @param {T[]} arr
+ */
+function arr_end(arr) {
+	let v=arr.at(-1);
+	if(v===void 0) throw new Error("arr_end");
+	return v;
+}
+/**
  * @param {string} str
  */
 function parse_sentence(str) {
@@ -47,13 +56,13 @@ function parse_sentence(str) {
 			case "usually": {
 				parsed.push({type: "usually"});
 				parsed_src.shift();
-				console.log([parsed[0].type,parsed_src[0]]);
+				console.log([arr_end(parsed).type,parsed_src[0]]);
 				throw 1;
 			}
 			case "generally": {
 				parsed.push({type: "generally"});
 				parsed_src.shift();
-				console.log([parsed[0].type,parsed_src[0]]);
+				console.log([arr_end(parsed).type,parsed_src[0]]);
 				throw 1;
 			}
 			default: {
