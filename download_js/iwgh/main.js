@@ -260,6 +260,21 @@ function parse_rng_word(word) {
   if (word.startsWith("a")) {
     word = "!" + word.slice(1);
   }
+  if (word.startsWith("ba")) {
+    word = "!" + word.slice(2);
+  }
+  if (word.startsWith("be")) {
+    word = "!" + word.slice(2);
+  }
+  if (word.startsWith("bi")) {
+    word = "!" + word.slice(2);
+  }
+  if (word.startsWith("bo")) {
+    word = "!" + word.slice(2);
+  }
+  if (word.startsWith("bu")) {
+    word = "!" + word.slice(2);
+  }
   dict.add(word);
   const word_chars = word.split("");
   for (let char_idx = 0; char_idx < word_chars.length - 1; char_idx++) {
