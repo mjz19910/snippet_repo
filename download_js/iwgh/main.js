@@ -44,6 +44,7 @@ const word3_dict=[
 	"treehouse",
 	"village",
 	"weapon",
+	"pipe",
 ];
 /**
  * @template T
@@ -103,6 +104,7 @@ function parse_sentence(str) {
 			return parse_next_word(parsed,parsed_src);
 		}
 		switch(cur_word) {
+			case "but":
 			case "instrument":
 			case "of":
 			case "in":
