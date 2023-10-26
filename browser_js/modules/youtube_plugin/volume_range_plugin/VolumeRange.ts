@@ -6,8 +6,8 @@ export class VolumeRange {
 	min: number
 	overdrive: number
 	gain_controller: HTMLMediaElementGainController
-	range_element: any
-	view_div: any
+	range_element: unknown;
+	view_div: unknown;
 	constructor(min: number,max: number,overdrive: number,obj: HTMLMediaElementGainController) {
 		this.cache=true
 		this.max=max
@@ -43,7 +43,7 @@ export class VolumeRange {
 	getHistoryStateCache(key: string) {
 		if(!this.cache)
 			return null
-		if(history.state!==null&&history.state.hasOwnProperty(key)) {
+		if(history.state!==null&&Object.prototype.hasOwnProperty.call(history.state,key)) {
 			let {[key]: value}=history.state
 			return value
 		}

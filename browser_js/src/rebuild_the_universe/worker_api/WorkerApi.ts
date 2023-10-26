@@ -159,7 +159,7 @@ export class WorkerApi {
 		return false;
 	}
 	static delete_old_global_state() {
-		let old_worker_state=this.get_global_state();
+		const old_worker_state=this.get_global_state();
 		if(old_worker_state) {
 			const before_destroy_call_name='delete_global_state';
 			this.destroy_old_worker_state(old_worker_state,before_destroy_call_name);
@@ -170,7 +170,7 @@ export class WorkerApi {
 		worker_state_value.destroy();
 	}
 	static has_global_state() {
-		return window.hasOwnProperty(GlobalWorkerApiKey);
+		return Object.prototype.hasOwnProperty.call(window,GlobalWorkerApiKey);
 	}
 	static get_global_state(): WorkerApi|undefined {
 		return window[GlobalWorkerApiKey];

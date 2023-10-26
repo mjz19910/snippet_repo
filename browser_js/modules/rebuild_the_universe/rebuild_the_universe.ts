@@ -551,8 +551,8 @@ class WindowBoxImpl {
 		this.inner_type="Window";
 		this.value=value;
 	}
-	as_type(input_typeof: string): this|null {
-		return typeof this.value===input_typeof? this:null;
+	as_type(input_typeof: typeof typeof_type): this|null {
+		return generic_as_type(this,input_typeof);
 	}
 }
 
@@ -567,24 +567,24 @@ class ObjectBoxImpl {
 		this.extension="null";
 		this.value=value;
 	}
-	as_type(input_typeof: string): this|null {
-		return typeof this.value===input_typeof? this:null;
+	as_type(input_typeof: typeof typeof_type): this|null {
+		return generic_as_type(this,input_typeof);
 	}
 }
 
 class InstructionCallImpl {
-	debug: boolean=false;
+	debug=false;
 	type: "call";
 	constructor() {
 		this.type="call";
 	}
 	run(vm: StackVMImpl,instruction: InstructionMapImpl[this["type"]]) {
-		let number_of_arguments=instruction[1];
+		const number_of_arguments=instruction[1];
 		if(typeof number_of_arguments!="number") throw new Error("Invalid");
 		if(number_of_arguments<=1) {
 			throw new Error("Not enough arguments for call (min 2, target_this, target_fn)");
 		}
-		let [target_this,value_box,...arg_arr]=vm.pop_arg_count(number_of_arguments);
+		const [target_this,value_box,...arg_arr]=vm.pop_arg_count(number_of_arguments);
 		console.log('TODO: vm_call',target_this,value_box,arg_arr);
 	}
 }
@@ -595,9 +595,9 @@ class InstructionConstructImpl {
 		this.type="construct";
 	}
 	run(vm: StackVMImpl,ins: InstructionMapImpl[this["type"]]) {
-		let number_of_arguments=ins[1];
+		const number_of_arguments=ins[1];
 		if(typeof number_of_arguments!="number") throw new Error("Invalid");
-		let [construct_target,...construct_arr]=vm.pop_arg_count(number_of_arguments);
+		const [construct_target,...construct_arr]=vm.pop_arg_count(number_of_arguments);
 		const a=construct_target;
 		if(typeof a!="object") throw new Error("Invalid");
 		if(a===null) throw new Error("Invalid");
@@ -702,7 +702,7 @@ class InstructionCastImpl {
 		console.warn('unk obj boxed into temporary_box<object_index>',obj);
 	}
 	run(vm: StackVMImpl,instruction: InstructionMapImpl[this["type"]]) {
-		let obj=vm.stack.pop();
+		const obj=vm.stack.pop();
 		if(!obj) throw new Error("Invalid");
 		if(this.debug) {
 			console.log('VM: cast',instruction[1],obj);
@@ -719,7 +719,7 @@ class InstructionCastImpl {
 class InstructionJeImpl {
 	readonly type="je";
 	run(vm: StackVMImpl,instruction: InstructionMapImpl[this["type"]]) {
-		let [,target]=instruction;
+		const [,target]=instruction;
 		if(typeof target!="number") throw new Error("Invalid");
 		if(vm.is_in_instructions(target)) {
 			throw new Error("RangeError: Jump target is out of instructions range");
@@ -736,7 +736,7 @@ class InstructionJmpImpl {
 		this.type="jmp";
 	}
 	run(vm: StackVMImpl,instruction: InstructionMapImpl[this["type"]]) {
-		let [,target]=instruction;
+		const [,target]=instruction;
 		if(typeof target!="number") throw new Error("Invalid");
 		if(vm.is_in_instructions(target)) {
 			throw new Error("RangeError: Jump target is out of instructions range");
@@ -751,14 +751,14 @@ class InstructionModifyOpImpl {
 		this.type="modify_operand";
 	}
 	run(vm: StackVMImpl,instruction: InstructionMapImpl[this["type"]]) {
-		let [,target,offset]=instruction;
+		const [,target,offset]=instruction;
 		if(typeof target!="number") throw new Error("Invalid");
 		if(typeof offset!="number") throw new Error("Invalid");
 		if(vm.is_in_instructions(target)) {
 			throw new Error("RangeError: Destination is out of instructions range");
 		}
-		let instruction_1=vm.instructions[target];
-		let instruction_modify: [string,...any[]]=instruction_1;
+		const instruction_1=vm.instructions[target];
+		const instruction_modify: [string,...string[]]=instruction_1 as [string,...string[]];
 		let value: BoxImpl|null=null;
 		if(vm instanceof StackVMImpl) {
 			value=vm.pop();
@@ -767,8 +767,9 @@ class InstructionModifyOpImpl {
 			throw new Error("Unreachable");
 		}
 		if(instruction_modify===void 0) throw new Error("Invalid");
-		instruction_modify[offset]=value;
-		let valid_instruction=StackVMParser.verify_instruction(instruction_modify);
+		if(value.type!=="string") throw new Error("Invalid");
+		instruction_modify[offset]=value.value;
+		const valid_instruction=StackVMParser.verify_instruction(instruction_modify);
 		vm.instructions[target]=valid_instruction;
 	}
 }
@@ -779,7 +780,7 @@ class InstructionVMPushIPImpl {
 		this.type="vm_push_ip";
 	}
 	run(vm: StackVMImpl,_ins: InstructionMapImpl[this["type"]]) {
-		if(!vm.hasOwnProperty("push")) {
+		if(!Object.prototype.hasOwnProperty.call(vm,"push")) {
 			throw new Error("push_pc requires a stack");
 		} else if(vm instanceof StackVMImpl) {
 			vm.stack.push({type: "number",value: vm.instruction_pointer});
@@ -796,10 +797,10 @@ class InstructionPushImpl {
 		this.type="push";
 	}
 	run(vm: StackVMImpl,instruction: InstructionMapImpl[this["type"]]) {
-		let instruction_: ["push",...BoxImpl[]]=instruction;
-		let [,...rest]=instruction_;
+		const instruction_: ["push",...BoxImpl[]]=instruction;
+		const [,...rest]=instruction_;
 		for(let i=0;i<rest.length;i++) {
-			let item=rest[i];
+			const item=rest[i];
 			vm.stack.push(item);
 		}
 	}
@@ -812,7 +813,7 @@ class InstructionDupImpl {
 	}
 	run(vm: StackVMImpl,_ins: InstructionMapImpl[this["type"]]) {
 		if(vm.stack.length===0) throw new Error("stack underflow");
-		let res=vm.stack.at(-1);
+		const res=vm.stack.at(-1);
 		if(!res) throw new Error("bad");
 		vm.stack.push(res);
 	}
@@ -845,16 +846,16 @@ class InstructionGetImpl {
 	array_box_handle_num(value_box: EmptyArrayBox|ArrayBoxImpl|InstructionTypeArrayBox,key: number,vm: StackVMImpl) {
 		switch(value_box.item_type) {
 			case "Box": {
-				let res=value_box.value[key];
+				const res=value_box.value[key];
 				vm.push(res);
 			} break;
 			case 'instruction_type[]': {
-				let res=value_box.value[key];
+				const res=value_box.value[key];
 				vm.push(new InstructionTypeBox(res));
 			} break;
 			case "none": {
-				let res=value_box.value[key];
-				let _n: never=res;
+				const res=value_box.value[key];
+				const _n: never=res;
 				_n;
 				vm.push(new VoidBoxImpl());
 			}
@@ -866,7 +867,7 @@ class InstructionGetImpl {
 				if(typeof key==="number") {
 					this.array_box_handle_num(value_box,key,vm);
 				} else {
-					let key_alt=parseInt(key,10);
+					const key_alt=parseInt(key,10);
 					if(Number.isNaN(key_alt)) throw new Error("Failed to parse int");
 					this.array_box_handle_num(value_box,key_alt,vm);
 				}
@@ -899,8 +900,8 @@ class InstructionGetImpl {
 		}
 	}
 	run(vm: StackVMImpl,_ins: InstructionMapImpl[this["type"]]) {
-		let get_key=vm.pop();
-		let value_box=vm.pop();
+		const get_key=vm.pop();
+		const value_box=vm.pop();
 		if(get_key.type!="string") throw new Error("Invalid");
 		this.on_get(vm,value_box,get_key.value);
 	}
@@ -950,15 +951,15 @@ class InstructionPeekImpl {
 	readonly type="peek";
 	debug=false;
 	run(vm: StackVMImpl,ins: InstructionMapImpl[this["type"]]) {
-		let [,distance]=ins;
+		const [,distance]=ins;
 		let base_ptr=vm.base_ptr;
 		if(base_ptr===null) base_ptr=0;
 		if(typeof vm.frame_size!=="number") {
 			console.log("vm",vm);
 			throw new Error("Require frame size");
 		}
-		let offset=base_ptr-distance-vm.frame_size-1;
-		let at=vm.stack[offset];
+		const offset=base_ptr-distance-vm.frame_size-1;
+		const at=vm.stack[offset];
 		vm.stack.push(at);
 		if(this.debug) console.log('VM: peek',ins,"value",at,"index",offset,vm.stack.length-offset);
 	}
@@ -970,11 +971,11 @@ class InstructionAppendImpl {
 		if(vm.stack.length<=0) {
 			throw new Error('stack underflow');
 		}
-		let target=vm.stack.pop();
+		const target=vm.stack.pop();
 		if(vm.stack.length<=0) {
 			throw new Error('stack underflow');
 		}
-		let append_obj=vm.stack.pop();
+		const append_obj=vm.stack.pop();
 		if(typeof append_obj!="object") throw new Error("Element to append not object");
 		if(typeof target!="object") {
 			console.log(target,append_obj,vm.stack.slice());
@@ -1009,13 +1010,13 @@ class InstructionVMReturnImpl {
 	readonly type="vm_return";
 	debug=false;
 	run(vm: StackVMImpl,_i: InstructionMapImpl[this["type"]]) {
-		let start_stack=vm.stack.slice();
+		const start_stack=vm.stack.slice();
 		if(vm.base_ptr!=vm.stack.length) {
 			console.log('TODO: support returning values');
 			vm.stack.length=vm.base_ptr;
 		}
-		let ip=vm.stack.pop();
-		let bp=vm.stack.pop();
+		const ip=vm.stack.pop();
+		const bp=vm.stack.pop();
 		if(typeof ip!="number") throw new Error("Invalid stack frame");
 		if(typeof bp!="number") throw new Error("Invalid stack frame");
 		vm.instruction_pointer=ip;
@@ -1027,7 +1028,7 @@ class InstructionVMReturnImpl {
 class InstructionVMCallImpl {
 	readonly type="vm_call";
 	run(vm: StackVMImpl,ins: InstructionMapImpl[this["type"]]) {
-		let prev_base=vm.base_ptr;
+		const prev_base=vm.base_ptr;
 		vm.stack.push({type: "number",value: vm.base_ptr});
 		vm.stack.push({type: "number",value: vm.instruction_pointer});
 		vm.base_ptr=vm.stack.length;
@@ -1113,8 +1114,8 @@ class StackVMImpl implements AbstractVM {
 	instructions: InstructionTypeImpl[];
 	instruction_pointer: number;
 	running: boolean;
-	flags: any;
-	frame_size: any;
+	flags: StackVMFlags;
+	frame_size: unknown;
 	instruction_map_obj: {
 		[U in keyof typeof instruction_class_map]: InstanceType<typeof instruction_class_map[U]>;
 	};
@@ -1131,10 +1132,10 @@ class StackVMImpl implements AbstractVM {
 		this.instruction_map_obj=this.create_instruction_map(instruction_class_map);
 	}
 	create_instruction_map(instruction_desc_arr: typeof instruction_class_map) {
-		let obj: {
+		const obj: {
 			[U in keyof typeof instruction_class_map]?: InstanceType<typeof instruction_class_map[keyof typeof instruction_class_map]>;
 		}={};
-		for(let i of InstructionNames) {
+		for(const i of InstructionNames) {
 			obj[i]=new instruction_desc_arr[i];
 		}
 		return obj as {
@@ -1145,7 +1146,7 @@ class StackVMImpl implements AbstractVM {
 		this.stack.push(value);
 	}
 	pop() {
-		let value=this.stack.pop();
+		const value=this.stack.pop();
 		if(!value) throw new Error("Stack underflow");
 		return value;
 	}
@@ -1153,13 +1154,13 @@ class StackVMImpl implements AbstractVM {
 		return this.stack.at(-1-distance);
 	}
 	pop_arg_count(operand_number_of_arguments: number) {
-		let arguments_arr: BoxImpl[]=[];
-		let arg_count=operand_number_of_arguments;
+		const arguments_arr: BoxImpl[]=[];
+		const arg_count=operand_number_of_arguments;
 		for(let i=0;i<arg_count;i++) {
 			if(this.stack.length<=0) {
 				throw new Error('stack underflow in pop_arg_count');
 			}
-			let top=this.stack.pop();
+			const top=this.stack.pop();
 			if(!top) throw new Error('stack underflow in pop_arg_count');
 			arguments_arr.unshift(top);
 		}
@@ -1215,7 +1216,7 @@ class StackVMImpl implements AbstractVM {
 	run() {
 		this.running=true;
 		while(this.instruction_pointer<this.instructions.length) {
-			let instruction=this.instructions[this.instruction_pointer];
+			const instruction=this.instructions[this.instruction_pointer];
 			this.execute_instruction(instruction);
 			if(!this.running) break;
 			if(this.jump_instruction_pointer===null) this.instruction_pointer++;
@@ -1241,9 +1242,9 @@ class StackVMImpl implements AbstractVM {
 	}
 }
 class EventHandlerVMDispatch extends StackVMImpl {
-	target_obj: any;
+	target_obj: unknown;
 	args_arr: BoxImpl[]|null;
-	constructor(instructions: InstructionTypeImpl[],target_obj: any) {
+	constructor(instructions: InstructionTypeImpl[],target_obj: unknown) {
 		super(instructions);
 		this.target_obj=target_obj;
 		this.args_arr=null;
@@ -1260,18 +1261,18 @@ class EventHandlerVMDispatch extends StackVMImpl {
 class StackVMParser {
 	static match_regex=/(.+?)(;|$)/gm;
 	static parse_int_arg(cur: string[]|number[],arg_loc: number) {
-		let cur_item=cur[arg_loc];
+		const cur_item=cur[arg_loc];
 		if(typeof cur_item=="string") {
-			let arg=cur_item;
+			const arg=cur_item;
 			if(arg[3]==='()'[0]&&arg.at(-1)==="()"[1]) {
-				let str_int=arg.slice(4,-1);
+				const str_int=arg.slice(4,-1);
 				cur[arg_loc]=parseInt(str_int,10);
 			}
 		}
 	}
 	static parse_string_with_format_ident(str: string|string[],format_list: any[]) {
-		let format_index=str.indexOf('%');
-		let format_type=str[format_index+1];
+		const format_index=str.indexOf('%');
+		const format_type=str[format_index+1];
 		switch(format_type) {
 			case "o":
 				return format_list.shift();
@@ -1285,7 +1286,7 @@ class StackVMParser {
 		while(arg) {
 			if(arg.slice(0,3)==="int") this.parse_int_arg(cur,arg_loc);
 			if(arg.includes('%')) {
-				let res=this.parse_string_with_format_ident(arg,format_list);
+				const res=this.parse_string_with_format_ident(arg,format_list);
 				cur[arg_loc]=res;
 			}
 			arg_loc++;
@@ -1296,7 +1297,7 @@ class StackVMParser {
 		let iter=m[1].trim();
 		if(iter.startsWith("//")) return null;
 		while(iter.startsWith("/*")) {
-			let j=iter.indexOf("*/");
+			const j=iter.indexOf("*/");
 			iter=iter.slice(j+2).trim();
 		}
 		if(!iter) return null;
@@ -1305,34 +1306,34 @@ class StackVMParser {
 	static parse_string_into_raw_instruction_stream(string: string) {
 		const parser_max_match_iter=300;
 		let parts: string[]|null;
-		let arr: string[][]=[];
+		const arr: string[][]=[];
 		let i=0;
 		do {
-			let saved_last=this.match_regex.lastIndex;
-			let sub_str=string.slice(this.match_regex.lastIndex);
-			let trimmed_str=sub_str.trim();
-			let diff_len=sub_str.length-trimmed_str.length;
+			const saved_last=this.match_regex.lastIndex;
+			const sub_str=string.slice(this.match_regex.lastIndex);
+			const trimmed_str=sub_str.trim();
+			const diff_len=sub_str.length-trimmed_str.length;
 			if(trimmed_str.startsWith("//")) {
-				let com_end=trimmed_str.indexOf("\n");
+				const com_end=trimmed_str.indexOf("\n");
 				if(com_end>-1) {
 					this.match_regex.lastIndex=saved_last+diff_len+trimmed_str.indexOf("\n");
 				}
 			}
 			parts=this.match_regex.exec(string);
 			if(!parts) break;
-			let res=this.raw_parse_handle_regexp_match(parts);
+			const res=this.raw_parse_handle_regexp_match(parts);
 			if(res) arr.push(res);
 		} while(parts&&i++<parser_max_match_iter);
 		if(parts) console.assert(false,'StackVM Parser: Iteration limit exceeded (limit=%o)',parser_max_match_iter);
 		return arr;
 	}
-	static parse_instruction_stream_from_string(string: string,format_list: any[]) {
-		let raw_instructions=this.parse_string_into_raw_instruction_stream(string);
+	static parse_instruction_stream_from_string(string: string,format_list: unknown[]) {
+		const raw_instructions=this.parse_string_into_raw_instruction_stream(string);
 		for(let i=0;i<raw_instructions.length;i++) {
-			let raw_instruction=raw_instructions[i];
+			const raw_instruction=raw_instructions[i];
 			this.parse_current_instruction(raw_instruction,format_list);
 		}
-		let instructions=this.verify_raw_instructions(raw_instructions); return instructions;
+		const instructions=this.verify_raw_instructions(raw_instructions); return instructions;
 	}
 	static verify_instruction(instruction: string[]): InstructionTypeImpl {
 		let num_to_parse=instruction.length;
@@ -1353,7 +1354,7 @@ class StackVMParser {
 				}
 			} break;
 			case "cast": {
-				let m_arg=instruction[1];
+				const m_arg=instruction[1];
 				switch(m_arg) {
 					case "object_index":
 					case "vm_function":
@@ -1374,9 +1375,9 @@ class StackVMParser {
 			case "breakpoint":
 			case "vm_return": {
 				num_to_parse--;
-				let v_2=instruction[0];
-				let v_1: InstructionTypeImpl[0]=v_2;
-				let val: InstructionTypeImpl=[v_1];
+				const v_2=instruction[0];
+				const v_1: InstructionTypeImpl[0]=v_2;
+				const val: InstructionTypeImpl=[v_1];
 				ret=val;
 			} break;
 			default: throw new Error("Verify: Unexpected opcode, opcode was `"+instruction[0]+"`");
@@ -1417,14 +1418,14 @@ class DocumentWriteList {
 	}
 	attach_proxy(document: Document) {
 		if(this.attached) {
-			let was_destroyed=this.destroy(true);
+			const was_destroyed=this.destroy(true);
 			if(!was_destroyed) {
 				throw new Error("Can't reattach to document, document.write is not equal to DocumentWriteList.document_write_proxy");
 			}
 		}
 		this.attached_document=document;
 		this.document_write=document.write;
-		let proxy_handler={
+		const proxy_handler={
 			other: this,
 			apply(target: (...text: string[]) => void,thisArg: Document,argArray: string[]) {
 				this.other.write(target,thisArg,argArray);
@@ -1433,7 +1434,7 @@ class DocumentWriteList {
 		this.document_write_proxy=new Proxy(document.write,proxy_handler);
 		document.write=this.document_write_proxy;
 	}
-	destroy(should_try_to_destroy: boolean=false) {
+	destroy(should_try_to_destroy=false) {
 		if(this.attached_document&&this.document_write_proxy) {
 			console.assert(this.attached_document.write===this.document_write_proxy);
 			if(this.attached_document.write!==this.document_write_proxy) {
@@ -1442,12 +1443,8 @@ class DocumentWriteList {
 				}
 				throw new Error("Unable to destroy: document.write is not equal to DocumentWriteList.document_write_proxy");
 			}
-			let doc_1=this.attached_document;
-			if(doc_1&&this.document_write) {
-				let doc_var=this.document_write;
-				let any_var: any=doc_var;
-				let vv: Document["write"]=any_var;
-				doc_1.write=vv;
+			if(this.attached_document&&this.document_write) {
+				this.attached_document.write=this.document_write;
 			}
 		}
 		if(this.document_write_proxy) {
@@ -3207,7 +3204,7 @@ class AutoBuy {
 	get_timeout_change(pow_base: number,pow_num: number,div: number) {
 		if(!this.timeout_ms) throw new Error("Invalid");
 		let pow_res=Math.pow(pow_base,pow_num);
-		let res=this.timeout_ms*pow_res;
+		const res=this.timeout_ms*pow_res;
 		return res/div;
 	}
 	update_timeout_inc(change: number) {
@@ -3444,7 +3441,7 @@ function do_auto_unit_promote() {
 			}
 		}
 	}
-	let res=out.lastIndexOf(true);
+	const res=out.lastIndexOf(true);
 	if(res<0)
 		return;
 	if(maxed[res]) {
@@ -3560,7 +3557,7 @@ function use_jquery() {
 	let jq: typeof $|undefined=window.$;
 	if(!jq) return;
 	if(typeof jq!="function") return;
-	let res=jq("head");
+	const res=jq("head");
 	let r_proto=Object.getPrototypeOf(res);
 	r_proto.lazyload=function(..._a: any[]) {};
 	return jq;
