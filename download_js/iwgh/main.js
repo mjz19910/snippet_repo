@@ -5,7 +5,8 @@ const word_list_2=[
 	"traditional",
 ];
 const word3_dict=[
-	"traditional",
+	"company",
+	"symbol",
 ];
 /**
  * @template T
@@ -32,6 +33,10 @@ function parse_sentence(str) {
 		parsed.push({type: "a"});
 		parsed_src.shift();
 		let word1=parsed_src.shift();
+		if(word1===void 0) throw new Error("word1 null");
+		if(word3_dict.includes(word1)) {
+			return;
+		}
 		x: switch(word1) {
 			case "category": {
 				let word2=parsed_src.shift();
