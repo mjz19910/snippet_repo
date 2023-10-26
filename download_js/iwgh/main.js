@@ -18,6 +18,13 @@ const word3_dict=[
 	"melody",
 	"building",
 	"company",
+	"song",
+	"smoking",
+	"weapon",
+	"profanity",
+	"village",
+	"transport",
+	"food",
 ];
 /**
  * @template T
