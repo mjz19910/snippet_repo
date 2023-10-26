@@ -462,7 +462,6 @@ async function run() {
     for (const new_word of new_words_arr) {
       parse_rng_word(new_word, true, true);
     }
-    console.log(new_words_arr);
     new_words_set.clear();
     console.log("dict word num", new_words);
   };
