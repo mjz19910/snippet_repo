@@ -207,9 +207,16 @@ class StackVMBoxImpl {
 	type = "custom_box";
 	/** @type {"StackVM"} */
 	box_type = "StackVM";
-	/** @arg {string} to_match */
+	/** @arg {"object"|"function"} to_match */
 	as_type(to_match) {
-		if (typeof this.value === to_match) return this;
+		switch (to_match) {
+			case "function":
+				if (typeof this.value == "function") return this;
+				break;
+			case "object":
+				if (typeof this.value == "object") return this;
+				break;
+		}
 		return null;
 	}
 	/** @type {StackVMImpl} */
@@ -230,7 +237,16 @@ class WindowBoxImpl {
 	inner_type = "Window";
 	/** @arg {string} to_match */
 	as_type(to_match) {
-		if (typeof this.value === to_match) return this;
+		switch (to_match) {
+			case "function":
+				if (typeof this.value == "function") return this;
+				break;
+			case "object":
+				if (typeof this.value == "object") return this;
+				break;
+			default:
+				trigger_debug_breakpoint();
+		}
 		return null;
 	}
 	/** @type {Window} */
@@ -251,7 +267,16 @@ class ObjectBoxImpl {
 	extension = "null";
 	/** @arg {string} to_match */
 	as_type(to_match) {
-		if (typeof this.value === to_match) return this;
+		switch (to_match) {
+			case "function":
+				if (typeof this.value == "function") return this;
+				break;
+			case "object":
+				if (typeof this.value == "object") return this;
+				break;
+			default:
+				trigger_debug_breakpoint();
+		}
 		return null;
 	}
 	/** @type {{}} */
@@ -263,7 +288,7 @@ class ObjectBoxImpl {
 }
 
 /** @template T */
-class NewableInstancePackImpl {
+class _NewableInstancePackImpl {
 	/** @arg {new (...a: Box_CJS[]) => T} box_value @arg {Box_CJS[]} construct_args @returns {Box_CJS} */
 	make_box(box_value, construct_args) {
 		box_value;
@@ -273,7 +298,7 @@ class NewableInstancePackImpl {
 }
 
 class NewableFunctionBoxImpl {
-	/** @arg {NewableInstancePackImpl<{}>} factory_value @arg {new (...a: Box_CJS[]) => {}} class_value */
+	/** @arg {_NewableInstancePackImpl<{}>} factory_value @arg {new (...a: Box_CJS[]) => {}} class_value */
 	constructor(factory_value, class_value) {
 		this.factory_value = factory_value;
 		this.class_value = class_value;
@@ -336,14 +361,14 @@ class InstructionCallImpl extends InstructionImplBase {
 		if (object_box === null) return null;
 		const { type, ...left_to_unbox } = object_box;
 		if (object_box.type === "object_box") {
-			const { type, value, ...rest } = object_box;
+			const { type: _, value, ...rest } = object_box;
 			if (Object.keys(rest).length > 0) {
 				console.log("other enumerable on box", rest);
 			}
 			return value;
 		}
 		if (object_box.type === "instance_box") {
-			const { type, value, instance_type, ...rest } = object_box;
+			const { type: _0, value, instance_type: _1, ...rest } = object_box;
 			if (Object.keys(rest).length > 0) {
 				console.log("other enumerable on box", rest);
 			}
@@ -361,13 +386,13 @@ class InstructionCallImpl extends InstructionImplBase {
 	/** @arg {Box_CJS[]} arg_arr */
 	unbox_arr(arg_arr) {
 		/** @type {({}|Function|StackVMImpl|null)[]} */
-		let arr = [];
+		const arr = [];
 		for (let i = 0; i < arg_arr.length; i++) {
-			let cur = arg_arr[i];
+			const cur = arg_arr[i];
 			if (typeof cur === "string") arr.push(cur);
 			else if (typeof cur === "function") arr.push(cur);
 			else if (typeof cur === "object") {
-				let cur_value = this.unbox_obj(cur);
+				const cur_value = this.unbox_obj(cur);
 				arr.push(cur_value);
 			} else {
 				console.log("unbox_arr item non object", cur);
@@ -378,8 +403,8 @@ class InstructionCallImpl extends InstructionImplBase {
 	}
 	/** @arg {StackVMImpl} vm @arg {(...a: Box_CJS[]) => Box_CJS} fn_value @arg {Box_CJS} target_this @arg {Box_CJS[]} arg_arr */
 	handle_as_fn(vm, fn_value, target_this, arg_arr) {
-		let real_this = this.unbox_obj(target_this);
-		let ret = fn_value.apply(real_this, arg_arr);
+		const real_this = this.unbox_obj(target_this);
+		const ret = fn_value.apply(real_this, arg_arr);
 		vm.stack.push(ret);
 	}
 	/** @arg {StackVMImpl} vm @arg {Box_CJS} fn_obj @arg {Box_CJS} target_this @arg {Box_CJS[]} arg_arr */
@@ -397,8 +422,8 @@ class InstructionCallImpl extends InstructionImplBase {
 	}
 	/** @arg {StackVMImpl} vm @arg {(...a: Box_CJS[]) => Promise<Box_CJS>} fn_value @arg {Box_CJS} target_this @arg {Box_CJS[]} arg_arr */
 	handle_as_fn_to_promise(vm, fn_value, target_this, arg_arr) {
-		let real_this = this.unbox_obj(target_this);
-		let ret = fn_value.apply(real_this, arg_arr);
+		const real_this = this.unbox_obj(target_this);
+		const ret = fn_value.apply(real_this, arg_arr);
 		vm.stack.push(new PromiseBoxImpl(ret));
 	}
 	/** @arg {number} number_of_arguments @arg {StackVMImpl} vm */
@@ -409,7 +434,7 @@ class InstructionCallImpl extends InstructionImplBase {
 				"Not enough arguments for call (min 2, target_this, target_fn)",
 			);
 		}
-		let [target_this, value_box, ...arg_arr] = vm.pop_arg_count(
+		const [target_this, value_box, ...arg_arr] = vm.pop_arg_count(
 			number_of_arguments,
 		);
 		if (typeof target_this !== "object") {
@@ -464,7 +489,7 @@ class InstructionConstructImpl extends InstructionImplBase {
 	type = "construct";
 	/** @arg {StackVMImpl} vm @arg {number} number_of_arguments */
 	run(vm, number_of_arguments) {
-		let [construct_target, ...construct_arr] = vm.pop_arg_count(
+		const [construct_target, ...construct_arr] = vm.pop_arg_count(
 			number_of_arguments,
 		);
 		const a = construct_target;
@@ -472,7 +497,7 @@ class InstructionConstructImpl extends InstructionImplBase {
 		if (a === null) throw new Error("Invalid");
 		if (a.type != "constructor_box") throw new Error("Invalid");
 		if (a.instance_type === "unknown") {
-			let obj = a.factory(...construct_arr);
+			const obj = a.factory(...construct_arr);
 			vm.stack.push(obj);
 		} else if (a.instance_type === "CSSStyleSheet") {
 			/** @type {{s:[options?: CSSStyleSheetInit|undefined], valid_count:1}|{s:[], valid_count:0}} */
@@ -481,7 +506,7 @@ class InstructionConstructImpl extends InstructionImplBase {
 				valid_count: 0,
 			};
 			for (let i = 0; i < construct_arr.length; i++) {
-				let val = construct_arr[i];
+				const val = construct_arr[i];
 				if (typeof val != "object") continue;
 				if (val === null) continue;
 				if (val.type != "shape_box") continue;
@@ -490,7 +515,7 @@ class InstructionConstructImpl extends InstructionImplBase {
 					valid_count: 1,
 				};
 			}
-			let obj = new a.value(...valid_args.s);
+			const obj = new a.value(...valid_args.s);
 			vm.stack.push(new CSSStyleSheetBoxImpl(obj));
 		}
 		log_if_impl_r(
@@ -546,7 +571,7 @@ class InstructionCastImpl extends InstructionImplBase {
 	}
 	/** @arg {string} cast_type @arg {StackVMImpl} vm */
 	run(vm, cast_type) {
-		let obj = vm.stack.pop();
+		const obj = vm.stack.pop();
 		if (!obj) throw new Error("Invalid");
 		if (this.debug) console.log("VM: cast", cast_type, obj);
 		if (typeof obj != "object") throw new Error("Invalid");
@@ -587,13 +612,13 @@ class InstructionModifyOpImpl extends InstructionImplBase {
 	type = "modify_operand";
 	/** @arg {[number,number]} instruction @arg {StackVMImpl} vm */
 	run(vm, ...instruction) {
-		let [target, offset] = instruction;
+		const [target, offset] = instruction;
 		if (vm.is_in_instructions(target)) {
 			throw new Error("RangeError: Destination is out of instructions range");
 		}
-		let instruction_1 = vm.instructions[target];
+		const instruction_1 = vm.instructions[target];
 		/** @type {[string, ...any[]]} */
-		let instruction_modify = instruction_1;
+		const instruction_modify = instruction_1;
 		let value = null;
 		if (vm instanceof StackVMImpl) value = vm.stack.pop();
 		else {
@@ -602,7 +627,7 @@ class InstructionModifyOpImpl extends InstructionImplBase {
 		}
 		if (instruction_modify === void 0) throw new Error("Invalid");
 		instruction_modify[offset] = value;
-		let valid_instruction = StackVMParserImplR.verify_instruction(
+		const valid_instruction = StackVMParserImplR.verify_instruction(
 			instruction_modify,
 		);
 		vm.instructions[target] = valid_instruction;
@@ -615,7 +640,16 @@ class NumberBoxImpl {
 	type = "number";
 	/** @returns {this|null} @arg {string} target */
 	as_type(target) {
-		if (typeof this.value === target) return this;
+		switch (target) {
+			case "function":
+				if (typeof this.value == "function") return this;
+				break;
+			case "object":
+				if (typeof this.value == "object") return this;
+				break;
+			default:
+				trigger_debug_breakpoint();
+		}
 		return null;
 	}
 	/** @arg {number} value */
@@ -628,7 +662,7 @@ class InstructionVMPushIPImpl extends InstructionImplBase {
 	type = "vm_push_ip";
 	/** @arg {StackVMImpl} vm */
 	run(vm) {
-		if (!vm.hasOwnProperty("push")) throw new Error("push_pc requires a stack");
+		if (!("push" in vm)) throw new Error("push_pc requires a stack");
 		else if (vm instanceof StackVMImpl) {
 			vm.stack.push(new NumberBoxImpl(vm.instruction_pointer));
 		} else {
@@ -651,7 +685,7 @@ class InstructionDupImpl extends InstructionImplBase {
 	/** @arg {StackVMImpl} vm */
 	run(vm) {
 		if (vm.stack.length === 0) throw new Error("stack underflow");
-		let last = vm.stack.at(-1);
+		const last = vm.stack.at(-1);
 		if (!last) throw new Error("Unreachable");
 		vm.stack.push(last);
 	}
@@ -666,7 +700,7 @@ class InstructionGetImpl extends InstructionImplBase {
 			case "array_box": {
 				if (typeof key === "number") {
 					if (value_box.item_type === "Box") {
-						let res = value_box.value[key];
+						const res = value_box.value[key];
 						vm.stack.push(res);
 						break;
 					}
@@ -675,7 +709,7 @@ class InstructionGetImpl extends InstructionImplBase {
 					key = parseInt(key, 10);
 					if (Number.isNaN(key)) throw new Error("Failed to parse int");
 					if (value_box.item_type === "Box") {
-						let res = value_box.value[key];
+						const res = value_box.value[key];
 						vm.stack.push(res);
 						break;
 					}
@@ -707,8 +741,8 @@ class InstructionGetImpl extends InstructionImplBase {
 	}
 	/** @arg {StackVMImpl} vm */
 	run(vm) {
-		let get_key = vm.stack.pop();
-		let value_box = vm.stack.pop();
+		const get_key = vm.stack.pop();
+		const value_box = vm.stack.pop();
 		if (!value_box) throw new Error("Invalid");
 		if (typeof get_key != "string") throw new Error("Invalid");
 		if (typeof value_box != "object") throw new Error("Invalid");
@@ -764,8 +798,8 @@ class InstructionPeekImpl extends InstructionImplBase {
 	debug = false;
 	/** @arg {StackVMImpl} vm @arg {number} distance */
 	run(vm, distance) {
-		let offset = vm.base_ptr - distance - vm.frame_size - 1;
-		let at = vm.stack[offset];
+		const offset = vm.base_ptr - distance - vm.frame_size - 1;
+		const at = vm.stack[offset];
 		vm.stack.push(at);
 		if (this.debug) {
 			console.log(
@@ -786,9 +820,9 @@ class InstructionAppendImpl extends InstructionImplBase {
 	/** @arg {StackVMImpl} vm */
 	run(vm) {
 		if (vm.stack.length <= 0) throw new Error("stack underflow");
-		let target = vm.stack.pop();
+		const target = vm.stack.pop();
 		if (vm.stack.length <= 0) throw new Error("stack underflow");
-		let append_obj = vm.stack.pop();
+		const append_obj = vm.stack.pop();
 		if (typeof append_obj != "object") {
 			throw new Error("Element to append not object");
 		}
@@ -829,7 +863,7 @@ class InstructionVMReturnImpl extends InstructionImplBase {
 	debug = false;
 	/** @arg {StackVMImpl} vm */
 	run(vm) {
-		let start_stack = vm.stack.slice();
+		const start_stack = vm.stack.slice();
 		if (vm.base_ptr === null) {
 			vm.running = false;
 			return;
@@ -838,8 +872,8 @@ class InstructionVMReturnImpl extends InstructionImplBase {
 			console.log("TODO: support returning values");
 			vm.stack.length = vm.base_ptr;
 		}
-		let ip = vm.stack.pop();
-		let bp = vm.stack.pop();
+		const ip = vm.stack.pop();
+		const bp = vm.stack.pop();
 		if (typeof ip != "number") throw new Error("Invalid stack frame");
 		if (typeof bp != "number") throw new Error("Invalid stack frame");
 		vm.instruction_pointer = ip;
@@ -855,7 +889,7 @@ class InstructionVMCallImpl extends InstructionImplBase {
 	/** @arg {StackVMImpl} vm @arg {number} jump_target */
 	run(vm, jump_target) {
 		if (vm.base_ptr === null) throw new Error("BasePtr was null");
-		let prev_base = vm.base_ptr;
+		const prev_base = vm.base_ptr;
 		vm.stack.push(
 			new NumberBoxImpl(vm.base_ptr),
 			new NumberBoxImpl(vm.instruction_pointer),
@@ -992,7 +1026,7 @@ class StackVMImpl {
 		this.m_base = new StackVmBaseImpl();
 	}
 	pop() {
-		let value = this.stack.pop();
+		const value = this.stack.pop();
 		if (!value) throw 1;
 		return value;
 	}
@@ -1006,8 +1040,8 @@ class StackVMImpl {
 	}
 	/** @arg {number} operand_number_of_arguments */
 	pop_arg_count(operand_number_of_arguments) {
-		let arguments_arr = [];
-		let arg_count = operand_number_of_arguments;
+		const arguments_arr = [];
+		const arg_count = operand_number_of_arguments;
 		for (let i = 0; i < arg_count; i++) {
 			if (this.stack.length <= 0) {
 				throw new Error("stack underflow in pop_arg_count");
@@ -1120,7 +1154,7 @@ class StackVMImpl {
 				break;
 			case "push":
 				{
-					let [infer, ...rest] = instruction;
+					const [infer, ...rest] = instruction;
 					instruction_table[instruction[0]].run(this, infer, ...rest);
 				}
 				break;
@@ -1137,7 +1171,7 @@ class StackVMImpl {
 	run() {
 		this.running = true;
 		while (this.instruction_pointer < this.instructions.length) {
-			let instruction = this.instructions[this.instruction_pointer];
+			const instruction = this.instructions[this.instruction_pointer];
 			this.execute_instruction(instruction);
 			if (!this.running) break;
 			if (this.jump_instruction_pointer === null) this.instruction_pointer++;
@@ -1172,12 +1206,8 @@ class StackVMImpl {
 class EventHandlerVMDispatchImplR extends StackVMImpl {
 	/** @arg {InstructionType_CJS[]} instructions @arg {any} target_obj */
 	constructor(instructions, target_obj) {
-		try {
-			super(instructions);
-			this.target_obj = target_obj;
-		} catch (e) {
-			console.log("EventHandlerVMDispatch constructor error", e);
-		}
+		super(instructions);
+		this.target_obj = target_obj;
 	}
 	/** @override @arg {Box_CJS[]} args_arr */
 	run(...args_arr) {
@@ -1212,19 +1242,19 @@ class StackVMParserImplR {
 	static match_regex = /(.+?)(;|$)/gm;
 	/** @arg {string[]|number[]} cur @arg {number} arg_loc */
 	static parse_int_arg(cur, arg_loc) {
-		let cur_item = cur[arg_loc];
+		const cur_item = cur[arg_loc];
 		if (typeof cur_item == "string") {
-			let arg = cur_item;
+			const arg = cur_item;
 			if (arg[3] === "()"[0] && arg.at(-1) === "()"[1]) {
-				let str_int = arg.slice(4, -1);
+				const str_int = arg.slice(4, -1);
 				cur[arg_loc] = parseInt(str_int, 10);
 			}
 		}
 	}
 	/** @arg {string|string[]} str @arg {any[]} format_list */
 	static parse_string_with_format_ident(str, format_list) {
-		let format_index = str.indexOf("%");
-		let format_type = str[format_index + 1];
+		const format_index = str.indexOf("%");
+		const format_type = str[format_index + 1];
 		switch (format_type) {
 			case "o":
 				return format_list.shift();
@@ -1243,7 +1273,7 @@ class StackVMParserImplR {
 		while (arg) {
 			if (arg.slice(0, 3) === "int") this.parse_int_arg(cur, arg_loc);
 			if (arg.includes("%")) {
-				let res = this.parse_string_with_format_ident(arg, format_list);
+				const res = this.parse_string_with_format_ident(arg, format_list);
 				cur[arg_loc] = res;
 			}
 			arg_loc++;
@@ -1255,7 +1285,7 @@ class StackVMParserImplR {
 		let iter = m[1].trim();
 		if (iter.startsWith("//")) return null;
 		while (iter.startsWith("/*")) {
-			let j = iter.indexOf("*/");
+			const j = iter.indexOf("*/");
 			iter = iter.slice(j + 2).trim();
 		}
 		if (!iter) return null;
@@ -1264,14 +1294,15 @@ class StackVMParserImplR {
 	/** @arg {string} string */
 	static parse_string_into_raw_instruction_stream(string) {
 		const parser_max_match_iter = 300;
-		let parts, arr = [], i = 0;
+		let parts, i = 0;
+		const arr = [];
 		do {
-			let saved_last = this.match_regex.lastIndex;
-			let sub_str = string.slice(this.match_regex.lastIndex);
-			let trimmed_str = sub_str.trim();
-			let diff_len = sub_str.length - trimmed_str.length;
+			const saved_last = this.match_regex.lastIndex;
+			const sub_str = string.slice(this.match_regex.lastIndex);
+			const trimmed_str = sub_str.trim();
+			const diff_len = sub_str.length - trimmed_str.length;
 			if (trimmed_str.startsWith("//")) {
-				let com_end = trimmed_str.indexOf("\n");
+				const com_end = trimmed_str.indexOf("\n");
 				if (com_end > -1) {
 					this.match_regex.lastIndex = saved_last + diff_len +
 						trimmed_str.indexOf("\n");
@@ -1279,7 +1310,7 @@ class StackVMParserImplR {
 			}
 			parts = this.match_regex.exec(string);
 			if (!parts) break;
-			let res = this.raw_parse_handle_regexp_match(parts);
+			const res = this.raw_parse_handle_regexp_match(parts);
 			if (res) arr.push(res);
 		} while (parts && i++ < parser_max_match_iter);
 		if (parts) {
@@ -1293,14 +1324,14 @@ class StackVMParserImplR {
 	}
 	/** @arg {string} string @arg {any[]} format_list */
 	static parse_instruction_stream_from_string(string, format_list) {
-		let raw_instructions = this.parse_string_into_raw_instruction_stream(
+		const raw_instructions = this.parse_string_into_raw_instruction_stream(
 			string,
 		);
 		for (let i = 0; i < raw_instructions.length; i++) {
-			let raw_instruction = raw_instructions[i];
+			const raw_instruction = raw_instructions[i];
 			this.parse_current_instruction(raw_instruction, format_list);
 		}
-		let instructions = this.verify_raw_instructions(raw_instructions);
+		const instructions = this.verify_raw_instructions(raw_instructions);
 		return instructions;
 	}
 	/** @arg {string[]} instruction @returns {InstructionType_CJS}*/
@@ -1332,7 +1363,7 @@ class StackVMParserImplR {
 				break;
 			case "cast":
 				{
-					let m_arg = instruction[1];
+					const m_arg = instruction[1];
 					switch (m_arg) {
 						case "object_index":
 						case "vm_function":
@@ -1405,7 +1436,7 @@ class DocumentWriteListImpl {
 	/** @arg {Document} document */
 	attach_proxy(document) {
 		if (this.attached) {
-			let was_destroyed = this.destroy(true);
+			const was_destroyed = this.destroy(true);
 			if (!was_destroyed) {
 				throw new Error(
 					"Can't reattach to document, document.write is not equal to DocumentWriteList.document_write_proxy",
@@ -1414,7 +1445,7 @@ class DocumentWriteListImpl {
 		}
 		this.attached_document = document;
 		this.document_write = document.write;
-		let proxy_handler = {
+		const proxy_handler = {
 			other: this,
 			/** @arg {(...text: string[]) => void} target @arg {Document} thisArg @arg {string[]} argArray */
 			apply(target, thisArg, argArray) {
@@ -1436,13 +1467,13 @@ class DocumentWriteListImpl {
 					"Unable to destroy: document.write is not equal to DocumentWriteList.document_write_proxy",
 				);
 			}
-			let doc_1 = this.attached_document;
+			const doc_1 = this.attached_document;
 			if (doc_1 && this.document_write) {
-				let doc_var = this.document_write;
+				const doc_var = this.document_write;
 				/** @type {any} */
-				let any_var = doc_var;
+				const any_var = doc_var;
 				/** @type {Document["write"]} */
-				let vv = any_var;
+				const vv = any_var;
 				doc_1.write = vv;
 				return true;
 			}
@@ -1477,14 +1508,14 @@ class NamedIdGenerator {
 	}
 	/** @arg {string} name */
 	current_named(name) {
-		let val = this.state_map.get(name);
+		const val = this.state_map.get(name);
 		if (val) return val;
 		else return 0;
 	}
 	/** @arg {string} name */
 	next_named(name) {
 		if (this.state_map.has(name)) {
-			let state_item = this.state_map.get(name) + 1;
+			const state_item = this.state_map.get(name) + 1;
 			this.state_map.set(name, state_item);
 			return state_item;
 		} else {
@@ -1697,7 +1728,7 @@ class AsyncTimeoutNode extends TimeoutNode {
 		log_if_impl_r(LOG_LEVEL_INFO_IMPL, "start_async");
 		this.m_target = target;
 		this.set();
-		let promise = this.m_target.wait();
+		const promise = this.m_target.wait();
 		log_if_impl_r(LOG_LEVEL_INFO_IMPL, "p", promise);
 		await promise;
 	}
@@ -1761,7 +1792,7 @@ class AsyncNodeRootImplR {
 	}
 	/** @arg {BaseNodeImpl} record */
 	remove_child(record) {
-		let index = this.children.indexOf(record);
+		const index = this.children.indexOf(record);
 		this.children.splice(index, 1);
 		record.set_parent(null);
 	}
@@ -1775,7 +1806,7 @@ class AsyncNodeRootImplR {
 		} while (item);
 	}
 }
-class RatioOptions {
+class _RatioOptions {
 	/** @type {number} */
 	size;
 	/** @type {number} */
@@ -1793,7 +1824,7 @@ class RatioOptions {
 }
 class AverageRatio {
 	// @AverageRatio
-	/** @arg {string} type @arg {RatioOptions} options */
+	/** @arg {string} type @arg {_RatioOptions} options */
 	constructor(type, options) {
 		this.type = type;
 		/** @type {number[]} */
@@ -1820,7 +1851,7 @@ class AverageRatio {
 			this.gen_count++;
 			this.history.unshift(this.value);
 			if (this.history.length > this.history_size) this.history.pop();
-			let next = avg.next(this);
+			const next = avg.next(this);
 			if (next) next.do_history_update(avg, time_now);
 		}
 	}
@@ -1852,7 +1883,7 @@ class AverageRatioRoot {
 	}
 	/** @arg {string} key */
 	get_average(key) {
-		let ratio_calc = this.map.get(key);
+		const ratio_calc = this.map.get(key);
 		if (!ratio_calc) throw new Error("Ratio not found: " + key);
 		return ratio_calc.get_average();
 	}
@@ -1864,7 +1895,7 @@ class AverageRatioRoot {
 	}
 	/** @arg {AverageRatio} value_obj */
 	next(value_obj) {
-		let idx = this.values.indexOf(value_obj);
+		const idx = this.values.indexOf(value_obj);
 		if (idx < this.values.length) return this.values[idx + 1];
 		return null;
 	}
@@ -1873,11 +1904,11 @@ class AverageRatioRoot {
 		let cur = this.map.get(this.keys[0]);
 		if (!cur) throw new Error("Invalid");
 		let cur_size = cur.size;
-		let time_now = performance.now();
+		const time_now = performance.now();
 		cur.do_history_update(this, time_now);
 		cur.add_to_ratio(value);
 		for (let i = 1; i < this.keys.length; i++) {
-			let key = this.keys[i];
+			const key = this.keys[i];
 			cur = this.map.get(key);
 			if (!cur) throw new Error("Invalid");
 			cur_size *= cur.size;
@@ -1910,13 +1941,13 @@ class DataLoaderImplR {
 	}
 	/** @arg {string} key @returns {[true,string[]]|[false,null]} */
 	load_str_arr(key) {
-		let data = this.getItem(key);
+		const data = this.getItem(key);
 		if (data === null) return [false, data];
 		return [true, this.default_split(data)];
 	}
 	/** @arg {string} key @returns {[true,number[]]|[false,null]} */
 	load_int_arr(key) {
-		let storage_data = this.getItem(key);
+		const storage_data = this.getItem(key);
 		if (storage_data === null) return [false, storage_data];
 		return [true, this.parse_int_arr(storage_data)];
 	}
@@ -1960,7 +1991,7 @@ class AutoBuyStateImplR {
 	}
 	init() {
 		if (window.atomepersecond === 0) {
-			let node = new TimeoutNode(0);
+			const node = new TimeoutNode(0);
 			this.root_node.append_child(node);
 			node.start(new TimeoutTarget(this, this.init));
 			return;
@@ -1971,24 +2002,24 @@ class AutoBuyStateImplR {
 			for (let i = 0; i < 8; i++) this.arr.push(rep_val * .75);
 		} else rep_val = 0.75;
 		this.ratio_types = ["10sec", "1min", "5min", "30min", "3hour"];
-		let ratio_duration = [
+		const ratio_duration = [
 			10 * 1000,
 			60 * 1000,
 			5 * 60 * 1000,
 			30 * 60 * 1000,
 			3 * 60 * 60 * 1000,
 		];
-		let ratio_counts = [80, 6, 5, 6, 6];
+		const ratio_counts = [80, 6, 5, 6, 6];
 		/** @arg {number[]} arr @arg {number} i */
 		function mul_3(arr, i) {
-			let [a, b = 1, c = 10] = arr.slice(i);
+			const [a, b = 1, c = 10] = arr.slice(i);
 			return a * b * c * 4;
 		}
 		//@AverageRatio
 		/** @arg {AutoBuyStateImplR} state @arg {number} i @arg {number} now_start */
 		function create_ratio(state, i, now_start) {
 			if (!state.ratio_types) throw 1;
-			let obj = new AverageRatio(state.ratio_types[i], {
+			const obj = new AverageRatio(state.ratio_types[i], {
 				size: ratio_counts[i],
 				history_size: mul_3(ratio_counts, i),
 				time_start: now_start,
@@ -1997,7 +2028,7 @@ class AutoBuyStateImplR {
 			if (state.ratio_types[i] === "1min") obj.set_history_size(7200);
 			state.avg.set_ratio(state.ratio_types[i], obj);
 		}
-		let now_start = performance.now();
+		const now_start = performance.now();
 		for (let i = 0; i < 5; i++) create_ratio(this, i, now_start);
 		this.prev_atomepersecond = window.atomepersecond;
 		this.is_init_complete = true;
@@ -2012,7 +2043,7 @@ class AutoBuyStateImplR {
 		this.arr.unshift(value);
 		this.avg.push(value);
 		while (this.arr.length > this.arr_max_len) this.arr.pop();
-		let new_ratio = this.calc_ratio();
+		const new_ratio = this.calc_ratio();
 		if (!Number.isFinite(new_ratio)) {
 			console.assert(false, "ratio result is not finite");
 		}
@@ -2035,15 +2066,15 @@ class AutoBuyStateImplR {
 		if (!do_update) return;
 		this.total_mul = 1;
 		this.total_cycle_count_change = 0;
-		let did_update = this.rep_update_ratio_mode(true);
+		const did_update = this.rep_update_ratio_mode(true);
 		/*let should_notify=did_update;
 			while(did_update){did_update=this.rep_update_ratio_mode(false);}*/
 		if (did_update) this.log_on_update_ratio_mode_notify();
 	}
 	/** @arg {boolean} do_lock */
 	rep_update_ratio_mode(do_lock) {
-		let mode_ratio_up = this.ratio_mode * .1 + .1;
-		let mode_ratio_down = this.ratio_mode * .1 - .4;
+		const mode_ratio_up = this.ratio_mode * .1 + .1;
+		const mode_ratio_down = this.ratio_mode * .1 - .4;
 		if (this.ratio > (mode_ratio_up + .4)) {
 			return this.on_increase_ratio(do_lock, 2);
 		}
@@ -2102,8 +2133,8 @@ class AutoBuyStateImplR {
 			this.total_cycle_count_change,
 		);
 		const near_avg = "30min";
-		let real_val = this.avg.get_average(near_avg);
-		let [num, exponent] = this.calc_near_val(real_val);
+		const real_val = this.avg.get_average(near_avg);
+		const [num, exponent] = this.calc_near_val(real_val);
 		if (real_val < 0.9) return;
 		if (exponent < 2 && exponent > -3) {
 			log_if_impl_r(
@@ -2123,7 +2154,7 @@ class AutoBuyStateImplR {
 			);}
 	}
 	update_not_ready() {
-		let node = new TimeoutNode(80);
+		const node = new TimeoutNode(80);
 		this.root_node.append_child(node);
 		node.start(new TimeoutTarget(this, this.update));
 	}
@@ -2155,21 +2186,20 @@ class AutoBuyStateImplR {
 	}
 	/** @arg {string} time_played_str */
 	on_game_reset_finish(time_played_str) {
-		let history_arr_1 = this.avg.values[0].history.slice().reverse();
+		const history_arr_1 = this.avg.values[0].history.slice().reverse();
 		let history_item = history_arr_1[0];
-		let history_div_num = 6 * 5 * 6;
-		let history_arr_2 = history_arr_1.map((value) => {
+		const history_div_num = 6 * 5 * 6;
+		const history_arr_2 = history_arr_1.map((value) => {
 			history_item *= history_div_num - 1;
 			history_item += value;
 			history_item /= history_div_num;
 			return (history_item * 100).toFixed(1);
 		});
-		let json_hist = JSON.stringify(history_arr_2);
-		let json_tag = "JSON_HIST";
-		let prev_hist = sessionStorage["history"];
+		const json_hist = JSON.stringify(history_arr_2);
+		const json_tag = "JSON_HIST";
+		const prev_hist = sessionStorage["history"];
 		/** @type {string[]} */
 		let data_arr;
-		xx:
 		if (prev_hist && prev_hist.startsWith(json_tag)) {
 			let hist_data = prev_hist.slice(json_tag.length);
 			while (hist_data[0] === "@") hist_data = hist_data.slice(1);
@@ -2177,11 +2207,11 @@ class AutoBuyStateImplR {
 			data_arr.push(json_hist);
 		} else data_arr = [json_hist];
 		sessionStorage["history"] = `${json_tag}@${data_arr.join("|")}`;
-		let time_played_data = sessionStorage["time_played_hist"];
+		const time_played_data = sessionStorage["time_played_hist"];
 		/** @type {(string|null)[]} */
 		let time_played_arr = data_arr.map(() => null);
 		if (time_played_data) {
-			let stored_arr = JSON.parse(time_played_data);
+			const stored_arr = JSON.parse(time_played_data);
 			for (let i = 0; i < stored_arr.length; i++) {
 				time_played_arr[i] = stored_arr[i];
 			}
@@ -2191,7 +2221,7 @@ class AutoBuyStateImplR {
 	}
 	reset() {
 		this.ratio *= 0.75;
-		for (var i = 0; i < this.arr.length; i++) this.arr[i] *= 0.75;
+		for (let i = 0; i < this.arr.length; i++) this.arr[i] *= 0.75;
 	}
 }
 class AsyncAutoBuy {
@@ -2201,7 +2231,7 @@ class AsyncAutoBuy {
 		this.unit_upgradeable_trigger = 30;
 	}
 	get timeout_ms() {
-		debugger;
+		trigger_debug_breakpoint();
 		return this.parent.timeout_ms;
 	}
 	/** @arg {boolean} no_wait */
@@ -2211,7 +2241,7 @@ class AsyncAutoBuy {
 	}
 	/** @returns {Promise<[boolean,number]>} */
 	async maybe_async_reset() {
-		let loss_rate = await this.parent.unit_promote_start();
+		const loss_rate = await this.parent.unit_promote_start();
 		if (this.parent.maybe_run_reset()) return [true, loss_rate];
 		return [false, loss_rate];
 	}
@@ -2251,7 +2281,8 @@ class AsyncAutoBuy {
 		try {
 			run_loop:
 			while (this.main_running) {
-				for (this.parent.iter_count = 0;;) {
+				this.parent.iter_count = 0;
+				for (let exit_loop = false; !exit_loop;) {
 					// 30
 					this.unit_upgradeable_trigger = 30;
 					if (
@@ -2263,12 +2294,12 @@ class AsyncAutoBuy {
 						this.parent.unit_upgradable_count = 0;
 						await this.rare_faster_async();
 					}
-					let [quit, loss_rate] = await this.maybe_async_reset();
+					const [quit, loss_rate] = await this.maybe_async_reset();
 					if (quit) break run_loop;
 					if (loss_rate == 0) await this.faster_timeout_async();
 					else await this.slower_timeout_async();
 					if (loss_rate > 0.08) continue;
-					if (this.parent.pre_total == window.totalAtome) break;
+					if (this.parent.pre_total == window.totalAtome) exit_loop = true;
 				}
 				await this.faster_timeout_async();
 			}
@@ -3069,7 +3100,7 @@ class AutoBuyImplR {
 		this.timeout_ms = this.calc_timeout_ms();
 		this.pre_total = window.totalAtome;
 		await do_auto_unit_promote();
-		let money_diff = this.pre_total - window.totalAtome;
+		const money_diff = this.pre_total - window.totalAtome;
 		let loss_rate = money_diff / this.pre_total;
 		if (this.pre_total != window.totalAtome) this.unit_upgradable_count++;
 		if (this.pre_total != window.totalAtome && this.debug) {
