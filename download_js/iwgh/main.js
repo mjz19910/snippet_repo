@@ -344,7 +344,7 @@ function parse_rng_word(word, add_new_words = true, destructure_word = false) {
       if (word_starts_with_vowel(w2)) {
         word_arr.push("v:" + w2[0]);
         w2 = w2.slice(1);
-				continue;
+        continue;
       }
       const seq_len = word_starts_with_consonant_seq(w2);
       if (seq_len === null) break;
@@ -462,6 +462,7 @@ async function run() {
     for (const new_word of new_words_arr) {
       parse_rng_word(new_word, true, true);
     }
+    console.log(new_words_arr);
     new_words_set.clear();
     console.log("dict word num", new_words);
   };
