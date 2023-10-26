@@ -289,6 +289,7 @@ function strip_word_part(word) {
   if (word.startsWith("b")) return strip_vowel("b", word);
   if (word.startsWith("ch")) return strip_vowel("ch", word);
   if (word.startsWith("c")) return strip_vowel("c", word);
+  if (word.startsWith("d")) return strip_vowel("d", word);
   return word;
 }
 /** @type {Map<string,number>} */
