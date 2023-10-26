@@ -56,12 +56,12 @@ function parse_sentence(str) {
 			case "sort":
 			case "local":
 			case "national":
-			case "popular":
-			case "plant": break x;
-			case "kind": {
+			case "popular": break x;
+			case "plant": {
 				let word2=parsed_src.shift();
 				console.log(["w1",word1,"w2",word2]);
 			} break x;
+			case "kind":
 			case "type": {
 				let word2=parsed_src.shift();
 				if(word2!=="of") throw new Error("word2 not of");
