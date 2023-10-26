@@ -4556,14 +4556,13 @@ class TCPMessage
 	static make_syn(client_id)
 	{
 		let seq=(Math.random()*ack_win)%ack_win|0;
-		if(testing_tcp) {seq=100;}
 		return new TCPMessage(tcp_syn,client_id,seq,null,null);
 	}
 	/** @arg {number} client_id @arg {import("./support/dbg/ConnectionMessage.js").ConnectionMessage["data"]} data @arg {number} seq @arg {number} ack @returns {import("./support/dbg/ConnectionMessage.js").ConnectionMessage} */
 	static make_message(client_id,data,seq,ack) {return new TCPMessage(0,client_id,seq,ack,data);}
 }
 
-let testing_tcp=false;
+let testing_tcp=true;
 
 class Socket
 {
