@@ -1,6 +1,9 @@
 const word_list_1=[
 	"popular",
 ];
+const word_list_2=[
+	"traditional",
+];
 /**
  * @param {string} str
  */
