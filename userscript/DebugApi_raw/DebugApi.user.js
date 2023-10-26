@@ -3472,15 +3472,15 @@ function gen_function_prototype_use(safe_function_prototype) {
 	/** @type {[typeof apply_,typeof bind_,typeof call_]}*/
 	const funcs = [apply_, bind_, call_];
 
+	const bound_apply = apply_.bind(apply_);
 	const bound_bind = apply_.bind(bind_);
 	const bound_call = apply_.bind(call_);
-	const bound_apply = apply_.bind(apply_);
 
 	/** @type {[typeof bound_apply,typeof bound_bind,typeof bound_call]}*/
 	const bound_funcs = [
 		bound_apply,
-		bound_call,
 		bound_bind,
+		bound_call,
 	];
 	return { funcs, bound_funcs };
 }
@@ -3495,25 +3495,33 @@ function run_modules_plugin() {
 	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
 	const bound_call_call = function_prototype_call.bind(function_prototype_call);
 	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
-	const bound_call_apply = function_prototype_call.bind(function_prototype_apply);
+	const bound_call_apply = function_prototype_call.bind(
+		function_prototype_apply,
+	);
 	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
 	const bound_call_bind = function_prototype_call.bind(function_prototype_bind);
 
 	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
 	const bound_bind_call = function_prototype_bind.bind(function_prototype_call);
 	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
-	const bound_bind_apply = function_prototype_bind.bind(function_prototype_apply);
+	const bound_bind_apply = function_prototype_bind.bind(
+		function_prototype_apply,
+	);
 	/** @type {(thisArg:Function, bindThisArg:any, ...argArray:[thisArg:any, ...callArgs:any[]])=>any} */
 	const bound_bind_bind = function_prototype_bind.bind(function_prototype_bind);
 
 	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
-	const bound_apply_call = function_prototype_apply.bind(function_prototype_call);
+	const bound_apply_call = function_prototype_apply.bind(
+		function_prototype_call,
+	);
 	/** @type {(thisArg:Function, applyArgs:[thisArg:any, argArray?:any])=>any} */
 	const bound_apply_apply = function_prototype_apply.bind(
 		function_prototype_apply,
 	);
 	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...bindArgs:any[]])=>(...args:any[])=>any}*/
-	const bound_apply_bind = function_prototype_apply.bind(function_prototype_bind);
+	const bound_apply_bind = function_prototype_apply.bind(
+		function_prototype_bind,
+	);
 
 	const safe_function_prototype = {
 		apply: function_prototype.apply,
