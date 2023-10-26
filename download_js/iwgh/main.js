@@ -141,38 +141,12 @@ function parse_sentence(str) {
 		let tmp_arr=[];
 		for(;parsed_src.length>0;) {
 			let word=next_word(parsed_src);
+			if(word===null) throw new Error("Bad iter");
 			tmp_arr.push(word);
 		}
 		parsed_src=tmp_arr;
 	}
 	parse_next_word(parsed,parsed_src);
-	let word1=next_word(parsed_src);
-	if(word1!=="This") throw new Error("first word not 'This'");
-	let word2=next_word(parsed_src);
-	if(word2!=="is") throw new Error("second word not 'is'");
-	parsed.push({type: "this_is"});
-	let word3=next_word(parsed_src);
-	switch(word3) {
-		case "a": {
-			parse_a(parsed,parsed_src);
-		} break;
-		case "usually":
-		case "generally": {
-			parsed.push({type: word3});
-			let word4=next_word(parsed_src);
-			if(word4==="a") {
-				parse_a(parsed,parsed_src);
-				break;
-			}
-			console.log([arr_end(parsed).type,parsed_src[0]]);
-			throw 1;
-		}
-		default: {
-			console.log("parsed default:",parsed_src[0]);
-			throw 1;
-		}
-	}
-
 	return str;
 }
 /**
