@@ -21,6 +21,10 @@ function parse_sentence(str) {
 	if(str.endsWith(".")) {
 		str=str.slice(0,-1);
 	}
+	/**
+	 * @param {{ type: string; }[]} parsed
+	 * @param {string[]} parsed_src
+	 */
 	function parse_a(parsed,parsed_src) {
 		parsed.push({type: "a"});
 		parsed_src.shift();
