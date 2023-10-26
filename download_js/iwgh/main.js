@@ -104,9 +104,33 @@ function parse_sentence(str) {
 			return parse_next_word(parsed,parsed_src);
 		}
 		switch(cur_word) {
+			case "rarely":
+			case "party":
+			case "may":
+			case "on":
+			case "spotted":
+			case "foreigner":
+			case "like":
+			case "that":
+			case "are":
+			case "to":
+			case "uttered":
+			case "sometimes":
+			case "something":
+			case "told":
+			case "by":
+			case "official":
+			case "it":
+			case "debate":
+			case "used":
+			case "part":
+			case "northern":
+			case "southern":
+			case "or":
 			case "scientists":
 			case "depending":
 			case "as":
+			case "its":
 			case "it's":
 			case "the":
 			case "meaning":
