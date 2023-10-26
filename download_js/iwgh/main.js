@@ -69,6 +69,11 @@ function parse_sentence(str) {
 			case "generally": {
 				parsed.push({type: "generally"});
 				parsed_src.shift();
+				let next=parsed_src.shift();
+				if(next==="a") {
+					parse_a(parsed,parsed_src);
+					break;
+				}
 				console.log([arr_end(parsed).type,parsed_src[0]]);
 				throw 1;
 			}
