@@ -62,7 +62,7 @@ async function run() {
 	}
 	let description_arr=[...description_set.values()].sort();
 	for(let description of description_arr) {
-		console.log(description);
+		console.log("%o",description);
 	}
 }
 await run();
