@@ -330,7 +330,6 @@ const rng_word_num_map = new Map();
  */
 function parse_rng_word(word) {
   word = word.toLowerCase();
-  if (word.startsWith("!")) word = word.slice(1);
   {
     const word_arr = [];
     let w2 = word;
@@ -346,12 +345,6 @@ function parse_rng_word(word) {
     } while (w2 !== "");
     console.log(word_arr.length, word_arr.join(","));
   }
-  if (word_starts_with_vowel(word)) {
-    word = strip_vowel("", word);
-  } else {
-    word = strip_word_part(word);
-  }
-  if (word === "") return;
   dict.add(word);
   const word_chars = word.split("");
   for (let char_idx = 0; char_idx < word_chars.length - 1; char_idx++) {
