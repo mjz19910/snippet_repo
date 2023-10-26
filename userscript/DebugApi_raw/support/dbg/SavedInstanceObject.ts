@@ -1,1 +1,1 @@
-export type SavedInstanceObject={};
+export type SavedInstanceObject=Record<never,never>;

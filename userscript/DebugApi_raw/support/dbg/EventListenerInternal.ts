@@ -1,5 +1,7 @@
+import {FunctionLike} from "../types/FunctionLike.ts";
+
 export type EventListenerInternal={
-	listener: Function;
+	listener: FunctionLike;
 	once: boolean;
 	passive: boolean;
 	type: "string";

@@ -1,1 +1,3 @@
-export interface BlockEnd {}
+export interface BlockEnd {
+	__tag: "BlockEnd";
+}
