@@ -104,6 +104,11 @@ function parse_sentence(str) {
 			return parse_next_word(parsed,parsed_src);
 		}
 		switch(cur_word) {
+			case "thing":
+			case "else":
+			case "polite":
+			case "p.m.":
+			case "mean":
 			case "might":
 			case "lied":
 			case "cases":
