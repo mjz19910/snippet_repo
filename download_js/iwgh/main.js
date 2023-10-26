@@ -9,6 +9,10 @@ const word3_dict=[
 	"emblem",
 	"melody",
 	"art",
+	"sport",
+	"hairstyle",
+	"palace",
+	"pastime",
 ];
 /**
  * @template T
