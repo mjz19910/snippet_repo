@@ -2333,7 +2333,7 @@ class AsyncAutoBuy {
 	}
 	/** @arg {number} timeout @arg {string} char */
 	async next_timeout_async(timeout, char, silent = false) {
-		let node = new AsyncTimeoutNode(timeout);
+		const node = new AsyncTimeoutNode(timeout);
 		this.parent.root_node.append_child(node);
 		if (!silent) {
 			this.parent.timeout_ms = timeout;
@@ -2362,7 +2362,7 @@ class AutoBuyImplR {
 		this.debug = this.state.debug;
 		this.compressor = new MulCompression();
 		this.stats_calculator = new CompressionStatsCalculator();
-		let history_loaded = this.local_data_loader.load_str_arr(
+		const history_loaded = this.local_data_loader.load_str_arr(
 			"auto_buy_history_str",
 		);
 		if (history_loaded[0]) this.state_history_arr = history_loaded[1];
@@ -2379,7 +2379,7 @@ class AutoBuyImplR {
 		} catch (e) {
 			console.log(e);
 		}
-		let timeout_arr_load = this.local_data_loader.load_int_arr(
+		const timeout_arr_load = this.local_data_loader.load_int_arr(
 			"auto_buy_timeout_str",
 		);
 		if (timeout_arr_load[0]) this.timeout_arr = timeout_arr_load[1];
@@ -2399,28 +2399,24 @@ class AutoBuyImplR {
 		else args.unshift("test");
 		log_if_impl_r(log_level, format_str, ...args);
 	}
-	/** @arg {{ [x: string]: any; }} sym_indexed_this @arg {{ sym: any; }} val */
-	symbols_iter(sym_indexed_this, val) {
-		if (!sym_indexed_this[val.sym]) return;
-		let obj = sym_indexed_this[val.sym];
+	/** @arg {{ sym: any; }} val */
+	symbols_iter(val) {
+		if (!this[val.sym]) return;
+		const obj = this[val.sym];
 		if (!obj.split) return;
-		let str = sym_indexed_this[val.sym];
-		let arr = str.split(",");
-		let trimmed = arr.map((/** @type {string} */ e) => e.trim());
+		const str = this[val.sym];
+		const arr = str.split(",");
+		const trimmed = arr.map((/** @type {string} */ e) => e.trim());
 		this.debug_arr.push(...trimmed);
 	}
 	check_for_symbols() {
-		/** @type {any} */
-		let this_as_any = this;
-		/** @type {{[x:symbol]:string}} */
-		let sym_indexed_this = this_as_any;
 		for (let i = 0; i < debug_id_syms.length; i++) {
-			let val = debug_id_syms[i].deref();
-			if (val) this.symbols_iter(sym_indexed_this, val);
+			const val = debug_id_syms[i].deref();
+			if (val) this.symbols_iter(val);
 		}
 	}
 	pre_init() {
-		let audio_element = document.querySelector("#background_audio");
+		const audio_element = document.querySelector("#background_audio");
 		if (!audio_element) {
 			throw new Error('Missing element querySelector("#background_audio")');
 		}
@@ -2437,136 +2433,134 @@ class AutoBuyImplR {
 		});
 		this.dom_pre_init();
 	}
+	async_pre_init_vm() {
+		const raw_instructions = `
+		// [none]
+		vm_push_self;
+		// vm_self
+		cast,object_index;
+		// vm_self as object_index
+		push,target_obj;
+		// (vm_self as object_index) "target_obj"
+		get;
+		// (vm_self as object_index).target_obj
+		// .. -> (vm_self.target_obj named target_obj)
+		// .. -> target_obj
+		cast,object_index;
+		// <object_index>target_obj
+		push,background_audio;
+		// <object_index>target_obj "background_audio"
+		get;
+		// (<object_index>target_obj)["background_audio"]
+		// .. -> (target_obj.background_audio named background_audio)
+		// .. -> background_audio
+		dup;
+		// background_audio background_audio
+		cast,object_index;
+		// background_audio (background_audio as object_index)
+		push,play;
+		// background_audio (background_audio as object_index) "play"
+		get;
+		// background_audio (background_audio as object_index)["play"]
+		// target_obj background_audio .. -> background_audio.play
+		cast,vm_function;
+		// background_audio (background_audio.play as vm_function)
+		// .. -> call(background_audio, (background_audio.play as vm_function))
+		// .. -> background_audio.play()
+		call,int(2);
+		// (return is Promise<void> named playback_promise)
+		dup;
+		// playback_promise playback_promise
+		cast,object_index;
+		// playback_promise (playback_promise as object_index)
+		push,then;
+		// playback_promise (playback_promise as object_index) "then"
+		get;
+		// playback_promise playback_promise.then
+		cast,vm_function;
+		// playback_promise (playback_promise.then as vm_function)
+		push,%o;
+		// playback_promise (playback_promise.then as vm_function) arg1
+		push,%o;
+		// playback_promise (playback_promise.then as vm_function) arg1 arg2
+		// .. -> call<4>(playback_promise, (playback_promise.then as vm_function), arg1, arg2)
+		// .. -> playback_promise.then(arg1, arg2)
+		call,int(4);
+		// (return is Promise<void>)
+		drop;
+		// [none]
+		push_window_object;
+		// window
+		dup;
+		// window window
+		cast,object_index;
+		// window (window as object_index)
+		push,removeEventListener;
+		// window (window as object_index) "removeEventListener"
+		get;
+		// window (window as object_index)["removeEventListener"]
+		// window .. -> window.removeEventListener
+		cast,vm_function;
+		// window (window.removeEventListener as vm_function)
+		push,click;
+		// window (window.removeEventListener as vm_function) "click"
+		vm_push_self;
+		// window (window.removeEventListener as vm_function) "click" vm_self
+		// .. -> call<4>(window, window.removeEventListener,"click", vm_self)
+		// .. -> window.removeEventListener("click", vm_self)
+		call,int(4);
+		// (return is vm_self)
+		drop;
+		// [none]
+		vm_return;
+		`;
+		const instructions = StackVMParserImplR
+			.parse_instruction_stream_from_string(
+				raw_instructions,
+				[
+					function () {
+						// LOG_LEVEL_INFO
+						log_if_impl_r(LOG_LEVEL_ERROR_IMPL, "play success");
+					},
+					/** @arg {any} err */
+					function (err) {
+						log_if_impl_r(LOG_LEVEL_ERROR_IMPL, err);
+					},
+				],
+			);
+		const handler = new EventHandlerVMDispatchImplR(instructions, this);
+		self.addEventListener("click", handler);
+	}
 	async async_pre_init() {
 		if (!this.background_audio) throw new Error("1");
 		if (!(this.background_audio instanceof HTMLAudioElement)) {
 			throw new Error("1");
 		}
-		x:
 		try {
 			return await this.background_audio.play();
 		} catch (e) {
 			log_if_impl_r(
 				LOG_LEVEL_INFO_IMPL,
 				"failed to play `#background_audio`, page was loaded without a user interaction(reload from devtools or F5 too)",
+				e,
 			);
 		}
-		let raw_instructions = `
-			// [none]
-			vm_push_self;
-			// vm_self
-			cast,object_index;
-			// vm_self as object_index
-			push,target_obj;
-			// (vm_self as object_index) "target_obj"
-			get;
-			// (vm_self as object_index).target_obj
-			// .. -> (vm_self.target_obj named target_obj)
-			// .. -> target_obj
-			cast,object_index;
-			// <object_index>target_obj
-			push,background_audio;
-			// <object_index>target_obj "background_audio"
-			get;
-			// (<object_index>target_obj)["background_audio"]
-			// .. -> (target_obj.background_audio named background_audio)
-			// .. -> background_audio
-			dup;
-			// background_audio background_audio
-			cast,object_index;
-			// background_audio (background_audio as object_index)
-			push,play;
-			// background_audio (background_audio as object_index) "play"
-			get;
-			// background_audio (background_audio as object_index)["play"]
-			// target_obj background_audio .. -> background_audio.play
-			cast,vm_function;
-			// background_audio (background_audio.play as vm_function)
-			// .. -> call(background_audio, (background_audio.play as vm_function))
-			// .. -> background_audio.play()
-			call,int(2);
-			// (return is Promise<void> named playback_promise)
-			dup;
-			// playback_promise playback_promise
-			cast,object_index;
-			// playback_promise (playback_promise as object_index)
-			push,then;
-			// playback_promise (playback_promise as object_index) "then"
-			get;
-			// playback_promise playback_promise.then
-			cast,vm_function;
-			// playback_promise (playback_promise.then as vm_function)
-			push,%o;
-			// playback_promise (playback_promise.then as vm_function) arg1
-			push,%o;
-			// playback_promise (playback_promise.then as vm_function) arg1 arg2
-			// .. -> call<4>(playback_promise, (playback_promise.then as vm_function), arg1, arg2)
-			// .. -> playback_promise.then(arg1, arg2)
-			call,int(4);
-			// (return is Promise<void>)
-			drop;
-			// [none]
-			push_window_object;
-			// window
-			dup;
-			// window window
-			cast,object_index;
-			// window (window as object_index)
-			push,removeEventListener;
-			// window (window as object_index) "removeEventListener"
-			get;
-			// window (window as object_index)["removeEventListener"]
-			// window .. -> window.removeEventListener
-			cast,vm_function;
-			// window (window.removeEventListener as vm_function)
-			push,click;
-			// window (window.removeEventListener as vm_function) "click"
-			vm_push_self;
-			// window (window.removeEventListener as vm_function) "click" vm_self
-			// .. -> call<4>(window, window.removeEventListener,"click", vm_self)
-			// .. -> window.removeEventListener("click", vm_self)
-			call,int(4);
-			// (return is vm_self)
-			drop;
-			// [none]
-			vm_return;
-			`;
-		let instructions = StackVMParserImplR.parse_instruction_stream_from_string(
-			raw_instructions,
-			[
-				function () {
-					// LOG_LEVEL_INFO
-					log_if_impl_r(LOG_LEVEL_ERROR_IMPL, "play success");
-				},
-				/** @arg {any} err */
-				function (err) {
+		const handler_new = {
+			target: this,
+			handleEvent() {
+				this.run(this.target).then(() => {
+					log_if_impl_r(LOG_LEVEL_INFO_IMPL, "play success");
+				}, function (err) {
 					log_if_impl_r(LOG_LEVEL_ERROR_IMPL, err);
-				},
-			],
-		);
-		try {
-			let t = this;
-			let handler_new = {
-				handleEvent() {
-					this.run().then(() => {
-						log_if_impl_r(LOG_LEVEL_INFO_IMPL, "play success");
-					}, function (err) {
-						log_if_impl_r(LOG_LEVEL_ERROR_IMPL, err);
-					});
-					window.removeEventListener("click", this);
-				},
-				async run() {
-					if (!t.background_audio) throw 1;
-					await t.background_audio.play();
-				},
-			};
-			window.addEventListener("click", handler_new);
-			return;
-			let handler = new EventHandlerVMDispatchImplR(instructions, this);
-			window.addEventListener("click", handler);
-		} catch (e) {
-			console.log("error when setting up EventHandlerVMDispatch", e);
-		}
+				});
+				self.removeEventListener("click", this);
+			},
+			async run(t) {
+				if (!t.background_audio) throw 1;
+				await t.background_audio.play();
+			},
+		};
+		self.addEventListener("click", handler_new);
 	}
 	save_state_history_arr() {
 		if (this.skip_save) return;
