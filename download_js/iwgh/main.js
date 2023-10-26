@@ -104,6 +104,31 @@ function parse_sentence(str) {
 			return parse_next_word(parsed,parsed_src);
 		}
 		switch(cur_word) {
+			case "texts":
+			case "suspect":
+			case "priest":
+			case "outdated":
+			case "otherwise":
+			case "older":
+			case "least":
+			case "central":
+			case "wants":
+			case "slightly":
+			case "among":
+			case "mostly":
+			case "politician":
+			case "lost":
+			case "lips":
+			case "which":
+			case "was":
+			case "from":
+			case "letters":
+			case "holidays":
+			case "heard":
+			case "generation":
+			case "speech":
+			case "figure":
+			case "ancient":
 			case "sure":
 			case "you":
 			case "younger":
