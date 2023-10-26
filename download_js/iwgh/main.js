@@ -384,7 +384,7 @@ async function run() {
   await dictionary_file.seek(0, 0);
   const dictionary_arr = [...dict.values()].sort();
   dictionary_str = JSON.stringify(dictionary_arr, void 0, "\t");
-  const dictionary_data = encoder.encode(dictionary_arr);
+  const dictionary_data = encoder.encode(dictionary_str);
   const n_written2 = await dictionary_file.write(dictionary_data);
   console.log(n_written2, dictionary_data.length);
   await dictionary_file.truncate(dictionary_data.length);
