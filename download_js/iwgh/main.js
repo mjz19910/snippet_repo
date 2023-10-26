@@ -86,6 +86,8 @@ function parse_sentence(str) {
 					console.log("@w3",["w3",word3]);
 					break x;
 				}
+				let word4=parsed_src.shift();
+				console.log(["w4",word4]);
 				break x;
 			}
 			case "rare":
