@@ -323,6 +323,7 @@ function strip_word_part(word) {
   if (word.startsWith("w")) return strip_vowel("w", word);
   return word;
 }
+export { strip_word_part };
 /** @type {Map<string,number>} */
 const rng_word_num_map = new Map();
 /**
