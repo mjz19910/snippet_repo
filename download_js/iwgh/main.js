@@ -128,7 +128,7 @@ function parse_sentence(str) {
 				return parse_next_word(parsed,parsed_src);
 			}
 			default: {
-				console.log("parsed default:",cur_word);
+				console.log(["parsed_default",cur_word]);
 			}
 		}
 	}
