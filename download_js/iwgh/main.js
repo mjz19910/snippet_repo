@@ -409,13 +409,15 @@ async function run() {
   }
   if (description_set_state.modified) {
     const description_arr = [...description_set.values()].sort();
-		console.log("description_arr.length", description_arr.length);
-		await write_entire_file(description_file, description_arr);
+    console.log("description_arr.length", description_arr.length);
+    await write_entire_file(description_file, description_arr);
   }
-  const dictionary_arr = [...dict.values()].sort();
-  console.log("dictionary.length", dictionary_arr.length);
-  await write_entire_file(dictionary_file, dictionary_arr);
   description_file.close();
+  {
+    const dictionary_arr = [...dict.values()].sort();
+    console.log("dictionary.length", dictionary_arr.length);
+    await write_entire_file(dictionary_file, dictionary_arr);
+  }
   dictionary_file.close();
 }
 await run();
