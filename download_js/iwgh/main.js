@@ -104,6 +104,16 @@ function parse_sentence(str) {
 			return parse_next_word(parsed,parsed_src);
 		}
 		switch(cur_word) {
+			case "means":
+			case "at":
+			case "peasant":
+			case "someone":
+			case "course":
+			case "usage":
+			case "common":
+			case "modern":
+			case "vary":
+			case "eastern":
 			case "elderly":
 			case "circumstances":
 			case "citizens":
