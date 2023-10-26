@@ -72,6 +72,8 @@ function parse_sentence(str) {
 		let word1=parsed_src.shift();
 		if(word1===void 0) throw new Error("word1 null");
 		if(word3_dict.includes(word1)) {
+			let word2=parsed_src.shift();
+			console.log(["w2",word2]);
 			return;
 		}
 		x: switch(word1) {
