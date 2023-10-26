@@ -317,18 +317,18 @@ async function one_page() {
 /** @arg {Deno.FsFile} file */
 async function read_entire_file(file) {
   await file.seek(0, 0);
-  let description_data = new Uint8Array(0);
-  const buf = new Uint8Array(1024);
+  let buf = new Uint8Array(0);
+  const tmp_buf = new Uint8Array(1024);
   do {
-    const n = await file.read(buf);
+    const n = await file.read(tmp_buf);
     if (n === null) break;
-    const prev_end = description_data.length;
-    const prev_data = description_data;
-    description_data = new Uint8Array(prev_end + n);
-    description_data.set(prev_data, 0);
-    description_data.set(buf.slice(0, n), prev_end);
+    const prev_end = buf.length;
+    const prev_data = buf;
+    buf = new Uint8Array(prev_end + n);
+    buf.set(prev_data, 0);
+    buf.set(tmp_buf.slice(0, n), prev_end);
   } while (true);
-  return new TextDecoder().decode(description_data);
+  return new TextDecoder().decode(buf);
 }
 async function run() {
   const arr = [];
