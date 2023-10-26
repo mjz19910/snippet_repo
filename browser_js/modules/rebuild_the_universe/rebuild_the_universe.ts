@@ -18,6 +18,20 @@
 // @grant			none
 // ==/UserScript==
 
+declare global {
+	export class Element {}
+	export class Node {}
+	export class MediaList {}
+	export type CSSStyleSheetInit={
+		baseURL: string;
+		disabled: boolean;
+		media: MediaList|string;
+	};
+	export class CSSStyleSheet {
+		constructor(options?: CSSStyleSheetInit);
+	}
+}
+
 import {StringBox} from "../../src/box/StringBox.ts";
 import captureStackTrace from "../../src/capture-stack-trace.ts";
 import {CompressDual} from "../DebugApi/types/CompressDual.ts";
@@ -74,19 +88,6 @@ export interface BoxMakerImpl<TMakerArgs,TBoxRet extends BoxTemplateImpl<string,
 		make_new: (do_box: () => TBoxRet["value"],...a: TMakerArgs[]) => TBoxRet,
 		value: FunctionConstructor
 	) => TBoxRet;
-}
-
-declare global {
-	export class Node {}
-	export class MediaList {}
-	export type CSSStyleSheetInit={
-		baseURL: string;
-		disabled: boolean;
-		media: MediaList|string;
-	};
-	export class CSSStyleSheet {
-		constructor(options?: CSSStyleSheetInit);
-	}
 }
 
 export class CSSStyleSheetConstructorBox extends BoxTemplateImpl<"constructor_box",typeof CSSStyleSheet> {
