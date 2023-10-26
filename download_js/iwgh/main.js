@@ -103,6 +103,7 @@ function parse_sentence(str) {
 			return parse_next_word(parsed,parsed_src);
 		}
 		switch(cur_word) {
+			case "in":
 			case "rare":
 			case "local":
 			case "traditional":
