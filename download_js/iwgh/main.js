@@ -27,6 +27,9 @@ function parse_sentence(str) {
 						let word2=parsed_src.shift();
 						if(word2!=="of") throw new Error("word2 not of");
 						let word3=parsed_src.shift();
+						switch(word3) {
+							case "clothing": break x;
+						}
 						console.log(["w3",word3]);
 						break x;
 					}
