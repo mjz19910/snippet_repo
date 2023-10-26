@@ -2556,8 +2556,8 @@ class AddEventListenerExtension {
 	failed_obj = null;
 	/** @private @type {WeakRef<{}>[]} */
 	object_ids = [];
-	/** @private @readonly @type {`__inject_api_${commit_id_sha1}_namespace`} */
-	namespace_key = `__inject_api_${commit_id_sha1}_namespace`;
+	/** @private @readonly @type {`__inject_api_namespace`} */
+	namespace_key = `__inject_api_namespace`;
 	/** @type {import("./support/dbg/EventListenersT.ts").EventListenersT[]} */
 	elevated_event_handlers = [];
 	/** @private */
@@ -4510,9 +4510,8 @@ function cast_to_record_with_key_and_string_type(x, k) {
 add_function(cast_to_record_with_key_and_string_type);
 //#endregion
 
-/** @readonly @type {`CrossOriginConnection_${typeof commit_id_sha1}`} */
-const post_message_connect_message_type =
-	`CrossOriginConnection_${commit_id_sha1}`;
+/** @readonly @type {"CrossOriginConnection"} */
+const post_message_connect_message_type ="CrossOriginConnection";
 export_((exports) => {
 	exports.post_message_connect_message_type = post_message_connect_message_type;
 });
