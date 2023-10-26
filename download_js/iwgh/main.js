@@ -21,7 +21,7 @@ function parse_sentence(str) {
 				throw 1;
 			}
 			default: {
-				console.log(parsed_src[0]);
+				console.log("parsed default:",parsed_src[0]);
 				throw 1;
 			}
 		}
