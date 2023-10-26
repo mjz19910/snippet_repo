@@ -267,7 +267,7 @@ let rng_word_num_map=new Map;
 function parse_rng_word(word) {
 	word=word.toLowerCase();
 	if(word.startsWith("th")) {
-		console.log(["word",word]);
+		word=word.slice(2);
 	}
 	let word_chars=word.split("");
 	for(let char_idx=0;char_idx<word_chars.length-1;char_idx++) {
