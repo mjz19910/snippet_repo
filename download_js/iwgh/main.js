@@ -253,22 +253,22 @@ function parse_sentence(str) {
 /** @arg {string} prefix @arg {string} word */
 function strip_vowel(prefix, word) {
   if (word.startsWith(prefix + "a")) {
-    word = "!" + word.slice(prefix.length + 1);
+    return "!" + word.slice(prefix.length + 1);
   }
   if (word.startsWith(prefix + "e")) {
-    word = "!" + word.slice(prefix.length + 1);
+    return "!" + word.slice(prefix.length + 1);
   }
   if (word.startsWith(prefix + "i")) {
-    word = "!" + word.slice(prefix.length + 1);
+    return "!" + word.slice(prefix.length + 1);
   }
   if (word.startsWith(prefix + "o")) {
-    word = "!" + word.slice(prefix.length + 1);
+    return "!" + word.slice(prefix.length + 1);
   }
   if (word.startsWith(prefix + "u")) {
-    word = "!" + word.slice(prefix.length + 1);
+    return "!" + word.slice(prefix.length + 1);
   }
   if (word.startsWith(prefix + "y")) {
-    word = "!" + word.slice(prefix.length + 1);
+    return "!" + word.slice(prefix.length + 1);
   }
   return word;
 }
