@@ -258,7 +258,7 @@ const rng_word_num_map = new Map();
 function parse_rng_word(word) {
   word = word.toLowerCase();
   if (word.startsWith("a")) {
-    word = word.slice(1);
+    word = "!" + word.slice(1);
   }
   dict.add(word);
   const word_chars = word.split("");
