@@ -152,6 +152,13 @@ function parse_sentence(str) {
 		/** @type {ParsedArrItem[]} */
 		let parsed=[];
 		let parsed_src=str.split(/([ ,]|\.\.\.)/);
+		{
+			let tmp_arr=[];
+			for(;parsed_src.length>0;) {
+				let word=next_word(parsed_src);
+				tmp_arr.push(word);
+			}
+		}
 		let word1=next_word(parsed_src);
 		if(word1!=="This") throw new Error("first word not 'This'");
 		let word2=next_word(parsed_src);
