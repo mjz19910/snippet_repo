@@ -131,7 +131,7 @@ function parse_sentence(str) {
 					case "...": break x;
 					case ",": break x;
 				}
-				console.log(["w3",word3,"w4",word4]);
+				console.log(["w4",word4]);
 			} break x;
 			default: {
 				console.log(["w1",word1]);
