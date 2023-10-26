@@ -1,16 +1,24 @@
 const word3_dict=[
 	"art",
+	"boat",
 	"book",
 	"building",
 	"clothing",
+	"club",
+	"coin",
 	"company",
+	"dance",
+	"drink",
 	"emblem",
+	"establishment",
 	"food",
 	"game",
 	"garden",
+	"god",
 	"hairstyle",
 	"holiday",
 	"landscape",
+	"martial",
 	"melody",
 	"music",
 	"painting",
@@ -18,32 +26,24 @@ const word3_dict=[
 	"pastime",
 	"performance",
 	"person",
+	"philosophy",
 	"plant",
 	"poem",
+	"political",
 	"profanity",
+	"profession",
 	"religion",
 	"ritual",
+	"sculpture",
 	"smoking",
 	"song",
 	"sport",
 	"symbol",
+	"toy",
 	"transport",
+	"treehouse",
 	"village",
 	"weapon",
-	"coin",
-	"dance",
-	"establishment",
-	"drink",
-	"god",
-	"philosophy",
-	"club",
-	"treehouse",
-	"political",
-	"boat",
-	"toy",
-	"profession",
-	"martial",
-	"sculpture",
 ];
 /**
  * @template T
@@ -131,7 +131,7 @@ function parse_sentence(str) {
 					case "...": break x;
 					case ",": break x;
 				}
-				console.log(["w4",word4]);
+				console.log(["w3",word3,"w4",word4]);
 			} break x;
 			default: {
 				console.log(["w1",word1]);
