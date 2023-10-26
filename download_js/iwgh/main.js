@@ -158,6 +158,7 @@ function parse_sentence(str) {
 				let word=next_word(parsed_src);
 				tmp_arr.push(word);
 			}
+			parsed_src=tmp_arr;
 		}
 		let word1=next_word(parsed_src);
 		if(word1!=="This") throw new Error("first word not 'This'");
