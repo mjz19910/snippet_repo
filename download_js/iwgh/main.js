@@ -63,7 +63,9 @@ function parse_sentence(str) {
 			} break x;
 			case "type": {
 				let word2=parsed_src.shift();
-				console.log(["w2",word2]);
+				if(word2!=="of") throw new Error("word2 not of");
+				let word3=parsed_src.shift();
+				console.log(["w3",word3]);
 			} break x;
 			default: {
 				console.log(["w1",word1]);
