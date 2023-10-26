@@ -87,7 +87,7 @@ function parse_sentence(str) {
 	 */
 
 	/**
-	 * @typedef {GeneralSentenceWord|SentenceSectionWord|{type:"dictionary_word"; value: string; } } ParsedArrItem
+	 * @typedef {GeneralSentenceWord|SentenceSectionWord|{type:"dictionary_word"|"sentence_structure"; value: string;} } ParsedArrItem
 	 */
 
 	/**
@@ -102,7 +102,16 @@ function parse_sentence(str) {
 			parsed.push({type: "dictionary_word",value: cur_word});
 			return parse_next_word(parsed,parsed_src);
 		}
-		switch(cur_word) {}
+		switch(cur_word) {
+			case "a": {
+				parsed.push({type: "dictionary_word",value: cur_word});
+				return parse_next_word(parsed,parsed_src);
+			}
+			default: {
+				console.log("parsed default:",parsed_src[0]);
+				throw new Error("parse_next_word default");
+			}
+		}
 	}
 	/**
 	 * @param {(ParsedArrItem)[]} parsed
@@ -151,45 +160,45 @@ function parse_sentence(str) {
 			} break;
 		}
 	}
-	if(str.startsWith("This is ")) {
-		/** @type {ParsedArrItem[]} */
-		let parsed=[];
-		let parsed_src=str.split(/([ ,]|\.\.\.)/);
-		{
-			let tmp_arr=[];
-			for(;parsed_src.length>0;) {
-				let word=next_word(parsed_src);
-				tmp_arr.push(word);
-			}
-			parsed_src=tmp_arr;
+	/** @type {ParsedArrItem[]} */
+	let parsed=[];
+	let parsed_src=str.split(/([ ,]|\.\.\.)/);
+	{
+		let tmp_arr=[];
+		for(;parsed_src.length>0;) {
+			let word=next_word(parsed_src);
+			tmp_arr.push(word);
 		}
-		let word1=next_word(parsed_src);
-		if(word1!=="This") throw new Error("first word not 'This'");
-		let word2=next_word(parsed_src);
-		if(word2!=="is") throw new Error("second word not 'is'");
-		parsed.push({type: "this_is"});
-		let word3=next_word(parsed_src);
-		switch(word3) {
-			case "a": {
+		parsed_src=tmp_arr;
+	}
+	parse_next_word(parsed,parsed_src);
+	let word1=next_word(parsed_src);
+	if(word1!=="This") throw new Error("first word not 'This'");
+	let word2=next_word(parsed_src);
+	if(word2!=="is") throw new Error("second word not 'is'");
+	parsed.push({type: "this_is"});
+	let word3=next_word(parsed_src);
+	switch(word3) {
+		case "a": {
+			parse_a(parsed,parsed_src);
+		} break;
+		case "usually":
+		case "generally": {
+			parsed.push({type: word3});
+			let word4=next_word(parsed_src);
+			if(word4==="a") {
 				parse_a(parsed,parsed_src);
-			} break;
-			case "usually":
-			case "generally": {
-				parsed.push({type: word3});
-				let word4=next_word(parsed_src);
-				if(word4==="a") {
-					parse_a(parsed,parsed_src);
-					break;
-				}
-				console.log([arr_end(parsed).type,parsed_src[0]]);
-				throw 1;
+				break;
 			}
-			default: {
-				console.log("parsed default:",parsed_src[0]);
-				throw 1;
-			}
+			console.log([arr_end(parsed).type,parsed_src[0]]);
+			throw 1;
+		}
+		default: {
+			console.log("parsed default:",parsed_src[0]);
+			throw 1;
 		}
 	}
+
 	return str;
 }
 /**
