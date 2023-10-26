@@ -1,13 +1,22 @@
 function parse_sentence() {
 }
+/**
+ * @param {string} str
+ * @param {string} needle
+ */
 function split_at(str,needle) {
 	let idx=str.indexOf(needle);
 	if(idx===-1) return [str];
 	let n_len=needle.length;
 	let arr=[];
-	let sp=str.slice(0,idx+n_len);
-	arr.push(sp);
-	console.log(sp);
+	let start=0;
+	do {
+		let sp=str.slice(start,idx+n_len);
+		arr.push(sp);
+		console.log(sp);
+		start=idx+n_len;
+		idx=str.indexOf(needle,start);
+	} while(idx!==-1);
 	return arr;
 }
 async function run() {
