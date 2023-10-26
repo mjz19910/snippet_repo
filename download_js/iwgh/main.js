@@ -16,7 +16,7 @@ function parse_sentence(str) {
 		let parsed=[];
 		let parsed_src=str.split(" ");
 		parsed_src.shift(); parsed_src.shift();
-		switch(parsed_src[0]) {
+		x: switch(parsed_src[0]) {
 			case "a": {
 				parsed.push({
 					type: "this_is_a",
@@ -28,7 +28,12 @@ function parse_sentence(str) {
 					case "category": {
 						let word2=parsed_src.shift();
 						if(word2!=="of") throw new Error("word2 not of");
-					} break;
+						let word3=parsed_src.shift();
+						console.log(["w3",word3]);
+						break x;
+					}
+					case "traditional": break x;
+					case "rare": break x;
 				}
 				parsed_src.unshift(word);
 				console.log([parsed[0].type,parsed_src]);
