@@ -419,6 +419,7 @@ async function run() {
     await write_entire_file(dictionary_file, dictionary_arr);
   }
   dictionary_file.close();
+  show_rng_map();
 }
 await run();
 
