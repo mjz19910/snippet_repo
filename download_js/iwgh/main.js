@@ -150,7 +150,6 @@ function parse_sentence(str) {
 				parsed.push({type: word3});
 				let word4=parsed_src.shift();
 				if(word4==="a") {
-					parsed_src.unshift(word4);
 					parse_a(parsed,parsed_src);
 					break;
 				}
