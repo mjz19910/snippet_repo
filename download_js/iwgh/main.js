@@ -368,11 +368,13 @@ async function read_json_array_file(file) {
 async function run() {
   const arr = [];
   const description_file = await deno_default_open("./description_cache.json");
+	/** @type {string[]} */
   const description_load_arr = await read_json_array_file(description_file);
   for (const description_item of description_load_arr) {
     description_set.add(description_item);
   }
   const dictionary_file = await deno_default_open("./random_dictionary.json");
+	/** @type {string[]} */
   const load_arr2 = await read_json_array_file(dictionary_file);
   for (const word of load_arr2) {
     parse_rng_word(word);
