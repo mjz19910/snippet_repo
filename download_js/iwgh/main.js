@@ -79,14 +79,31 @@ function parse_sentence(str) {
 		str=str.slice(0,-1);
 	}
 	/**
-	 * @typedef {{type: "a"|"this_is"|"usually"|"generally"|"of";} | {type: "section";value: string;}} ParsedArrItem
+	 * @typedef {{type: "section";value: string;}} SentenceSectionWord
+	 */
+
+	/**
+	 * @typedef {{type: "a" | "this_is" | "usually" | "generally" | "of";}} GeneralSentenceWord
+	 */
+
+	/**
+	 * @typedef {GeneralSentenceWord|SentenceSectionWord|{type:"dictionary_word"; value: string; } } ParsedArrItem
 	 */
 
 	/**
 	 * @param {(ParsedArrItem)[]} parsed
 	 * @param {string[]} parsed_src
 	 */
-	function parse_next_word(parsed,parsed_src) {}
+	function parse_next_word(parsed,parsed_src) {
+		if(parsed_src.length==0) return;
+		let cur_word=next_word(parsed_src);
+		if(cur_word===void 0) throw new Error("word1 null");
+		if(word3_dict.includes(cur_word)) {
+			parsed.push({type: "dictionary_word",value: cur_word});
+			return parse_next_word(parsed,parsed_src);
+		}
+		switch(cur_word) {}
+	}
 	/**
 	 * @param {(ParsedArrItem)[]} parsed
 	 * @param {string[]} parsed_src
