@@ -63,7 +63,11 @@ function parse_sentence(str) {
 		str=str.slice(0,-1);
 	}
 	/**
-	 * @param {{ type: string; }[]} parsed
+	 * @typedef {{type: "a"|"this_is"|"usually"|"generally";} | {type: "section";value: string;}} ParsedArrItem
+	 */
+
+	/**
+	 * @param {(ParsedArrItem)[]} parsed
 	 * @param {string[]} parsed_src
 	 */
 	function parse_a(parsed,parsed_src) {
@@ -95,6 +99,7 @@ function parse_sentence(str) {
 			case "type": {
 				let word2=parsed_src.shift();
 				if(word2!=="of") throw new Error("word2 not of");
+				parsed.push({type: "section",value: word1});
 				let word3=parsed_src.shift();
 				if(word3===void 0) throw new Error("word3 null");
 				if(!word3_dict.includes(word3)) {
@@ -111,6 +116,7 @@ function parse_sentence(str) {
 		}
 	}
 	if(str.startsWith("This is ")) {
+		/** @type {ParsedArrItem[]} */
 		let parsed=[];
 		let parsed_src=str.split(/(?:[ ,]|\.\.\.)/);
 		parsed_src.shift(); parsed_src.shift();
