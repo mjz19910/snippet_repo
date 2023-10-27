@@ -1,4 +1,4 @@
-import {rebuild_the_universe_plugin} from "./rebuild_the_universe.user";
+import {rebuild_the_universe_plugin} from "./rebuild_the_universe.user.js";
 const {
 	InstructionAppendImpl,InstructionBreakpointImpl,InstructionCallImpl,InstructionCastImpl,InstructionConstructImpl,InstructionDropImpl,
 	InstructionDupImpl,InstructionGetImpl,InstructionHaltImpl,InstructionJeImpl,InstructionJmpImpl,InstructionModifyOpImpl,InstructionNopImpl,

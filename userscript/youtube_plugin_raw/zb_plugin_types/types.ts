@@ -23,7 +23,7 @@ export type MakeImportPathForTemplateDir<T>=
 	? `../zc_child_modules/${BaseName1}`|`./${BaseName1}`
 	:never;
 export type ImpPathTest1=MakeImportPathForTemplateDir<keyof PathMapType>;
-export type ImpPathTest3=MakeImportPathForTemplateDir<"../base_require_raw/BaseRequire.user">;
+export type ImpPathTest3=MakeImportPathForTemplateDir<"../base_require_raw/BaseRequire.user.js">;
 export type Ret_ParserService_GetUrlType=ReturnType<ParserService["get_url_type"]>;
 export type AsyncPluginEventDetail={
 	handle_types: HandleTypes;

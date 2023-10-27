@@ -95,7 +95,7 @@ function resolve_path_to_userscript_dir(x) {
 			switch (parts[1]) {
 				case "DebugApi_raw":
 					switch (parts[2]) {
-						case "DebugApi.user":
+						case "DebugApi.user.js":
 							resolved_path = `./${parts[1]}/${parts[2]}`;
 							break m;
 					}
@@ -106,7 +106,7 @@ function resolve_path_to_userscript_dir(x) {
 					switch (parts[2]) {
 						case "base_require_raw":
 							switch (parts[3]) {
-								case "BaseRequire.user":
+								case "BaseRequire.user.js":
 									resolved_path = `./${parts[2]}/${parts[3]}`;
 									break m;
 							}

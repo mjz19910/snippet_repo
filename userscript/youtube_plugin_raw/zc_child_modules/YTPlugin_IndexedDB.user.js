@@ -23,9 +23,9 @@ if (typeof require === "undefined" || page_require !== __module_require__) {
 	reset_require = true;
 }
 // yt_plugin/IndexedDB_Service(10) => base_require/BaseRequire(1)
-const { as, do_export } = require("../../base_require_raw/BaseRequire.user");
+const { as, do_export } = require("../../base_require_raw/BaseRequire.user.js");
 // yt_plugin/IndexedDB_Service(10) => yt_plugin/Base(4) => base_require/BaseRequire(1)
-const { BaseService } = require("./YTPlugin_Base.user");
+const { BaseService } = require("./YTPlugin_Base.user.js");
 
 // priority yt_plugin/IndexedDB_Service(10)
 

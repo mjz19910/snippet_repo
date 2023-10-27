@@ -22,8 +22,8 @@ if (typeof require === "undefined" || page_require !== __module_require__) {
 	require = __module_require__;
 	reset_require = true;
 }
-const {do_export}=require("../../base_require_raw/BaseRequire.user");
-const {yt_plugin_base_main}=require("./YTPlugin_Base.user");
+const {do_export}=require("../../base_require_raw/BaseRequire.user.js");
+const {yt_plugin_base_main}=require("./YTPlugin_Base.user.js");
 
 const __module_name__="mod$InitPlugin";
 /** @private @arg {(x:typeof exports)=>void} fn */

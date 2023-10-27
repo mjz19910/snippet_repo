@@ -25,7 +25,7 @@ if (typeof require === "undefined" || page_require !== __module_require__) {
 	reset_require = true;
 }
 // yt_plugin/Base(4) => base_require/BaseRequire(1)
-const {do_export,get_exports,required,as}=require("../../base_require_raw/BaseRequire.user");
+const {do_export,get_exports,required,as}=require("../../base_require_raw/BaseRequire.user.js");
 
 // priority yt_plugin/Base(4)
 
@@ -2089,7 +2089,7 @@ function yt_plugin_base_main()
 	}
 	if(failed_to_load) return;
 	let require=__module_require__;
-	const {ServiceLoader}=require("./YTPlugin_ServiceLoader_Plugin.user");
+	const {ServiceLoader}=require("./YTPlugin_ServiceLoader_Plugin.user.js");
 	const log_enabled_page_type_change=false;
 	/** @private @type {import("../zb_plugin_types/types.ts").ServiceResolverBox<{}>} */
 	const resolver_value={

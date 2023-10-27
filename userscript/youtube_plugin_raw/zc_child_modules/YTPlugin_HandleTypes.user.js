@@ -24,9 +24,9 @@ if (typeof require === "undefined" || page_require !== __module_require__) {
 	require = __module_require__;
 	reset_require = true;
 }
-const {do_export,as}=require("../../base_require_raw/BaseRequire.user");
-const {split_string_once_ex2}=require("./YTPlugin_Base.user");
-const {base64_url_dec,split_string_once,split_string,as_any,JsonReplacerState,BaseService,split_string_once_ex}=require("./YTPlugin_Base.user");
+const {do_export,as}=require("../../base_require_raw/BaseRequire.user.js");
+const {split_string_once_ex2}=require("./YTPlugin_Base.user.js");
+const {base64_url_dec,split_string_once,split_string,as_any,JsonReplacerState,BaseService,split_string_once_ex}=require("./YTPlugin_Base.user.js");
 
 //#region module setup
 const __module_name__="mod$HandleTypes";
@@ -40,7 +40,7 @@ export_(exports => {exports.__is_module_flag__=true;});
 function init_module()
 {
 	let require=__module_require__;
-	const {ECatcherService}=require("./YTPlugin_ECatcherService_Plugin.user");
+	const {ECatcherService}=require("./YTPlugin_ECatcherService_Plugin.user.js");
 	/** @type {(number[]|number)[]} */
 	const new_fexp_expected_many=[
 		[24517720,39323453,39323495,39323568,39323575,39323582],

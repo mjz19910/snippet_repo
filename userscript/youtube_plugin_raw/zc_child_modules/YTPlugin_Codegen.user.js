@@ -23,8 +23,8 @@ if (typeof require === "undefined" || page_require !== __module_require__) {
 	require = __module_require__;
 	reset_require = true;
 }
-const {as,do_export}=require("../../base_require_raw/BaseRequire.user");
-const {split_string_once,split_string,as_any,JsonReplacerState,ServiceWithAccessors}=require("./YTPlugin_Base.user");
+const {as,do_export}=require("../../base_require_raw/BaseRequire.user.js");
+const {split_string_once,split_string,as_any,JsonReplacerState,ServiceWithAccessors}=require("./YTPlugin_Base.user.js");
 
 if(window.__log_module_loading_enabled__) console.log("Load Codegen Service");
 const __module_name__="mod$CodegenService";

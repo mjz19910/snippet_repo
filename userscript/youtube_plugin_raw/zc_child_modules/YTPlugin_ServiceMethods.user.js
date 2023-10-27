@@ -23,7 +23,7 @@ if (typeof require === "undefined" || page_require !== __module_require__) {
 	require = __module_require__;
 	reset_require = true;
 }
-const { do_export, as } = require("../base_require_raw/BaseRequire.user");
+const { do_export, as } = require("../base_require_raw/BaseRequire.user.js");
 const {
 	ServiceData,
 	split_string_once,
@@ -32,7 +32,7 @@ const {
 	as_any,
 	base64_dec,
 	JsonReplacerState,
-} = require("./YTPlugin_Base.user");
+} = require("./YTPlugin_Base.user.js");
 
 const __module_name__ = "mod$ServiceMethods";
 /** @private @arg {(x:typeof exports)=>void} fn */
