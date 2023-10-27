@@ -16,17 +16,12 @@
 // @hash_for_version 0.1.2
 
 /* eslint-disable no-undef */
-console.log(typeof require == "undefined");
-const page_require = typeof require == "undefined"
-	? typeof __module_require__ == "undefined" ? null : __module_require__
+const page_require = typeof require === "undefined"
+	? __module_require__
 	: require;
 let delete_require = false,
 	reset_require = false;
-if (
-	(typeof require === "undefined" ||
-		page_require !== __module_require__) &&
-	typeof __module_require__ != "undefined"
-) {
+if (typeof require === "undefined" || page_require !== __module_require__) {
 	delete_require = typeof require === "undefined";
 	require = __module_require__;
 	reset_require = true;
@@ -2184,6 +2179,11 @@ export_((exports) => {
 
 const api_debug_enabled = false;
 // #region console
+const base_console = self.console;
+add_object_with_name("Console", base_console);
+
+/** @type {Console} */
+const console = { ...self.console };
 console.log = console.log.bind(self.console);
 // #endregion
 
