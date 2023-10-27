@@ -1497,13 +1497,14 @@ class NamedIdGenerator {
 		}
 	}
 }
+/** @template {string} T */
 class EventHandlerDispatch {
-	/** @arg {{[x:string]: (x:unknown)=>void}} target_obj @arg {string} target_name */
+	/** @arg {{[V in T]: (x: Event)=>void}} target_obj @arg {T} target_name */
 	constructor(target_obj, target_name) {
 		this.target_obj = target_obj;
 		this.target_name = target_name;
 	}
-	/** @arg {unknown} event */
+	/** @arg {Event} event */
 	handleEvent(event) {
 		this.target_obj[this.target_name](event);
 	}
@@ -2609,7 +2610,7 @@ class AutoBuyImplR {
 			font-size:22px;
 			color:lightgray;
 		}`;
-		/** @arg {unknown} obj @arg {HTMLElement} parent @arg {string} tag_name @arg {string} id @arg {string|undefined} [content] */
+		/** @arg {AutoBuyImplR} obj @arg {HTMLElement} parent @arg {string} tag_name @arg {string} id @arg {string|undefined} [content] */
 		function create_element(obj, parent, tag_name, id, content) {
 			const ele = document.createElement(tag_name);
 			ele.id = id;
@@ -2936,7 +2937,7 @@ class AutoBuyImplR {
 				temp.lastIndexOf("}"),
 			),
 		);
-		window.lightreset = temp_function;
+		window.lightreset = cast_as(temp_function);
 	}
 	init_impl() {
 		this.init_dom();
@@ -3393,7 +3394,7 @@ function array_sample_end(arr, rem_target_len) {
 	}
 	return arr;
 }
-/** @arg {unknown[]} arr */
+/** @arg {string[]} arr */
 function char_len_of(arr) {
 	return arr.reduce((a, b) => a + b.length, 0) + arr.length;
 }
@@ -3492,17 +3493,25 @@ function got_jquery(value) {
 	});
 	use_jquery();
 }
-/** @template U @template {U} T @arg {U} e @returns {T} */
-function cast_as(e) {
-	return e;
+/** @template T,U @arg {T} _e @arg {U|undefined} _v @returns {_e is U} */
+function cast_assume(_e, _v) {
+	return true;
+}
+/** @template T,U @arg {T} e @arg {U} [x] @returns {U} */
+function cast_as(e, x) {
+	/** @type {unknown} */
+	const a1 = e;
+	if (!cast_assume(a1, x)) throw new Error("Unreachable");
+	return a1;
 }
 function use_jquery() {
+	// @ts-ignore
 	const jq = window.$;
 	if (!jq) return;
 	if (typeof jq != "function") return;
 	const res = jq("head");
 	const r_proto = Object.getPrototypeOf(res);
-	r_proto.lazyload = function (/** @type {unknown} */ ..._a) {};
+	r_proto.lazyload = function (/** @type {unknown[]} */ ..._a) {};
 	return jq;
 }
 function proxy_jquery() {
@@ -3717,7 +3726,7 @@ function main() {
 	}
 	const real_st = setTimeout;
 	const real_si = setInterval;
-	/** @type {unknown} */
+	/** @type {()=>number} */
 	const any_nop = nop_timeout;
 	self.setTimeout = any_nop;
 	self.setInterval = any_nop;
@@ -3766,15 +3775,13 @@ function main() {
 			if (!la) throw new Error("mut_observers underflow");
 			la.disconnect();
 		}
-		/** @type {typeof window&{$:unknown}} */
+		/** @type {typeof window&{$:{_0:0}}} */
 		const win_jquery = cast_as(window);
 		const jq = win_jquery.$;
 		set_jq_proxy(jq);
 		/** @type {unknown[]} */
 		const arr = [];
-		/** @type {unknown} */
-		const any_cur = arr;
-		window.adsbygoogle = any_cur;
+		window.adsbygoogle = cast_as(arr);
 		window.adsbygoogle.op = window.adsbygoogle.push;
 		window.adsbygoogle.push = function (e) {
 			// console.log("ads by google push");

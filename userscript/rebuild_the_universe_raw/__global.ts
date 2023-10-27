@@ -23,7 +23,7 @@ declare global {
 	export interface Window {g_auto_buy: InstanceType<typeof rebuild_the_universe_plugin.AutoBuyImplR>;}
 }
 
-interface GoogleAdList {
+export interface GoogleAdList {
 	op(v: number): void;
 	push(v: number): void;
 }
