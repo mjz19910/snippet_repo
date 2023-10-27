@@ -1,4 +1,7 @@
-interface YtdPlayerElement extends HTMLElement {
+import { YtPlayerApi } from "./YtPlayerApi.ts";
+import { YtPlayerApiResolver } from "./YtPlayerApiResolver.ts";
+
+export interface YtdPlayerElement extends HTMLElement {
 	active_nav: boolean;
 	player_: YtPlayerApi|null;
 	playerResolver_: YtPlayerApiResolver;
