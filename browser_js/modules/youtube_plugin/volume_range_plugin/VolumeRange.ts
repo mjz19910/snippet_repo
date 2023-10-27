@@ -8,7 +8,7 @@ export class VolumeRange {
 	overdrive: number;
 	gain_controller: HTMLMediaElementGainController;
 	range_element?: HTMLInputElement;
-	view_div: unknown;
+	view_div?: HTMLDivElement;
 	constructor(min: number,max: number,overdrive: number,obj: HTMLMediaElementGainController) {
 		this.cache=true;
 		this.max=max;
@@ -90,7 +90,7 @@ export class VolumeRange {
 				element=document.createElement("div");
 				element.id='rh_css';
 			}
-			this.view_div=element;
+			this.view_div=element as HTMLDivElement;
 		}
 		if(!this.range_element) {
 			const element=document.getElementById('i_r_css');
@@ -111,7 +111,7 @@ export class VolumeRange {
 			this.range_element.oninput=() => {
 				if(!this.range_element)
 					return;
-				this.setGain(this.range_element.value/this.max);
+				this.setGain((+this.range_element.value)/this.max);
 			};
 			this.range_element.onkeydown=(event: KeyboardEvent) => this.on_key_down(event);
 			this.range_element.min=""+this.min;
