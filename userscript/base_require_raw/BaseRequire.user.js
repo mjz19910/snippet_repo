@@ -18,47 +18,47 @@ const __module_name__ = "mod$base_require";
 
 const path_map = {
 	/** @type {["mod","base_require"]} */
-	["./base_require_raw/BaseRequire.user"]: ["mod", "base_require"],
+	["./base_require_raw/BaseRequire.user.js"]: ["mod", "base_require"],
 	/** @type {["raw","DebugApi"]} */
-	["./DebugApi_raw/DebugApi.user"]: ["raw", "DebugApi"],
+	["./DebugApi_raw/DebugApi.user.js"]: ["raw", "DebugApi"],
 	/** @type {["mod","YoutubePluginBase"]} */
-	["./youtube_plugin_raw/zc_child_modules/YTPlugin_Base.user"]: [
+	["./youtube_plugin_raw/zc_child_modules/YTPlugin_Base.user.js"]: [
 		"mod",
 		"YoutubePluginBase",
 	],
 	/** @type {["mod","SupportService"]} */
-	["./youtube_plugin_raw/zc_child_modules/YTPlugin_Support_Service.user"]: [
+	["./youtube_plugin_raw/zc_child_modules/YTPlugin_Support_Service.user.js"]: [
 		"mod",
 		"SupportService",
 	],
 	/** @type {["mod","ECatcherService"]} */
-	["./youtube_plugin_raw/zc_child_modules/YTPlugin_ECatcherService_Plugin.user"]:
+	["./youtube_plugin_raw/zc_child_modules/YTPlugin_ECatcherService_Plugin.user.js"]:
 		["mod", "ECatcherService"],
 	/** @type {["mod","ServiceMethods"]} */
-	["./youtube_plugin_raw/zc_child_modules/YTPlugin_ServiceMethods.user"]: [
+	["./youtube_plugin_raw/zc_child_modules/YTPlugin_ServiceMethods.user.js"]: [
 		"mod",
 		"ServiceMethods",
 	],
 	/** @type {["mod","ServiceLoaderPlugin"]} */
-	["./youtube_plugin_raw/zc_child_modules/YTPlugin_ServiceLoader_Plugin.user"]:
+	["./youtube_plugin_raw/zc_child_modules/YTPlugin_ServiceLoader_Plugin.user.js"]:
 		["mod", "ServiceLoaderPlugin"],
 	/** @type {["mod","CodegenService"]} */
-	["./youtube_plugin_raw/zc_child_modules/YTPlugin_Codegen.user"]: [
+	["./youtube_plugin_raw/zc_child_modules/YTPlugin_Codegen.user.js"]: [
 		"mod",
 		"CodegenService",
 	],
 	/** @type {["mod","HandleTypes"]} */
-	["./youtube_plugin_raw/zc_child_modules/YTPlugin_HandleTypes.user"]: [
+	["./youtube_plugin_raw/zc_child_modules/YTPlugin_HandleTypes.user.js"]: [
 		"mod",
 		"HandleTypes",
 	],
 	/** @type {["mod","IndexedDBService"]} */
-	["./youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB.user"]: [
+	["./youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB.user.js"]: [
 		"mod",
 		"IndexedDBService",
 	],
 	/** @type {["mod","ParserService"]} */
-	["./youtube_plugin_raw/zc_child_modules/YTPlugin_Parser_Service.user"]: [
+	["./youtube_plugin_raw/zc_child_modules/YTPlugin_Parser_Service.user.js"]: [
 		"mod",
 		"ParserService",
 	],
@@ -114,31 +114,31 @@ function resolve_path_to_userscript_dir(x) {
 			}
 		case ".":
 			switch (parts[1]) {
-				case "YTPlugin_Base.user":
+				case "YTPlugin_Base.user.js":
 					resolved_path = `./${yt_plugin_base_path}/${parts[1]}`;
 					break;
-				case "YTPlugin_Codegen.user":
+				case "YTPlugin_Codegen.user.js":
 					resolved_path = `./${yt_plugin_base_path}/${parts[1]}`;
 					break;
-				case "YTPlugin_ECatcherService_Plugin.user":
+				case "YTPlugin_ECatcherService_Plugin.user.js":
 					resolved_path = `./${yt_plugin_base_path}/${parts[1]}`;
 					break;
-				case "YTPlugin_HandleTypes.user":
+				case "YTPlugin_HandleTypes.user.js":
 					resolved_path = `./${yt_plugin_base_path}/${parts[1]}`;
 					break;
-				case "YTPlugin_IndexedDB.user":
+				case "YTPlugin_IndexedDB.user.js":
 					resolved_path = `./${yt_plugin_base_path}/${parts[1]}`;
 					break;
-				case "YTPlugin_Parser_Service.user":
+				case "YTPlugin_Parser_Service.user.js":
 					resolved_path = `./${yt_plugin_base_path}/${parts[1]}`;
 					break;
-				case "YTPlugin_ServiceLoader_Plugin.user":
+				case "YTPlugin_ServiceLoader_Plugin.user.js":
 					resolved_path = `./${yt_plugin_base_path}/${parts[1]}`;
 					break;
-				case "YTPlugin_ServiceMethods.user":
+				case "YTPlugin_ServiceMethods.user.js":
 					resolved_path = `./${yt_plugin_base_path}/${parts[1]}`;
 					break;
-				case "YTPlugin_Support_Service.user":
+				case "YTPlugin_Support_Service.user.js":
 					resolved_path = `./${yt_plugin_base_path}/${parts[1]}`;
 					break;
 			}
@@ -184,7 +184,7 @@ function export_(fn, flags = { global: false }) {
 	do_export(
 		fn,
 		flags,
-		typeof exports == "undefined" ? {} : exports,
+		exports,
 		__module_name__,
 	);
 }
