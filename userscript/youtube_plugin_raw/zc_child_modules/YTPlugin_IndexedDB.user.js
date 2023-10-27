@@ -26,6 +26,7 @@ if (typeof require === "undefined" || page_require !== __module_require__) {
 const { as, do_export } = require("../../base_require_raw/BaseRequire.user.js");
 // yt_plugin/IndexedDB_Service(10) => yt_plugin/Base(4) => base_require/BaseRequire(1)
 const { BaseService } = require("./YTPlugin_Base.user.js");
+const { StoreData } = require("./YTPlugin_Support_Service.user.js");
 
 // priority yt_plugin/IndexedDB_Service(10)
 
@@ -633,7 +634,11 @@ function init_module() {
 						if (this.log_db_actions) {
 							console.log("[update_sync_cache_item_add_to_db]", x_value);
 						}
-						const req = this.start_put_request(s.typed_db, s.obj_store, x_value);
+						const req = this.start_put_request(
+							s.typed_db,
+							s.obj_store,
+							x_value,
+						);
 						if (req.type === "err") {
 							throw new AggregateError([req.err], "start_put_request error");
 						}
