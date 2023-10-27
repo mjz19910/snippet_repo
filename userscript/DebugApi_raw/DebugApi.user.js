@@ -81,7 +81,7 @@ function add_object_with_name(name, object) {
 export_((exports) => {
 	exports.add_object_with_name = add_object_with_name;
 });
-/** @template {{}} U @template {new (...args: unknown) => U} T @arg {T} constructor_ @arg {U} object */
+/** @template {{}} U @template {new (...args: unknown[]) => U} T @arg {T} constructor_ @arg {U} object */
 function add_object(constructor_, object) {
 	const name = constructor_.name;
 	/** @type {import("./support/dbg/MetaTagForConstructor.ts").MetaTagForConstructor} */
@@ -2199,7 +2199,7 @@ class ApiProxyManager {
 	constructor(event_handler) {
 		this.event_handler = event_handler;
 	}
-	/** @template {(...x:unknown[])=>unknown} T @arg {string} message_to_send @arg {T} function_value @returns {T} */
+	/** @template {Window["postMessage"]} T @arg {string} message_to_send @arg {T} function_value @returns {T} */
 	create_proxy_for_function(message_to_send, function_value) {
 		const t = this.event_handler;
 		/** @arg {[target: T, thisArg: unknown, argArray: unknown[]]} post_message_proxy_spread */
@@ -2729,7 +2729,7 @@ class AddEventListenerExtension {
 		const t = this;
 		switch (target) {
 			case "addEventListener":
-				/** @arg {[string,EventListenerOrEventListenerObject,unknown?]} args */
+				/** @arg {[string,EventListenerOrEventListenerObject,(boolean | AddEventListenerOptions)?]} args */
 				t.target_prototype[target] = function (...args) {
 					if (api_debug_enabled) t.add_to_call_list([target, this, args]);
 					const original_function = args[1];
@@ -2823,7 +2823,10 @@ class IterExtensions {
 	}
 	/** @arg {IterableIterator<unknown>} iterable_map_iterator_values */
 	static init_tree(iterable_map_iterator_values) {
-		console.log("[is] [IterableIterator<unknown>]", iterable_map_iterator_values);
+		console.log(
+			"[is] [IterableIterator<unknown>]",
+			iterable_map_iterator_values,
+		);
 		const iterable_map_iterator_prototype = this.get_prototype(
 			iterable_map_iterator_values,
 		);
@@ -3156,7 +3159,7 @@ class CompressState extends CompressStateBase {
 class MulCompression extends BaseCompression {
 	constructor() {
 		super();
-		/** @type {unknown[]} */
+		/** @type {[string, number][][]} */
 		this.compression_stats = [];
 	}
 	/** @arg {{i:number,arr:string[],ret:string[]}} state @arg {string} item */
@@ -3254,7 +3257,7 @@ class DisabledMulCompression extends MulCompression {
 		state.i += off - 1;
 		return true;
 	}
-	/** @template {InstanceType<U>} T @template {new (...args: unknown) => unknown} U @arg {U} _ @arg {T[]} arr @arg {import("./support/dbg/AnyOrRepeat_0.ts").AnyOrRepeat_0<T>[]} ret @returns {[true, import("./support/dbg/AnyOrRepeat_0.ts").AnyOrRepeat_0<T>[]]|[false,T[]]} */
+	/** @template {InstanceType<U>} T @template {new (...args: unknown[]) => unknown} U @arg {U} _ @arg {T[]} arr @arg {import("./support/dbg/AnyOrRepeat_0.ts").AnyOrRepeat_0<T>[]} ret @returns {[true, import("./support/dbg/AnyOrRepeat_0.ts").AnyOrRepeat_0<T>[]]|[false,T[]]} */
 	compress_result_T(_, arr, ret) {
 		if (this.did_compress(arr, ret)) return [true, ret];
 		return [false, arr];
@@ -3557,6 +3560,7 @@ function run_modules_plugin() {
 	/** @this {()=>void} @arg {unknown} tv @arg {unknown} r */
 	function function_prototype_apply_inject(tv, r) {
 		if (r === void 0 || r === null) r = [];
+		// @ts-ignore
 		const ret = bound_apply_call(this, [tv, ...r]);
 		if (function_as_string_vec.indexOf(this.toString()) == -1) {
 			function_as_string_vec.push(this.toString());
@@ -3965,42 +3969,6 @@ function assign_next(value, next) {
 	return next;
 }
 add_function(assign_next);
-/** @implements {IDValueImpl_0} */
-class Value {
-	set_arr_T() {}
-	/** @type {import("./support/dbg/AltPair.ts").AltPair<import("./support/dbg/AnyOrRepeat_0.ts").AnyOrRepeat_0<string>,import("./support/dbg/AnyOrRepeat_0.ts").AnyOrRepeat_0<number>>[]} */
-	arr_dual_x = [];
-	/** @type {import("./support/dbg/AnyOrRepeat_0.ts").AnyOrRepeat_0<string>[]} */
-	arr_rep_str = [];
-	/** @arg {number} id */
-	constructor(id) {
-		this.id = id;
-	}
-	/** @type {unknown} */
-	next;
-	/** @type {unknown} */
-	arr_dual;
-	/** @type {unknown} */
-	arr_dual_compressed;
-	/** @type {unknown} */
-	arr_rep_num;
-	/** @type {unknown} */
-	arr_str;
-	/** @type {unknown} */
-	arr_num;
-	/** @type {unknown} */
-	value;
-	/** @type {unknown} */
-	arr_rep;
-	/** @type {unknown} */
-	log_val;
-	/** @type {unknown} */
-	stats;
-	/** @type {unknown} */
-	stats_win;
-}
-add_function(Value);
-
 const max_id = { value: 0 };
 /** @arg {IDValueImpl_0} obj @arg {CompressionStatsCalculator} stats */
 function run_calc(stats, obj) {
@@ -5143,15 +5111,22 @@ class DebugApi {
 	getData(key) {
 		return this.data_store.get(key);
 	}
+	/** @returns {import("./support/dbg/I_undebug.ts").I_undebug} */
+	get_u() {
+		// @ts-ignore
+		return this.getData("u");
+	}
 	/** @arg {"__k"} key @returns {import("./support/dbg/dbg_get_ty.ts").dbg_get_ty} */
 	get_k(key) {
+		// @ts-ignore
 		return this.getData(key);
 	}
 	/** @returns {import("./support/dbg/I_debug.ts").I_debug} */
 	get_d() {
+		// @ts-ignore
 		return this.getData("d");
 	}
-	/** @arg {"getEventListeners"} key @returns {(x:{})=>{[x: string]: import("./support/dbg/EventListenerInternal.ts").EventListenerInternal[]}} */
+	/** @arg {"getEventListeners"} key @returns {(x:unknown)=>{[x: string]: import("./support/dbg/EventListenerInternal.ts").EventListenerInternal[]}} */
 	get_getEventListeners(key) {
 		return this.data_store.get(key);
 	}
@@ -5211,11 +5186,11 @@ class DebugApi {
 		}
 		return this;
 	}
-	/** @arg {new (...arg0: unknown[]) => unknown} class_value @arg {unknown[]} arg_vec @returns {boolean} */
+	/** @arg {new (...arg0: unknown[]) => unknown} class_value @arg {unknown[]} arg_vec @returns {unknown} */
 	activateClass(class_value, arg_vec) {
 		return new class_value(...arg_vec);
 	}
-	/** @arg {unknown} function_value @arg {unknown} target_obj @arg {unknown} arg_vec @returns {boolean} */
+	/** @arg {CallableFunction} function_value @arg {unknown} target_obj @arg {unknown[]} arg_vec @returns {boolean} */
 	activateApply(function_value, target_obj, arg_vec) {
 		return Reflect.apply(function_value, target_obj, arg_vec);
 	}
@@ -5236,7 +5211,8 @@ class DebugApi {
 	}
 	/** @returns {boolean} */
 	clearCurrentBreakpoint() {
-		const undebug = this.getData("u");
+		if (this.current_function_value === void 0) return false;
+		const undebug = this.get_u();
 		if (undebug) {
 			undebug(this.current_function_value);
 			return true;
@@ -5293,7 +5269,7 @@ class DebugApi {
 				...activate_vec,
 			);
 		} else {
-			this.getData("u")(this.current_function_value);
+			this.get_u()(this.current_function_value);
 			return { type: "argument-error" };
 		}
 		const exec_res_arr = [];
@@ -5369,8 +5345,7 @@ class DebugApi {
 		}
 		const tmp_value = new DebugInfoValue();
 		this.setData(tmp_key, tmp_value);
-		/** @type {import("./support/dbg/I_debug.ts").I_debug} */
-		const debug = this.getData("d");
+		const debug = this.get_d();
 		debug(this.current_function_value, `${dbg_str_func}`);
 		// ---- Activate ----
 		let activate_return = null;
@@ -5385,7 +5360,7 @@ class DebugApi {
 				...breakpoint_arguments.activate_args,
 			);
 		} else {
-			this.getData("u")(this.current_function_value);
+			this.get_u()(this.current_function_value);
 			return { type: "argument-error" };
 		}
 		let breakpoint_result = null;
