@@ -26,7 +26,7 @@ if (typeof require === "undefined" || page_require !== __module_require__) {
 	require = __module_require__;
 	reset_require = true;
 }
-const { do_export } = require("../base_require_raw/BaseRequire.user");
+const { do_export } = require("../base_require_raw/BaseRequire.user.js");
 
 const __module_name__ = "DebugApi";
 /** @private @arg {(x:typeof exports)=>void} fn */
