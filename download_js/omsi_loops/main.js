@@ -1,6 +1,6 @@
 (function main() {
 	class OutputResult {
-		result=res;
+		result = res;
 		/**
 		 * @param {{ setup: ({ pot: number; }|{pick_locks:number}|{buy_mana:number})[]; used: { mana: number; time: string; }; result: { mana: number; gold: number; time: string; }; }} val_any
 		 */
@@ -8,10 +8,10 @@
 			val_any;
 		}
 	}
-	const ret=new OutputResult;
+	const ret = new OutputResult();
 	ret.use({
 		setup: [{
-			pot: 50
+			pot: 50,
 		}],
 		used: {
 			mana: 2_436,
@@ -25,9 +25,9 @@
 	});
 	ret.use({
 		setup: [
-			{pot: 50},
-			{pick_locks: 7},
-			{buy_mana: 1},
+			{ pot: 50 },
+			{ pick_locks: 7 },
+			{ buy_mana: 1 },
 		],
 		used: {
 			mana: 5_225,
@@ -41,11 +41,11 @@
 	});
 	ret.use({
 		setup: [
-			{pot: 50},
-			{pick_locks: 7},
-			{buy_mana: 1},
-			{pick_locks: 3},
-			{buy_mana: 1},
+			{ pot: 50 },
+			{ pick_locks: 7 },
+			{ buy_mana: 1 },
+			{ pick_locks: 3 },
+			{ buy_mana: 1 },
 		],
 		used: {
 			mana: 6_448,
