@@ -1,4 +1,4 @@
-const ip_list = [
+export const ip_list = [
 	'72.52.72.97',
 	'72.52.72.233',
 	'72.52.72.234',
@@ -8,7 +8,7 @@ const ip_list = [
 	'100.126.0.121',
 	'100.126.0.129',
 ];
-const src_bgp_scan = [
+export const src_bgp_scan = [
 	'72.52.72.233',
 	'100.126.0.17',
 	'100.126.0.89',

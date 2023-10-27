@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import util from "util";
 import {Status} from "../js/Status";
 import {DigState} from "../js/DigState.js";

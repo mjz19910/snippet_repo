@@ -1,2 +1,0 @@
-const global_hook=__REACT_DEVTOOLS_GLOBAL_HOOK__.hook_ref;
-export const dispatcher_ref=global_hook.currentDispatcherRef;

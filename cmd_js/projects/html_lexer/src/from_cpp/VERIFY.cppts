@@ -1,9 +1,0 @@
-#    define __stringify_helper(x) #    x
-#    define __stringify(x) __stringify_helper(x)
-
-#define VERIFY(expr) \
-    (!(expr)   \
-        ? ak_verification_failed([#expr,"\n",__FILE__,":",__stringify(__LINE__)].join("")) \
-        : void 0)
-
-#define VERIFY_NOT_REACHED() VERIFY(false)

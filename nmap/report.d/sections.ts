@@ -1,22 +1,22 @@
 function gen_section_group_las() {
-	let las_11_list=[
+	const las_11_list=[
 		["01",{d: "las11s01-in-f0.1e100.net",i: "142.251.214.0"}],
 		["02",{d: "las11s02-in-f0.1e100.net",i: "142.251.214.32"}],
 		["03",{d: "las11s03-in-f0.1e100.net",i: "142.251.214.64"}],
 	] as const;
-	let las_12_list=[
+	const las_12_list=[
 		["01",{d: "las12s01-in-f0.1e100.net",i: "142.251.213.160"}],
 		["02",{d: "las12s02-in-f0.1e100.net",i: "142.251.213.192"}],
 		["03",{d: "las12s03-in-f0.1e100.net",i: "142.251.213.224"}],
 	] as const;
-	let las_14_list=[
+	const las_14_list=[
 		["01",{d: "las14s01-in-f0.1e100.net",i: "172.217.3.0"}],
 		["02",{d: "las14s02-in-f0.1e100.net",i: "172.217.3.32"}],
 		["03",{d: "las14s03-in-f0.1e100.net",i: "216.58.219.160"}],
 		["04",{d: "las14s04-in-f0.1e100.net",i: "216.58.219.192"}],
 		["05",{d: "las14s05-in-f0.1e100.net",i: "142.251.213.128"}],
 	] as const;
-	let las_15_list=[
+	const las_15_list=[
 		["01",{d: "las15s01-in-f0.1e100.net",i: "216.58.192.64"}],
 		["02",{d: "las15s02-in-f0.1e100.net",i: "216.58.192.96"}],
 		["03",{d: "las15s03-in-f0.1e100.net",i: "216.58.219.224"}],
@@ -49,8 +49,9 @@ const section_order=[
 	"sfo",
 	"sof",
 ];
+section_order;
 function get_sections() {
-	let bom_03=[
+	const bom_03=[
 		['06',{d: "bom03s06-in-f0.1e100.net",i: "172.217.24.0"}],
 	] as const;
 	return [
@@ -99,3 +100,4 @@ function get_sections() {
 	] as const;
 }
 const sections=get_sections();
+sections;

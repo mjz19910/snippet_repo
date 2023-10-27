@@ -6,7 +6,7 @@ export class Report {
 		this.report_contents.push(value);
 	}
 	get new() {
-		let report_gen = (/** @type {ReadonlyArray<string>} */ e, /** @type {[]} */ ...ex) => {
+		const report_gen = (/** @type {ReadonlyArray<string>} */ e, /** @type {[]} */ ...ex) => {
 			this.add(['template', e, ex]);
 			return report_gen;
 		};

@@ -1,5 +1,4 @@
 (function main() {
-	let res=null;
 	class OutputResult {
 		result=res;
 		/**
@@ -9,7 +8,7 @@
 			val_any;
 		}
 	}
-	let ret=new OutputResult;
+	const ret=new OutputResult;
 	ret.use({
 		setup: [{
 			pot: 50

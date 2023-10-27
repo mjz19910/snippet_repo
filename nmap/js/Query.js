@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {DNSClassEnum} from "./DNSClassEnum.js";
 import {DNSTypeEnum} from "./DNSTypeEnum.js";
 import {IP_base} from "./IP_base.js";
