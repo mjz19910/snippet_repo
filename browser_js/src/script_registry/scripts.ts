@@ -1,1 +1,1 @@
-export let scripts=new WeakSet;
+export const scripts=new WeakSet;

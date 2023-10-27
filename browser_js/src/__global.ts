@@ -1,7 +1,7 @@
 export {};
 
 declare global {
-	interface HTMLDivElement {
+	export interface HTMLDivElement {
 		style: CSSStyleDeclaration;
 	}
 }

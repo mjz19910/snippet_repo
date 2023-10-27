@@ -1,6 +1,6 @@
 export class Counter {
 	next(): number {
-		let cur_id=this.id;
+		const cur_id=this.id;
 		this.inc();
 		return cur_id;
 	}

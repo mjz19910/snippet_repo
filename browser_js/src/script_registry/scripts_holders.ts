@@ -1,3 +1,3 @@
 import {HeldType} from "./HeldType.ts";
 
-export let scripts_holders: HeldType[]=[];
+export const scripts_holders: HeldType[]=[];

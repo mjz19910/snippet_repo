@@ -1,1 +1,1 @@
-export type AnyFunction=CallableFunction|NewableFunction|Function;
+export type AnyFunction=CallableFunction|NewableFunction;

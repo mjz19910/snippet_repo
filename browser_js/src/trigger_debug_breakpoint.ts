@@ -1,3 +1,4 @@
 export function trigger_debug_breakpoint() {
-	debugger
+	// deno-lint-ignore no-debugger
+	debugger;
 }

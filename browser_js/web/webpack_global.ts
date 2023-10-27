@@ -1,5 +1,5 @@
 declare global {
-	type ModuleDesc={
+	export type ModuleDesc={
 		identifier: string;
 		shortIdentifier: string;
 		resource: string;

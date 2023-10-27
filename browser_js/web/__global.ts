@@ -1,4 +1,4 @@
 declare global {
-	var __dirname: string;
+	export let __dirname: string;
 }
 export {};

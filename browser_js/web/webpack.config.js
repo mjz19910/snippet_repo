@@ -4,6 +4,7 @@ const {get_keys_of}=require('../group2/item_14/item_14');
 
 /** @arg {ModuleDesc} template */
 function devtool_module_template(template) {
+	// deno-lint-ignore no-debugger
 	debugger;
 	if(template.identifier.includes("webpack/")) {
 		return "";
