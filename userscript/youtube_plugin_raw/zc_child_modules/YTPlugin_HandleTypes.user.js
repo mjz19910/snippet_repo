@@ -25,6 +25,7 @@ if (typeof require === "undefined" || page_require !== __module_require__) {
 	reset_require = true;
 }
 const { do_export, as } = require("../../base_require_raw/BaseRequire.user.js");
+const {cast_as}=require("./YTPlugin_Base.user.js");
 const { split_string_once_ex2 } = require("./YTPlugin_Base.user.js");
 const {
 	base64_url_dec,
@@ -2460,7 +2461,7 @@ class HandleTypes extends BaseService {
 	cache_playlist_index = [];
 	log_start_radio = false;
 	log_playlist_index = false;
-	/** @public @arg {import("../yt_json_types/abc/group_C.ts").CF_L_TP_Params} root @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../support_2/ParseUrlWithSearchIn.ts").ParseUrlWithSearchIn,"?">,["watch",...unknown]>[1]} x */
+	/** @public @arg {import("../yt_json_types/abc/group_C.ts").CF_L_TP_Params} root @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../support_2/ParseUrlWithSearchIn.ts").ParseUrlWithSearchIn,"?">,["watch",...unknown[]]>[1]} x */
 	parse_watch_page_url_url_arr(root, x) {
 		root;
 		let { ...x2 } = this.parse_url_search_params(x);
@@ -2864,7 +2865,7 @@ class HandleTypes extends BaseService {
 		/** @type {unknown} */
 		let xa = x;
 		/** @type {typeof obj_sparams} */
-		let xt = xa;
+		let xt = cast_as(xa);
 		for (let k of kk_sparams) {
 			this.y_copy_key(obj_sparams, xt, k);
 			let idx = kk_x.indexOf(k);
@@ -3340,15 +3341,6 @@ class HandleTypes extends BaseService {
 	/** @arg {import("../yt_json_types/ghi/group_G.ts").G_BoxedDatabaseData} x @returns {import("../yt_json_types/ghi/group_G.ts").G_BoxedInner} */
 	w_db_data(x) {
 		return [1, x];
-	}
-	/** @arg {unknown} x @returns {import("../yt_json_types/k/kv_mod/KV_T_move.ts").Ret_w_diz} */
-	w_diz(x) {
-		const a = x.z[0], w = this.w_di(a);
-		return [w, a, x];
-	}
-	/** @arg {unknown} x @returns {[unknown,unknown]} */
-	w_di(x) {
-		return [x.z[0], x];
 	}
 	/** @template {import("../yt_json_types/ghi/group_G.ts").G_BoxedDatabaseData} T_Put @arg {T_Put} value */
 	on_has_key_in_cache(value) {

@@ -345,7 +345,7 @@ export type D_ExactValue={
 };
 export type DST_Group={
 	key: `boxed_id:${string}:${string}`;
-	z: [make_item_group<unknown>];
+	z: [make_item_group<string>];
 	_z: [string,string];
 };
 export type DST_SaveId={

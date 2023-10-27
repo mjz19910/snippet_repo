@@ -55,6 +55,9 @@ function cast_as(e, x) {
 	if (!cast_assume(a1, x)) throw new Error("Unreachable");
 	return a1;
 }
+export_((exports) => {
+	exports.cast_as = cast_as;
+});
 /** @private @template U @template T @arg {U} e @arg {unknown} [x] @returns {T} */
 function as_any(e, x = e) {
 	return cast_as(x);
