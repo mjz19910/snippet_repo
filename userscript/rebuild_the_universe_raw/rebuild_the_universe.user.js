@@ -1446,7 +1446,7 @@ class DocumentWriteListImpl {
 				/** @type {unknown} */
 				const any_var = doc_var;
 				/** @type {Document["write"]} */
-				const vv = any_var;
+				const vv = cast_as(any_var);
 				doc_1.write = vv;
 				return true;
 			}
