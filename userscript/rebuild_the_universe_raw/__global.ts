@@ -68,7 +68,7 @@ declare global {
 // do_auto_unit_promote
 declare global {
 	export interface Window {
-		Get_Unit_Type(v: unknown): unknown;
+		Get_Unit_Type(v: unknown): [unknown,unknown,number[]];
 		getUnitPromoCost(v: unknown): number;
 		_targets_achi: unknown[];
 		totalAchi(): number;

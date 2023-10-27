@@ -2372,10 +2372,10 @@ class AutoBuyImplR {
 		const v1 = cast_as(this);
 		/** @type {{[x: symbol]: string|Record<"_",never>;}} */
 		const v = cast_as(v1);
-		if(!v[val.sym]) return;
-		const obj=v[val.sym];
-		if(typeof obj!="string") return;
-		const arr=obj.split(",");
+		if (!v[val.sym]) return;
+		const obj = v[val.sym];
+		if (typeof obj != "string") return;
+		const arr = obj.split(",");
 		const trimmed = arr.map((/** @type {string} */ e) => e.trim());
 		this.debug_arr.push(...trimmed);
 	}
@@ -2620,7 +2620,7 @@ class AutoBuyImplR {
 		}
 		const ratio = this.dom_map.get("ratio");
 		if (ratio && typeof ratio == "object") {
-			ratio.addEventListener("click", function () {
+			ratio.addEventListener("click", () => {
 				this.state.reset();
 			});
 		}
@@ -2628,7 +2628,7 @@ class AutoBuyImplR {
 		if (state_log instanceof HTMLElement) {
 			state_log.style.fontSize = font_size_px + "px";
 		}
-		self.addEventListener("unload", function () {
+		self.addEventListener("unload", () => {
 			this.save_state_history_arr();
 			this.save_timeout_arr();
 		});
@@ -3289,7 +3289,7 @@ function wait(delay) {
 /** @arg {number} id */
 async function tonext_async(id) {
 	const next = Find_ToNext(id);
-	if (arUnit[id][16] || arUnit[id][8] == "quantum foam") {
+	if (window.arUnit[id][16] || window.arUnit[id][8] == "quantum foam") {
 		for (let y = 0; y < next; y++) {
 			await wait(40);
 			mainCalc(id);
