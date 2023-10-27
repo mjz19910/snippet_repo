@@ -28,10 +28,7 @@ declare global {
 
 import $ from "npm:jquery";
 
-import {Typeof_arUnit} from "../../src/auto_buy/do_auto_unit_promote.ts";
-import {StringBox} from "../../src/box/StringBox.ts";
 import captureStackTrace from "../../src/capture-stack-trace.ts";
-import {CompressDual} from "../DebugApi/types/CompressDual.ts";
 import {AltPair} from "./AltPair.ts";
 import {AnyOrRepeat2} from "./AnyOrRepeat2.ts";
 import {CompressStateBase} from "./CompressStateBase.ts";
@@ -329,7 +326,7 @@ export class StackVMBox extends BoxTemplateImpl<"custom_box",StackVMImpl> {
 	readonly type="custom_box";
 	readonly box_type="StackVM";
 }
-export class StringBoxImpl extends BoxTemplateImpl<"string",string> implements StringBox {
+export class StringBoxImpl extends BoxTemplateImpl<"string",string> {
 	readonly type="string";
 }
 export class VoidBoxImpl {
@@ -1550,9 +1547,6 @@ class CompressionStatsCalculator {
 	}
 }
 class BaseCompression {
-	compress_result_state_dual(arg0: CompressDual): [true,AnyOrRepeat2<string,number>[]]|[false,AltPair<string,number>[]] {
-		return this.compress_result_dual(arg0.arr,arg0.ret);
-	}
 	compress_result_dual(src: AltPair<string,number>[],dst: AnyOrRepeat2<string,number>[]): [true,AnyOrRepeat2<string,number>[]]|[false,AltPair<string,number>[]] {
 		if(this.did_compress(src,dst)) return [true,dst];
 		return [false,src];
@@ -3397,6 +3391,7 @@ class AutoBuy {
 		this.next_timeout(this.on_repeat_r,1*1000,"r");
 	}
 }
+export type Typeof_arUnit=[unknown,unknown,unknown,number,number,number,unknown,unknown,unknown,unknown,unknown,unknown,unknown,unknown,unknown,unknown,boolean,number[]][];
 declare global {
 	export interface Window {
 		arUnit: Typeof_arUnit;
