@@ -78,7 +78,8 @@ function gen_code_v1 {
 }
 
 append_imports_tmp_js() {
-	echo 'import {CF_D_CaseGen,CF_D_ChipCloudChip_Omit,CF_D_CustomEmoji,CF_D_GuideEntry,CF_D_Link,CF_D_Menu_Omit,CF_D_Params,CF_D_Playlist_Omit,CF_D_STR,CF_D_Video_Handle,CF_GE_ResponseReceived,CF_L_TP_Params,CF_M_HD,CF_M_k,CF_M_s,CF_M_w,CF_M_wn,CF_M_y,CF_P_EntityKey,CF_P_ParamParse,CF_RS_Page_Browse,CF_RS_Page_Type1,CF_TA_OpenPopup,CF_TA_Page,CF_TD_ItemSection,CF_TD_Params,CF_TE_Endpoint_2,CF_TE_Endpoint_3,CF_TE_Endpoint_Opt_3,CF_TE_TrackedObj_2,CF_TR_MultiPageMenu,CF_T_Attachment,CF_T_Commands,CF_T_GM,CF_T_Icon,CF_T_Icon_Any,CF_T_Items,CF_T_Items_TP,CF_T_OpenPopup_Dropdown,CF_T_SE_Signal,CF_T_Signal,CF_T_WCM,CF_T_WCM_Unpack,CF_add_string_to_map,CF_onMissingIcon,CF_parse_identifier} from "../../yt_json_types/abc/group_C.js";\n\n'
+	echo '// deno-lint-ignore-file'
+	echo 'import {CF_D_CaseGen,CF_D_ChipCloudChip_Omit,CF_D_CustomEmoji,CF_D_GuideEntry,CF_D_Link,CF_D_Menu_Omit,CF_D_Params,CF_D_Playlist_Omit,CF_D_STR,CF_D_Video_Handle,CF_GE_ResponseReceived,CF_L_TP_Params,CF_M_HD,CF_M_k,CF_M_s,CF_M_w,CF_M_wn,CF_M_y,CF_P_EntityKey,CF_P_ParamParse,CF_RS_Page_Browse,CF_RS_Page_Type1,CF_TA_OpenPopup,CF_TA_Page,CF_TD_ItemSection,CF_TD_Params,CF_TE_Endpoint_2,CF_TE_Endpoint_3,CF_TE_Endpoint_Opt_3,CF_TE_TrackedObj_2,CF_TR_MultiPageMenu,CF_T_Attachment,CF_T_Commands,CF_T_GM,CF_T_Icon,CF_T_Icon_Any,CF_T_Items,CF_T_Items_TP,CF_T_OpenPopup_Dropdown,CF_T_SE_Signal,CF_T_Signal,CF_T_WCM,CF_T_WCM_Unpack,CF_add_string_to_map,CF_onMissingIcon,CF_parse_identifier} from "../../yt_json_types/abc/group_C.ts";'
 }
 
 generate_typescript_code_unique() {
