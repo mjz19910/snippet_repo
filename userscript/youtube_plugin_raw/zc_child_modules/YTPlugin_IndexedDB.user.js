@@ -27,6 +27,7 @@ const { as, do_export } = require("../../base_require_raw/BaseRequire.user.js");
 // yt_plugin/IndexedDB_Service(10) => yt_plugin/Base(4) => base_require/BaseRequire(1)
 const { BaseService } = require("./YTPlugin_Base.user.js");
 const { StoreData } = require("./YTPlugin_Support_Service.user.js");
+/** @typedef {InstanceType<typeof StoreData>} StoreData */
 
 // priority yt_plugin/IndexedDB_Service(10)
 
