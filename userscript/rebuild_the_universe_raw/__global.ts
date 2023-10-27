@@ -24,7 +24,7 @@ declare global {
 }
 
 interface GoogleAdList {
-	op: unknown;
+	op(v: number): void;
 	push(v: number): void;
 }
 

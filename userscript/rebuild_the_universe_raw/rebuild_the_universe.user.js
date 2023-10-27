@@ -2307,10 +2307,6 @@ class AsyncAutoBuy {
 		await node.start_async(new AsyncTimeoutTarget());
 	}
 }
-/** @arg {any} v */
-function any(v) {
-	return v;
-}
 class AutoBuyImplR {
 	constructor() {
 		this.root_node = new AsyncNodeRootImplR();
