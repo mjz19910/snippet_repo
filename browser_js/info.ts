@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 function output_all(iter: () => string,has_more: () => boolean) {
 	let i=0;
 	while(has_more()&&i<256) {

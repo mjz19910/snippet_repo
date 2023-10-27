@@ -1,5 +1,5 @@
 // deno-lint-ignore-file
-import {volume_plugin_style_source} from "./css/volume_plugin_style_source.js"
+import {volume_plugin_style_source} from "./css/volume_plugin_style_source.ts"
 
 export class HTMLMediaElementGainController {
 	last_event: Event|undefined
