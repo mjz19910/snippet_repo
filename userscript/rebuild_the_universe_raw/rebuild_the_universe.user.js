@@ -1201,6 +1201,7 @@ class StringBoxImpl {
 		this.value = string;
 	}
 }
+StringBoxImpl;
 class StackVMParserImplR {
 	static match_regex = /(.+?)(;|$)/gm;
 	/** @arg {string[]|number[]} cur @arg {number} arg_loc */
@@ -1227,6 +1228,7 @@ class StackVMParserImplR {
 					"Assertion failed: %s",
 					"unsupported format spec %" + format_type,
 				);
+				throw new Error("Failed");
 		}
 	}
 	/** @arg {string[]} cur @arg {unknown[]} format_list */
