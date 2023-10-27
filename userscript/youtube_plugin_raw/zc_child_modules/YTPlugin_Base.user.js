@@ -12,6 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_Base.user.js
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
+// @ts-nocheck
 
 // deno-lint-ignore-file
 const page_require = typeof require === "undefined"
@@ -112,7 +113,7 @@ let active_blob_set = new Set();
 //#endregion
 /**
  * @template T
- * @template {abstract new (...args: unknown) => unknown} U
+ * @template {abstract new (...args: unknown[]) => unknown} U
  * @template {InstanceType<U>} X
  * @param {T|X} x
  * @param {U} c_ty
@@ -124,7 +125,7 @@ function assume_assert_is_instanceof(x, c_ty) {
 }
 /**
  * @template T
- * @template {abstract new (...args: unknown) => unknown} U
+ * @template {abstract new (...args: unknown[]) => unknown} U
  * @template {InstanceType<U>} X
  * @param {T|X} x
  * @param {U} c_ty
@@ -757,7 +758,7 @@ class PropertyHandler {
 	proxy_map = new Map();
 	/** @private @type {{value: unknown}} */
 	override_value = { value: void 0 };
-	/** @constructor @public @arg {(args: [unknown, unknown, unknown]) => unknown} on_target_apply_callback */
+	/** @constructor @public @arg {(args: [Function, unknown, unknown[]]) => unknown} on_target_apply_callback */
 	constructor(on_target_apply_callback) {
 		this.on_target_apply_callback = on_target_apply_callback;
 		PropertyHandler.instances.push(this);
@@ -765,7 +766,7 @@ class PropertyHandler {
 	get() {
 		return this.override_value.value;
 	}
-	/** @api @public @arg {unknown} value */
+	/** @api @public @arg {Function} value */
 	set(value) {
 		if (value === void 0 || value === null) {
 			this.override_value.value = value;
@@ -801,9 +802,7 @@ function override_prop(object, property, property_handler) {
 override_prop(
 	window,
 	"getInitialCommand",
-	new PropertyHandler((
-		/** @private @type {[unknown,unknown,unknown]} */ args,
-	) => Reflect.apply(...args)),
+	new PropertyHandler((args) => Reflect.apply(...args)),
 );
 class ObjectInfo {
 	constructor() {
@@ -1413,13 +1412,14 @@ function act_found_create_yt_player(
 	}
 	let plr_raw_replace_debug = true;
 	function plr_raw_replace(
-		/** @private @type {{ args: { raw_player_response: unknown; }; }} */ player_config,
+		/** @private @type {{ args: { raw_player_response: {playerAds:string[];adPlacements:string[]}; }; }} */ player_config,
 	) {
 		let raw_plr_rsp = player_config.args.raw_player_response;
 		if (raw_plr_rsp === void 0) {
 			console.log("yt_cfg", player_config);
 			return;
 		}
+		if (raw_plr_rsp === null) throw new Error("1");
 		if (plr_raw_replace_debug) {
 			console.log(
 				"plr_raw_replace",

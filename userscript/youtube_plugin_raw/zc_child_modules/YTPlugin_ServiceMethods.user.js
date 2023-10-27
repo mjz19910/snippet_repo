@@ -4151,7 +4151,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["pdg",...unknown]>} t @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["pdg",...unknown[]]>} t @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_pdg(t, x) {
 		switch (t[1]) {
 			case "get_pdg_buy_flow":
