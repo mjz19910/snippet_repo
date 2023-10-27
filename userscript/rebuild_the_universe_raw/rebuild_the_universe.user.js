@@ -1731,7 +1731,6 @@ class AsyncTimeoutNode extends BaseNodeImpl {
 	}
 	set() {
 		TimeoutNode.prototype.set.call(this);
-		super.set();
 	}
 	/** @override */
 	run() {
