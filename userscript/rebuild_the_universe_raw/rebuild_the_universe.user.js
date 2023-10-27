@@ -1545,7 +1545,7 @@ class PromiseTimeoutTarget {
 		this.m_active = true;
 		return this.m_promise;
 	}
-	/** @arg {unknown} accept @arg {unknown} reject */
+	/** @arg {(x:unknown)=>void} accept @arg {(x:unknown)=>void} reject */
 	promise_executor(accept, reject) {
 		this.m_promise_accept = accept;
 		this.m_promise_reject = reject;
@@ -1588,16 +1588,27 @@ class AsyncTimeoutTarget extends PromiseTimeoutTarget {
 	}
 }
 class BaseNodeImpl {
+	/** @type {BaseNodeImpl[]} */
+	m_children;
 	constructor() {
+		this.m_children = [];
 		this.m_parent = null;
 	}
-	/** @arg {unknown} parent */
+	/** @arg {BaseNodeImpl|null} parent */
 	set_parent(parent) {
 		this.m_parent = parent;
 	}
 	run() {/* do nothing*/}
 	remove() {
 		if (this.m_parent) this.m_parent.remove_child(this);
+	}
+	/** @arg {BaseNodeImpl} record */
+	remove_child(record) {
+		const index = this.m_children.indexOf(record);
+		if (index > -1) {
+			this.m_children.splice(index, 1);
+			record.set_parent(null);
+		}
 	}
 	destroy() {
 		this.remove();
@@ -1628,7 +1639,7 @@ class IntervalIdNode extends BaseNodeImpl {
 	}
 }
 class IntervalTargetFn {
-	/** @arg {unknown} callback @arg {number} timeout */
+	/** @arg {CallableFunction} callback @arg {number} timeout */
 	constructor(callback, timeout) {
 		this.m_callback = callback;
 		this.timeout = timeout;
@@ -1647,14 +1658,14 @@ class TimeoutNode extends BaseNodeImpl {
 	timeout() {
 		return this.m_timeout;
 	}
-	/** @arg {unknown} target */
+	/** @arg {IntervalTargetFn} target */
 	set_target(target) {
 		this.m_target = target;
 	}
 	set() {
 		this.m_id = setTimeout(this.run.bind(this), this.m_timeout);
 	}
-	/** @arg {{}|null} target */
+	/** @arg {IntervalTargetFn|null} target */
 	start(target) {
 		if (!target) throw new Error("No target");
 		this.m_target = target;
@@ -1693,8 +1704,8 @@ class IntervalNode extends BaseNodeImpl {
 		if (this.id !== null) clearInterval(this.id);
 	}
 }
-class AsyncTimeoutNode extends TimeoutNode {
-	/** @arg {{wait():Promise<unknown>;destroy():void}} target */
+class AsyncTimeoutNode {
+	/** @arg {AsyncTimeoutTarget} target */
 	async start_async(target) {
 		if (!target) {
 			throw new Error("unable to start_async without anything to wait for");
@@ -1706,20 +1717,15 @@ class AsyncTimeoutNode extends TimeoutNode {
 		log_if_impl_r(LOG_LEVEL_INFO_IMPL, "p", promise);
 		await promise;
 	}
-	/** @override */
 	set() {
-		log_if_impl_r(LOG_LEVEL_INFO_IMPL, "set", this);
-		super.set();
+		TimeoutNode.prototype.set.call(this);
 	}
-	/** @override */
 	run() {
-		log_if_impl_r(LOG_LEVEL_INFO_IMPL, "run", this);
-		return super.run();
+		TimeoutNode.prototype.run.call(this);
 	}
-	/** @override */
 	destroy() {
 		if (this.m_target) this.m_target.destroy();
-		super.destroy();
+		TimeoutNode.prototype.destroy.call(this);
 	}
 }
 class IntervalIdNodeRef extends IntervalIdNode {
