@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {blob_create_args_arr} from "./blob_create_args_arr.ts"
 import {leftover_args} from "./leftover_args.ts"
 import {active_blob_set} from "./active_blob_set.ts"

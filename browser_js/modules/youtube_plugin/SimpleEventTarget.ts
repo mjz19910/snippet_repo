@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 export class SimpleEventTarget {
 	_events: {[str: string]: any}
 	constructor() {

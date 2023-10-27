@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {HTMLMediaElementGainController} from "./HTMLMediaElementGainController.ts";
 
 export class VolumeRange {
@@ -6,7 +7,7 @@ export class VolumeRange {
 	min: number;
 	overdrive: number;
 	gain_controller: HTMLMediaElementGainController;
-	range_element?: Range;
+	range_element?: HTMLInputElement;
 	view_div: unknown;
 	constructor(min: number,max: number,overdrive: number,obj: HTMLMediaElementGainController) {
 		this.cache=true;
@@ -103,8 +104,8 @@ export class VolumeRange {
 				this.range_element.id="i_r_css";
 				const range_style=this.range_element.style;
 				range_style.width="calc(100% + 40px + 8px + 40px)";
-				range_style.marginLeft=0;
-				range_style.marginRight=0;
+				range_style.marginLeft="0";
+				range_style.marginRight="0";
 			}
 			this.range_element;
 			this.range_element.oninput=() => {

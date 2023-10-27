@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 export function init_Image_plugin() {
 	let OriginalImage=Image;
 	Image=new Proxy(Image,{

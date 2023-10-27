@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 export class Seen {
 	static debug=false;
 	static all_seen_objs: any[]=[]

@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {active_property_watcher_paths} from "./active_property_watcher_paths.ts";
 import {ghost_symbol} from "./ghost_symbol.ts";
 import {watched_target_map} from "./watched_target_map.ts";
