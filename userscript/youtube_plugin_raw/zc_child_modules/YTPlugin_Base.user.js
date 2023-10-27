@@ -13,12 +13,16 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
-let page_require=typeof require==="undefined"? __module_require__:require,delete_require=false,reset_require=false;
-if(typeof require==="undefined"||page_require!==__module_require__)
-{
-	delete_require=typeof require==="undefined";
-	require=__module_require__;
-	reset_require=true;
+// deno-lint-ignore-file
+const page_require = typeof require === "undefined"
+	? __module_require__
+	: require;
+let delete_require = false,
+	reset_require = false;
+if (typeof require === "undefined" || page_require !== __module_require__) {
+	delete_require = typeof require === "undefined";
+	require = __module_require__;
+	reset_require = true;
 }
 // yt_plugin/Base(4) => base_require/BaseRequire(1)
 const {do_export,get_exports,required,as}=require("../../base_require_raw/BaseRequire.user");
@@ -38,7 +42,7 @@ function as_any(e,x=e) {return x;}
 export_(exports => {exports.as_any=as_any;});
 //#endregion
 //#region helper
-/** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {import("../yt_json_types/stu/group_T.js").T_SplitOnce<S,D>} */
+/** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {import("../yt_json_types/stu/group_T.ts").T_SplitOnce<S,D>} */
 function split_string_once(s,d=as(","))
 {
 	if(!s) {debugger; return as_any([]);}
@@ -69,7 +73,7 @@ function split_string_once(s,d=as(","))
 }
 //#endregion
 //#region constants
-/** @private @type {import("../support_2/YtdAppElement.js").YtdAppElement} */
+/** @private @type {import("../support_2/YtdAppElement.ts").YtdAppElement} */
 const YtdAppElement=as({});
 const is_yt_debug_enabled=false;
 //#endregion
@@ -137,27 +141,27 @@ function make_iterator(x) {return new Iterator(x);}
 //#region ui_plugin & on_${element}
 class CustomEventTarget
 {
-	/** @private @type {import("../yt_json_types/j/J_CustomEventTargetEvents.js").J_CustomEventTargetEvents} */
+	/** @private @type {import("../yt_json_types/j/J_CustomEventTargetEvents.ts").J_CustomEventTargetEvents} */
 	_events={};
-	/** @api @public @arg {import("../yt_json_types/j/J_CustomEventTargetEvents.js").J_HandlerInfoArgs} args */
+	/** @api @public @arg {import("../yt_json_types/j/J_CustomEventTargetEvents.ts").J_HandlerInfoArgs} args */
 	addEventListener(...args)
 	{
 		let [type,handler]=args;
 		let ht1=this._events[type];
 		if(ht1)
 		{
-			/** @type {NonNullable<import("../yt_json_types/j/J_CustomEventTargetEvents.js").J_CustomEventTargetEvents[keyof import("../yt_json_types/j/J_CustomEventTargetEvents.js").J_CustomEventTargetEvents]>[number][]} */
+			/** @type {NonNullable<import("../yt_json_types/j/J_CustomEventTargetEvents.ts").J_CustomEventTargetEvents[keyof import("../yt_json_types/j/J_CustomEventTargetEvents.ts").J_CustomEventTargetEvents]>[number][]} */
 			let handlers=ht1;
 			handlers.push(handler);
 		} else
 		{
 			ht1=this._events[type]=[];
-			/** @type {NonNullable<import("../yt_json_types/j/J_CustomEventTargetEvents.js").J_CustomEventTargetEvents[keyof import("../yt_json_types/j/J_CustomEventTargetEvents.js").J_CustomEventTargetEvents]>[number][]} */
+			/** @type {NonNullable<import("../yt_json_types/j/J_CustomEventTargetEvents.ts").J_CustomEventTargetEvents[keyof import("../yt_json_types/j/J_CustomEventTargetEvents.ts").J_CustomEventTargetEvents]>[number][]} */
 			let handlers=ht1;
 			handlers.push(handler);
 		}
 	}
-	/** @api @public @arg {import("../yt_json_types/j/J_CustomEventTargetEvents.js").J_HandlerInfoArgs} args */
+	/** @api @public @arg {import("../yt_json_types/j/J_CustomEventTargetEvents.ts").J_HandlerInfoArgs} args */
 	removeEventListener(...args)
 	{
 		let [type,handler]=args;
@@ -171,14 +175,14 @@ class CustomEventTarget
 			event_arr.splice(i,1);
 		}
 	}
-	/** @api @public @arg {import("../zb_plugin_types/types.js").CustomEventType} event */
+	/** @api @public @arg {import("../zb_plugin_types/types.ts").CustomEventType} event */
 	dispatchEvent(event)
 	{
 		let msg_arr=this._events[event.type];
 		if(!msg_arr) return;
 		for(let i=0;i<msg_arr.length;i++)
 		{
-			/** @type {(this:CustomEventTarget,event:import("../zb_plugin_types/types.js").CustomEventType) => void} */
+			/** @type {(this:CustomEventTarget,event:import("../zb_plugin_types/types.ts").CustomEventType) => void} */
 			let cur=as(msg_arr[i]);
 			cur.call(this,event);
 		}
@@ -189,7 +193,7 @@ class DomObserver extends CustomEventTarget
 {
 	/** @private @type {Set<MessagePort>} */
 	wait_ports=new Set;
-	/** @private @type {Map<MessagePort,import("../yt_json_types/d/group_D.js").D_ResState[]>} */
+	/** @private @type {Map<MessagePort,import("../yt_json_types/d/group_D.ts").D_ResState[]>} */
 	port_to_resolvers_map=new Map;
 	/** @api @public @arg {MessagePort} port */
 	notify_with_port(port)
@@ -330,12 +334,12 @@ function iterate_find_element(element_value,tag_name,src_element,cb)
 	found_element_count++;
 	cb(target_element);
 }
-/** @private @arg {import("../support_1/AsyncPluginInitEvent.js").AsyncPluginInitEvent} event */
+/** @private @arg {import("../support_1/AsyncPluginInitEvent.ts").AsyncPluginInitEvent} event */
 function _plugin_init(event) {async_plugin_init(event).then(() => {},(e) => {console.log("async error",e);});}
 /** @private @type {Element|null} */
 let main_page_app=null;
 /**
- * @typedef {{type: "ready";detail: {current_page: import("../support_2/YtCurrentPage.js").YtCurrentPage;ytd_page_manager: YtdPageManagerElement;};}} FindElement_IsReady
+ * @typedef {{type: "ready";detail: {current_page: import("../support_2/YtCurrentPage.ts").YtCurrentPage;ytd_page_manager: YtdPageManagerElement;};}} FindElement_IsReady
  */
 
 /**
@@ -385,11 +389,11 @@ async function find_ytd_watch_flexy(ready_event,iter_count)
 	return;
 }
 /**
- * @param {import("../support_1/AsyncPluginInitEvent.js").AsyncPluginInitEvent} event
+ * @param {import("../support_1/AsyncPluginInitEvent.ts").AsyncPluginInitEvent} event
  * @param {number} iter_count
  * @param {DomObserver} obj
  * @param {number} cur_count
- * @returns {Promise<import("../yt_json_types/ghi/dnp_wrong/IterationDecision.js").IterationDecision>}
+ * @returns {Promise<import("../yt_json_types/ghi/dnp_wrong/IterationDecision.ts").IterationDecision>}
  */
 async function find_from_ytd_app(event,iter_count,obj,cur_count)
 {
@@ -425,7 +429,7 @@ function create_find_event_for_ytd_watch_flexy()
 	if(!current_page) return {type: "current-page-not-found",detail: {ytd_page_manager}};
 	return {type: "ready",detail: {current_page,ytd_page_manager}};
 }
-/** @private @arg {import("../support_1/AsyncPluginInitEvent.js").AsyncPluginInitEvent} event */
+/** @private @arg {import("../support_1/AsyncPluginInitEvent.ts").AsyncPluginInitEvent} event */
 async function async_plugin_init(event)
 {
 	let plugin_state={};
@@ -749,9 +753,9 @@ class R_HandleRichGrid_Base
 	class_name="HandleRichGridRenderer";
 	/** @readonly */
 	entry="richGridRenderer";
-	/** @constructor @public @arg {import("../zb_plugin_types/types.js").ServiceResolverBox<{}>} x */
+	/** @constructor @public @arg {import("../zb_plugin_types/types.ts").ServiceResolverBox<{}>} x */
 	constructor(x) {this.rendererContentItemArray=new HandleRendererContentItemArray(x);}
-	/** @handler @public @arg {string} path @arg {import("../yt_json_types/d/group_D.js").Todo_D_RichGrid} renderer */
+	/** @handler @public @arg {string} path @arg {import("../yt_json_types/d/group_D.ts").Todo_D_RichGrid} renderer */
 	richGridRenderer(path,renderer)
 	{
 		if(this.enable_logging) console.log("run handler richGridRenderer");
@@ -960,7 +964,7 @@ class MyReader
 	read_any_impl()
 	{
 		this.failed=false;
-		/** @private @type {import("../yt_json_types/d/group_D.js").D_ProtobufWireFormat[]} */
+		/** @private @type {import("../yt_json_types/d/group_D.ts").D_ProtobufWireFormat[]} */
 		let data=[];
 		let loop_count=0;
 		let log_slow=true;
@@ -984,7 +988,7 @@ class MyReader
 			}
 			if(!log_slow&&loop_count%4096==0) {console.log("taking a very long time to read protobuf data",loop_count/4096|0);}
 		}
-		/** @private @type {import("../yt_json_types/d/group_D.js").D_ProtobufObj[]} */
+		/** @private @type {import("../yt_json_types/d/group_D.ts").D_ProtobufObj[]} */
 		let res_arr=[];
 		for(let i=0;i<data.length;i++)
 		{
@@ -1193,7 +1197,7 @@ class MyReader
 	{
 		if(this.noisy_log_level) console.log("[skip] pos=%o",this.pos);
 		let pos_start=this.pos;
-		/** @private @type {import("../yt_json_types/d/group_D.js").D_ProtobufObj[]} */
+		/** @private @type {import("../yt_json_types/d/group_D.ts").D_ProtobufObj[]} */
 		let first_num=[];
 		switch(wireType)
 		{
@@ -1263,7 +1267,7 @@ class MyReader
 				}
 				let sub_buffer=this.buf.subarray(this.pos,this.pos+size);
 				let res=this.try_read_any(size);
-				/** @private @type {import("../yt_json_types/d/group_D.js").D_ProtobufObj} */
+				/** @private @type {import("../yt_json_types/d/group_D.ts").D_ProtobufObj} */
 				try {this.skip(size);} catch {
 					console.log("skip failed at",this.pos,fieldId);
 					first_num.push(["error",fieldId]);
@@ -1485,7 +1489,7 @@ new MKState({},window,"yt","yt",true).run();
 win_watch.addEventListener("new_window_object",act_found_create_yt_player);
 class YtdPageManagerElement extends HTMLElement
 {
-	/** @returns {import("../support_2/YtCurrentPage.js").YtCurrentPage|undefined} */
+	/** @returns {import("../support_2/YtCurrentPage.ts").YtCurrentPage|undefined} */
 	getCurrentPage() {throw new Error();}
 }
 /** @private @type {YtdPageManagerElement|null} */
@@ -1524,7 +1528,7 @@ function as_node(value) {return value;}
 let element_map=new Map;
 /** @private @type {Map<string, HTMLVideoElementArrayBox>} */
 let box_map=new Map;
-/** @private @type {import("../support_2/YtdPlayerElement.js").YtdPlayerElement|null} */
+/** @private @type {import("../support_2/YtdPlayerElement.ts").YtdPlayerElement|null} */
 let ytd_player=null;
 /** @private @arg {HTMLElement} element */
 function on_ytd_player(element)
@@ -1534,7 +1538,7 @@ function on_ytd_player(element)
 	element_map.set(element_id,element);
 	/** @private @type {any} */
 	let element_any=element;
-	/** @private @type {import("../support_2/YtdPlayerElement.js").YtdPlayerElement} */
+	/** @private @type {import("../support_2/YtdPlayerElement.ts").YtdPlayerElement} */
 	let element_type=element_any;
 	ytd_player=element_type;
 	window.ytd_player=element;
@@ -1564,7 +1568,7 @@ class YTNavigateFinishEvent
 		let ret=value;
 		return ret;
 	}
-	/** @api @public @type {import("../yt_json_types/ghi/group_G.js").G_NavFinishDetail} */
+	/** @api @public @type {import("../yt_json_types/ghi/group_G.ts").G_NavFinishDetail} */
 	detail=as({});
 }
 /** @private @type {((event:YTNavigateFinishEvent)=>void)[]} */
@@ -1648,7 +1652,7 @@ function on_port_message(event)
 let message_channel=new MessageChannel();
 
 function fire_observer_event() {dom_observer.notify_with_port(message_channel.port1);}
-/** @private @arg {import("../zb_plugin_types/types.js").AsyncPluginEventDetail["handle_types"]} handle_types @arg {import("../zb_plugin_types/types.js").AsyncPluginEventDetail["elements"]} elements */
+/** @private @arg {import("../zb_plugin_types/types.ts").AsyncPluginEventDetail["handle_types"]} handle_types @arg {import("../zb_plugin_types/types.ts").AsyncPluginEventDetail["elements"]} elements */
 function start_message_channel_loop(handle_types,elements)
 {
 	message_channel=new MessageChannel();
@@ -2007,7 +2011,7 @@ class AudioGainController
 }
 /** @private @type {AudioGainController|null} */
 let audio_gain_controller=new AudioGainController;
-/** @private @template {string} T @template {{}} U @template {import("../yt_json_types/stu/group_T.js").T_Split<T,",">} C @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}} @type {import("../support_1/make/__ia_excludeKeysS.js").__ia_excludeKeysS2['fn']} */
+/** @private @template {string} T @template {{}} U @template {import("../yt_json_types/stu/group_T.ts").T_Split<T,",">} C @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}} @type {import("../support_1/make/__ia_excludeKeysS.ts").__ia_excludeKeysS2['fn']} */
 Object.__ia_excludeKeysS=function(/** @private @type {{ [s: string]: any; }|ArrayLike<any>} */ target,/** @private @type {string} */ ex_keys_str)
 {
 	/** @private @type {any} */
@@ -2087,7 +2091,7 @@ function yt_plugin_base_main()
 	let require=__module_require__;
 	const {ServiceLoader}=require("./YTPlugin_ServiceLoader_Plugin.user");
 	const log_enabled_page_type_change=false;
-	/** @private @type {import("../zb_plugin_types/types.js").ServiceResolverBox<{}>} */
+	/** @private @type {import("../zb_plugin_types/types.ts").ServiceResolverBox<{}>} */
 	const resolver_value={
 		value: null,
 		listeners: [],
@@ -2130,7 +2134,7 @@ function yt_plugin_base_main()
 
 	// wait for plugin requirements
 	start_message_channel_loop(services.handle_types,{on_yt_playlist_manager});
-	/** @private @arg {[()=>import("../yt_json_types/ghi/group_G.js").G_NavFinishDetail["response"], object, []]} apply_args */
+	/** @private @arg {[()=>import("../yt_json_types/ghi/group_G.ts").G_NavFinishDetail["response"], object, []]} apply_args */
 	function do_proxy_call_getInitialData(apply_args)
 	{
 		return yt_handlers.on_initial_data(apply_args);
@@ -2164,14 +2168,14 @@ export_(exports =>
 });
 //#endregion
 //#region string manipulation
-/** @private @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {import("../yt_json_types/stu/group_T.js").T_Split<X,string extends S?",":S>} */
+/** @private @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {import("../yt_json_types/stu/group_T.ts").T_Split<X,string extends S?",":S>} */
 function split_string(x,s=as(","))
 {
 	if(!x) {debugger;}
 	let r=x.split(s);
 	return as(r);
 }
-/** @private @arg {WA|null} _wa @template {string} WA @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {import("../yt_json_types/_rtv_wrong/T_InferTypedSplitOnce.js").TI_SplitOnce<WA,S,D>} */
+/** @private @arg {WA|null} _wa @template {string} WA @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {import("../yt_json_types/_rtv_wrong/T_InferTypedSplitOnce.ts").TI_SplitOnce<WA,S,D>} */
 function split_string_once_ex(s,d=as(","),_wa)
 {
 	if(s==="")
@@ -2199,7 +2203,7 @@ function split_string_once_ex(s,d=as(","),_wa)
 	let q=r;
 	return as(q);
 }
-/** @private @arg {A1|null} _a1 @template {string} A1 @arg {A2|null} _a2 @template {string} A2 @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {import("../yt_json_types/_rtv_wrong/T_InferTypedSplitOnce.js").TI_SplitOnce_2arg<A1,A2,S,D>} */
+/** @private @arg {A1|null} _a1 @template {string} A1 @arg {A2|null} _a2 @template {string} A2 @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {import("../yt_json_types/_rtv_wrong/T_InferTypedSplitOnce.ts").TI_SplitOnce_2arg<A1,A2,S,D>} */
 function split_string_once_ex2(s,d=as(","),_a1,_a2)
 {
 	if(s==="")
@@ -2228,7 +2232,7 @@ function split_string_once_ex2(s,d=as(","),_a1,_a2)
 	return as(q);
 }
 export_(exports => exports.split_string_once_ex2=split_string_once_ex2);
-/** @private @arg {WA|null} _wx @template {string} S @template {string} WA @arg {S} s @template {string} D @arg {D} d @returns {import("../yt_json_types/_rtv_wrong/T_InferTypedSplitOnce.js").TI_SplitOnce_NE<WA,S,D>} */
+/** @private @arg {WA|null} _wx @template {string} S @template {string} WA @arg {S} s @template {string} D @arg {D} d @returns {import("../yt_json_types/_rtv_wrong/T_InferTypedSplitOnce.ts").TI_SplitOnce_NE<WA,S,D>} */
 function split_string_once_last(s,d,_wx)
 {
 	if(s==="")
@@ -2276,7 +2280,7 @@ class ApiBase2
 		if(log) console.log("module_debug: module");
 		if(log) console.log(mod);
 	}
-	/** @public @template {{}} T @arg {T} obj @returns {import("../yt_json_types/stu/group_T.js").T_DistributedKeysOf<T>} */
+	/** @public @template {{}} T @arg {T} obj @returns {import("../yt_json_types/stu/group_T.ts").T_DistributedKeysOf<T>} */
 	get_keys_of(obj)
 	{
 		if(!obj) {debugger;}
@@ -2294,7 +2298,7 @@ class ApiBase2
 		let ra=rq;
 		return ra;
 	}
-	/** @protected @template {{}} T @arg {T} obj @returns {import("../yt_json_types/stu/group_T.js").T_DistributedKeysOf_2<T>} */
+	/** @protected @template {{}} T @arg {T} obj @returns {import("../yt_json_types/stu/group_T.ts").T_DistributedKeysOf_2<T>} */
 	get_keys_of_2(obj)
 	{
 		if(!obj) {debugger;}
@@ -2364,7 +2368,7 @@ class ApiBase extends ApiBase2
 		}
 		return null;
 	}
-	/** @protected @template T @arg {NonNullable<T>} x @arg {import("../yt_json_types/stu/group_T.js").T_GetTypeof<T>} y */
+	/** @protected @template T @arg {NonNullable<T>} x @arg {import("../yt_json_types/stu/group_T.ts").T_GetTypeof<T>} y */
 	_primitive_of(x,y) {if(typeof x!==y) debugger;}
 	/** @protected @template {{}} B @template {B} U @arg {{}} x @arg {B} _b @returns {Partial<B>} */
 	upgrade_obj(x,_b)
@@ -2375,7 +2379,7 @@ class ApiBase extends ApiBase2
 		let id=cd;
 		return id;
 	}
-	/** @protected @template {string} T @arg {T} t @returns {import("../yt_json_types/stu/group_T.js").TP_ParseUrlSearchParams<T>} */
+	/** @protected @template {string} T @arg {T} t @returns {import("../yt_json_types/stu/group_T.ts").TP_ParseUrlSearchParams<T>} */
 	parse_url_search_params(t)
 	{
 		let sp=new URLSearchParams(t);
@@ -2383,7 +2387,7 @@ class ApiBase extends ApiBase2
 		let as_any=Object.fromEntries(sp.entries());
 		return as_any;
 	}
-	/** @protected @template {string} T @arg {T} t @returns {import("../yt_json_types/stu/group_T.js").TP_KeyofSearchParams<T>} */
+	/** @protected @template {string} T @arg {T} t @returns {import("../yt_json_types/stu/group_T.ts").TP_KeyofSearchParams<T>} */
 	keyof_search_params(t)
 	{
 		let tmp=this.parse_url_search_params(t);
@@ -2391,7 +2395,7 @@ class ApiBase extends ApiBase2
 		for(let k in tmp) {ret.push(k);}
 		/** @type {any} */
 		let as_any=ret;
-		/** @type {import("../yt_json_types/stu/group_T.js").TP_KeyofSearchParams<T>} */
+		/** @type {import("../yt_json_types/stu/group_T.ts").TP_KeyofSearchParams<T>} */
 		let ret_val=as_any;
 		return ret_val;
 	}
@@ -2401,13 +2405,13 @@ class ApiBase extends ApiBase2
 class ServiceWithResolver extends ApiBase
 {
 	#x;
-	/** @constructor @public @arg {import("../zb_plugin_types/types.js").ServiceResolverBox<{}>} x */
+	/** @constructor @public @arg {import("../zb_plugin_types/types.ts").ServiceResolverBox<{}>} x */
 	constructor(x)
 	{
 		super();
 		this.#x=x;
 	}
-	/** @protected @returns {import("../zb_plugin_types/types.js").ServiceResolverValue} */
+	/** @protected @returns {import("../zb_plugin_types/types.ts").ServiceResolverValue} */
 	get x() {return as_any(this.#x.value);}
 	/** @arg {()=>void} cb */
 	addOnServicesListener(cb) {this.#x.listeners.push(cb);}
@@ -2426,7 +2430,7 @@ class PrivateAccessorCache extends ServiceWithResolver
 }
 class ServiceWithAccessors extends ServiceWithResolver
 {
-	/** @param {import("../zb_plugin_types/types.js").ServiceResolverBox<{}>} x */
+	/** @param {import("../zb_plugin_types/types.ts").ServiceResolverBox<{}>} x */
 	constructor(x)
 	{
 		super(x);
@@ -2468,7 +2472,7 @@ class ServiceWithMembers extends ServiceWithAccessors
 }
 class BaseService extends ServiceWithMembers
 {
-	/** @public @arg {K} k @template U @template {import("../yt_json_types/stu/group_T.js").T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
+	/** @public @arg {K} k @template U @template {import("../yt_json_types/stu/group_T.ts").T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
 	H_s(k,x,f)
 	{
 		let tm=this;
@@ -2483,24 +2487,24 @@ class BaseService extends ServiceWithMembers
 		}
 		this.sm.H_cls(this,k,x,f);
 	}
-	/** @public @template U @arg {import("../yt_json_types/abc/group_C.js").CF_T_GM} cf @template T @arg {{sendPost: true;apiUrl: T;}} x @arg {(this:this,x:T)=>U} f */
+	/** @public @template U @arg {import("../yt_json_types/abc/group_C.ts").CF_T_GM} cf @template T @arg {{sendPost: true;apiUrl: T;}} x @arg {(this:this,x:T)=>U} f */
 	T_GM(cf,x,f)
 	{
 		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(sendPost!==true) debugger;
 		return f.call(this,apiUrl);
 	}
-	/** @api @public @template {{}} T @arg {string|import("../yt_json_types/abc/group_C.js").CF_M_s} cf @arg {T} x */
+	/** @api @public @template {{}} T @arg {string|import("../yt_json_types/abc/group_C.ts").CF_M_s} cf @arg {T} x */
 	s(cf,x)
 	{
 		if(!x) debugger;
 		this.sm.k(cf,x);
 		return x;
 	}
-	/** @public @template {import("../yt_json_types/abc/group_C.js").CF_M_y} T_CF  @arg {T_CF} cf @template U @arg {K} k @template {import("../yt_json_types/stu/group_T.js").T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K],cf:`${T_CF}.${K}`)=>U} f */
+	/** @public @template {import("../yt_json_types/abc/group_C.ts").CF_M_y} T_CF  @arg {T_CF} cf @template U @arg {K} k @template {import("../yt_json_types/stu/group_T.ts").T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K],cf:`${T_CF}.${K}`)=>U} f */
 	y(cf,k,x,f) {return f.call(this,this.sm.w(cf,k,x),`${cf}.${k}`);}
 	/**
-	 * @protected @template {import("../yt_json_types/abc/group_C.js").CF_T_WCM} T_CF @arg {T_CF} cf @template {{webCommandMetadata:any;}} T @template U @arg {T|undefined} x @arg {(this:this,x:T["webCommandMetadata"],cf:`G${T_CF}`)=>U} f
+	 * @protected @template {import("../yt_json_types/abc/group_C.ts").CF_T_WCM} T_CF @arg {T_CF} cf @template {{webCommandMetadata:any;}} T @template U @arg {T|undefined} x @arg {(this:this,x:T["webCommandMetadata"],cf:`G${T_CF}`)=>U} f
 	 * @returns {[U,Omit<T,"webCommandMetadata">]|null}
 	 */
 	T_WCM(cf,x,f)
@@ -2512,7 +2516,7 @@ class BaseService extends ServiceWithMembers
 	}
 	/**
 	 * @protected @template R_D,R_M
-	 * @template {Extract<keyof T_Endpoint,import("../zb_plugin_types/KA_EndpointKey.js").KA_EndpointKey>} T_Key @template {import("../yt_json_types/stu/group_T.js").TE_Endpoint_3<any,any,any>} T_Endpoint @arg {T_Endpoint} x
+	 * @template {Extract<keyof T_Endpoint,import("../zb_plugin_types/KA_EndpointKey.ts").KA_EndpointKey>} T_Key @template {import("../yt_json_types/stu/group_T.ts").TE_Endpoint_3<any,any,any>} T_Endpoint @arg {T_Endpoint} x
 	 * @param {T_Key} k
 	 * @param {(this:this,x:T_Endpoint["commandMetadata"])=>R_M} f1 @arg {(this:this,x:T_Endpoint[T_Key])=>R_D} f2
 	 * @returns {[typeof y,R_M,R_D]}
@@ -2530,7 +2534,7 @@ class BaseService extends ServiceWithMembers
 		const r1=f1.call(this,commandMetadata),r2=f2.call(this,a);
 		return [y,r1,r2];
 	}
-	/** @public @arg {K} k @template U @template {import("../yt_json_types/stu/group_T.js").T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
+	/** @public @arg {K} k @template U @template {import("../yt_json_types/stu/group_T.ts").T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
 	H_(k,x,f)
 	{
 		if(f===void 0) {debugger; return;}
@@ -2563,13 +2567,13 @@ class BaseService extends ServiceWithMembers
 	}
 	//#endregion
 	//#region make
-	/** @arg {string} k @template T @arg {T} x @returns {import("../yt_json_types/m/make_item_group.js").make_one_t<T>} */
+	/** @arg {string} k @template T @arg {T} x @returns {import("../yt_json_types/m/make_item_group.ts").make_one_t<T>} */
 	make_one_t(k,x) {const b="item",c="one"; return {a: "/di/a/k/l/m/z",k: b,l: c,m: k,z: [x]};}
-	/** @arg {string} k @template T @arg {T[]} x @returns {import("../yt_json_types/m/make_item_group.js").make_arr_t<T>} */
+	/** @arg {string} k @template T @arg {T[]} x @returns {import("../yt_json_types/m/make_item_group.ts").make_arr_t<T>} */
 	make_arr_t(k,x) {const b="item",c="arr"; return {a: "/di/a/k/l/m/z",k: b,l: c,m: k,z: [x]};}
 	//#endregion
 	//#region save
-	/** @public @arg {import("../yt_json_types/abc/group_C.js").CF_M_k|string} k @arg {{}} x */
+	/** @public @arg {import("../yt_json_types/abc/group_C.ts").CF_M_k|string} k @arg {{}} x */
 	k(k,x) {this.save_primitive(k,x);}
 	/** @protected @arg {string} k @arg {object|string|number|bigint|number[]|string[]|Uint8Array} x */
 	save_primitive(k,x) {k; x;}
@@ -2612,9 +2616,9 @@ class BaseService extends ServiceWithMembers
 	get_KZ=x => `/di/${this[`kz_${x}`]}`;
 	/** @template T @arg {T} x  @returns {{a:"primitive";e:"number";z: [T]}} */
 	make_prim_num(x) {return {a: "primitive",e: "number",z: [x]};}
-	/** @template {string} L @template T @arg {L} l @arg {T} x @returns {import("../yt_json_types/d/mod_D/DI_T/DI_T_move.js").T_DI_Raw<L,T>} */
+	/** @template {string} L @template T @arg {L} l @arg {T} x @returns {import("../yt_json_types/d/mod_D/DI_T/DI_T_move.ts").T_DI_Raw<L,T>} */
 	make_DI_Raw(l,x) {return {a: this.get_KZ("kl"),k: "raw",l,z: [x]};}
-	/** @template T @arg {T} x @returns {import("../yt_json_types/stu/group_T.js").T_GetPrimitiveTag<T>} */
+	/** @template T @arg {T} x @returns {import("../yt_json_types/stu/group_T.ts").T_GetPrimitiveTag<T>} */
 	get_primitive_tag(x)
 	{
 		switch(typeof x)
@@ -2628,38 +2632,38 @@ class BaseService extends ServiceWithMembers
 		debugger;
 		return as("unknown");
 	}
-	/** @template {string|number} Z @param {Z} z @returns {import("../yt_json_types/d/mod_D/DI_T/DI_T_move.js").T_PrimitiveBox<Z>} */
+	/** @template {string|number} Z @param {Z} z @returns {import("../yt_json_types/d/mod_D/DI_T/DI_T_move.ts").T_PrimitiveBox<Z>} */
 	make_prim_v(z) {return {a: this.get_KZ("k"),k: this.get_primitive_tag(z),z: [z]};}
-	/** @template T @arg {T} x @returns {import("../yt_json_types/d/mod_D/DI_T/DI_T_move.js").T_PrimitiveBox<T>} */
+	/** @template T @arg {T} x @returns {import("../yt_json_types/d/mod_D/DI_T/DI_T_move.ts").T_PrimitiveBox<T>} */
 	make_Typeof(x) {return {a: this.get_KZ("k"),k: this.get_primitive_tag(x),z: [x]};}
-	/** @template T @arg {T} x @returns {import("../yt_json_types/d/mod_D/DI_T/DI_T_move.js").DIT_Box_Typeof2<import("../yt_json_types/stu/group_T.js").T_GetPrimitiveTag<T>,T>} */
+	/** @template T @arg {T} x @returns {import("../yt_json_types/d/mod_D/DI_T/DI_T_move.ts").DIT_Box_Typeof2<import("../yt_json_types/stu/group_T.ts").T_GetPrimitiveTag<T>,T>} */
 	make_BoxTypeof(x) {return {a: this.get_KZ("k"),k: this.get_primitive_tag(x),z: [x]};}
-	/** @template T @arg {T} v @returns {import("../yt_json_types/d/mod_D/DI_T/DI_T_move.js").MK_DIInfo1<T>} */
+	/** @template T @arg {T} v @returns {import("../yt_json_types/d/mod_D/DI_T/DI_T_move.ts").MK_DIInfo1<T>} */
 	make_obj_input(v) {return {z: [v]};}
-	/** @template {number} T @param {T} x @returns {import("../yt_json_types/d/mod_D/DI_T/DI_T_move.js").T_PrimitiveBox<T>} */
+	/** @template {number} T @param {T} x @returns {import("../yt_json_types/d/mod_D/DI_T/DI_T_move.ts").T_PrimitiveBox<T>} */
 	make_prim_num_t(x) {return {a: this.get_KZ("k"),k: this.get_primitive_tag(x),z: [x]};}
 	//#endregion
-	/** @public @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {X extends infer X1?import("../yt_json_types/stu/group_T.js").T_Split<X1,string extends S?",":S>:never} */
+	/** @public @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {X extends infer X1?import("../yt_json_types/stu/group_T.ts").T_Split<X1,string extends S?",":S>:never} */
 	split_str(x,s=as(","))
 	{
 		if(!x) {debugger;}
 		let r=x.split(s);
 		return as(r);
 	}
-	/** @public @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {import("../support_1/Join.js").Join<X,S>} */
+	/** @public @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {import("../support_1/Join.ts").Join<X,S>} */
 	join_string(x,s)
 	{
 		if(!x) {debugger;}
 		let r=x.join(s);
 		return as(r);
 	}
-	/** @protected @template {`https://${string}`|`http://${string}`} T @arg {T} str @returns {import("../support_1/url_parse/UrlParse.js").UrlParse<T>} */
+	/** @protected @template {`https://${string}`|`http://${string}`} T @arg {T} str @returns {import("../support_1/url_parse/UrlParse.ts").UrlParse<T>} */
 	_convert_url_to_obj(str)
 	{
 		let s=new URL(str);
 		/** @private @type {any} */
 		let a=s;
-		/** @private @type {import("../support_1/url_parse/UrlParse.js").UrlParse<T>} */
+		/** @private @type {import("../support_1/url_parse/UrlParse.ts").UrlParse<T>} */
 		let ret=a;
 		return ret;
 	}
@@ -2679,7 +2683,7 @@ class BaseService extends ServiceWithMembers
 		let reader=new MyReader(buffer);
 		return reader.try_read_any();
 	}
-	/** @public @template {string} T @template {string} U @arg {T} str @arg {U} ends_str @returns {x is (T extends `${infer B}${infer R}`?`${B}${import("../yt_json_types/stu/group_T.js").Some<R>}${string}${U}`:`${string}${U}`)} */
+	/** @public @template {string} T @template {string} U @arg {T} str @arg {U} ends_str @returns {x is (T extends `${infer B}${infer R}`?`${B}${import("../yt_json_types/stu/group_T.ts").Some<R>}${string}${U}`:`${string}${U}`)} */
 	str_ends_with(str,ends_str) {return str.endsWith(ends_str);}
 	/** @public @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with_rx(needle,str) {return str.startsWith(needle);}
@@ -2698,7 +2702,7 @@ class BaseService extends ServiceWithMembers
 			this.save_primitive(`${ns_name}::${enum_base}`,sd);
 		} else {this.save_primitive(`${ns_name}::${enum_base}`,n2);}
 	}
-	/** @private @template {string} T @template {string} U @arg {T} x @arg {U} sep @returns {import("../yt_json_types/stu/group_T.js").T_SplitOnce<T,U>[number]} */
+	/** @private @template {string} T @template {string} U @arg {T} x @arg {U} sep @returns {import("../yt_json_types/stu/group_T.ts").T_SplitOnce<T,U>[number]} */
 	drop_separator(x,sep)
 	{
 		let v=split_string_once(x,sep);
@@ -2726,7 +2730,7 @@ class BaseService extends ServiceWithMembers
 		if(!keys.length) return true;
 		return false;
 	}
-	/** @private @template {{}} T @arg {T extends Record<string, never>?T:{} extends T?import("../yt_json_types/stu/group_T.js").T_DistributedKeysOf<T> extends []?T:never:never} x */
+	/** @private @template {{}} T @arg {T extends Record<string, never>?T:{} extends T?import("../yt_json_types/stu/group_T.ts").T_DistributedKeysOf<T> extends []?T:never:never} x */
 	on_empty_object(x)
 	{
 		if(!x) {debugger; return;}
@@ -2766,9 +2770,9 @@ class BaseService extends ServiceWithMembers
 	// takes (undefined | non-array) (as None), returns undefined (as None)
 	/** @protected @template {string} CF @arg {CF} cf @template {{}} U @arg {U[]} x @arg {(this:this,cf:CF,x:U,i:number)=>void} f  */
 	z_cf(cf,x,f) {if(x===void 0||!x.entries) {debugger; return;} return this.z(x,(x,i) => f.call(this,cf,x,i));}
-	/** @protected @template {{}} T @arg {T extends Record<string, never>?T:{} extends T?import("../yt_json_types/stu/group_T.js").T_DistributedKeysOf<T> extends []?T:never:never} x */
+	/** @protected @template {{}} T @arg {T extends Record<string, never>?T:{} extends T?import("../yt_json_types/stu/group_T.ts").T_DistributedKeysOf<T> extends []?T:never:never} x */
 	g(x) {this.on_empty_object(x);}
-	/** @public @template {{}} T @arg {({} extends T?import("../yt_json_types/stu/group_T.js").T_DistributedKeysOf<T> extends []?T:never:never)|null|undefined} x */
+	/** @public @template {{}} T @arg {({} extends T?import("../yt_json_types/stu/group_T.ts").T_DistributedKeysOf<T> extends []?T:never:never)|null|undefined} x */
 	tg_base(x) {this.t_base(x,this.g);}
 	// takes nullish (as None), returns null (as None)
 	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>U} f */
@@ -2788,17 +2792,17 @@ class BaseService extends ServiceWithMembers
 	/** @protected @template Z @template {{}} Y @arg {(this:this,y:Y)=>Z} x @returns {(y:Y|undefined)=>Z|undefined} */
 	tf=x => y => this.tv(x,y);
 	//#region T_Optional
-	/** @template T @arg {T} x @returns {import("../yt_json_types/stu/group_T.js").Some<T>} */
+	/** @template T @arg {T} x @returns {import("../yt_json_types/stu/group_T.ts").Some<T>} */
 	some(x) {return {type: "s",v: x};}
-	/** @template T @arg {T} x @returns {import("../yt_json_types/stu/group_T.js").Some<T>} */
+	/** @template T @arg {T} x @returns {import("../yt_json_types/stu/group_T.ts").Some<T>} */
 	m(x) {return this.some(x);}
-	/** @template T @arg {import("../yt_json_types/stu/group_T.js").Some<T>} x */
+	/** @template T @arg {import("../yt_json_types/stu/group_T.ts").Some<T>} x */
 	mw(x)
 	{
 		/** @template ST @template {this} CU */
 		class SomeEx
 		{
-			/** @arg {CU} cls @arg {import("../yt_json_types/stu/group_T.js").Some<ST>} x */
+			/** @arg {CU} cls @arg {import("../yt_json_types/stu/group_T.ts").Some<ST>} x */
 			constructor(cls,x)
 			{
 				this.cls=cls;
@@ -2813,18 +2817,18 @@ class BaseService extends ServiceWithMembers
 		}
 		return new SomeEx(this,x);
 	}
-	/** @template T @arg {import("../yt_json_types/stu/group_T.js").Some<T>} x @returns {T} */
+	/** @template T @arg {import("../yt_json_types/stu/group_T.ts").Some<T>} x @returns {T} */
 	mu(x) {return x.v;}
-	/** @arg {(this:this,x:T)=>U} y @template T @arg {import("../yt_json_types/stu/group_T.js").Some<T>} x @template U @returns {import("../yt_json_types/stu/group_T.js").Some<U>} */
+	/** @arg {(this:this,x:T)=>U} y @template T @arg {import("../yt_json_types/stu/group_T.ts").Some<T>} x @template U @returns {import("../yt_json_types/stu/group_T.ts").Some<U>} */
 	mt(x,y) {return this.m(y.call(this,x.v));}
-	/** @arg {(this:this,x:T)=>U} y @template {{}} T @arg {import("../yt_json_types/stu/group_T.js").Some<T|null|undefined>} x @template U @returns {import("../yt_json_types/stu/group_T.js").Some<U|null>} */
+	/** @arg {(this:this,x:T)=>U} y @template {{}} T @arg {import("../yt_json_types/stu/group_T.ts").Some<T|null|undefined>} x @template U @returns {import("../yt_json_types/stu/group_T.ts").Some<U|null>} */
 	m_t(x,y) {return this.m(this.t_base(x.v,y));}
-	/** @template {{}|undefined} T @arg {import("../yt_json_types/stu/group_T.js").Some<T>} x @returns {T extends infer V?V extends undefined?import("../yt_json_types/stu/group_T.js").None:import("../yt_json_types/stu/group_T.js").Some<V>:never} */
+	/** @template {{}|undefined} T @arg {import("../yt_json_types/stu/group_T.ts").Some<T>} x @returns {T extends infer V?V extends undefined?import("../yt_json_types/stu/group_T.ts").None:import("../yt_json_types/stu/group_T.ts").Some<V>:never} */
 	m_ud(x)
 	{
-		/** @arg {import("../yt_json_types/stu/group_T.js").Some<T>|import("../yt_json_types/stu/group_T.js").None} x @returns {asserts x is T extends infer V?V extends undefined?import("../yt_json_types/stu/group_T.js").None:import("../yt_json_types/stu/group_T.js").Some<V>:never} */
+		/** @arg {import("../yt_json_types/stu/group_T.ts").Some<T>|import("../yt_json_types/stu/group_T.ts").None} x @returns {asserts x is T extends infer V?V extends undefined?import("../yt_json_types/stu/group_T.ts").None:import("../yt_json_types/stu/group_T.ts").Some<V>:never} */
 		function assume_ret(x) {x;}
-		/** @type {import("../yt_json_types/stu/group_T.js").Some<T>|import("../yt_json_types/stu/group_T.js").None} */
+		/** @type {import("../yt_json_types/stu/group_T.ts").Some<T>|import("../yt_json_types/stu/group_T.ts").None} */
 		let mr;
 		if(x.v===void 0) mr={type: "n"};
 		else mr={type: "s",v: x.v};
@@ -2833,12 +2837,12 @@ class BaseService extends ServiceWithMembers
 	}
 	/** @template {{}|undefined} T @arg {T} x */
 	ms_ud(x) {return this.m_ud(this.m(x));}
-	/** @template {{}|null} T @arg {import("../yt_json_types/stu/group_T.js").Some<T>} x @returns {T extends infer V?V extends null?import("../yt_json_types/stu/group_T.js").None:import("../yt_json_types/stu/group_T.js").Some<V>:never} */
+	/** @template {{}|null} T @arg {import("../yt_json_types/stu/group_T.ts").Some<T>} x @returns {T extends infer V?V extends null?import("../yt_json_types/stu/group_T.ts").None:import("../yt_json_types/stu/group_T.ts").Some<V>:never} */
 	m_nu(x)
 	{
-		/** @arg {import("../yt_json_types/stu/group_T.js").Some<T>|import("../yt_json_types/stu/group_T.js").None} x @returns {asserts x is T extends infer V?V extends null?import("../yt_json_types/stu/group_T.js").None:import("../yt_json_types/stu/group_T.js").Some<V>:never} */
+		/** @arg {import("../yt_json_types/stu/group_T.ts").Some<T>|import("../yt_json_types/stu/group_T.ts").None} x @returns {asserts x is T extends infer V?V extends null?import("../yt_json_types/stu/group_T.ts").None:import("../yt_json_types/stu/group_T.ts").Some<V>:never} */
 		function assume_ret(x) {x;}
-		/** @type {import("../yt_json_types/stu/group_T.js").Some<T>|import("../yt_json_types/stu/group_T.js").None} */
+		/** @type {import("../yt_json_types/stu/group_T.ts").Some<T>|import("../yt_json_types/stu/group_T.ts").None} */
 		let mr;
 		if(x.v===null)
 		{
@@ -2847,12 +2851,12 @@ class BaseService extends ServiceWithMembers
 		assume_ret(mr);
 		return mr;
 	}
-	/** @arg {(this:this,x:Extract<A,import("../yt_json_types/stu/group_T.js").Some<any>>["v"])=>U} y @template {{}} T @template {import("../yt_json_types/stu/group_T.js").None|import("../yt_json_types/stu/group_T.js").Some<T>} A @arg {A} x @template {{}|undefined|void} U @returns {A extends import("../yt_json_types/stu/group_T.js").None?import("../yt_json_types/stu/group_T.js").None:U extends void|undefined?import("../yt_json_types/stu/group_T.js").None:import("../yt_json_types/stu/group_T.js").Some<U>} */
+	/** @arg {(this:this,x:Extract<A,import("../yt_json_types/stu/group_T.ts").Some<any>>["v"])=>U} y @template {{}} T @template {import("../yt_json_types/stu/group_T.ts").None|import("../yt_json_types/stu/group_T.ts").Some<T>} A @arg {A} x @template {{}|undefined|void} U @returns {A extends import("../yt_json_types/stu/group_T.ts").None?import("../yt_json_types/stu/group_T.ts").None:U extends void|undefined?import("../yt_json_types/stu/group_T.ts").None:import("../yt_json_types/stu/group_T.ts").Some<U>} */
 	m_nu_t(x,y)
 	{
-		/** @arg {import("../yt_json_types/stu/group_T.js").Some<U>|import("../yt_json_types/stu/group_T.js").None} x @returns {asserts x is A extends import("../yt_json_types/stu/group_T.js").None?import("../yt_json_types/stu/group_T.js").None:U extends void|undefined?import("../yt_json_types/stu/group_T.js").None:import("../yt_json_types/stu/group_T.js").Some<U>} */
+		/** @arg {import("../yt_json_types/stu/group_T.ts").Some<U>|import("../yt_json_types/stu/group_T.ts").None} x @returns {asserts x is A extends import("../yt_json_types/stu/group_T.ts").None?import("../yt_json_types/stu/group_T.ts").None:U extends void|undefined?import("../yt_json_types/stu/group_T.ts").None:import("../yt_json_types/stu/group_T.ts").Some<U>} */
 		function assume_ret(x) {x;}
-		/** @type {import("../yt_json_types/stu/group_T.js").Some<U>|import("../yt_json_types/stu/group_T.js").None} */
+		/** @type {import("../yt_json_types/stu/group_T.ts").Some<U>|import("../yt_json_types/stu/group_T.ts").None} */
 		let mr;
 		if(x.type==="n")
 		{
@@ -2868,41 +2872,41 @@ class BaseService extends ServiceWithMembers
 		assume_ret(mr);
 		return mr;
 	}
-	/** @arg {(this:this,x:T)=>U} y @template {{}} T @template {import("../yt_json_types/stu/group_T.js").Some<T[]>} Opt @arg {Opt} x @template U */
+	/** @arg {(this:this,x:T)=>U} y @template {{}} T @template {import("../yt_json_types/stu/group_T.ts").Some<T[]>} Opt @arg {Opt} x @template U */
 	mz(x,y) {return this.mt(x,x => this.z(x,y));}
-	/** @arg {(this:this,x:T)=>U} f @template T @arg {import("../yt_json_types/stu/group_T.js").Some<T>} m @template U */
+	/** @arg {(this:this,x:T)=>U} f @template T @arg {import("../yt_json_types/stu/group_T.ts").Some<T>} m @template U */
 	mb(f,m) {return this.mt(m,f);}
-	/** @template T @arg {T} x @template U @arg {(this:this,x:T)=>U} y @returns {import("../yt_json_types/stu/group_T.js").Some<U>} */
+	/** @template T @arg {T} x @template U @arg {(this:this,x:T)=>U} y @returns {import("../yt_json_types/stu/group_T.ts").Some<U>} */
 	ms(x,y) {return this.mt(this.m(x),y);}
-	/** @template {{}} T @arg {T|undefined} x @template U @arg {(this:this,x:T)=>U} y @returns {import("../yt_json_types/stu/group_T.js").Some<U|null>} */
+	/** @template {{}} T @arg {T|undefined} x @template U @arg {(this:this,x:T)=>U} y @returns {import("../yt_json_types/stu/group_T.ts").Some<U|null>} */
 	ms_t(x,y) {return this.ms(x,x => this.t_base(x,y));}
-	/** @template {{}} T1 @arg {import("../yt_json_types/stu/group_T.js").Some<T1|undefined>} x @template {{}} T2 @arg {(this:this,x:T1)=>T2} y @template T3 @arg {(this:this,x:T2)=>T3} z @returns {import("../yt_json_types/stu/group_T.js").Some<T3|null>} */
+	/** @template {{}} T1 @arg {import("../yt_json_types/stu/group_T.ts").Some<T1|undefined>} x @template {{}} T2 @arg {(this:this,x:T1)=>T2} y @template T3 @arg {(this:this,x:T2)=>T3} z @returns {import("../yt_json_types/stu/group_T.ts").Some<T3|null>} */
 	m2_t(x,y,z) {return this.m_t(this.m_t(x,y),z);}
-	/** @template {{}} T1 @arg {T1|undefined} x @template {{}} T2 @arg {(this:this,x:T1)=>T2} y @template T3 @arg {(this:this,x:T2)=>T3} z @returns {import("../yt_json_types/stu/group_T.js").Some<T3|null>} */
+	/** @template {{}} T1 @arg {T1|undefined} x @template {{}} T2 @arg {(this:this,x:T1)=>T2} y @template T3 @arg {(this:this,x:T2)=>T3} z @returns {import("../yt_json_types/stu/group_T.ts").Some<T3|null>} */
 	ms2_t(x,y,z) {return this.m2_t(this.m(x),y,z);}
-	/** @template {{}} T @arg {import("../yt_json_types/stu/group_T.js").Some<T|null>} x @template U @arg {(this:this,x:T)=>U} y @returns {import("../yt_json_types/stu/group_T.js").Some<U|null>} */
+	/** @template {{}} T @arg {import("../yt_json_types/stu/group_T.ts").Some<T|null>} x @template U @arg {(this:this,x:T)=>U} y @returns {import("../yt_json_types/stu/group_T.ts").Some<U|null>} */
 	mt_t(x,y) {return this.mt(x,x => this.t_base(x,y));}
-	/** @template {string} T_CF @arg {T_CF} cf @arg {(this:this,cf:T_CF,x:T)=>U} f @template T @arg {import("../yt_json_types/stu/group_T.js").Some<T>} m @template U @returns {import("../yt_json_types/stu/group_T.js").Some<U|null>} */
+	/** @template {string} T_CF @arg {T_CF} cf @arg {(this:this,cf:T_CF,x:T)=>U} f @template T @arg {import("../yt_json_types/stu/group_T.ts").Some<T>} m @template U @returns {import("../yt_json_types/stu/group_T.ts").Some<U|null>} */
 	mt_cf(m,cf,f) {return this.mt(m,x => this.t_cf(cf,x,f));}
 	//#endregion
-	/** @private @template T @template {T} U @arg {T} a @arg {import("../yt_json_types/n/NoInfer.js").NoInfer<U>} b */
+	/** @private @template T @template {T} U @arg {T} a @arg {import("../yt_json_types/n/NoInfer.ts").NoInfer<U>} b */
 	_cq_no_infer(a,b) {if(a!==b) debugger;}
 	/** @public @template T @template {T} U @arg {T} a @arg {U} b */
 	_cq_infer(a,b) {if(a!==b) debugger;}
-	/** @public @type {<T,U extends T>(a:T,b:import("../yt_json_types/n/NoInfer.js").NoInfer<U>)=>void} */
+	/** @public @type {<T,U extends T>(a:T,b:import("../yt_json_types/n/NoInfer.ts").NoInfer<U>)=>void} */
 	cq=this._cq_no_infer;
 }
 /** @typedef {{t:YtHandlers;path:string}} ApiIterateState */
 class YtObjectVisitor
 {
-	/** @handler @public @arg {ApiIterateState} state @arg {import("../yt_json_types/abc/AD.js").AD_AppendContinuationItems} action */
+	/** @handler @public @arg {ApiIterateState} state @arg {import("../yt_json_types/abc/AD.ts").AD_AppendContinuationItems} action */
 	appendContinuationItemsAction(state,action)
 	{
 		if(!action.continuationItems) {debugger;}
 		let filtered=state.t.handlers.renderer_content_item_array.replace_array(action.continuationItems);
 		if(filtered.length>0) action.continuationItems=filtered;
 	}
-	/** @handler @public @arg {ApiIterateState} state @arg  {import("../yt_json_types/d/group_DC.js").DC_ReloadContinuationItems} command */
+	/** @handler @public @arg {ApiIterateState} state @arg  {import("../yt_json_types/d/group_DC.ts").DC_ReloadContinuationItems} command */
 	reloadContinuationItemsCommand({t: state},command)
 	{
 		if(!("continuationItems" in command)) return;
@@ -2910,7 +2914,7 @@ class YtObjectVisitor
 		let filtered=state.handlers.renderer_content_item_array.replace_array(iterable_items);
 		if(filtered.length>0) command.continuationItems=filtered;
 	}
-	/** @handler @public @template {{}} T1 @template T2,T3  @arg {ApiIterateState} state @arg {import("../yt_json_types/stu/group_T.js").TD_ItemSection_3<T1,T2,T3>} renderer */
+	/** @handler @public @template {{}} T1 @template T2,T3  @arg {ApiIterateState} state @arg {import("../yt_json_types/stu/group_T.ts").TD_ItemSection_3<T1,T2,T3>} renderer */
 	itemSectionRenderer_with_state(state,renderer)
 	{
 		let {t}=state;
@@ -2918,7 +2922,7 @@ class YtObjectVisitor
 		if(renderer.contents===void 0) return;
 		renderer.contents=renderer.contents.filter(state.t.filter_renderer_contents_item,state.t);
 	}
-	/** @handler @public @arg {ApiIterateState} state @arg {import("../yt_json_types/d/group_D.js").Todo_D_RichGrid} renderer */
+	/** @handler @public @arg {ApiIterateState} state @arg {import("../yt_json_types/d/group_D.ts").Todo_D_RichGrid} renderer */
 	richGridRenderer(state,renderer)
 	{
 		state.t.handlers.rich_grid.richGridRenderer(state.path,renderer);
@@ -2946,7 +2950,7 @@ class YtObjectVisitor
 }
 class IterateApiResultBase extends BaseService
 {
-	/** @constructor @public @arg {import("../zb_plugin_types/types.js").ServiceResolverBox<{}>} x @arg {YtObjectVisitor} obj_visitor */
+	/** @constructor @public @arg {import("../zb_plugin_types/types.ts").ServiceResolverBox<{}>} x @arg {YtObjectVisitor} obj_visitor */
 	constructor(x,obj_visitor)
 	{
 		super(x);
@@ -3009,7 +3013,7 @@ class YtHandlers extends BaseService
 		}
 		return true;
 	}
-	/** @constructor @public @arg {import("../zb_plugin_types/types.js").ServiceResolverBox<{}>} res */
+	/** @constructor @public @arg {import("../zb_plugin_types/types.ts").ServiceResolverBox<{}>} res */
 	constructor(res)
 	{
 		super(res);
@@ -3047,7 +3051,7 @@ class YtHandlers extends BaseService
 			["videoRenderer",false],
 		]);
 	}
-	/** @api @public @arg {import("../support_2/FetchJsonParseArgs.js").FetchJsonParseArgs} target_args  */
+	/** @api @public @arg {import("../support_2/FetchJsonParseArgs.ts").FetchJsonParseArgs} target_args  */
 	on_handle_api(target_args)
 	{
 		const {request,response,parsed_obj}=target_args;
@@ -3059,7 +3063,7 @@ class YtHandlers extends BaseService
 			return {url: to_url(req.url)};
 		}
 		let parsed_url=convert_to_url(request).url;
-		/** @private @type {import("../yt_json_types/d/group_D.js").D_ApiUrlFormat} */
+		/** @private @type {import("../yt_json_types/d/group_D.ts").D_ApiUrlFormat} */
 		let api_url=as(parsed_url.href);
 		let url_type=this.sm.decode_url(api_url);
 		if(url_type==="s.i.youtube_outline.bars_3.v2.24px.svg") throw new Error("Invalid url_type");
@@ -3070,10 +3074,10 @@ class YtHandlers extends BaseService
 	}
 	known_page_types=split_string("settings,watch,browse,shorts,search,channel,playlist",",");
 	do_initial_data_trace=false;
-	/** @private @arg {import("../yt_json_types/r/group_R.js").G_RS_ByPageType} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").G_RS_ByPageType} x */
 	plugin_run_on_data(x)
 	{
-		/** @arg {import("../yt_json_types/r/group_R.js").G_RS_ByPageType} x */
+		/** @arg {import("../yt_json_types/r/group_R.ts").G_RS_ByPageType} x */
 		let ok=x => this.x.get("x_EventInput").DataResponsePageType(x);
 		switch(x.page)
 		{
@@ -3094,10 +3098,10 @@ class YtHandlers extends BaseService
 			case "watch": ok(x); break;
 		}
 	}
-	/** @api @public @arg {[()=>import("../yt_json_types/ghi/group_G.js").G_NavFinishDetail["response"], object, []]} apply_args */
+	/** @api @public @arg {[()=>import("../yt_json_types/ghi/group_G.ts").G_NavFinishDetail["response"], object, []]} apply_args */
 	on_initial_data(apply_args)
 	{
-		/** @private @type {import("../yt_json_types/ghi/group_G.js").G_NavFinishDetail["response"]} */
+		/** @private @type {import("../yt_json_types/ghi/group_G.ts").G_NavFinishDetail["response"]} */
 		let ret=Reflect.apply(...apply_args);
 		let start_path="unknown";
 		if("page" in ret) start_path=ret.page;
@@ -3136,7 +3140,7 @@ class YtHandlers extends BaseService
 		}
 		return ret;
 	}
-	/** @api @public @arg {import("../yt_json_types/ghi/group_G.js").G_NavFinishDetail} detail */
+	/** @api @public @arg {import("../yt_json_types/ghi/group_G.ts").G_NavFinishDetail} detail */
 	on_page_type_changed(detail)
 	{
 		try
@@ -3158,7 +3162,7 @@ class YtHandlers extends BaseService
 class HandleRendererContentItemArray extends BaseService
 {
 	flag_log_debug=false;
-	/** @private @arg {import("../yt_json_types/r/group_R.js").R_RichItem} content_item */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_RichItem} content_item */
 	filter_for_rich_item_renderer(content_item)
 	{
 		let noisy_logging=this.x.get_param("noisy_logging");
@@ -3179,11 +3183,11 @@ class HandleRendererContentItemArray extends BaseService
 		{debugger;}
 		return true;
 	}
-	/** @private @arg {import("../yt_json_types/r/group_R.js").R_RichSection} content_item */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_RichSection} content_item */
 	handle_rich_section_renderer(content_item)
 	{
 		let renderer=content_item.richSectionRenderer;
-		/** @private @type {import("../yt_json_types/ghi/group_G.js").G_RichSection} */
+		/** @private @type {import("../yt_json_types/ghi/group_G.ts").G_RichSection} */
 		let content=renderer.content;
 		if("inlineSurveyRenderer" in content) return true;
 		if("sourcePivotHeaderRenderer" in content) return true;
@@ -3205,7 +3209,7 @@ class HandleRendererContentItemArray extends BaseService
 		// debugger;
 		return true;
 	}
-	/** @api @public @template {(import("../yt_json_types/ghi/group_G.js").G_RendererContentItem|Extract<(import("../yt_json_types/d/group_DC.js").DC_ReloadContinuationItems|import("../yt_json_types/abc/AD.js").AD_AppendContinuationItems),{continuationItems:any}>["continuationItems"][number])[]} T @arg {T} arr @returns {T} */
+	/** @api @public @template {(import("../yt_json_types/ghi/group_G.ts").G_RendererContentItem|Extract<(import("../yt_json_types/d/group_DC.ts").DC_ReloadContinuationItems|import("../yt_json_types/abc/AD.ts").AD_AppendContinuationItems),{continuationItems:any}>["continuationItems"][number])[]} T @arg {T} arr @returns {T} */
 	replace_array(arr)
 	{
 		return as(arr.filter((/** @private @type {typeof arr[number]} */content_item) =>
@@ -3218,7 +3222,7 @@ class HandleRendererContentItemArray extends BaseService
 }
 class CsiService extends BaseService
 {
-	/** @private @type {(import("../yt_json_types/stu/group_T.js").T_RidFormat<string>)[]} */
+	/** @private @type {(import("../yt_json_types/stu/group_T.ts").T_RidFormat<string>)[]} */
 	rid_keys=[
 		"GetAccountAdvanced_rid","GetAccountBilling_rid","GetAccountDownloads_rid","GetAccountMenu_rid","GetAccountNotifications_rid","GetAccountOverview_rid","GetAccountPlayback_rid","GetAccountPrivacy_rid","GetAccountSharing_rid","GetAccountsList_rid","GetAttestationChallenge_rid","GetGamingDestination_rid","GetHistory_rid","GetHome_rid","GetLibrary_rid","GetLiveChatReplay_rid","GetNotificationsMenu_rid","GetPlayer_rid","GetPlaylist_rid","GetReelItemWatch_rid","GetReelWatchSequence_rid","GetSubscriptions_rid","GetUnseenNotificationCount_rid","GetVideoTranscript_rid","GetWatchNext_rid","GetWatchPageWebCommentReplies_rid","GetWatchPageWebTopLevelComments_rid","GetWebMainAppGuide_rid","RecordNotificationInteractions_rid","RemoveLike_rid",
 		"SetSetting_rid",
@@ -3226,13 +3230,13 @@ class CsiService extends BaseService
 		"GetAddToPlaylist_rid",
 		"EditPlaylist_rid",
 	];
-	/** @private @arg {{key:import("../yt_json_types/stu/group_T.js").T_RidFormat<string>;value:`0x${string}`}} x */
+	/** @private @arg {{key:import("../yt_json_types/stu/group_T.ts").T_RidFormat<string>;value:`0x${string}`}} x */
 	decode_rid_param_key(x)
 	{
 		this.decode_rid_section(x);
 		this.save_primitive("rid_key",x.key);
 	}
-	/** @private @arg {{key:import("../yt_json_types/stu/group_T.js").T_RidFormat<string>;value:`0x${string}`}} x */
+	/** @private @arg {{key:import("../yt_json_types/stu/group_T.ts").T_RidFormat<string>;value:`0x${string}`}} x */
 	decode_rid_section(x)
 	{
 		let section=/[A-Z][a-z]+/.exec(x.key);
@@ -3242,13 +3246,13 @@ class CsiService extends BaseService
 			this.save_primitive("section_id",section_id);
 		} else {debugger;}
 	}
-	/** @private @arg {{key:import("../yt_json_types/stu/group_T.js").T_RidFormat<string>;value:`0x${string}`}} param */
+	/** @private @arg {{key:import("../yt_json_types/stu/group_T.ts").T_RidFormat<string>;value:`0x${string}`}} param */
 	parse_rid_param(param)
 	{
 		this.decode_rid_param_key(param);
 		if(param.key in this.rid)
 		{
-			/** @private @type {import("../yt_json_types/stu/group_T.js").T_RidFormat<string>} */
+			/** @private @type {import("../yt_json_types/stu/group_T.ts").T_RidFormat<string>} */
 			let rid_key=param.key;
 			this.rid[rid_key]=param.value;
 			return;
@@ -3261,18 +3265,18 @@ class CsiService extends BaseService
 		}
 		this.rid[param.key]=param.value;
 	}
-	/** @private @type {{[x: import("../yt_json_types/stu/group_T.js").T_RidFormat<string>]: `0x${string}`|undefined;}} */
+	/** @private @type {{[x: import("../yt_json_types/stu/group_T.ts").T_RidFormat<string>]: `0x${string}`|undefined;}} */
 	rid={};
-	/** @constructor @public @arg {import("../zb_plugin_types/types.js").ServiceResolverBox<{}>} x */
+	/** @constructor @public @arg {import("../zb_plugin_types/types.ts").ServiceResolverBox<{}>} x */
 	constructor(x)
 	{
 		super(x);
 		this.data={
-			/** @private @type {import("../yt_json_types/d/group_D.js").D_BrowseEndpointPages|null} */
+			/** @private @type {import("../yt_json_types/d/group_D.ts").D_BrowseEndpointPages|null} */
 			yt_fn: null,
-			/** @private @type {import("../yt_json_types/r/group_R.js").RC_CsiServiceC["value"]|null} */
+			/** @private @type {import("../yt_json_types/r/group_R.ts").RC_CsiServiceC["value"]|null} */
 			c: null,
-			/** @private @type {import("../yt_json_types/r/group_R.js").RC_CsiVarTypes["cver"]|null} */
+			/** @private @type {import("../yt_json_types/r/group_R.ts").RC_CsiVarTypes["cver"]|null} */
 			cver: null,
 			/** @private @type {"1"|null} */
 			yt_li: null,
@@ -3281,7 +3285,7 @@ class CsiService extends BaseService
 		};
 		for(let x of this.rid_keys) {this.rid[x]=void 0;}
 	}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_BrowseEndpointPages} value */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_BrowseEndpointPages} value */
 	verify_param_yt_fn(value)
 	{
 		switch(value)
@@ -3294,7 +3298,7 @@ class CsiService extends BaseService
 			default: console.log("[verify_param_bad]",value); debugger; return false;
 		};
 	}
-	/** @api @public @arg {import("../yt_json_types/d/group_D.js").DRC_CsiVarKV[]} params */
+	/** @api @public @arg {import("../yt_json_types/d/group_D.ts").DRC_CsiVarKV[]} params */
 	on_params(params)
 	{
 		for(let param of params)
@@ -3321,14 +3325,14 @@ class GFeedbackService extends BaseService
 		e: null,
 		/** @private @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
-		/** @private @type {import("../yt_json_types/stu/group_S.js").SP_GFeedbackServiceRouteParam["value"]|null} */
+		/** @private @type {import("../yt_json_types/stu/group_S.ts").SP_GFeedbackServiceRouteParam["value"]|null} */
 		route: null,
 	};
 	get handle_types() {return this.x.get("handle_types");}
 	/** @private @type {string[]} */
 	seen_e_param=[];
 	has_new_e_param=false;
-	/** @private @arg {Extract<import("../yt_json_types/r/group_R.js").ToKeyValue<import("../yt_json_types/stu/group_S.js").SP_GFeedbackVarMap>,{key:"e"}>} param */
+	/** @private @arg {Extract<import("../yt_json_types/r/group_R.ts").ToKeyValue<import("../yt_json_types/stu/group_S.ts").SP_GFeedbackVarMap>,{key:"e"}>} param */
 	parse_e_param(param)
 	{
 		if(this.seen_e_param.includes(param.value)) return;
@@ -3337,7 +3341,7 @@ class GFeedbackService extends BaseService
 		this.data.e=inner;
 		this.has_new_e_param=true;
 	}
-	/** @api @public @arg {{context: import("../yt_json_types/d/group_D.js").D_ContextTypeStr|null;}} data_target @arg {import("../yt_json_types/d/group_D.js").D_ContextTypeStr} x */
+	/** @api @public @arg {{context: import("../yt_json_types/d/group_D.ts").D_ContextTypeStr|null;}} data_target @arg {import("../yt_json_types/d/group_D.ts").D_ContextTypeStr} x */
 	on_context_param(data_target,x)
 	{
 		data_target.context=x;
@@ -3356,7 +3360,7 @@ class GFeedbackService extends BaseService
 			default: debugger; break;
 		}
 	}
-	/** @api @public @arg {import("../yt_json_types/stu/group_S.js").SP_GFeedbackServiceParams[]} params */
+	/** @api @public @arg {import("../yt_json_types/stu/group_S.ts").SP_GFeedbackServiceParams[]} params */
 	on_params(params)
 	{
 		for(let param of params)
@@ -3389,7 +3393,7 @@ class GFeedbackService extends BaseService
 			this.maybe_new_e();
 		}
 	}
-	/** @private @arg {import("../yt_json_types/stu/group_S.js").SP_GFeedbackServiceRouteParam} x */
+	/** @private @arg {import("../yt_json_types/stu/group_S.ts").SP_GFeedbackServiceRouteParam} x */
 	parse_route_param(x)
 	{
 		let h=this.ps;
@@ -3417,7 +3421,7 @@ class GuidedHelpService extends BaseService
 		/** @private @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
 	};
-	/** @api @public @arg {import("../yt_json_types/stu/group_S.js").SP_GuidedHelp_SPs["params"]} params */
+	/** @api @public @arg {import("../yt_json_types/stu/group_S.ts").SP_GuidedHelp_SPs["params"]} params */
 	on_params(params)
 	{
 		for(let param of params)
@@ -3437,16 +3441,16 @@ class GuidedHelpService extends BaseService
 }
 class TrackingServices extends BaseService
 {
-	/** @private @arg {import("../yt_json_types/r/group_R.js").RC_Csi_SPs} service */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").RC_Csi_SPs} service */
 	on_csi_service(service) {this.x.get("csi_service").on_params(service.params);}
-	/** @private @arg {import("../yt_json_types/r/group_R.js").RC_ECatcher_SPs} service */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").RC_ECatcher_SPs} service */
 	on_e_catcher_service(service) {this.x.get("e_catcher_service").on_params(service.params);}
-	/** @private @arg {import("../yt_json_types/r/group_R.js").RC_GFeedback_SPs} service */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").RC_GFeedback_SPs} service */
 	on_g_feedback_service(service) {this.x.get("g_feedback_service").on_params(service.params);}
-	/** @private @arg {import("../yt_json_types/stu/group_S.js").SP_GuidedHelp_SPs} service */
+	/** @private @arg {import("../yt_json_types/stu/group_S.ts").SP_GuidedHelp_SPs} service */
 	on_guided_help_service(service) {this.x.get("guided_help_service").on_params(service.params);}
 	get handle_types() {return this.x.get("handle_types");}
-	/** @private @arg {import("../yt_json_types/r/group_R.js").RC_GoogleHelp_SPs} service */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").RC_GoogleHelp_SPs} service */
 	on_google_help_service(service)
 	{
 		for(let param of service.params)
@@ -3459,7 +3463,7 @@ class TrackingServices extends BaseService
 			}
 		}
 	}
-	/** @api @public @arg {import("../yt_json_types/ghi/group_G.js").GRC_ServiceTrackingParams} service_arg */
+	/** @api @public @arg {import("../yt_json_types/ghi/group_G.ts").GRC_ServiceTrackingParams} service_arg */
 	set_service_params(service_arg)
 	{
 		switch(service_arg.service)
@@ -3480,7 +3484,7 @@ class ModifyEnv extends BaseService
 	modify_global_env()
 	{
 		let handle_types=this.x.get("handle_types");
-		/** @private @arg {import("../support_2/FetchInjectInputArgs.js").FetchInjectInputArgs} input @arg {((arg0: any) => any)|undefined|null} onfulfilled @arg {((arg0: any) => void)|undefined|null} on_rejected @arg {string} response_text */
+		/** @private @arg {import("../support_2/FetchInjectInputArgs.ts").FetchInjectInputArgs} input @arg {((arg0: any) => any)|undefined|null} onfulfilled @arg {((arg0: any) => void)|undefined|null} on_rejected @arg {string} response_text */
 		function handle_json_parse({request,options},onfulfilled,on_rejected,response_text)
 		{
 			if(is_yt_debug_enabled) console.log("handle_json_parse",request,options);
@@ -3494,14 +3498,14 @@ class ModifyEnv extends BaseService
 			}
 			return ret;
 		}
-		/** @private @arg {import("../support_2/FetchInjectInputArgs.js").FetchInjectInputArgs} input @arg {((value: any) => any|PromiseLike<any>)|undefined|null} onfulfilled @arg {((reason: any) => any|PromiseLike<any>)|undefined|null} onrejected */
+		/** @private @arg {import("../support_2/FetchInjectInputArgs.ts").FetchInjectInputArgs} input @arg {((value: any) => any|PromiseLike<any>)|undefined|null} onfulfilled @arg {((reason: any) => any|PromiseLike<any>)|undefined|null} onrejected */
 		function bind_promise_handler(input,onfulfilled,onrejected)
 		{
 			if(is_yt_debug_enabled) console.log("handle_json_parse.bind()");
 			let ret=handle_json_parse.bind(null,input,onfulfilled,onrejected);
 			return ret;
 		}
-		/** @private @arg {{input: import("../support_2/FetchInjectInputArgs.js").FetchInjectInputArgs}} input_args @arg {{result:Promise<any>}} result @return {Promise<any>} */
+		/** @private @arg {{input: import("../support_2/FetchInjectInputArgs.ts").FetchInjectInputArgs}} input_args @arg {{result:Promise<any>}} result @return {Promise<any>} */
 		function handle_fetch_response_2({input},result)
 		{
 			return {
@@ -3636,7 +3640,7 @@ class YtPlugin extends BaseService
 	get indexed_db() {return this.x.get("indexed_db");}
 	/** @private @type {[string,{name: string;}][]} */
 	saved_function_objects=[];
-	/** @constructor @public @arg {import("../zb_plugin_types/types.js").ServiceResolverBox<{}>} x */
+	/** @constructor @public @arg {import("../zb_plugin_types/types.ts").ServiceResolverBox<{}>} x */
 	constructor(x)
 	{
 		super(x);
@@ -3713,9 +3717,9 @@ function sizeof_js(obj)
 //#region HandleTypesSupport
 class ServiceData extends BaseService
 {
-	/** @protected @type {import("../yt_json_types/ghi/group_G.js").GA_FormatItagNum[]} */
+	/** @protected @type {import("../yt_json_types/ghi/group_G.ts").GA_FormatItagNum[]} */
 	format_itag_arr=[18,133,134,135,136,137,140,160,242,243,244,247,248,249,250,251,278,298,299,302,303,308,315,394,395,396,397,398,399,400,401];
-	/** @protected @type {import("../yt_json_types/d/group_D.js").QualArr} */
+	/** @protected @type {import("../yt_json_types/d/group_D.ts").QualArr} */
 	format_quality_label_arr=[
 		"2160p50","1440p50","1080p50","720p50",
 		"2160p60","1440p60","1080p60","720p60",
@@ -3749,7 +3753,7 @@ class ParentWalker
 }
 class JsonReplacerState
 {
-	/** @constructor @public @arg {import("../yt_json_types/D_JsonReplacerArgs.js").D_JsonReplacerArgs} args */
+	/** @constructor @public @arg {import("../yt_json_types/D_JsonReplacerArgs.ts").D_JsonReplacerArgs} args */
 	constructor(args)
 	{
 		this.object_count=0;

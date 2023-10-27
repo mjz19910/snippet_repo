@@ -14,12 +14,15 @@
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
 // deno-lint-ignore-file
-let page_require=typeof require==="undefined"? __module_require__:require,delete_require=false,reset_require=false;
-if(typeof require==="undefined"||page_require!==__module_require__)
-{
-	delete_require=typeof require==="undefined";
-	require=__module_require__;
-	reset_require=true;
+const page_require = typeof require === "undefined"
+	? __module_require__
+	: require;
+let delete_require = false,
+	reset_require = false;
+if (typeof require === "undefined" || page_require !== __module_require__) {
+	delete_require = typeof require === "undefined";
+	require = __module_require__;
+	reset_require = true;
 }
 const {do_export,as}=require("../../base_require_raw/BaseRequire.user");
 const {split_string_once_ex2}=require("./YTPlugin_Base.user");

@@ -12,11 +12,15 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_ServiceLoader_Plugin.user.js
 // ==/UserScript==
 
-let page_require=typeof require==="undefined"? __module_require__:require,delete_require=false,reset_require=false;
-if(typeof require==="undefined"||page_require!==__module_require__) {
-	delete_require=typeof require==="undefined";
-	require=__module_require__;
-	reset_require=true;
+const page_require = typeof require === "undefined"
+	? __module_require__
+	: require;
+let delete_require = false,
+	reset_require = false;
+if (typeof require === "undefined" || page_require !== __module_require__) {
+	delete_require = typeof require === "undefined";
+	require = __module_require__;
+	reset_require = true;
 }
 const {do_export}=require("../../base_require_raw/BaseRequire.user");
 const {CsiService,GFeedbackService,GuidedHelpService,TrackingServices,YtHandlers,YtPlugin,ModifyEnv}=require("./YTPlugin_Base.user");
@@ -34,9 +38,9 @@ export_(exports => {exports.__is_module_flag__=true;});
 
 if(window.__log_module_loading_enabled__) console.log("Load ServiceLoader Plugin");
 class ServiceLoader {
-	/** @constructor @public @arg {import("../zb_plugin_types/types.js").ServiceResolverBox<{}>} x */
+	/** @constructor @public @arg {import("../zb_plugin_types/types.ts").ServiceResolverBox<{}>} x */
 	constructor(x) {
-		let require=__module_require__;
+		const require=__module_require__;
 		// IndexedDB_Service(7)
 		const {IndexedDBService}=require("./YTPlugin_IndexedDB.user");
 		// SupportService(6)
@@ -73,7 +77,7 @@ class ServiceLoader {
 	}
 	/** @api @public @arg {(() => void)[]} listeners */
 	on_resolve_services(listeners) {
-		for(let handler of listeners) handler();
+		for(const handler of listeners) handler();
 	}
 }
 

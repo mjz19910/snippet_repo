@@ -13,12 +13,15 @@
 // ==/UserScript==
 
 // deno-lint-ignore-file
-let page_require=typeof require==="undefined"? __module_require__:require,delete_require=false,reset_require=false;
-if(typeof require==="undefined"||page_require!==__module_require__)
-{
-	delete_require=typeof require==="undefined";
-	require=__module_require__;
-	reset_require=true;
+const page_require = typeof require === "undefined"
+	? __module_require__
+	: require;
+let delete_require = false,
+	reset_require = false;
+if (typeof require === "undefined" || page_require !== __module_require__) {
+	delete_require = typeof require === "undefined";
+	require = __module_require__;
+	reset_require = true;
 }
 // yt_plugin/SupportService(10) => base_require/BaseRequire(1)
 const {as,do_export}=require("../../base_require_raw/BaseRequire.user");

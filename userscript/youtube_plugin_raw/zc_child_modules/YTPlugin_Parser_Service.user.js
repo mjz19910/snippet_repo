@@ -12,12 +12,16 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Parser_Service.user.js
 // ==/UserScript==
 
-let page_require=typeof require==="undefined"? __module_require__:require,delete_require=false,reset_require=false;
-if(typeof require==="undefined"||page_require!==__module_require__)
-{
-	delete_require=typeof require==="undefined";
-	require=__module_require__;
-	reset_require=true;
+// deno-lint-ignore-file
+const page_require = typeof require === "undefined"
+	? __module_require__
+	: require;
+let delete_require = false,
+	reset_require = false;
+if (typeof require === "undefined" || page_require !== __module_require__) {
+	delete_require = typeof require === "undefined";
+	require = __module_require__;
+	reset_require = true;
 }
 const {do_export,as}=require("../../base_require_raw/BaseRequire.user");
 const {BaseService,split_string,split_string_once}=require("./YTPlugin_Base.user");
@@ -30,7 +34,7 @@ if(window.__log_module_loading_enabled__) console.log("Load Parser Service");
 class ParserService extends BaseService
 {
 	log_playlist_parse=false;
-	/** @api @public @arg {import("../yt_json_types/ghi/group_G.js").S_PageTypeStr} x */
+	/** @api @public @arg {import("../yt_json_types/ghi/group_G.ts").S_PageTypeStr} x */
 	parse_page_type(x)
 	{
 		switch(x)
@@ -54,7 +58,7 @@ class ParserService extends BaseService
 	}
 	/** @private @template {string} T @template {string} U @arg {T} x @arg {U} u @returns {x is `${string}${U}${string}`|`${U}${string}`|`${string}${U}`} */
 	str_has_sep(x,u) {return x.includes(u);}
-	/** @console_api @public @arg {import("../yt_json_types/ghi/group_G.js").G_MimeTypeFormat} x */
+	/** @console_api @public @arg {import("../yt_json_types/ghi/group_G.ts").G_MimeTypeFormat} x */
 	parse_mime_type(x)
 	{
 		let vv=split_string(x,";");
@@ -76,7 +80,7 @@ class ParserService extends BaseService
 		console.log(vv[0],codec_type_raw);
 		{debugger;}
 	}
-	/** @private @arg {import("../yt_json_types/ghi/group_G.js").G_CodecType} x */
+	/** @private @arg {import("../yt_json_types/ghi/group_G.ts").G_CodecType} x */
 	parse_codec_str(x)
 	{
 		switch(x)
@@ -101,7 +105,7 @@ class ParserService extends BaseService
 		if(!this.eq_keys(this.get_keys_of(sp),["query"])) debugger;
 		console.log("[found_search_query]",sp.query);
 	}
-	/** @private @arg {Extract<import("../yt_json_types/nop_q/Namespaces.js").NS_DP_Parse.ParseUrlStr_2,[`@${string}`,any]>[1]} x */
+	/** @private @arg {Extract<import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_2,[`@${string}`,any]>[1]} x */
 	parse_channel_section_url(x)
 	{
 		if(!this.str_is_search(x)) {return this.parse_channel_section(["channel",x]);}
@@ -112,35 +116,35 @@ class ParserService extends BaseService
 			default: debugger; break;
 		}
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.js").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.js").NS_DP_Parse.ParseUrlStr_0,"/">,["hashtag",...any]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_0,"/">,["hashtag",...any]>} x */
 	parse_hashtag_url(x)
 	{
 		console.log("[parse_hashtag_url]",x);
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.js").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.js").NS_DP_Parse.ParseUrlStr_0,"/">,["source",...any]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_0,"/">,["source",...any]>} x */
 	parse_source_url(x)
 	{
 		let a=split_string_once(x[1],"/");
 		console.log("[parse_source_url]",[x[0],...a]);
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.js").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.js").NS_DP_Parse.ParseUrlStr_0,"/">,["embed",...any]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_0,"/">,["embed",...any]>} x */
 	parse_embed_url(x)
 	{
 		console.log("[parse_embed_url]",x);
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.js").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.js").NS_DP_Parse.ParseUrlStr_0,"/">,["v",...any]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_0,"/">,["v",...any]>} x */
 	parse_video_url(x)
 	{
 		let a=split_string_once(x[1],"?");
 		console.log("[parse_video_url]",[x[0],...a]);
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.js").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.js").NS_DP_Parse.ParseUrlStr_0,"/">,["api",...any]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_0,"/">,["api",...any]>} x */
 	parse_api_url(x)
 	{
 		let a=split_string_once(x[1],"/");
 		switch(a[0]) {case "stats": this.parse_api_stats_url(a[1]); break;}
 	}
-	/** @private @arg {import("../yt_json_types/nop_q/Namespaces.js").NS_DP_Parse.ParseApiUrlStr} x */
+	/** @private @arg {import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseApiUrlStr} x */
 	parse_api_stats_url(x)
 	{
 		const cf="parse_api_stats_url";
@@ -148,7 +152,7 @@ class ParserService extends BaseService
 		switch(a[0])
 		{
 			case "ads": {
-				/** @private @type {import("../yt_json_types/d/group_D.js").D_ApiStatsAdsStr} */
+				/** @private @type {import("../yt_json_types/d/group_D.ts").D_ApiStatsAdsStr} */
 				let sp=as(a[1]);
 				let {...v}=this.parse_url_search_params(sp);
 				this.sm.k(`${cf}.ads`,v);
@@ -158,25 +162,25 @@ class ParserService extends BaseService
 			default: debugger; break;
 		}
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.js").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.js").NS_DP_Parse.ParseUrlStr_0,"/">,["channel",...any]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_0,"/">,["channel",...any]>} x */
 	parse_channel_url(x)
 	{
 		if(this.str_starts_with_at_1(x,"UC")) {return;}
 		console.log("[parse_channel_url]",x);
 	}
-	/** @unused_api @protected @arg {import("../yt_json_types/d/group_D.js").T_IdTemplate<"UC",import("../yt_json_types/d/group_D.js").D_UserIdStr>} x */
+	/** @unused_api @protected @arg {import("../yt_json_types/d/group_D.ts").T_IdTemplate<"UC",import("../yt_json_types/d/group_D.ts").D_UserIdStr>} x */
 	parse_channel_id(x)
 	{
 		if(this.str_starts_with_r(x,"UC")) {return;}
 		{debugger;}
 	}
-	/** @private @arg {import("../yt_json_types/nop_q/Namespaces.js").NS_DP_Parse.ParseUrlStr_1} x */
+	/** @private @arg {import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_1} x */
 	parse_youtube_url_2(x)
 	{
 		let [,a]=x;
 		this.parse_youtube_url_4(a);
 	}
-	/** @private @arg {import("../yt_json_types/nop_q/Namespaces.js").NS_DP_Parse.ParseUrlStr_3} x */
+	/** @private @arg {import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_3} x */
 	parse_youtube_url_4(x)
 	{
 		let a=split_string_once(x,"/");
@@ -185,13 +189,13 @@ class ParserService extends BaseService
 		if(this.str_has_sep(b,"/")) {return this.parse_youtube_api_url_5(b);}
 		this.get_yt_url_type(["youtubei","v1",b]);
 	}
-	/** @private @arg {import("../yt_json_types/nop_q/Namespaces.js").NS_DP_Parse.ParseUrlStr_4} x */
+	/** @private @arg {import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_4} x */
 	parse_youtube_api_url_5(x)
 	{
 		let a=split_string_once(x,"/");
 		this.get_yt_url_type(["youtubei","v1",...a]);
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.js").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.js").NS_DP_Parse.ParseUrlStr_0,"/">,["feed",any]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_0,"/">,["feed",any]>} x */
 	parse_feed_url(x)
 	{
 		let [,a]=x;
@@ -208,17 +212,17 @@ class ParserService extends BaseService
 	/** @private @template {string} T @arg {T} x @returns {x is `${string}?${string}`} */
 	str_is_search(x) {return x.includes("?");}
 	parse_key_index=1;
-	/** @unused_api @protected @arg {import("../yt_json_types/vw/group_V.js").V_ParamMapType} x @arg {number[]} mk @arg {number} ta */
+	/** @unused_api @protected @arg {import("../yt_json_types/vw/group_V.ts").V_ParamMapType} x @arg {number[]} mk @arg {number} ta */
 	remove_key(x,mk,ta)
 	{
 		x.delete(ta);
 		let idx=mk.indexOf(ta);
 		if(idx>-1) mk.splice(idx,1);
 	}
-	/** @unused_api @protected @arg {import("../yt_json_types/vw/group_V.js").V_ParamMapValue} map_entry_value */
+	/** @unused_api @protected @arg {import("../yt_json_types/vw/group_V.ts").V_ParamMapValue} map_entry_value */
 	mapper_use(map_entry_value)
 	{
-		/** @private @arg {import("../yt_json_types/vw/group_V.js").V_ParamMapValue} e */
+		/** @private @arg {import("../yt_json_types/vw/group_V.ts").V_ParamMapValue} e */
 		let mapper=e =>
 		{
 			if(e instanceof Map)
@@ -243,7 +247,7 @@ class ParserService extends BaseService
 		this.save_primitive(path,x[1]);
 		this.save_primitive(path,`${x[2]}n`);
 	}
-	/** @private @arg {import("../yt_json_types/vw/group_V.js").V_ParamMapType} x @returns {import("../yt_json_types/d/group_D.js").D_ParamObjType} */
+	/** @private @arg {import("../yt_json_types/vw/group_V.ts").V_ParamMapType} x @returns {import("../yt_json_types/d/group_D.ts").D_ParamObjType} */
 	to_param_obj(x)
 	{
 		return Object.fromEntries([...x.entries()].map(e =>
@@ -254,7 +258,7 @@ class ParserService extends BaseService
 		}));
 	}
 	log_enabled_playlist_id=false;
-	/** @private @arg {import("../yt_json_types/abc/group_C.js").CF_L_TP_Params} root @arg {Extract<import("../yt_json_types/d/group_D.js").D_UrlFormat,`https://${string}`|`http://${string}`>} x */
+	/** @private @arg {import("../yt_json_types/abc/group_C.ts").CF_L_TP_Params} root @arg {Extract<import("../yt_json_types/d/group_D.ts").D_UrlFormat,`https://${string}`|`http://${string}`>} x */
 	parse_full_url(root,x)
 	{
 		let r=this._convert_url_to_obj(x);
@@ -276,7 +280,7 @@ class ParserService extends BaseService
 			}
 			default:
 		}
-		/** @private @template {import("../support_1/url_parse/UrlParseRes_noSearch.js").UrlParseRes_noSearch<any,string,any,any>|import("../support_1/url_parse/UrlParseRes.js").UrlParseRes<any,string,any,any,any>} T @template {string} U @arg {T} x @arg {U} v @returns {x is Extract<T,{host:`${U}${string}`}>} */
+		/** @private @template {import("../support_1/url_parse/UrlParseRes_noSearch.ts").UrlParseRes_noSearch<any,string,any,any>|import("../support_1/url_parse/UrlParseRes.ts").UrlParseRes<any,string,any,any,any>} T @template {string} U @arg {T} x @arg {U} v @returns {x is Extract<T,{host:`${U}${string}`}>} */
 		let host_starts_with=(x,v) => {return this.str_starts_with_rx(x.host,v);};
 		if(host_starts_with(r,"yt"))
 		{
@@ -286,7 +290,7 @@ class ParserService extends BaseService
 			let h=split_string(r.host,".");
 			if(this.TODO_true) return;
 			console.log("yt_ggpht_url",h[0],c[0],v);
-			/** @private @type {import("../yt_json_types/d/group_D.js").D_UrlFormat} */
+			/** @private @type {import("../yt_json_types/d/group_D.ts").D_UrlFormat} */
 			return;
 		}
 		switch(r.host)
@@ -305,9 +309,9 @@ class ParserService extends BaseService
 		}
 		this.x.get("handle_types").on_google_video_url(r);
 	}
-	/** @unused_api @protected @arg {import("../yt_json_types/ghi/group_G.js").GM_VE3832['url']} x */
+	/** @unused_api @protected @arg {import("../yt_json_types/ghi/group_G.ts").GM_VE3832['url']} x */
 	parse_url_VE3832(x) {if(!this.str_starts_with_rx("/watch?",x)) debugger;}
-	/** @api @public @arg {import("../yt_json_types/abc/group_C.js").CF_L_TP_Params} root @arg {import("../yt_json_types/d/group_D.js").D_UrlFormat} x */
+	/** @api @public @arg {import("../yt_json_types/abc/group_C.ts").CF_L_TP_Params} root @arg {import("../yt_json_types/d/group_D.ts").D_UrlFormat} x */
 	parse_url(root,x)
 	{
 		if(x===void 0) {debugger; return;}
@@ -352,7 +356,7 @@ class ParserService extends BaseService
 			}
 		}
 	}
-	/** @private @arg {import("../yt_json_types/abc/group_C.js").CF_L_TP_Params} root @arg {import("../support_2/ParseUrlWithSearchIn.js").ParseUrlWithSearchIn|import("../support_2/ParseUrlWithSearchIn.js").ParseUrlWithSearchIn_2} x */
+	/** @private @arg {import("../yt_json_types/abc/group_C.ts").CF_L_TP_Params} root @arg {import("../support_2/ParseUrlWithSearchIn.ts").ParseUrlWithSearchIn|import("../support_2/ParseUrlWithSearchIn.ts").ParseUrlWithSearchIn_2} x */
 	parse_url_with_search(root,x)
 	{
 		let a=split_string(x,"?");
@@ -363,8 +367,8 @@ class ParserService extends BaseService
 		}
 	}
 	log_channel_handles=false;
-	/** @private @type {import("../yt_json_types/d/group_D.js").D_UrlFormat} */
-	/** @private @arg {import("../yt_json_types/abc/group_C.js").CF_L_TP_Params} root @arg {Extract<import("../yt_json_types/stu/group_T.js").T_SplitOnce<import("../yt_json_types/stu/group_T.js").T_SplitOnce<Exclude<import("../yt_json_types/d/group_D.js").D_UrlFormat,"/">,"/">[1],"/">,[any]>[0]} x */
+	/** @private @type {import("../yt_json_types/d/group_D.ts").D_UrlFormat} */
+	/** @private @arg {import("../yt_json_types/abc/group_C.ts").CF_L_TP_Params} root @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<Exclude<import("../yt_json_types/d/group_D.ts").D_UrlFormat,"/">,"/">[1],"/">,[any]>[0]} x */
 	parse_url_2(root,x)
 	{
 		if(this.str_is_search(x)) {return this.parse_url_with_search(root,as(x));}
@@ -394,7 +398,7 @@ class ParserService extends BaseService
 		assert_equal_type(x,{});
 		switch(x) {default: debugger; return;}
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.js").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.js").NS_DP_Parse.ParseUrlStr_0,"/">,[`account${string}`]>[0]} x */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_0,"/">,[`account${string}`]>[0]} x */
 	parse_account_url(x)
 	{
 		let a=split_string(x,"_");
@@ -411,7 +415,7 @@ class ParserService extends BaseService
 		}
 		return;
 	}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_PlaylistUrlParams} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_PlaylistUrlParams} x */
 	parse_playlist_page_url(x)
 	{
 		if(x.includes("&")) debugger;
@@ -422,10 +426,10 @@ class ParserService extends BaseService
 			default: debugger;
 		}
 	}
-	/** @unused_api @protected @arg {import("../yt_json_types/ghi/group_G.js").GU_VE6827_Url} x */
+	/** @unused_api @protected @arg {import("../yt_json_types/ghi/group_G.ts").GU_VE6827_Url} x */
 	parse_ve_6827_url(x)
 	{
-		/** @private @type {import("../yt_json_types/stu/group_T.js").T_SplitOnce<import("../yt_json_types/ghi/group_G.js").GU_VE6827_Url,"/">[1]} */
+		/** @private @type {import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/ghi/group_G.ts").GU_VE6827_Url,"/">[1]} */
 		let su=split_string_once(x,"/")[1];
 		let su1=split_string_once(su,"/");
 		if(su1.length===1)
@@ -467,7 +471,7 @@ class ParserService extends BaseService
 	}
 	/** @private @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with_r(str,needle) {return this.str_starts_with_rx(needle,str);}
-	/** @api @public @arg {import("../yt_json_types/stu/group_T.js").T_SplitOnce<import("../yt_json_types/d/group_D.js").D_ChanLoc,".">} x */
+	/** @api @public @arg {import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/d/group_D.ts").D_ChanLoc,".">} x */
 	parse_channel_section(x)
 	{
 		switch(x[1])
@@ -491,7 +495,7 @@ class ParserService extends BaseService
 		console.log("[no_handler_for] [%o] [%s]",parts,cur_part);
 		return null;
 	}
-	/** @private @arg {Extract<import("../yt_json_types/d/group_D.js").DG_ApiUrl,["youtubei","v1",string]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/d/group_D.ts").DG_ApiUrl,["youtubei","v1",string]>} x */
 	get_yt_url_type_3(x)
 	{
 		switch(x[2])
@@ -510,7 +514,7 @@ class ParserService extends BaseService
 		switch(x[2]) {default: console.log("[new_get_yt_url_type_3] [%o] [%s]",x,x[2]); debugger;}
 		return x[2];
 	}
-	/** @private @arg {Extract<import("../yt_json_types/d/group_D.js").DG_ApiUrl,["youtubei",...any]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/d/group_D.ts").DG_ApiUrl,["youtubei",...any]>} x */
 	get_yt_url_type(x)
 	{
 		if(x[1]!=="v1") {return this.api_no_handler(x,x[1]);}
@@ -552,7 +556,7 @@ class ParserService extends BaseService
 			default: return this.api_no_handler(x,x[2]);
 		}
 	}
-	/** @private @arg {Extract<import("../yt_json_types/d/group_D.js").DG_ApiUrl,["youtubei","v1","pdg",string]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/d/group_D.ts").DG_ApiUrl,["youtubei","v1","pdg",string]>} x */
 	get_pdg_type(x)
 	{
 		switch(x[3])
@@ -565,7 +569,7 @@ class ParserService extends BaseService
 			x: `${x[2]}.${x[3]}`,
 		}.x;
 	}
-	/** @private @arg {Extract<import("../yt_json_types/d/group_D.js").DG_ApiUrl,["youtubei","v1","music",string]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/d/group_D.ts").DG_ApiUrl,["youtubei","v1","music",string]>} x */
 	get_music_type(x)
 	{
 		switch(x[3])
@@ -578,7 +582,7 @@ class ParserService extends BaseService
 			x: `${x[2]}.${x[3]}`,
 		}.x;
 	}
-	/** @private @arg {Extract<import("../yt_json_types/d/group_D.js").DG_ApiUrl,["youtubei","v1","share",string]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/d/group_D.ts").DG_ApiUrl,["youtubei","v1","share",string]>} x */
 	get_share_type(x)
 	{
 		switch(x[3])
@@ -591,7 +595,7 @@ class ParserService extends BaseService
 			x: `${x[2]}.${x[3]}`,
 		}.x;
 	}
-	/** @private @arg {Extract<import("../yt_json_types/d/group_D.js").DG_ApiUrl,["youtubei","v1","playlist",string]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/d/group_D.ts").DG_ApiUrl,["youtubei","v1","playlist",string]>} x */
 	get_playlist_type(x)
 	{
 		switch(x[3])
@@ -605,7 +609,7 @@ class ParserService extends BaseService
 			x: `${x[2]}.${x[3]}`,
 		}.x;
 	}
-	/** @private @arg {Extract<import("../yt_json_types/d/group_D.js").DG_ApiUrl,["youtubei","v1","browse",string]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/d/group_D.ts").DG_ApiUrl,["youtubei","v1","browse",string]>} x */
 	get_browse_type(x)
 	{
 		switch(x[3])
@@ -618,7 +622,7 @@ class ParserService extends BaseService
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<import("../yt_json_types/d/group_D.js").DG_ApiUrl,["youtubei","v1","subscription",string]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/d/group_D.ts").DG_ApiUrl,["youtubei","v1","subscription",string]>} x */
 	get_subscription_type(x)
 	{
 		switch(x[3])
@@ -631,7 +635,7 @@ class ParserService extends BaseService
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<import("../yt_json_types/d/group_D.js").DG_ApiUrl,["youtubei","v1","reel",string]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/d/group_D.ts").DG_ApiUrl,["youtubei","v1","reel",string]>} x */
 	get_reel_type(x)
 	{
 		switch(x[3])
@@ -644,7 +648,7 @@ class ParserService extends BaseService
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<import("../yt_json_types/d/group_D.js").DG_ApiUrl,["youtubei","v1","notification",string]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/d/group_D.ts").DG_ApiUrl,["youtubei","v1","notification",string]>} x */
 	get_notification_type(x)
 	{
 		switch(x[3])
@@ -660,7 +664,7 @@ class ParserService extends BaseService
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<import("../yt_json_types/d/group_D.js").DG_ApiUrl,["youtubei","v1","comment",string]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/d/group_D.ts").DG_ApiUrl,["youtubei","v1","comment",string]>} x */
 	get_comment_type(x)
 	{
 		switch(x[3])
@@ -672,7 +676,7 @@ class ParserService extends BaseService
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<import("../yt_json_types/d/group_D.js").DG_ApiUrl,["youtubei","v1","att",string]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/d/group_D.ts").DG_ApiUrl,["youtubei","v1","att",string]>} x */
 	get_att_type(x)
 	{
 		switch(x[3])
@@ -685,7 +689,7 @@ class ParserService extends BaseService
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<import("../yt_json_types/d/group_D.js").DG_ApiUrl,["youtubei","v1","like",string]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/d/group_D.ts").DG_ApiUrl,["youtubei","v1","like",string]>} x */
 	get_like_type(x)
 	{
 		switch(x[3])
@@ -699,7 +703,7 @@ class ParserService extends BaseService
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<import("../yt_json_types/d/group_D.js").DG_ApiUrl,["youtubei","v1","account",string]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/d/group_D.ts").DG_ApiUrl,["youtubei","v1","account",string]>} x */
 	get_account_type(x)
 	{
 		switch(x[3])
@@ -714,7 +718,7 @@ class ParserService extends BaseService
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<import("../yt_json_types/d/group_D.js").DG_ApiUrl,["youtubei","v1","live_chat",string]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/d/group_D.ts").DG_ApiUrl,["youtubei","v1","live_chat",string]>} x */
 	get_live_chat_type(x)
 	{
 		switch(x[3])
@@ -728,7 +732,7 @@ class ParserService extends BaseService
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @api @public @arg {import("../yt_json_types/d/group_D.js").DG_ApiUrl} x */
+	/** @api @public @arg {import("../yt_json_types/d/group_D.ts").DG_ApiUrl} x */
 	get_url_type(x)
 	{
 		switch(x[0])
