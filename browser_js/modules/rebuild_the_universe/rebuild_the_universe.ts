@@ -2719,7 +2719,7 @@ class AutoBuy {
 				log_if(LOG_LEVEL_ERROR,'play success');
 			},
 			function(err: unknown) {
-				log_if(LOG_LEVEL_ERROR,err);
+				log_if(LOG_LEVEL_ERROR,"%o",err);
 			}
 		]);
 		try {
