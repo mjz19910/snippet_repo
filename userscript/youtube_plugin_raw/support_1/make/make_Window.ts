@@ -1,6 +1,5 @@
-export {};
 declare global {
-	interface Window {
+	export interface Window {
 		// Elements
 		ytd_player?: HTMLElement;
 		ytd_page_manager?: HTMLElement;

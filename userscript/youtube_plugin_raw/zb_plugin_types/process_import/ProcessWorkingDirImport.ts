@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {ProcessImport} from "../../../base_require_raw/ProcessImport.ts";
 import {MatchType_WorkingDir} from "./MatchType_WorkingDir.ts";
 import {ProcessImport1} from "./ProcessImport1.ts";

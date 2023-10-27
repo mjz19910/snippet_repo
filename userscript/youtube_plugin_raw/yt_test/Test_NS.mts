@@ -1,10 +1,10 @@
 // deno-lint-ignore-file
-import {DU_Playlist_Id} from "../yt_json_types/d/group_D.js";
-import {T_SplitIntoGroups} from "../yt_json_types/stu/group_T.js";
+import {DU_Playlist_Id} from "../yt_json_types/d/group_D.ts";
+import {T_SplitIntoGroups} from "../yt_json_types/stu/group_T.ts";
 
 export namespace Test {
 	export async function D_PlaylistId(): Promise<void> {
-		const assert_is_equal=(await import("../support_1/make/assert_is_equal_t.js")).assert_is_equal;
+		const assert_is_equal=(await import("../support_1/make/assert_is_equal_t.ts")).assert_is_equal;
 		function str_starts_with<T_Needle extends string,T_Str extends string>(needle: T_Needle,str: T_Str): str is Extract<T_Str,`${T_Needle}${string}`> {
 			return str.startsWith(needle);
 		}

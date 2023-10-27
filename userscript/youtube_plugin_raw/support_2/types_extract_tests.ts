@@ -10,7 +10,7 @@ export type ExtractTypes<T>=[ExtractTypeAt<T,0>,ExtractTypeAt<T,1>,ExtractTypeAt
 ];
 
 export type VV=ExtractTypes<number|string|any[]|(()=>any)|{}>;
-export type vu=ExtractTypes<import("../../rebuild_the_universe_raw/ns.js").Box['value']>;
+export type vu=ExtractTypes<import("../../rebuild_the_universe_raw/ns.ts").Box['value']>;
 export type Vc_0=vu[0];
 export type Vc_1=vu[1];
 export type Vc_2=vu[2];

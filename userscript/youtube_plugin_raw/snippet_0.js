@@ -27,7 +27,7 @@ try {
 	let r=localStorage.getItem("test");
 	if(r!=="test_value") no_storage_access=true;
 } catch {no_storage_access=true;}
-/** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {import("./yt_json_types/stu/group_T.js").T_SplitOnce<S,D>} */
+/** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {import("./yt_json_types/stu/group_T.ts").T_SplitOnce<S,D>} */
 function split_string_once(s,d=as(",")) {
 	if(s==="") {
 		/** @type {[]} */
@@ -59,10 +59,10 @@ export class Snippet_0_tmp {
 	}
 	/** @template U @template {{}} T @arg {T|undefined} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
 	t(x,f) {if(!x) return; return f.call(this,x);}
-	/** @protected @template T @arg {NonNullable<T>} x @arg {import("./yt_json_types/stu/group_T.js").T_GetTypeof<T>} y */
+	/** @protected @template T @arg {NonNullable<T>} x @arg {import("./yt_json_types/stu/group_T.ts").T_GetTypeof<T>} y */
 	primitive_of(x,y) {if(typeof x!==y) debugger;}
 	split_string_once=split_string_once;
-	/** @private @template {string} T @template {string} U @arg {T} x @arg {U} sep @returns {import("./yt_json_types/stu/group_T.js").T_SplitOnce<T,U>[number]|null} */
+	/** @private @template {string} T @template {string} U @arg {T} x @arg {U} sep @returns {import("./yt_json_types/stu/group_T.ts").T_SplitOnce<T,U>[number]|null} */
 	drop_separator(x,sep) {
 		let v=this.split_string_once(x,sep);
 		if(v[0]) return v[0];
@@ -87,9 +87,9 @@ export class Snippet_0_tmp {
 	generate_renderer(x,r) {throw new AggregateError(["this.#generate_renderer(x,r);",x,r]);}
 	/** @public @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
 	as(e,x=e) {return x;}
-	/** @private @template {{}} T @arg {import("./yt_json_types/stu/group_T.js").T_AnyObjectOrEmpty<T>} x @returns {x is T} */
+	/** @private @template {{}} T @arg {import("./yt_json_types/stu/group_T.ts").T_AnyObjectOrEmpty<T>} x @returns {x is T} */
 	maybe_has_value(x) {return Object.keys(x).length>0;}
-	/** @protected @template {{}} T @arg {import("./yt_json_types/stu/group_T.js").T_AnyObjectOrEmpty<T>} x @arg {(x:T)=>void} f */
+	/** @protected @template {{}} T @arg {import("./yt_json_types/stu/group_T.ts").T_AnyObjectOrEmpty<T>} x @arg {(x:T)=>void} f */
 	maybe(x,f) {
 		if(!this.maybe_has_value(x)) return;
 		f(x);
@@ -138,7 +138,7 @@ export class Snippet_0_tmp {
 		if(a>(b-epsilon)&&a<(b+epsilon)) return true;
 		return false;
 	}
-	/** @public @template {string} T @template {`${T}_${string}`} U @arg {T} ns @arg {U} x @returns {import("./yt_json_types/stu/group_T.js").T_SplitOnce<import("./yt_json_types/stu/group_T.js").T_SplitOnce<U,T>[1],"_">[1]} */
+	/** @public @template {string} T @template {`${T}_${string}`} U @arg {T} ns @arg {U} x @returns {import("./yt_json_types/stu/group_T.ts").T_SplitOnce<import("./yt_json_types/stu/group_T.ts").T_SplitOnce<U,T>[1],"_">[1]} */
 	parse_enum(ns,x) {
 		let r=this.split_string_once(x,ns);
 		if(!r[1]) throw new Error("Invalid enum");
@@ -162,7 +162,7 @@ export class Snippet_0_tmp {
 		}
 		return ok_e;
 	}
-	/** @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {import("./support_1/Join.js").Join<X,S>} */
+	/** @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {import("./support_1/Join.ts").Join<X,S>} */
 	join_string(x,s) {
 		if(!x) {debugger;}
 		let r=x.join(s);
@@ -170,9 +170,9 @@ export class Snippet_0_tmp {
 	}
 	//#region dispatch_in_progress
 	//#endregion
-	/** @public @template {import("./yt_json_types/stu/group_T.js").T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @returns {T[SI]} */
+	/** @public @template {import("./yt_json_types/stu/group_T.ts").T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @returns {T[SI]} */
 	w(x) {throw new Error(x+"");}
-	/** @template {import("./yt_json_types/stu/group_T.js").T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>void} f */
+	/** @template {import("./yt_json_types/stu/group_T.ts").T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>void} f */
 	H$R_(x,f) {f.call(this,this.w(x));}
 }
 class ND extends Snippet_0_tmp {
@@ -230,9 +230,9 @@ class ND extends Snippet_0_tmp {
 		}
 		return [tog,untoggled,other];
 	}
-	/** @protected @template T @arg {import("./yt_json_types/stu/group_T.js").T_Item<T>} x @arg {(x:T)=>void} f */
+	/** @protected @template T @arg {import("./yt_json_types/stu/group_T.ts").T_Item<T>} x @arg {(x:T)=>void} f */
 	ItemTemplate(x,f) {return f.call(this,x.item);}
-	/** @protected @template K,V @arg {import("./yt_json_types/stu/group_T.js").T_MapEntry<K,V>} x @arg {(this:this,x:V,k:K)=>void} f */
+	/** @protected @template K,V @arg {import("./yt_json_types/stu/group_T.ts").T_MapEntry<K,V>} x @arg {(this:this,x:V,k:K)=>void} f */
 	MapTemplate(x,f) {f.call(this,x.value,x.key);}
 	/** @protected @template {{}} T @arg {T[]|undefined} x @arg {(this:this,x:T)=>void} f */
 	tz(x,f) {

@@ -1,6 +1,6 @@
 // deno-lint-ignore-file
-import {RS_Browse} from "./r/group_R.js";
-import {T_Split} from "./stu/group_T.js";
+import {RS_Browse} from "./r/group_R.ts";
+import {T_Split} from "./stu/group_T.ts";
 
 //#region RS_Browse
 export type Alt_RS_Browse_raw=[

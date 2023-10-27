@@ -46,7 +46,7 @@ const path_map={
 function as(e,x=e) {return x;}
 /** @public @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 function str_starts_with(str,needle) {return str.startsWith(needle);}
-/** @private @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {import("../youtube_plugin_raw/yt_json_types/stu/group_T.js").T_Split<X,string extends S?",":S>} */
+/** @private @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {import("../youtube_plugin_raw/yt_json_types/stu/group_T.ts").T_Split<X,string extends S?",":S>} */
 function split_string(x,s=as(","))
 {
 	if(!x) {debugger;}
@@ -54,10 +54,10 @@ function split_string(x,s=as(","))
 	return as(r);
 }
 const log_path_resolve=false;
-/** @template {import("../youtube_plugin_raw/zb_plugin_types/AllImportPaths.js").AllImportPaths} T @arg {T} x @returns {(keyof typeof path_map)|null} */
+/** @template {import("../youtube_plugin_raw/zb_plugin_types/AllImportPaths.ts").AllImportPaths} T @arg {T} x @returns {(keyof typeof path_map)|null} */
 function resolve_path_to_userscript_dir(x)
 {
-	/** @type {import("../youtube_plugin_raw/zb_plugin_types/AllImportPaths.js").AllImportPaths} */
+	/** @type {import("../youtube_plugin_raw/zb_plugin_types/AllImportPaths.ts").AllImportPaths} */
 	let u=x;
 	const yt_plugin_base_path="youtube_plugin_raw/zc_child_modules";
 	if(!str_starts_with(u,".")) return u;
@@ -107,11 +107,11 @@ function get_exports()
 {
 	window.__require_module_cache__??={};
 	let all_modules=window.__require_module_cache__;
-	/** @type {{[U in keyof import("../_module_cache/RequireModuleCache.js").RequireModuleCache]?:import("../youtube_plugin_raw/zb_plugin_types/ambient_exports.js").BaseModuleType}} */
+	/** @type {{[U in keyof import("../_module_cache/RequireModuleCache.ts").RequireModuleCache]?:import("../youtube_plugin_raw/zb_plugin_types/ambient_exports.ts").BaseModuleType}} */
 	let ok_modules=all_modules;
 	return ok_modules;
 }
-/** @arg {keyof import("../_module_cache/RequireModuleCache.js").RequireModuleCache} module_name @template {import("../youtube_plugin_raw/zb_plugin_types/ambient_exports.js").BaseModuleType} T @arg {(x:T)=>void} fn @arg {{global:boolean}} flags @arg {T} exports */
+/** @arg {keyof import("../_module_cache/RequireModuleCache.ts").RequireModuleCache} module_name @template {import("../youtube_plugin_raw/zb_plugin_types/ambient_exports.ts").BaseModuleType} T @arg {(x:T)=>void} fn @arg {{global:boolean}} flags @arg {T} exports */
 function do_export(fn,flags,exports,module_name)
 {
 	/** @typedef {typeof exports} ExportsT */
@@ -129,7 +129,7 @@ function do_export(fn,flags,exports,module_name)
 			window.__require_module_cache__??={};
 			let all_modules=window.__require_module_cache__;
 			exports=as(all_modules[module_name]??{});
-			/** @type {{[U in keyof import("../_module_cache/RequireModuleCache.js").RequireModuleCache]?:import("../youtube_plugin_raw/zb_plugin_types/ambient_exports.js").BaseModuleType}} */
+			/** @type {{[U in keyof import("../_module_cache/RequireModuleCache.ts").RequireModuleCache]?:import("../youtube_plugin_raw/zb_plugin_types/ambient_exports.ts").BaseModuleType}} */
 			let ok_modules=all_modules;
 			ok_modules[module_name]=as(exports);
 		}
@@ -147,7 +147,7 @@ function required(x)
 	if(x===void 0) {throw new Error("missing required");}
 	return x;
 }
-/** @template {import("../youtube_plugin_raw/zb_plugin_types/AllImportPaths.js").AllImportPaths} T @arg {T} arg @arg {[]} r_args @returns {import("./ProcessImport.js").ProcessImport<T>} */
+/** @template {import("../youtube_plugin_raw/zb_plugin_types/AllImportPaths.ts").AllImportPaths} T @arg {T} arg @arg {[]} r_args @returns {import("./ProcessImport.ts").ProcessImport<T>} */
 function require(arg,...r_args)
 {
 	if(arg===void 0) {throw new Error("missing required argument");}
@@ -159,10 +159,10 @@ function require(arg,...r_args)
 		if(cur_require&&cur_require.__system_require) return cur_require(arg,...r_args);
 		throw new Error("Unable to resolve path: "+arg);
 	}
-	/** @arg {any} x @returns {asserts x is import("./ProcessImport.js").ProcessImport<T>} */
+	/** @arg {any} x @returns {asserts x is import("./ProcessImport.ts").ProcessImport<T>} */
 	function correct_return_type(x) {x;}
 	const loc=path_map[resolved_path];
-	/** @type {import("./ProcessImport.js").ProcessImport<import("../youtube_plugin_raw/zb_plugin_types/AllImportPaths.js").AllImportPaths>} */
+	/** @type {import("./ProcessImport.ts").ProcessImport<import("../youtube_plugin_raw/zb_plugin_types/AllImportPaths.ts").AllImportPaths>} */
 	let mod;
 	if(loc[0]==="sys") mod=i(window[loc[1]]);
 	else if(loc[0]==="raw") mod=i(M[loc[1]]);
@@ -181,7 +181,7 @@ export_(exports =>
 	exports.__path_map__=path_map;
 });
 require.__system_require=false;
-/** @type {({__system_require:boolean;system_require?:any;<T extends import("../youtube_plugin_raw/zb_plugin_types/AllImportPaths.js").AllImportPaths>(x:T):import("./ProcessImport.js").ProcessImport<T>})} */
+/** @type {({__system_require:boolean;system_require?:any;<T extends import("../youtube_plugin_raw/zb_plugin_types/AllImportPaths.ts").AllImportPaths>(x:T):import("./ProcessImport.ts").ProcessImport<T>})} */
 let cur_require=require;
 
 // global exports

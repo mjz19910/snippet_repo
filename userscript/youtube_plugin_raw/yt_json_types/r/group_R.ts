@@ -14,8 +14,8 @@ import {SP_GFeedbackServiceParams,SP_GoogleHelpServiceObj} from "../stu/group_S.
 import {T_AnyObjectOrEmpty,T_Command_TP,T_Icon,T_MapEntry,T_RidFormat} from "../stu/group_T.ts";
 import {UMA_Item} from "../stu/group_U.ts";
 import {DC_MusicShelf,DC_PlaylistPanel,D_AccountItem,D_AdActionInterstitial,D_AutomixPreviewVideo,D_BrowserMediaSessionRenderer,D_LiveChatItemList,D_LiveChatMessageInput,D_LiveChatParticipantsList,D_LiveChatTicker,D_MusicResponsiveListItem,D_MusicShelfDivider,D_ReportFormModal,D_VideoMastheadAdV3} from "../z/ZD_empty_obj.ts";
-import {D_MacroMarkersInfoItem} from "./r_sub/r/D_MacroMarkersInfoItem.js";
-import {D_VideoInfoCardContent} from "./r_sub/r/R_VideoInfoCardContent.js";
+import {D_MacroMarkersInfoItem} from "./r_sub/r/D_MacroMarkersInfoItem.ts";
+import {D_VideoInfoCardContent} from "./r_sub/r/R_VideoInfoCardContent.ts";
 
 //#region base(R)
 //#region RCA

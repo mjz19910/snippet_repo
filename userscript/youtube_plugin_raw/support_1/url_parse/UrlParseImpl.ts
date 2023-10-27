@@ -10,4 +10,3 @@ export type UrlParseImpl<T extends string>=
 	UrlParseRes<T,Host,Protocol,Search,"">:
 	T extends `${infer Protocol extends `${string}:`}//${infer Host}`?
 	UrlParseRes_noSearch<T,Host,Protocol,"">:never;
-;

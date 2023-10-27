@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {T_NumArrStrVerify,T_Split,T_NumArrStr} from "../yt_json_types/stu/group_T.ts";
 
 export function verify_service_g_feedback_valid() {

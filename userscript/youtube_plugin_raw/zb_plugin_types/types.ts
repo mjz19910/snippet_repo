@@ -38,7 +38,7 @@ export type HandleTypes=InstanceType<RequireModuleCache["mod$HandleTypes"]["Hand
 export type Y_PutBoxedArgs=[store_type: string,store_args: [string,make_item_group<any>]|[null,number]];
 
 export type CustomEventType={
-	type: keyof NonNullable<import("../yt_json_types/j/J_CustomEventTargetEvents.js").J_CustomEventTargetEvents>;
+	type: keyof NonNullable<import("../yt_json_types/j/J_CustomEventTargetEvents.ts").J_CustomEventTargetEvents>;
 	detail: {};
 	port: MessagePort;
 };

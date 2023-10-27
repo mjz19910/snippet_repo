@@ -1,6 +1,5 @@
-export {};
 declare global {
-	interface Window {
+	export interface Window {
 		// Elements
 		ytcp_app?: HTMLElement;
 	}

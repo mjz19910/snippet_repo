@@ -1,6 +1,6 @@
 export {};
 declare global {
-	interface Window {
+	export interface Window {
 		// Elements
 		ytmusic_app?: HTMLElement;
 	}

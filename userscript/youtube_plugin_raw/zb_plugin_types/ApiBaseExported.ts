@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {TP_ParseUrlSearchParams} from "../yt_json_types/stu/group_T.ts";
 import {ApiBase} from "../zc_child_modules/YTPlugin_Base.user.js";
 

@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 export type Join<T extends string[],D extends string=",">=NS_MakeJoin.JoinNonspecificStringArray<T,NS_MakeJoin.JoinInferParts_2<T,D>>;
 
 export namespace NS_MakeJoin {

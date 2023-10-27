@@ -1,9 +1,9 @@
 // deno-lint-ignore-file
-import {IndexedDBService,TypedIndexedDB} from "../zc_child_modules/YTPlugin_IndexedDB.user";
+import {IndexedDBService,TypedIndexedDB} from "../zc_child_modules/YTPlugin_IndexedDB.user.js";
 export class IndexedDBDeadCode extends IndexedDBService {
 	/**
 	 * @template {"boxed_id"} K
-	 * @template {import("../yt_json_types/ghi/group_G.js").G_BoxedDatabaseData} T
+	 * @template {import("../yt_json_types/ghi/group_G.ts").G_BoxedDatabaseData} T
 	 * @param {IDBTransaction} tx
 	 * @param {K} key
 	 * @param {IDBDatabase} db

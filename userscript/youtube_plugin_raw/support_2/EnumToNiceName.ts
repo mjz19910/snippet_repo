@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {Join} from "../support_1/Join.ts";
 import {T_Split} from "../yt_json_types/stu/group_T.ts";
 
