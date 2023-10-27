@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 /** @template T,U */
 export class Future {
 	/** @arg {T} v @arg {(x:T)=>U} f */

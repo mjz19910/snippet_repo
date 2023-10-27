@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 export interface TypedIDBObjectStore<T extends {}> extends IDBObjectStore {put(value: T): IDBRequest<IDBValidKey>;}
 export interface TypedIDBValidKey<T extends string> {type: "key"; key: T;}
 export interface TypedIDBKeyRange<T extends string> {type: "key_range"; key_range: IDBKeyRange; key: T;}

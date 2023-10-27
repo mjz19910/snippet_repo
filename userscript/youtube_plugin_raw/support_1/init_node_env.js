@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 /** @type {any} */
 let t_=new EventTarget;
 t_;

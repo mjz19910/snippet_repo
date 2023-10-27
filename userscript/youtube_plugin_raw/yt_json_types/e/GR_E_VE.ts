@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {B_Hack} from "../abc/group_B.ts";
 import {DE_VE3611,DE_VE3854,DE_Search,DE_VE5754,DE_VE6827,DE_VE11487,DE_VE23462,DE_ReelWatch,DE_VE42352,DE_VE96368} from "../d/group_DE.ts";
 import {GM_VE37414} from "../ghi/group_G.ts";

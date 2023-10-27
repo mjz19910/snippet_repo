@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {ProcessImport} from "./ProcessImport.ts";
 
 export namespace Test2 {

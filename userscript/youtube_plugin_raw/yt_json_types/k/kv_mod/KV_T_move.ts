@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 //#region AKZ
 export type KV_T_AKZ<T>={z: [T];};
 //#endregion

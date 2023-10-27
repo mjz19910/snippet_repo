@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {UrlParse} from "../support_1/url_parse/UrlParse.ts";
 import {D_GoogleLoginExternalUrl} from "../yt_json_types/d/group_D.ts";
 import {T_Split,TP_ParseUrlSearchParams,T_Replace} from "../yt_json_types/stu/group_T.ts";

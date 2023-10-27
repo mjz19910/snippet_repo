@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {never_return} from "../ghi/dnp_wrong/never_return.ts";
 import {TF_InferredSplitOnce_NB_2} from "./TF_InferredSplitOnce_NB_2.ts";
 import {T_SplitOnce_NB_1} from "./T_SplitOnce_NB_1.ts";

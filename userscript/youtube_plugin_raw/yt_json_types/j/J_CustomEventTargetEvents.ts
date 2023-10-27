@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {AsyncPluginInitEvent} from "../../support_1/AsyncPluginInitEvent.ts";
 import {PluginActivateEvent} from "../../support_1/PluginActivateEvent.ts";
 import {CustomEventTarget} from "../../zc_child_modules/YTPlugin_Base.user.js";

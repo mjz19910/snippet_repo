@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 export type J_ResolverType=J_ResolverType_Ready|J_ResolverType_Init;
 export type J_ResolverStateKey="ready"|"init";
 export type J_ResolverTypeHelpers={

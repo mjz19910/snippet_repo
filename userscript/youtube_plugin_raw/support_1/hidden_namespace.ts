@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {T_Split,T_VideoIdStr} from "../yt_json_types/stu/group_T.ts";
 
 export namespace hidden_namespace {

@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {IndexedDBService,TypedIndexedDB} from "../zc_child_modules/YTPlugin_IndexedDB.user";
 export class IndexedDBDeadCode extends IndexedDBService {
 	/**

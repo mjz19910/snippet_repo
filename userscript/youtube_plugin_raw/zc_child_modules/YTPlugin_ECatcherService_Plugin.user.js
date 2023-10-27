@@ -11,6 +11,7 @@
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_ECatcherService_Plugin.user.js
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_ECatcherService_Plugin.user.js
 // ==/UserScript==
+// deno-lint-ignore-file
 
 const page_require = typeof require === "undefined"
 	? __module_require__

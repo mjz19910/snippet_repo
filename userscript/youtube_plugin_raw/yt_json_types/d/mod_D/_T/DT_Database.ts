@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {DT_DatabaseStoreTypes} from "./DT_DatabaseStoreTypes.ts";
 
 export namespace DT_Database {

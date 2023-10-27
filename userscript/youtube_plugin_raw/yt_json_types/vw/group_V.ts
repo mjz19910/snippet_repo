@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {StoreDescription} from "../../zc_child_modules/YTPlugin_Support_Service.user.js";
 import {D_ProtobufObj} from "../d/group_D.ts";
 

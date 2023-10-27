@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 export type ExtractTypes_5<T>=T extends Promise<infer U>?[Promise<U>]:[null];
 export type ExtractTypes_4<T>=T extends (...v:infer A)=>infer R?[(...v:A)=>R,...ExtractTypes_5<T>]:[null,...ExtractTypes_5<T>];
 export type ExtractTypes_3<T>=T extends any[]? T extends infer R extends any[]?[R[0][],...ExtractTypes_4<T>]:[null,...ExtractTypes_4<T>]:[null,...ExtractTypes_4<T>];

@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {RS_Browse} from "./r/group_R.js";
 import {T_Split} from "./stu/group_T.js";
 
