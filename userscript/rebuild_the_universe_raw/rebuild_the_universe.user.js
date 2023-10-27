@@ -2525,6 +2525,9 @@ class AutoBuyImplR {
 				});
 				self.removeEventListener("click", this);
 			},
+			/**
+			 * @param {AutoBuyImplR} t
+			 */
 			async run(t) {
 				if (!t.background_audio) throw 1;
 				await t.background_audio.play();
