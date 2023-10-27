@@ -25,6 +25,7 @@ if (typeof require === "undefined" || page_require !== __module_require__) {
 }
 const {as,do_export}=require("../../base_require_raw/BaseRequire.user.js");
 const {split_string_once,split_string,as_any,JsonReplacerState,ServiceWithAccessors}=require("./YTPlugin_Base.user.js");
+/** @typedef {InstanceType<typeof JsonReplacerState>} JsonReplacerState */
 
 if(window.__log_module_loading_enabled__) console.log("Load Codegen Service");
 const __module_name__="mod$CodegenService";
@@ -284,6 +285,7 @@ class CodegenService extends ServiceWithAccessors
 		let o2=xv[k];
 		if(o2==null) return null;
 		let keys=Object.keys(x).concat(Object.keys(o2));
+		/** @type {JsonReplacerState} */
 		let s=new JsonReplacerState({
 			text_decoder: this.sm._decoder,
 			cf,keys,is_root: true,
@@ -793,7 +795,7 @@ class CodegenService extends ServiceWithAccessors
 		if(s.object_count<3) return x;
 		return {};
 	}
-	/** @private @arg {typeof JsonReplacerState} s @arg {string} cf @arg {object} x */
+	/** @private @arg {JsonReplacerState} s @arg {string} cf @arg {object} x */
 	codegen_typedef_base(s,cf,x)
 	{
 		let k=this.get_name_from_keys(x);

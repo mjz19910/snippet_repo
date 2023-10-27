@@ -10,3 +10,4 @@ declare global {
 		ytPageType?: string;
 	}
 }
+export {};

@@ -4,3 +4,4 @@ declare global {
 		ytcp_app?: HTMLElement;
 	}
 }
+export {};

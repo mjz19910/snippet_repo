@@ -24,1125 +24,1450 @@ if (typeof require === "undefined" || page_require !== __module_require__) {
 	reset_require = true;
 }
 // yt_plugin/SupportService(10) => base_require/BaseRequire(1)
-const {as,do_export}=require("../../base_require_raw/BaseRequire.user.js");
+const { as, do_export } = require("../../base_require_raw/BaseRequire.user.js");
 // yt_plugin/IndexedDB_Service(10) => yt_plugin/Base(4)
-const {split_string_once,split_string,split_string_once_ex,split_string_once_last,ApiBase,ApiBase2,as_any,BaseService,JsonReplacerState}=require("./YTPlugin_Base.user.js");
+const {
+	split_string_once,
+	split_string,
+	split_string_once_ex,
+	split_string_once_last,
+	ApiBase,
+	ApiBase2,
+	as_any,
+	BaseService,
+	JsonReplacerState,
+} = require("./YTPlugin_Base.user.js");
 
 // priority yt_plugin/SupportService(9)
 
-const __module_name__="mod$SupportService";
+const __module_name__ = "mod$SupportService";
 /** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
-export_(exports => {exports.__is_module_flag__=true;});
+function export_(fn, flags = { global: false }) {
+	do_export(fn, flags, exports, __module_name__);
+}
+export_((exports) => {
+	exports.__is_module_flag__ = true;
+});
 //#region SeenDatabase & non support exports
 /** @private @arg {WA|null} _wa @template {[string,string]} WA @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {import("../yt_json_types/_rtv_wrong/T_InferTypedSplitOnce.ts").TI_SplitOnce_v2<WA,S,D>} */
-function split_string_once_ex_v2(s,d=as(","),_wa)
-{
-	if(s==="")
-	{
+function split_string_once_ex_v2(s, d = as(","), _wa) {
+	if (s === "") {
 		/** @private @type {[]} */
-		let r=[];
+		let r = [];
 		/** @private @type {any} */
-		let q=r;
+		let q = r;
 		return as(q);
 	}
-	let i=s.indexOf(d);
-	if(i===-1)
-	{
+	let i = s.indexOf(d);
+	if (i === -1) {
 		/** @private @type {[S]} */
-		let r=[s];
+		let r = [s];
 		/** @private @type {any} */
-		let q=r;
+		let q = r;
 		return as(q);
 	}
-	let a=s.slice(0,i);
-	let b=s.slice(i+d.length);
+	let a = s.slice(0, i);
+	let b = s.slice(i + d.length);
 	/** @private @type {[string,string]} */
-	let r=[a,b];
+	let r = [a, b];
 	/** @private @type {any} */
-	let q=r;
+	let q = r;
 	return as(q);
 }
 /** @template {{}} T */
-class OnePropertyObjArray
-{
-	/** @arg {ApiBase} cls */
-	constructor(cls)
-	{
-		this.cls=cls;
+class OnePropertyObjArray {
+	/** @arg {InstanceType<typeof ApiBase>} cls */
+	constructor(cls) {
+		this.cls = cls;
 	}
 	/** @type {T[]} */
-	arr=[];
+	arr = [];
 	/** @arg {T} v */
-	push(v)
-	{
-		if(this.cls.get_keys_of(v).length!==1) debugger;
+	push(v) {
+		if (this.cls.get_keys_of(v).length !== 1) debugger;
 		this.arr.push(v);
 	}
-	get length() {return this.arr.length;}
-	[Symbol.iterator]() {return this.arr[Symbol.iterator]();}
+	get length() {
+		return this.arr.length;
+	}
+	[Symbol.iterator]() {
+		return this.arr[Symbol.iterator]();
+	}
 }
-export_(exports => {exports.OnePropertyObjArray=OnePropertyObjArray;});
-class TypedefGenerator extends BaseService
-{
+export_((exports) => {
+	exports.OnePropertyObjArray = OnePropertyObjArray;
+});
+class TypedefGenerator extends BaseService {
 	/** @arg {import("../yt_json_types/d/group_D.ts").D_TypedefGenerator_Popup} x */
-	D_TypedefGenerator_Popup(x)
-	{
-		const cf="popup_dialog"; cf; this.sm.k(cf,x);
-		let x1=this.sm.unpack_popup_dialog(x);
-		if(!x1[0]) {debugger; return null;}
-		let dialog=x1[1];
+	D_TypedefGenerator_Popup(x) {
+		const cf = "popup_dialog";
+		cf;
+		this.sm.k(cf, x);
+		let x1 = this.sm.unpack_popup_dialog(x);
+		if (!x1[0]) {
+			debugger;
+			return null;
+		}
+		let dialog = x1[1];
 		return this.D_TypedefGenerator_Popup_R(dialog);
 	}
 	/** @arg {import("../yt_json_types/d/group_D.ts").D_TypedefGenerator_Popup_R} x */
-	D_TypedefGenerator_Popup_R(x)
-	{
-		const cf="R_ConfirmDialog"; cf; this.sm.k(cf,x);
-		if("confirmDialogRenderer" in x) return "TYPE::Popup_ConfirmDialog";
-		if("fancyDismissibleDialogRenderer" in x) return "TYPE::Popup_DismissibleDialog";
+	D_TypedefGenerator_Popup_R(x) {
+		const cf = "R_ConfirmDialog";
+		cf;
+		this.sm.k(cf, x);
+		if ("confirmDialogRenderer" in x) return "TYPE::Popup_ConfirmDialog";
+		if ("fancyDismissibleDialogRenderer" in x) {
+			return "TYPE::Popup_DismissibleDialog";
+		}
 		return null;
 	}
 }
-export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
+export_((exports) => {
+	exports.TypedefGenerator = TypedefGenerator;
+});
 /** @private @template T */
-class BitmapResult
-{
+class BitmapResult {
 	/** @constructor @public @arg {T[]} map_arr @arg {string} bitmap */
-	constructor(map_arr,bitmap)
-	{
-		this.map_arr=map_arr;
-		this.bitmap=bitmap;
+	constructor(map_arr, bitmap) {
+		this.map_arr = map_arr;
+		this.bitmap = bitmap;
 	}
 }
 /** @template {string} CLS_Kx */
-class StoreDescription extends ApiBase2
-{
+class StoreDescription extends ApiBase2 {
 	/** @type {Map<string,number>} */
-	key_index=new Map;
+	key_index = new Map();
 	/** @type {Map<string,number>} */
-	new_key_index=new Map;
+	new_key_index = new Map();
 	/** @typedef {CLS_Kx&keyof import("../yt_json_types/j/J_StoreTypeMap.ts").J_StoreTypeMap} CLS_K */
 	/** @type {[string, import("../yt_json_types/m/make_item_group.ts").make_item_group<import("../yt_json_types/j/J_StoreTypeMap.ts").J_StoreTypeMap[CLS_K]>][]} */
-	data=[];
+	data = [];
 	/** @type {[string, import("../yt_json_types/m/make_item_group.ts").make_item_group<import("../yt_json_types/j/J_StoreTypeMap.ts").J_StoreTypeMap[CLS_K]>][]} */
-	new_data=[];
+	new_data = [];
 	/** @arg {CLS_Kx} type @arg {[string]} type_arr */
-	constructor(type,type_arr)
-	{
+	constructor(type, type_arr) {
 		super();
-		this.type=type;
-		this.type_arr=type_arr;
+		this.type = type;
+		this.type_arr = type_arr;
 	}
 	/** @arg {string} k @arg {import("../yt_json_types/m/make_item_group.ts").make_item_group<import("../yt_json_types/j/J_StoreTypeMap.ts").J_StoreTypeMap[CLS_K]>} x */
-	add_data_to_index(k,x)
-	{
-		let idx=this.key_index.get(k);
-		if(idx!==void 0)
-		{
-			this.data[idx]=[k,x];
+	add_data_to_index(k, x) {
+		let idx = this.key_index.get(k);
+		if (idx !== void 0) {
+			this.data[idx] = [k, x];
 			return;
 		}
-		let new_len=this.data.push([k,x]);
-		this.key_index.set(k,new_len-1);
+		let new_len = this.data.push([k, x]);
+		this.key_index.set(k, new_len - 1);
 	}
 	/** @arg {string} k @arg {import("../yt_json_types/m/make_item_group.ts").make_item_group<import("../yt_json_types/j/J_StoreTypeMap.ts").J_StoreTypeMap[CLS_K]>} x */
-	add_new_data_to_index(k,x)
-	{
-		let idx=this.new_key_index.get(k);
-		if(idx!==void 0)
-		{
-			this.new_data[idx]=[k,x];
+	add_new_data_to_index(k, x) {
+		let idx = this.new_key_index.get(k);
+		if (idx !== void 0) {
+			this.new_data[idx] = [k, x];
 			return;
 		}
-		let new_len=this.new_data.push([k,x]);
-		this.new_key_index.set(k,new_len-1);
+		let new_len = this.new_data.push([k, x]);
+		this.new_key_index.set(k, new_len - 1);
 	}
 	/** @arg {string} k @arg {import("../yt_json_types/m/make_item_group.ts").make_item_group<import("../yt_json_types/j/J_StoreTypeMap.ts").J_StoreTypeMap[CLS_K]>} x */
-	push_new_data(k,x)
-	{
-		this.add_new_data_to_index(k,x);
-		this.add_data_to_index(k,x);
+	push_new_data(k, x) {
+		this.add_new_data_to_index(k, x);
+		this.add_data_to_index(k, x);
 	}
 	/** @template {import("../yt_json_types/m/make_item_group.ts").make_item_group<import("../yt_json_types/j/J_StoreTypeMap.ts").J_StoreTypeMap[CLS_K]>} R @arg {R} x @returns {R} */
-	clone_container(x)
-	{
-		switch(x.l)
-		{
-			default: debugger; throw new Error("Unable to clone");
+	clone_container(x) {
+		switch (x.l) {
+			default:
+				debugger;
+				throw new Error("Unable to clone");
 			case "arr": {
 				/** @type {typeof x} */
-				let x_clone=structuredClone(x);
+				let x_clone = structuredClone(x);
 				return x_clone;
 			}
 			case "many": {
 				/** @type {typeof x} */
-				let x_clone=structuredClone(x);
+				let x_clone = structuredClone(x);
 				return x_clone;
 			}
 			case "one": {
 				/** @type {typeof x} */
-				let x_clone=structuredClone(x);
+				let x_clone = structuredClone(x);
 				return x_clone;
 			}
 		}
 	}
 	/** @template {import("../yt_json_types/m/make_item_group.ts").make_item_group<import("../yt_json_types/j/J_StoreTypeMap.ts").J_StoreTypeMap[CLS_K]>} T @arg {T} x @template {import("../yt_json_types/m/make_item_group.ts").make_item_group<import("../yt_json_types/j/J_StoreTypeMap.ts").J_StoreTypeMap[CLS_K]>} U @arg {(x:T)=>U} prepare */
-	clone_and_then(x,prepare)
-	{
-		let x1=this.clone_container(x);
+	clone_and_then(x, prepare) {
+		let x1 = this.clone_container(x);
 		return prepare(x1);
 	}
 	/** @template {import("../yt_json_types/m/make_item_group.ts").make_item_group<import("../yt_json_types/j/J_StoreTypeMap.ts").J_StoreTypeMap[CLS_K]>} T @arg {T} x @template TI @template {import("../yt_json_types/m/make_item_group.ts").make_arr_t<TI>} U @arg {(x:T)=>U} prepare */
-	clone_and_then_arr(x,prepare)
-	{
-		let x1=this.clone_container(x);
+	clone_and_then_arr(x, prepare) {
+		let x1 = this.clone_container(x);
 		return prepare(x1);
 	}
 	/** @arg {string} k @arg {import("../yt_json_types/m/make_item_group.ts").make_item_group<import("../yt_json_types/j/J_StoreTypeMap.ts").J_StoreTypeMap[CLS_K]>} x */
-	add_to_index(k,x)
-	{
+	add_to_index(k, x) {
 		/** @type {[typeof k,typeof x]} */
-		let p=[k,x];
-		let nk=this.data.push(p)-1;
-		this.key_index.set(k,nk);
+		let p = [k, x];
+		let nk = this.data.push(p) - 1;
+		this.key_index.set(k, nk);
 		return p;
 	}
 	/** @arg {string} k */
-	includes_key(k)
-	{
-		let idx=this.key_index.get(k);
-		if(idx!==void 0) return true;
+	includes_key(k) {
+		let idx = this.key_index.get(k);
+		if (idx !== void 0) return true;
 		return false;
 	}
 	/** @arg {string} key */
-	index_get(key)
-	{
-		let idx=this.key_index.get(key);
-		if(idx===void 0) return null;
+	index_get(key) {
+		let idx = this.key_index.get(key);
+		if (idx === void 0) return null;
 		return this.data[idx];
 	}
 }
-export_(exports => {exports.StoreDescription=StoreDescription;});
-class StoreData extends BaseService
-{
+export_((exports) => {
+	exports.StoreDescription = StoreDescription;
+});
+class StoreData extends BaseService {
 	/** @type {Map<string,StoreDescription<string>>} */
-	stores=new Map;
+	stores = new Map();
 	/** @arg {import("../zb_plugin_types/types.ts").ServiceResolverBox<{}>} x */
-	constructor(x)
-	{
+	constructor(x) {
 		super(x);
 		/** @arg {string} type @returns {import("../zb_plugin_types/Support_Service.ts").T_StoreDataInput<string>} */
-		function make_store(type)
-		{
-			const description=new StoreDescription(type,[type]); return {type,description};
+		function make_store(type) {
+			const description = new StoreDescription(type, [type]);
+			return { type, description };
 		}
-		const store_names_arr=["bigint","boolean","keys","number","root_visual_element","string"];
-		for(let store_name of store_names_arr) this.add_store(make_store(store_name));
-		this.loaded_database=false;
+		const store_names_arr = [
+			"bigint",
+			"boolean",
+			"keys",
+			"number",
+			"root_visual_element",
+			"string",
+		];
+		for (let store_name of store_names_arr) {
+			this.add_store(make_store(store_name));
+		}
+		this.loaded_database = false;
 		/** @type {number|null} */
-		this.idle_id=requestIdleCallback(async () =>
-		{
-			try
-			{
-				await this.ix.load_database(this,this.sm.indexed_db_version);
-				this.loaded_database=true;
-			} catch(err)
-			{
-				console.log("load_database failed",err);
-				let stack=[err];
-				while(stack.length>0)
-				{
-					let cur_err=stack.pop();
-					if(cur_err!==err) console.log("caused by",cur_err);
-					if(cur_err instanceof AggregateError)
-					{
-						for(let err_iter of cur_err.errors) stack.push(err_iter);
+		this.idle_id = requestIdleCallback(async () => {
+			try {
+				await this.ix.load_database(this, this.sm.indexed_db_version);
+				this.loaded_database = true;
+			} catch (err) {
+				console.log("load_database failed", err);
+				let stack = [err];
+				while (stack.length > 0) {
+					let cur_err = stack.pop();
+					if (cur_err !== err) console.log("caused by", cur_err);
+					if (cur_err instanceof AggregateError) {
+						for (let err_iter of cur_err.errors) stack.push(err_iter);
 					}
 				}
 				return;
 			}
-			this.idle_id=null;
-			if(this.store_description_sets.outdated.length!==0) this.on_stores_to_save();
+			this.idle_id = null;
+			if (this.store_description_sets.outdated.length !== 0) {
+				this.on_stores_to_save();
+			}
 		});
 	}
 	/** @returns {StoreDescription<"string">} */
-	get_string_store() {return as_any(this.get_store("string"));}
+	get_string_store() {
+		return as_any(this.get_store("string"));
+	}
 	/** @returns {StoreDescription<"number">} */
-	get_number_store() {return as_any(this.get_store("number"));}
+	get_number_store() {
+		return as_any(this.get_store("number"));
+	}
 	/** @template {string} T @arg {T} key @returns {StoreDescription<string>|null} */
-	get_store(key)
-	{
-		let item=this.stores.get(key);
-		if(item===void 0) return null;
+	get_store(key) {
+		let item = this.stores.get(key);
+		if (item === void 0) return null;
 		return item;
 	}
 	/** @arg {import("../zb_plugin_types/Support_Service.ts").T_StoreDataInput<string>} args */
-	add_store(args) {let {type,description}=args; this.stores.set(type,description);}
+	add_store(args) {
+		let { type, description } = args;
+		this.stores.set(type, description);
+	}
 	/** @arg {import("../yt_json_types/ghi/group_G.ts").G_BoxedDatabaseData} item */
-	on_item_loaded_from_database(item)
-	{
+	on_item_loaded_from_database(item) {
 		item;
 	}
 	/** @private */
-	store_description_sets={
+	store_description_sets = {
 		/** @private @type {StoreDescription<string>[]} */
 		outdated: [],
 		/** @private @type {StoreDescription<string>[]} */
 		saved: [],
 	};
 	/** @arg {StoreDescription<string>} store */
-	on_store_update(store)
-	{
-		let idx=this.store_description_sets.saved.indexOf(store);
-		if(idx!==-1) this.store_description_sets.saved.splice(idx,1);
-		if(this.store_description_sets.outdated.includes(store)) return;
+	on_store_update(store) {
+		let idx = this.store_description_sets.saved.indexOf(store);
+		if (idx !== -1) this.store_description_sets.saved.splice(idx, 1);
+		if (this.store_description_sets.outdated.includes(store)) return;
 		this.store_description_sets.outdated.push(store);
 	}
-	on_stores_to_save()
-	{
-		if(this.idle_id!==null) return;
-		this.idle_id=requestIdleCallback(async (idle_deadline) =>
-		{
-			console.log("idle time remaining",idle_deadline.timeRemaining());
-			while(true)
-			{
-				for(let outdated_store of this.store_description_sets.outdated)
-				{
-					if(this.store_description_sets.saved.includes(outdated_store)) continue;
-					try
-					{
-						console.log("[time_remaining:save_store:enter]",outdated_store.type,idle_deadline.timeRemaining());
-						await this.ix.save_store_to_database(outdated_store,this.sm.indexed_db_version);
+	on_stores_to_save() {
+		if (this.idle_id !== null) return;
+		this.idle_id = requestIdleCallback(async (idle_deadline) => {
+			console.log("idle time remaining", idle_deadline.timeRemaining());
+			while (true) {
+				for (let outdated_store of this.store_description_sets.outdated) {
+					if (this.store_description_sets.saved.includes(outdated_store)) {
+						continue;
+					}
+					try {
+						console.log(
+							"[time_remaining:save_store:enter]",
+							outdated_store.type,
+							idle_deadline.timeRemaining(),
+						);
+						await this.ix.save_store_to_database(
+							outdated_store,
+							this.sm.indexed_db_version,
+						);
 						this.store_description_sets.saved.push(outdated_store);
-						console.log("[time_remaining:save_store:leave]",outdated_store.type,idle_deadline.timeRemaining());
-						console.log("end save at time remaining",idle_deadline.timeRemaining());
-					} catch(err)
-					{
-						console.log("save_store_to_database failed",err);
+						console.log(
+							"[time_remaining:save_store:leave]",
+							outdated_store.type,
+							idle_deadline.timeRemaining(),
+						);
+						console.log(
+							"end save at time remaining",
+							idle_deadline.timeRemaining(),
+						);
+					} catch (err) {
+						console.log("save_store_to_database failed", err);
 						break;
 					}
 				}
-				for(let saved_store of this.store_description_sets.saved)
-				{
-					const outdated_idx=this.store_description_sets.outdated.indexOf(saved_store);
-					if(outdated_idx===-1) continue;
-					this.store_description_sets.outdated.splice(outdated_idx,1);
+				for (let saved_store of this.store_description_sets.saved) {
+					const outdated_idx = this.store_description_sets.outdated.indexOf(
+						saved_store,
+					);
+					if (outdated_idx === -1) continue;
+					this.store_description_sets.outdated.splice(outdated_idx, 1);
 				}
-				if(this.store_description_sets.outdated.length!==0) continue;
+				if (this.store_description_sets.outdated.length !== 0) continue;
 				break;
 			}
-			console.log("idle time remaining at exit",idle_deadline.timeRemaining());
-			this.idle_id=null;
+			console.log("idle time remaining at exit", idle_deadline.timeRemaining());
+			this.idle_id = null;
 		});
 	}
 }
-export_(exports => {exports.StoreData=StoreData;});
-class LocalStorageSeenDatabase extends BaseService
-{
+export_((exports) => {
+	exports.StoreData = StoreData;
+});
+class LocalStorageSeenDatabase extends BaseService {
 	/** @template {string} X @template {X} Ty @arg {StoreDescription<X>} store @arg {Ty} type @returns {x is StoreDescription<Ty>} */
-	is_store_type(store,type)
-	{
-		return store.type===type;
+	is_store_type(store, type) {
+		return store.type === type;
 	}
 	/** @arg {string} key */
-	get_store_keys(key)
-	{
-		let res=this.x.get("data_store").get_store("string");
-		if(!res) return null;
+	get_store_keys(key) {
+		let res = this.x.get("data_store").get_store("string");
+		if (!res) return null;
 		return res.index_get(key);
 	}
 	/** @public @template {string} T @arg {`[${T}]`} x @returns {T} */
-	unwrap_brackets(x)
-	{
+	unwrap_brackets(x) {
 		/** @returns {T|null} */
-		function gn() {return null;}
-		let wv=gn();
-		let wa=split_string_once_ex(x,"[",wv);
-		let [_s1,s2]=wa;
-		let ua=split_string_once_last(s2,"]",wv);
-		let [s3,_s4]=ua;
+		function gn() {
+			return null;
+		}
+		let wv = gn();
+		let wa = split_string_once_ex(x, "[", wv);
+		let [_s1, s2] = wa;
+		let ua = split_string_once_last(s2, "]", wv);
+		let [s3, _s4] = ua;
 		return s3;
 	}
-	loaded_database=false;
+	loaded_database = false;
 	/** @template {string} A @template {string} B @arg {`boxed_id:${A}:${B}`} k */
-	split_box_type(k)
-	{
+	split_box_type(k) {
 		/** @returns {`${A}:${B}`|null} */
-		function gn() {return null;}
-		let wv=gn();
-		let wa=split_string_once_ex(k,":",wv);
-		if(wa.length===2)
-		{
+		function gn() {
+			return null;
+		}
+		let wv = gn();
+		let wa = split_string_once_ex(k, ":", wv);
+		if (wa.length === 2) {
 			wa;
 		}
 		/** @type {`${A}:${B}`} */
-		let z1=wa[1];
+		let z1 = wa[1];
 		/** @returns {[A,B]|null} */
-		function gb_a() {return null;}
-		let [za,zb]=split_string_once_ex_v2(z1,":",gb_a());
-		return this.exact_arr(za,zb);
+		function gb_a() {
+			return null;
+		}
+		let [za, zb] = split_string_once_ex_v2(z1, ":", gb_a());
+		return this.exact_arr(za, zb);
 	}
-	log_load_database=false;
-	expected_id=0;
+	log_load_database = false;
+	expected_id = 0;
 	/** @api @public @arg {string} cf @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
-	save_enum_impl(cf,ns,s)
-	{
+	save_enum_impl(cf, ns, s) {
 		/** @private @type {"_"|"-"} */
 		let sep;
 		/** @type {"ENUM"|"ELEMENT"} */
-		let ns_name="ENUM";
-		if(s.includes("-"))
-		{
-			sep="-";
-			ns_name="ELEMENT";
-		} else {sep="_";}
-		let no_ns=split_string_once(s,ns);
-		if(!no_ns[1]) throw new Error();
-		let nn=split_string_once(no_ns[1],sep);
-		if(!nn[1]) throw new Error();
+		let ns_name = "ENUM";
+		if (s.includes("-")) {
+			sep = "-";
+			ns_name = "ELEMENT";
+		} else sep = "_";
+		let no_ns = split_string_once(s, ns);
+		if (!no_ns[1]) throw new Error();
+		let nn = split_string_once(no_ns[1], sep);
+		if (!nn[1]) throw new Error();
 		/** @private @type {import("../yt_json_types/stu/group_T.ts").T_SplitOnce<NonNullable<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<U,T>[1]>,"">[1]} */
-		let no_ns_part=nn[1];
-		this.save_primitive(`${ns_name}::${ns}`,no_ns_part);
-		this.save_primitive(`${cf}::enum_type`,ns_name);
-		this.save_primitive(`${cf}::enum_namespace`,ns);
+		let no_ns_part = nn[1];
+		this.save_primitive(`${ns_name}::${ns}`, no_ns_part);
+		this.save_primitive(`${cf}::enum_type`, ns_name);
+		this.save_primitive(`${cf}::enum_namespace`, ns);
 	}
 	/** @public @arg {string} ns @arg {number} idx @arg {StoreDescription<"string"|"keys">} store */
-	show_strings_bitmap(ns,idx,store)
-	{
+	show_strings_bitmap(ns, idx, store) {
 		debugger;
-		let f=true;
-		if(f) return;
-		let p=store.data[idx];
-		if(!p) return;
-		let k=p[0];
-		let cur=p[1];
-		switch(cur.l)
-		{
-			default: debugger; break;
-			case "one": debugger; break;
-			case "many": {
-				let src_data=cur.z[0];
-				let max_len=src_data.map(e => e.length).reduce((a,b) => Math.max(a,b));
-				for(let bitmap_src_idx=0;bitmap_src_idx<max_len;bitmap_src_idx++)
+		let f = true;
+		if (f) return;
+		let p = store.data[idx];
+		if (!p) return;
+		let k = p[0];
+		let cur = p[1];
+		switch (cur.l) {
+			default:
+				debugger;
+				break;
+			case "one":
+				debugger;
+				break;
+			case "many":
 				{
-					let bitmap_src=src_data.filter(e => bitmap_src_idx<e.length).map(e => e[bitmap_src_idx]);
-					let {bitmap,map_arr: index_map}=this.generate_bitmap(bitmap_src);
-					console.log(` --------- [${ns}] [store["${k}"][${bitmap_src_idx}]] --------- `);
-					if(index_map.length===0) continue;
-					console.log(index_map.map(e => `"${e}"`).join(","));
+					let src_data = cur.z[0];
+					let max_len = src_data.map((e) => e.length).reduce((a, b) =>
+						Math.max(a, b)
+					);
+					for (
+						let bitmap_src_idx = 0;
+						bitmap_src_idx < max_len;
+						bitmap_src_idx++
+					) {
+						let bitmap_src = src_data.filter((e) => bitmap_src_idx < e.length)
+							.map((e) => e[bitmap_src_idx]);
+						let { bitmap, map_arr: index_map } = this.generate_bitmap(
+							bitmap_src,
+						);
+						console.log(
+							` --------- [${ns}] [store["${k}"][${bitmap_src_idx}]] --------- `,
+						);
+						if (index_map.length === 0) continue;
+						console.log(index_map.map((e) => `"${e}"`).join(","));
+						console.log(bitmap);
+					}
+				}
+				break;
+			case "arr":
+				{
+					let bitmap_src = cur.z[0];
+					if (bitmap_src.length === 0) return;
+					let linear_map = bitmap_src.every((e) => {
+						if (typeof e !== "string") return false;
+						return !e.includes(",");
+					});
+					if (linear_map) {
+						console.log(` --------- [${ns}] [${k}] --------- `);
+						if (bitmap_src.length === 0) return;
+						console.log(bitmap_src.join(","));
+						return;
+					}
+					let { bitmap, map_arr: index_map } = this.generate_bitmap(bitmap_src);
+					console.log(` --------- [${ns}] [${k}] --------- `);
+					if (index_map.length === 0) return;
+					console.log(index_map.join(","));
 					console.log(bitmap);
 				}
-
-			} break;
-			case "arr": {
-				let bitmap_src=cur.z[0];
-				if(bitmap_src.length===0) return;
-				let linear_map=bitmap_src.every(e =>
-				{
-					if(typeof e!=="string") return false;
-					return !e.includes(",");
-				});
-				if(linear_map)
-				{
-					console.log(` --------- [${ns}] [${k}] --------- `);
-					if(bitmap_src.length===0) return;
-					console.log(bitmap_src.join(","));
-					return;
-				}
-				let {bitmap,map_arr: index_map}=this.generate_bitmap(bitmap_src);
-				console.log(` --------- [${ns}] [${k}] --------- `);
-				if(index_map.length===0) return;
-				console.log(index_map.join(","));
-				console.log(bitmap);
-			} break;
+				break;
 		}
 	}
 	/** @private @arg {string} x */
-	rle_enc(x)
-	{
-		let rle=x.replaceAll(/(1+)|(0+)/g,(v,c1,c2) =>
-		{
-			let rle=c1?.length??c2?.length;
-			if(rle<4) return "!"+v[0]+":"+v.length;
-			if(c1?.length!==void 0) return "!"+c1[0]+":"+c1.length;
-			if(c2?.length!==void 0) return "!"+c2[0]+":"+c2.length;
-			return ["!",c1?.length,"$",c2?.length,":"]+"";
+	rle_enc(x) {
+		let rle = x.replaceAll(/(1+)|(0+)/g, (v, c1, c2) => {
+			let rle = c1?.length ?? c2?.length;
+			if (rle < 4) return "!" + v[0] + ":" + v.length;
+			if (c1?.length !== void 0) return "!" + c1[0] + ":" + c1.length;
+			if (c2?.length !== void 0) return "!" + c2[0] + ":" + c2.length;
+			return ["!", c1?.length, "$", c2?.length, ":"] + "";
 		}).split("!").slice(1);
 		return rle.join("!");
 	}
 	/** @private @template T @arg {T[]} bitmap_src */
-	generate_bitmap(bitmap_src)
-	{
-		let map_arr=[...new Set([...bitmap_src.map(e =>
-		{
-			if(typeof e!=="string") return [];
-			return e.split(",");
-		}).flat()])];
-		let bitmap="\n"+bitmap_src.map(e =>
-		{
-			if(typeof e!=="string") return [];
-			return e.split(",").map(e => map_arr.indexOf(e));
-		}).map(e =>
-		{
-			let ta=new Array(map_arr.length).fill(0);
-			for(let x of e) ta[x]=1;
-			let bs=ta.join("");
+	generate_bitmap(bitmap_src) {
+		let map_arr = [
+			...new Set([
+				...bitmap_src.map((e) => {
+					if (typeof e !== "string") return [];
+					return e.split(",");
+				}).flat(),
+			]),
+		];
+		let bitmap = "\n" + bitmap_src.map((e) => {
+			if (typeof e !== "string") return [];
+			return e.split(",").map((e) => map_arr.indexOf(e));
+		}).map((e) => {
+			let ta = new Array(map_arr.length).fill(0);
+			for (let x of e) ta[x] = 1;
+			let bs = ta.join("");
 			return bs;
-		}).sort((a,b) => b.split("0").length-a.split("0").length).join("\n")+"\n";
-		return new BitmapResult(map_arr,bitmap);
+		}).sort((a, b) => b.split("0").length - a.split("0").length).join("\n") +
+			"\n";
+		return new BitmapResult(map_arr, bitmap);
 	}
 	/** @arg {number[]} src */
-	generate_bitmap_num_raw_fill(src,fill_value=0)
-	{
-		let map_arr=[...new Set([...src])].sort((a,b) => a-b);
-		let zz=map_arr.at(-1)??0;
-		let ta=new Array(zz+1).fill(fill_value);
+	generate_bitmap_num_raw_fill(src, fill_value = 0) {
+		let map_arr = [...new Set([...src])].sort((a, b) => a - b);
+		let zz = map_arr.at(-1) ?? 0;
+		let ta = new Array(zz + 1).fill(fill_value);
 		/** @private @type {0|1} */
 		let replace_value;
-		if(fill_value===0) {replace_value=1;} else {replace_value=0;}
-		src.forEach(e => {ta[e]=replace_value;});
-		let bs=ta.join("");
-		return new BitmapResult(map_arr,bs);
+		if (fill_value === 0) replace_value = 1;
+		else replace_value = 0;
+		src.forEach((e) => {
+			ta[e] = replace_value;
+		});
+		let bs = ta.join("");
+		return new BitmapResult(map_arr, bs);
 	}
-	bitmap_console_todo_1()
-	{
-		const yt_plugin={ds: this};
-		let gg=yt_plugin.ds.x.get("data_store").get_number_store().data.find(e => e[0]==="tracking.trackingParams.f1");
-		if(!gg) return;
-		if(gg[1].l!=="arr") return;
-		gg[1].z[0].sort((a,b) => a-b);
-		let g1=gg[1];
+	bitmap_console_todo_1() {
+		const yt_plugin = { ds: this };
+		let gg = yt_plugin.ds.x.get("data_store").get_number_store().data.find(
+			(e) => e[0] === "tracking.trackingParams.f1",
+		);
+		if (!gg) return;
+		if (gg[1].l !== "arr") return;
+		gg[1].z[0].sort((a, b) => a - b);
+		let g1 = gg[1];
 		/** @private @arg {string} str */
-		function find_one_set_bit(str)
-		{
-			let rx=/(?<=0)1{1}(?=0)/g;
+		function find_one_set_bit(str) {
+			let rx = /(?<=0)1{1}(?=0)/g;
 			/** @private @type {[number,string][]} */
-			let r=[];
-			for(;;)
-			{
-				let rr=rx.exec(str);
-				if(rr===null) return r;
-				r.push([rx.lastIndex,rr[0]]);
+			let r = [];
+			for (;;) {
+				let rr = rx.exec(str);
+				if (rr === null) return r;
+				r.push([rx.lastIndex, rr[0]]);
 			}
 		}
-		let bm=yt_plugin.ds.generate_bitmap_num_raw_fill(g1.z[0],1).bitmap;
-		let mm=find_one_set_bit(bm);
+		let bm = yt_plugin.ds.generate_bitmap_num_raw_fill(g1.z[0], 1).bitmap;
+		let mm = find_one_set_bit(bm);
 		/** @private @arg {string} bm */
-		function unset_bits(bm)
-		{
-			let mu=bm.split("");
-			for(let u of mm)
-			{
-				let [k,v]=u;
-				let cx=k-1;
-				let off=0;
-				if(v.length===2) off=0;
-				if(v.length===1) off=1;
-				for(let i=cx-1;i<k+v.length-2;i++)
-				{
-					let ui=i+off;
-					let log_clear=false;
-					if(log_clear) console.log("clear",ui,"of",mu[ui]);
-					mu[ui]="0";
+		function unset_bits(bm) {
+			let mu = bm.split("");
+			for (let u of mm) {
+				let [k, v] = u;
+				let cx = k - 1;
+				let off = 0;
+				if (v.length === 2) off = 0;
+				if (v.length === 1) off = 1;
+				for (let i = cx - 1; i < k + v.length - 2; i++) {
+					let ui = i + off;
+					let log_clear = false;
+					if (log_clear) console.log("clear", ui, "of", mu[ui]);
+					mu[ui] = "0";
 				}
 			}
 			return mu;
 		}
 		/** @private @arg {string[]} s */
-		function swap_mask(s) {return s.map(e => e==="0"? "1":"0").join("");}
-		let mu=unset_bits(bm);
+		function swap_mask(s) {
+			return s.map((e) => e === "0" ? "1" : "0").join("");
+		}
+		let mu = unset_bits(bm);
 		new Map(mm);
 		yt_plugin.ds.rle_enc(mu.join(""));
-		let mc=swap_mask(mu);
-		mm=find_one_set_bit(mc);
-		mu=unset_bits(mc);
-		let mu_=swap_mask(mu);
-		let mx=mu_;
-		let rle_x=yt_plugin.ds.rle_enc(mx);
+		let mc = swap_mask(mu);
+		mm = find_one_set_bit(mc);
+		mu = unset_bits(mc);
+		let mu_ = swap_mask(mu);
+		let mx = mu_;
+		let rle_x = yt_plugin.ds.rle_enc(mx);
 		console.log(rle_x.split("!"));
 	}
 }
-export_(exports => {exports.LocalStorageSeenDatabase=LocalStorageSeenDatabase;});
+export_((exports) => {
+	exports.LocalStorageSeenDatabase = LocalStorageSeenDatabase;
+});
 //#endregion
-class Support_RS_Player extends BaseService
-{
+class Support_RS_Player extends BaseService {
 	//#region dup
 	/** @arg {`${string}.${string}`} x */
-	parse_signature(x)
-	{
-		let [sig_0,sig_1]=split_string_once(x,".");
-		if(sig_0.match(/^[0-9A-F]+$/)===null) debugger;
-		switch(sig_0.length)
-		{
-			default: debugger; break;
-			case 38: case 40:
+	parse_signature(x) {
+		let [sig_0, sig_1] = split_string_once(x, ".");
+		if (sig_0.match(/^[0-9A-F]+$/) === null) debugger;
+		switch (sig_0.length) {
+			default:
+				debugger;
+				break;
+			case 38:
+			case 40:
 		}
-		if(sig_1.match(/^[0-9A-F]+$/)===null) debugger; if(sig_1.length!==40) debugger;
+		if (sig_1.match(/^[0-9A-F]+$/) === null) debugger;
+		if (sig_1.length !== 40) debugger;
 	}
 	//#endregion
 	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:Support_RS_Player,x:T)=>U} F @arg {F} f */
-	t(x,f) {return this.t_base(x,f);}
+	t(x, f) {
+		return this.t_base(x, f);
+	}
 	nop() {}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").RS_Player} x */
-	RS_Player(x)
-	{
-		const cf="RS_Player";
-		const {responseContext,playabilityStatus,streamingData,heartbeatParams,playerAds,playbackTracking,videoDetails,playerConfig,storyboards,microformat,cards,trackingParams,attestation,videoQualityPromoSupportedRenderers,captions,adPlacements,frameworkUpdates,endscreen,paidContentOverlay,annotations,cacheMetadata,...y}=this.s(cf,x); this.g(y);
-		this.t(responseContext,this.nop);
+	RS_Player(x) {
+		const cf = "RS_Player";
+		const {
+			responseContext,
+			playabilityStatus,
+			streamingData,
+			heartbeatParams,
+			playerAds,
+			playbackTracking,
+			videoDetails,
+			playerConfig,
+			storyboards,
+			microformat,
+			cards,
+			trackingParams,
+			attestation,
+			videoQualityPromoSupportedRenderers,
+			captions,
+			adPlacements,
+			frameworkUpdates,
+			endscreen,
+			paidContentOverlay,
+			annotations,
+			cacheMetadata,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
+		this.t(responseContext, this.nop);
 		this.D_PlayabilityStatus(playabilityStatus);
-		this.t(streamingData,this.DD_Streaming);
-		this.t(heartbeatParams,this.D_HeartbeatParams);
-		this.tz(playerAds,this.R_DesktopWatchAds);
-		this.t(playbackTracking,x => this.xm.D_PlaybackTracking(x));
-		this.t(videoDetails,x => this.ht.D_VideoDetails(x));
-		this.t(playerConfig,x => this.ht.D_PlayerConfig(x));
-		this.t(storyboards,this.G_PlayerStoryboards);
-		this.t(microformat,this.R_PlayerMicroformat);
-		this.t(cards,this.R_CardCollection);
-		this.t(attestation,this.R_PlayerAttestation);
-		this.t(videoQualityPromoSupportedRenderers,this.R_VideoQualityPromo);
-		this.t(captions,this.R_PlayerCaptionsTracklist);
-		this.tz(adPlacements,x =>
-		{
-			if("adPlacementRenderer" in x) return this.sm.R_AdPlacement(x);
-			let ka=this.get_keys_of(x);
-			if(ka.length!==0) debugger;
+		this.t(streamingData, this.DD_Streaming);
+		this.t(heartbeatParams, this.D_HeartbeatParams);
+		this.tz(playerAds, this.R_DesktopWatchAds);
+		this.t(playbackTracking, (x) => this.xm.D_PlaybackTracking(x));
+		this.t(videoDetails, (x) => this.ht.D_VideoDetails(x));
+		this.t(playerConfig, (x) => this.ht.D_PlayerConfig(x));
+		this.t(storyboards, this.G_PlayerStoryboards);
+		this.t(microformat, this.R_PlayerMicroformat);
+		this.t(cards, this.R_CardCollection);
+		this.t(attestation, this.R_PlayerAttestation);
+		this.t(videoQualityPromoSupportedRenderers, this.R_VideoQualityPromo);
+		this.t(captions, this.R_PlayerCaptionsTracklist);
+		this.tz(adPlacements, (x) => {
+			if ("adPlacementRenderer" in x) return this.sm.R_AdPlacement(x);
+			let ka = this.get_keys_of(x);
+			if (ka.length !== 0) debugger;
 		});
-		this.t(frameworkUpdates,x => this.sm.D_FrameworkUpdates(x));
-		this.t(endscreen,this.R_Endscreen);
-		this.t(paidContentOverlay,this.R_PaidContentOverlay);
-		this.tz(annotations,x =>
-		{
-			if(!x.playerAnnotationsExpandedRenderer) debugger;
+		this.t(frameworkUpdates, (x) => this.sm.D_FrameworkUpdates(x));
+		this.t(endscreen, this.R_Endscreen);
+		this.t(paidContentOverlay, this.R_PaidContentOverlay);
+		this.tz(annotations, (x) => {
+			if (!x.playerAnnotationsExpandedRenderer) debugger;
 			this.R_PlayerAnnotationsExpanded(x);
 		});
-		this.sm.t(cacheMetadata,this.sm.D_Cache_MD);
+		this.sm.t(cacheMetadata, this.sm.D_Cache_MD);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_EndscreenElement} x */
-	R_EndscreenElement(x) {this.H_("endscreenElementRenderer",x,this.D_EndscreenElement);}
+	R_EndscreenElement(x) {
+		this.H_("endscreenElementRenderer", x, this.D_EndscreenElement);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_PlayerAnnotationsExpanded} x */
-	R_PlayerAnnotationsExpanded(x) {this.H_("playerAnnotationsExpandedRenderer",x,this.D_PlayerAnnotationsExpanded);}
+	R_PlayerAnnotationsExpanded(x) {
+		this.H_(
+			"playerAnnotationsExpandedRenderer",
+			x,
+			this.D_PlayerAnnotationsExpanded,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_Miniplayer} x */
-	R_Miniplayer(x) {this.H_("miniplayerRenderer",x,this.D_Miniplayer);}
+	R_Miniplayer(x) {
+		this.H_("miniplayerRenderer", x, this.D_Miniplayer);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_DesktopWatchAds} x */
-	R_DesktopWatchAds(x) {this.H_("playerLegacyDesktopWatchAdsRenderer",x,this.D_DesktopWatchAds);}
+	R_DesktopWatchAds(x) {
+		this.H_("playerLegacyDesktopWatchAdsRenderer", x, this.D_DesktopWatchAds);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_PlayerCaptionsTracklist} x */
-	R_PlayerCaptionsTracklist(x) {this.H_("playerCaptionsTracklistRenderer",x,this.D_PlayerCaptionsTracklist);}
+	R_PlayerCaptionsTracklist(x) {
+		this.H_(
+			"playerCaptionsTracklistRenderer",
+			x,
+			this.D_PlayerCaptionsTracklist,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_VideoQualityPromo} x */
-	R_VideoQualityPromo(x) {this.H_("videoQualityPromoRenderer",x,this.D_VideoQualityPromo);}
+	R_VideoQualityPromo(x) {
+		this.H_("videoQualityPromoRenderer", x, this.D_VideoQualityPromo);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_PlayerAttestation} x */
-	R_PlayerAttestation(x) {this.H_("playerAttestationRenderer",x,this.D_PlayerAttestation);}
+	R_PlayerAttestation(x) {
+		this.H_("playerAttestationRenderer", x, this.D_PlayerAttestation);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_CardCollection} x */
-	R_CardCollection(x) {this.H_("cardCollectionRenderer",x,this.D_CardCollection);}
+	R_CardCollection(x) {
+		this.H_("cardCollectionRenderer", x, this.D_CardCollection);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_PlayerMicroformat} x */
-	R_PlayerMicroformat(x) {this.H_("playerMicroformatRenderer",x,this.D_PlayerMicroformat);}
+	R_PlayerMicroformat(x) {
+		this.H_("playerMicroformatRenderer", x, this.D_PlayerMicroformat);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_Endscreen} x */
-	R_Endscreen(x) {this.H_("endscreenRenderer",x,this.D_Endscreen);}
+	R_Endscreen(x) {
+		this.H_("endscreenRenderer", x, this.D_Endscreen);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_PaidContentOverlay} x */
-	R_PaidContentOverlay(x) {this.H_("paidContentOverlayRenderer",x,this.D_PaidContentOverlay);}
+	R_PaidContentOverlay(x) {
+		this.H_("paidContentOverlayRenderer", x, this.D_PaidContentOverlay);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").D_PaidContentOverlay} x */
-	D_PaidContentOverlay(x)
-	{
-		const cf="D_PaidContentOverlay";
-		const {text,durationMs,navigationEndpoint,icon,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_PaidContentOverlay(x) {
+		const cf = "D_PaidContentOverlay";
+		const { text, durationMs, navigationEndpoint, icon, trackingParams, ...y } =
+			this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.G_Text(text);
-		if(durationMs!=="10000") debugger;
+		if (durationMs !== "10000") debugger;
 		this.xm.E_Url(navigationEndpoint);
-		this.sm.T_Icon(cf,icon);
+		this.sm.T_Icon(cf, icon);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_PlayabilityStatus} x */
-	D_PlayabilityStatus(x)
-	{
-		const cf="D_PlayabilityStatus";
-		if(!x) {debugger; return;}
-		switch(x.status)
-		{
-			default: debugger; break;
-			case "LIVE_STREAM_OFFLINE": {
-				const {status: {},reason,playableInEmbed,liveStreamability,miniplayer,contextParams,...y}=this.s(cf,x); this.g(y);
-				this.sm.cq(reason,"This live event will begin in a few moments.");
-				this.sm.a_primitive_bool(playableInEmbed);
-				this.t(liveStreamability,this.R_LiveStreamability);
-				this.t(miniplayer,this.R_Miniplayer);
-			} break;
-			case "OK": {
-				const {status,reason,playableInEmbed,liveStreamability,offlineability,miniplayer,contextParams,...y}=this.s(cf,x); this.g(y);
-				this.t(reason,x =>
+	D_PlayabilityStatus(x) {
+		const cf = "D_PlayabilityStatus";
+		if (!x) {
+			debugger;
+			return;
+		}
+		switch (x.status) {
+			default:
+				debugger;
+				break;
+			case "LIVE_STREAM_OFFLINE":
 				{
-					switch(x)
-					{
-						default: this.cg.codegen_case(`${cf}.reason`,x); break;
-						case "We're experiencing technical difficulties.":
-						case "This live event has ended.":
-					}
-				});
-				this.sm.a_primitive_bool(playableInEmbed);
-				this.t(liveStreamability,this.R_LiveStreamability);
-				this.xm.t(offlineability,x => this.xm.R_Button(x));
-				this.t(miniplayer,this.R_Miniplayer);
-			} break;
-			case "UNPLAYABLE": {
-				const {status: {},errorScreen,...y}=this.s(cf,x); this.g(y);
-				this.ht.R_PlayerErrorMessage(errorScreen);
-			} break;
+					const {
+						status: {},
+						reason,
+						playableInEmbed,
+						liveStreamability,
+						miniplayer,
+						contextParams,
+						...y
+					} = this.s(cf, x);
+					this.g(y);
+					this.sm.cq(reason, "This live event will begin in a few moments.");
+					this.sm.a_primitive_bool(playableInEmbed);
+					this.t(liveStreamability, this.R_LiveStreamability);
+					this.t(miniplayer, this.R_Miniplayer);
+				}
+				break;
+			case "OK":
+				{
+					const {
+						status,
+						reason,
+						playableInEmbed,
+						liveStreamability,
+						offlineability,
+						miniplayer,
+						contextParams,
+						...y
+					} = this.s(cf, x);
+					this.g(y);
+					this.t(reason, (x) => {
+						switch (x) {
+							default:
+								this.cg.codegen_case(`${cf}.reason`, x);
+								break;
+							case "We're experiencing technical difficulties.":
+							case "This live event has ended.":
+						}
+					});
+					this.sm.a_primitive_bool(playableInEmbed);
+					this.t(liveStreamability, this.R_LiveStreamability);
+					this.xm.t(offlineability, (x) => this.xm.R_Button(x));
+					this.t(miniplayer, this.R_Miniplayer);
+				}
+				break;
+			case "UNPLAYABLE":
+				{
+					const { status: {}, errorScreen, ...y } = this.s(cf, x);
+					this.g(y);
+					this.ht.R_PlayerErrorMessage(errorScreen);
+				}
+				break;
 		}
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").R_LiveStreamability} x */
-	R_LiveStreamability(x) {this.H_("liveStreamabilityRenderer",x,this.D_LiveStreamability);}
+	R_LiveStreamability(x) {
+		this.H_("liveStreamabilityRenderer", x, this.D_LiveStreamability);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_LiveStreamability} x */
-	D_LiveStreamability(x)
-	{
-		const cf="D_LiveStreamability";
-		const {videoId,broadcastId,pollDelayMs,...y}=this.s(cf,x); this.g(y);
+	D_LiveStreamability(x) {
+		const cf = "D_LiveStreamability";
+		const { videoId, broadcastId, pollDelayMs, ...y } = this.s(cf, x);
+		this.g(y);
 		this.sm.videoId(videoId);
-		this.t(broadcastId,x => this.sm.cq(x,"1"));
-		this.sm.cq(pollDelayMs,"15000");
+		this.t(broadcastId, (x) => this.sm.cq(x, "1"));
+		this.sm.cq(pollDelayMs, "15000");
 	}
 	/** @private @arg {import("../yt_json_types/ghi/group_G.ts").G_PlayerStoryboards} x */
-	G_PlayerStoryboards(x)
-	{
-		const cf="G_PlayerStoryboards"; this.sm.k(cf,x);
-		if("playerStoryboardSpecRenderer" in x) return;
-		if("playerLiveStoryboardSpecRenderer" in x) return;
-		this.sm.codegen_typedef(cf,x);
+	G_PlayerStoryboards(x) {
+		const cf = "G_PlayerStoryboards";
+		this.sm.k(cf, x);
+		if ("playerStoryboardSpecRenderer" in x) return;
+		if ("playerLiveStoryboardSpecRenderer" in x) return;
+		this.sm.codegen_typedef(cf, x);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_CaptionTrackItem} x */
-	D_CaptionTrackItem(x)
-	{
-		const cf="D_CaptionTrackItem",t=this;
-		const {baseUrl,name,vssId,languageCode,rtl,kind,isTranslatable,...y}=t.sm.s(cf,x); t.g(y);
+	D_CaptionTrackItem(x) {
+		const cf = "D_CaptionTrackItem", t = this;
+		const {
+			baseUrl,
+			name,
+			vssId,
+			languageCode,
+			rtl,
+			kind,
+			isTranslatable,
+			...y
+		} = t.sm.s(cf, x);
+		t.g(y);
 		{
-			let x=baseUrl;
-			let x1=split_string_once(x,"?");
-			if(x1[0]!=="https://www.youtube.com/api/timedtext") debugger;
-			let rx=t.parse_url_search_params(x1[1]);
+			let x = baseUrl;
+			let x1 = split_string_once(x, "?");
+			if (x1[0] !== "https://www.youtube.com/api/timedtext") debugger;
+			let rx = t.parse_url_search_params(x1[1]);
 			t.xr.D_TimedTextApi(as_any(rx));
 		}
 		t.sm.G_Text(name);
-		t.save_primitive(`${cf}.vssId`,vssId);
-		t.save_primitive(`${cf}.languageCode`,languageCode);
-		t.t(kind,x => t.save_primitive(`${cf}.kind`,x));
-		if(isTranslatable!==true) debugger;
-		t.t(rtl,x => t.sm.cq(x,true));
+		t.save_primitive(`${cf}.vssId`, vssId);
+		t.save_primitive(`${cf}.languageCode`, languageCode);
+		t.t(kind, (x) => t.save_primitive(`${cf}.kind`, x));
+		if (isTranslatable !== true) debugger;
+		t.t(rtl, (x) => t.sm.cq(x, true));
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_AudioTrackItem} x */
-	D_AudioTrackItem(x)
-	{
-		const cf="D_AudioTrackItem";
-		if("defaultCaptionTrackIndex" in x)
-		{
-			const {captionTrackIndices,defaultCaptionTrackIndex,visibility,hasDefaultTrack,captionsInitialState,...y}=this.s(cf,x); this.g(y);
-			this.sm.z(captionTrackIndices,this.sm.a_primitive_num);
+	D_AudioTrackItem(x) {
+		const cf = "D_AudioTrackItem";
+		if ("defaultCaptionTrackIndex" in x) {
+			const {
+				captionTrackIndices,
+				defaultCaptionTrackIndex,
+				visibility,
+				hasDefaultTrack,
+				captionsInitialState,
+				...y
+			} = this.s(cf, x);
+			this.g(y);
+			this.sm.z(captionTrackIndices, this.sm.a_primitive_num);
 			this.sm.a_primitive_num(defaultCaptionTrackIndex);
-			this.t(visibility,x2 =>
-			{
-				switch(x2)
-				{
-					default: debugger; break;
+			this.t(visibility, (x2) => {
+				switch (x2) {
+					default:
+						debugger;
+						break;
 					case "UNKNOWN":
 					case "ON":
 				}
 			});
-			this.sm.cq(hasDefaultTrack,true);
-			switch(captionsInitialState)
-			{
-				default: debugger; break;
+			this.sm.cq(hasDefaultTrack, true);
+			switch (captionsInitialState) {
+				default:
+					debugger;
+					break;
 				case "CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED":
 				case "CAPTIONS_INITIAL_STATE_ON_REQUIRED":
 			}
 			return;
 		}
-		const {captionTrackIndices,...y}=this.s(cf,x); this.g(y);
-		this.sm.z(captionTrackIndices,this.sm.a_primitive_num);
+		const { captionTrackIndices, ...y } = this.s(cf, x);
+		this.g(y);
+		this.sm.z(captionTrackIndices, this.sm.a_primitive_num);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_TranslationLanguage} x */
-	D_TranslationLanguage(x)
-	{
-		const cf="D_TranslationLanguage";
-		const {languageCode,languageName,...y}=this.s(cf,x); this.g(y);
+	D_TranslationLanguage(x) {
+		const cf = "D_TranslationLanguage";
+		const { languageCode, languageName, ...y } = this.s(cf, x);
+		this.g(y);
 		this.sm.a_primitive_str(languageCode);
 		this.sm.G_Text(languageName);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_Endscreen} x */
-	D_Endscreen(x)
-	{
-		const cf="D_Endscreen";
-		const {elements,startMs,trackingParams,...y}=this.s(cf,x); this.g(y);
-		this.z(elements,this.R_EndscreenElement);
-		this.t(startMs,x => this.sm.a_primitive_str(x));
+	D_Endscreen(x) {
+		const cf = "D_Endscreen";
+		const { elements, startMs, trackingParams, ...y } = this.s(cf, x);
+		this.g(y);
+		this.z(elements, this.R_EndscreenElement);
+		this.t(startMs, (x) => this.sm.a_primitive_str(x));
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_PlayerAnnotationsExpanded} x */
-	D_PlayerAnnotationsExpanded(x)
-	{
-		const cf="D_PlayerAnnotationsExpanded"; this.sm.k(cf,x);
-		const {featuredChannel,allowSwipeDismiss,annotationId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_PlayerAnnotationsExpanded(x) {
+		const cf = "D_PlayerAnnotationsExpanded";
+		this.sm.k(cf, x);
+		const { featuredChannel, allowSwipeDismiss, annotationId, ...y } = this.s(
+			cf,
+			x,
+		);
+		this.g(y); /*#destructure_done*/
 		this.D_FeaturedChannel(featuredChannel);
 		this.parse_uuid(annotationId);
 		this.sm.a_primitive_bool(allowSwipeDismiss);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_HeartbeatParams} x */
-	D_HeartbeatParams(x)
-	{
-		const cf="D_HeartbeatParams";
-		const {intervalMilliseconds,softFailOnError,heartbeatServerData,...y}=this.s(cf,x); this.g(y);
-		this.save_primitive(`${cf}.intervalMilliseconds`,intervalMilliseconds);
+	D_HeartbeatParams(x) {
+		const cf = "D_HeartbeatParams";
+		const { intervalMilliseconds, softFailOnError, heartbeatServerData, ...y } =
+			this.s(cf, x);
+		this.g(y);
+		this.save_primitive(`${cf}.intervalMilliseconds`, intervalMilliseconds);
 		this.sm.a_primitive_bool(softFailOnError);
-		this.save_primitive(`${cf}.heartbeatServerData`,heartbeatServerData);
+		this.save_primitive(`${cf}.heartbeatServerData`, heartbeatServerData);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_Miniplayer} x */
-	D_Miniplayer(x)
-	{
-		const cf="D_Miniplayer";
-		const {playbackMode,...y}=this.s(cf,x); this.g(y);
-		if(playbackMode!=="PLAYBACK_MODE_ALLOW") debugger;
+	D_Miniplayer(x) {
+		const cf = "D_Miniplayer";
+		const { playbackMode, ...y } = this.s(cf, x);
+		this.g(y);
+		if (playbackMode !== "PLAYBACK_MODE_ALLOW") debugger;
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_DesktopWatchAds} x */
-	D_DesktopWatchAds(x)
-	{
-		const cf="D_DesktopWatchAds";
-		const {gutParams,playerAdParams,showCompanion,showInstream,useGut,...y}=this.s(cf,x);
+	D_DesktopWatchAds(x) {
+		const cf = "D_DesktopWatchAds";
+		const {
+			gutParams,
+			playerAdParams,
+			showCompanion,
+			showInstream,
+			useGut,
+			...y
+		} = this.s(cf, x);
 		/** @arg {true} x */
-		const expect_true=x => this.sm.cq(x,true);
-		let params_tag=this.t(gutParams,x => this.sm.B_TagObj(x));
+		const expect_true = (x) => this.sm.cq(x, true);
+		let params_tag = this.t(gutParams, (x) => this.sm.B_TagObj(x));
 		// cSpell:ignoreRegExp /\\\\4061\\\\ytpwmpu/
-		this.t(params_tag,x => this.sm.cq(x,"\\4061\\ytpwmpu"));
-		this.t(showCompanion,expect_true);
-		this.t(showInstream,expect_true);
-		this.t(useGut,expect_true);
-		let ka=this.get_keys_of(y);
-		if(ka.length>0)
-		{
+		this.t(params_tag, (x) => this.sm.cq(x, "\\4061\\ytpwmpu"));
+		this.t(showCompanion, expect_true);
+		this.t(showInstream, expect_true);
+		this.t(useGut, expect_true);
+		let ka = this.get_keys_of(y);
+		if (ka.length > 0) {
 			console.log(`[${cf}.next_key] [${ka.shift()}]`);
 		}
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_PlayerMicroformat} x */
-	D_PlayerMicroformat(x)
-	{
-		const cf="D_PlayerMicroformat";
-		const {thumbnail,embed,title,description,lengthSeconds,ownerProfileUrl,externalChannelId,isFamilySafe,availableCountries,isUnlisted,hasYpcMetadata,viewCount,category,publishDate,ownerChannelName,liveBroadcastDetails,uploadDate,learningResource,...y}=this.s(cf,x); this.g(y);
+	D_PlayerMicroformat(x) {
+		const cf = "D_PlayerMicroformat";
+		const {
+			thumbnail,
+			embed,
+			title,
+			description,
+			lengthSeconds,
+			ownerProfileUrl,
+			externalChannelId,
+			isFamilySafe,
+			availableCountries,
+			isUnlisted,
+			hasYpcMetadata,
+			viewCount,
+			category,
+			publishDate,
+			ownerChannelName,
+			liveBroadcastDetails,
+			uploadDate,
+			learningResource,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
 		this.sm.D_Thumbnail(thumbnail);
-		this.t(embed,this.D_MicroformatEmbed);
+		this.t(embed, this.D_MicroformatEmbed);
 		this.sm.G_Text(title);
-		this.sm.t(description,this.sm.G_Text);
+		this.sm.t(description, this.sm.G_Text);
 		this.sm.a_primitive_str(lengthSeconds);
-		this.ps.parse_url(cf,ownerProfileUrl);
+		this.ps.parse_url(cf, ownerProfileUrl);
 		this.sm.channelId(externalChannelId);
 		this.sm.a_primitive_bool(isFamilySafe);
-		this.z(availableCountries,x => this.sm.a_primitive_str(x));
+		this.z(availableCountries, (x) => this.sm.a_primitive_str(x));
 		this.sm.a_primitive_bool(isUnlisted);
 		this.sm.a_primitive_bool(hasYpcMetadata);
 		this.sm.a_primitive_str(viewCount);
 		this.D_VideoCategory(category);
 		this.sm.a_primitive_str(publishDate);
 		this.sm.a_primitive_str(ownerChannelName);
-		this.t(liveBroadcastDetails,this.D_LiveBroadcastDetails);
+		this.t(liveBroadcastDetails, this.D_LiveBroadcastDetails);
 		this.sm.a_primitive_str(uploadDate);
-		this.t(learningResource,this.D_LearningResource);
+		this.t(learningResource, this.D_LearningResource);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_PlayerCaptionsTracklist} x */
-	D_PlayerCaptionsTracklist(x)
-	{
-		const cf="D_PlayerCaptionsTracklist";
-		const {captionTracks,audioTracks,translationLanguages,defaultAudioTrackIndex,openTranscriptCommand,...y}=this.s(cf,x); this.g(y);
-		this.z(captionTracks,this.D_CaptionTrackItem);
-		this.z(audioTracks,this.D_AudioTrackItem);
-		this.z(translationLanguages,this.D_TranslationLanguage);
+	D_PlayerCaptionsTracklist(x) {
+		const cf = "D_PlayerCaptionsTracklist";
+		const {
+			captionTracks,
+			audioTracks,
+			translationLanguages,
+			defaultAudioTrackIndex,
+			openTranscriptCommand,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
+		this.z(captionTracks, this.D_CaptionTrackItem);
+		this.z(audioTracks, this.D_AudioTrackItem);
+		this.z(translationLanguages, this.D_TranslationLanguage);
 		this.sm.a_primitive_num(defaultAudioTrackIndex);
-		this.t(openTranscriptCommand,x =>
-		{
-			if("changeEngagementPanelVisibilityAction" in x) return this.sm.A_ChangeEngagementPanelVisibility(x);
+		this.t(openTranscriptCommand, (x) => {
+			if ("changeEngagementPanelVisibilityAction" in x) {
+				return this.sm.A_ChangeEngagementPanelVisibility(x);
+			}
 			debugger;
 		});
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_VideoQualityPromo} x */
-	D_VideoQualityPromo(x)
-	{
-		const cf="D_VideoQualityPromo";
-		const {triggerCriteria,text,endpoint,trackingParams,snackbar,...y}=this.s(cf,x); this.g(y);
+	D_VideoQualityPromo(x) {
+		const cf = "D_VideoQualityPromo";
+		const { triggerCriteria, text, endpoint, trackingParams, snackbar, ...y } =
+			this.s(cf, x);
+		this.g(y);
 		this.D_TriggerCriteria(triggerCriteria);
 		this.sm.G_Text(text);
 		this.xm.E_Url(endpoint);
 		this.sm.RA_Notification(snackbar);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_PlayerAttestation} x */
-	D_PlayerAttestation(x)
-	{
-		const cf="D_PlayerAttestation";
-		const {challenge,botguardData,...y}=this.s(cf,x); this.g(y);
+	D_PlayerAttestation(x) {
+		const cf = "D_PlayerAttestation";
+		const { challenge, botguardData, ...y } = this.s(cf, x);
+		this.g(y);
 		this.sm.a_primitive_str(challenge);
 		this.D_Botguard(botguardData);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").DD_Streaming} x */
-	DD_Streaming(x)
-	{
-		const cf="DD_Streaming";
-		const {expiresInSeconds,adaptiveFormats,formats,probeUrl,dashManifestUrl,hlsManifestUrl,...y}=this.s(cf,x); this.g(y);
+	DD_Streaming(x) {
+		const cf = "DD_Streaming";
+		const {
+			expiresInSeconds,
+			adaptiveFormats,
+			formats,
+			probeUrl,
+			dashManifestUrl,
+			hlsManifestUrl,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
 		this.sm.parse_number_template(expiresInSeconds);
-		this.z(adaptiveFormats,this.D_AdaptiveFormatItem);
-		this.tz(formats,this.D_FormatItem);
-		this.t(probeUrl,x => this.ps.parse_url(cf,x));
-		this.t(dashManifestUrl,x => this.sm.a_primitive_str(x));
-		this.t(hlsManifestUrl,x => this.sm.a_primitive_str(x));
+		this.z(adaptiveFormats, this.D_AdaptiveFormatItem);
+		this.tz(formats, this.D_FormatItem);
+		this.t(probeUrl, (x) => this.ps.parse_url(cf, x));
+		this.t(dashManifestUrl, (x) => this.sm.a_primitive_str(x));
+		this.t(hlsManifestUrl, (x) => this.sm.a_primitive_str(x));
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_TriggerCriteria} x */
-	D_TriggerCriteria(x)
-	{
-		const cf="D_TriggerCriteria";
-		const {connectionWhitelist,joinLatencySeconds,rebufferTimeSeconds,watchTimeWindowSeconds,refractorySeconds,...y}=this.s(cf,x); this.g(y);
-		if(connectionWhitelist.length!==1) debugger;
-		this.sm.cq(connectionWhitelist[0],"WIFI");
-		if(joinLatencySeconds!==15) debugger;
-		if(rebufferTimeSeconds!==10) debugger;
-		if(watchTimeWindowSeconds!==180) debugger;
-		if(refractorySeconds!==2592000) debugger;
+	D_TriggerCriteria(x) {
+		const cf = "D_TriggerCriteria";
+		const {
+			connectionWhitelist,
+			joinLatencySeconds,
+			rebufferTimeSeconds,
+			watchTimeWindowSeconds,
+			refractorySeconds,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
+		if (connectionWhitelist.length !== 1) debugger;
+		this.sm.cq(connectionWhitelist[0], "WIFI");
+		if (joinLatencySeconds !== 15) debugger;
+		if (rebufferTimeSeconds !== 10) debugger;
+		if (watchTimeWindowSeconds !== 180) debugger;
+		if (refractorySeconds !== 2592000) debugger;
 	}
 	/** @private @arg {`${import("../yt_json_types/d/group_D.ts").D_AudioSampleRate}`} x */
-	D_AudioSampleRate(x)
-	{
-		switch(x)
-		{
-			default: debugger; break;
-			case "22050": case "44100": case "48000":
+	D_AudioSampleRate(x) {
+		switch (x) {
+			default:
+				debugger;
+				break;
+			case "22050":
+			case "44100":
+			case "48000":
 		}
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_FormatItem} x */
-	D_FormatItem(x)
-	{
-		const cf="D_FormatItem";
-		const {itag,url,mimeType,bitrate,width,height,lastModified,contentLength,quality,fps,qualityLabel,projectionType,averageBitrate,audioQuality,approxDurationMs,audioSampleRate,audioChannels,signatureCipher,...u}=this.s(cf,x);
+	D_FormatItem(x) {
+		const cf = "D_FormatItem";
+		const {
+			itag,
+			url,
+			mimeType,
+			bitrate,
+			width,
+			height,
+			lastModified,
+			contentLength,
+			quality,
+			fps,
+			qualityLabel,
+			projectionType,
+			averageBitrate,
+			audioQuality,
+			approxDurationMs,
+			audioSampleRate,
+			audioChannels,
+			signatureCipher,
+			...u
+		} = this.s(cf, x);
 		this.sm.a_primitive_num(itag);
-		this.t(url,x => this.ps.parse_url(cf,x));
+		this.t(url, (x) => this.ps.parse_url(cf, x));
 		this.sm.a_primitive_str(mimeType);
 		this.sm.a_primitive_num(bitrate);
-		this.sm.t(width,this.sm.a_primitive_num);
-		this.sm.t(height,this.sm.a_primitive_num);
+		this.sm.t(width, this.sm.a_primitive_num);
+		this.sm.t(height, this.sm.a_primitive_num);
 		this.sm.a_primitive_str(lastModified);
-		this.t(contentLength,x => this.sm.a_primitive_str(x));
+		this.t(contentLength, (x) => this.sm.a_primitive_str(x));
 		this.sm.a_primitive_str(quality);
-		this.t(fps,this.D_FormatFps);
-		this.t(qualityLabel,x => this.sm.a_primitive_str(x));
-		if(projectionType!=="RECTANGULAR") debugger;
-		this.sm.t(averageBitrate,this.sm.a_primitive_num);
-		this.t(audioQuality,x =>
-		{
-			switch(x)
-			{
-				default: debugger; break;
+		this.t(fps, this.D_FormatFps);
+		this.t(qualityLabel, (x) => this.sm.a_primitive_str(x));
+		if (projectionType !== "RECTANGULAR") debugger;
+		this.sm.t(averageBitrate, this.sm.a_primitive_num);
+		this.t(audioQuality, (x) => {
+			switch (x) {
+				default:
+					debugger;
+					break;
 				case "AUDIO_QUALITY_LOW":
 				case "AUDIO_QUALITY_MEDIUM":
 			}
 		});
 		this.sm.a_primitive_str(approxDurationMs);
-		this.t(audioSampleRate,this.D_AudioSampleRate);
-		this.t(audioChannels,x =>
-		{
-			switch(x) {case 1: case 2: break; default: debugger;}
+		this.t(audioSampleRate, this.D_AudioSampleRate);
+		this.t(audioChannels, (x) => {
+			switch (x) {
+				case 1:
+				case 2:
+					break;
+				default:
+					debugger;
+			}
 		});
-		this.t_cf(cf,signatureCipher,this.D_Format_signatureCipher);
-		const {xtags,...y}=u; this.g(y);
+		this.t_cf(cf, signatureCipher, this.D_Format_signatureCipher);
+		const { xtags, ...y } = u;
+		this.g(y);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_UUIDString} x */
-	parse_uuid(x)
-	{
-		let uuid_parts=split_string(x,"-");
-		let [_up0,_up1,_up2,up3,_up4]=uuid_parts;
-		let bd=parseInt(split_string(up3,"")[0],16).toString(2);
-		if(bd.length!==4) debugger;
-		if(bd.slice(0,2)!=="10") debugger;
+	parse_uuid(x) {
+		let uuid_parts = split_string(x, "-");
+		let [_up0, _up1, _up2, up3, _up4] = uuid_parts;
+		let bd = parseInt(split_string(up3, "")[0], 16).toString(2);
+		if (bd.length !== 4) debugger;
+		if (bd.slice(0, 2) !== "10") debugger;
 		return uuid_parts;
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_FeaturedChannel} x */
-	D_FeaturedChannel(x)
-	{
-		const cf="D_FeaturedChannel"; this.sm.k(cf,x);
-		const {startTimeMs,endTimeMs,watermark,trackingParams,navigationEndpoint,channelName,subscribeButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z([startTimeMs,endTimeMs],x => this.sm.a_primitive_str(x));
+	D_FeaturedChannel(x) {
+		const cf = "D_FeaturedChannel";
+		this.sm.k(cf, x);
+		const {
+			startTimeMs,
+			endTimeMs,
+			watermark,
+			trackingParams,
+			navigationEndpoint,
+			channelName,
+			subscribeButton,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.z([startTimeMs, endTimeMs], (x) => this.sm.a_primitive_str(x));
 		this.sm.D_Thumbnail(watermark);
 		this.sm.E_VE3611(navigationEndpoint);
 		this.sm.a_primitive_str(channelName);
 		this.xm.R_SubscribeButton(subscribeButton);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_Botguard} x */
-	D_Botguard(x)
-	{
-		const cf="D_Botguard";
-		const {program,interpreterSafeUrl,serverEnvironment,...y}=this.s(cf,x); this.g(y);
+	D_Botguard(x) {
+		const cf = "D_Botguard";
+		const { program, interpreterSafeUrl, serverEnvironment, ...y } = this.s(
+			cf,
+			x,
+		);
+		this.g(y);
 		this.sm.a_primitive_str(program);
-		let interpreterUrl=this.sm.UrlWrappedValueT(interpreterSafeUrl);
+		let interpreterUrl = this.sm.UrlWrappedValueT(interpreterSafeUrl);
 		this.sm.a_primitive_str(interpreterUrl);
-		this.save_primitive(`${cf}.serverEnvironment`,serverEnvironment);
+		this.save_primitive(`${cf}.serverEnvironment`, serverEnvironment);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_CardCollection} x */
-	D_CardCollection(x)
-	{
-		const cf="D_CardCollection";
-		const {cards,headerText,icon,closeButton,trackingParams,allowTeaserDismiss,logIconVisibilityUpdates,...y}=this.s(cf,x); this.g(y);
-		this.z(cards,this.R_Card);
+	D_CardCollection(x) {
+		const cf = "D_CardCollection";
+		const {
+			cards,
+			headerText,
+			icon,
+			closeButton,
+			trackingParams,
+			allowTeaserDismiss,
+			logIconVisibilityUpdates,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
+		this.z(cards, this.R_Card);
 		this.sm.G_Text(headerText);
 		this.R_InfoCardIcon(icon);
 		this.R_InfoCardIcon(closeButton);
-		this.sm.cq(allowTeaserDismiss,true);
-		this.sm.cq(logIconVisibilityUpdates,true);
+		this.sm.cq(allowTeaserDismiss, true);
+		this.sm.cq(logIconVisibilityUpdates, true);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_MicroformatEmbed} x */
-	D_MicroformatEmbed(x)
-	{
-		const cf="D_CardCollection";
-		const {iframeUrl,flashUrl,width,height,flashSecureUrl,...y}=this.s(cf,x); this.g(y);
-		this.ps.parse_url(cf,iframeUrl);
-		flashUrl&&this.ps.parse_url(cf,flashUrl);
-		this.save_primitive(`${cf}.width`,width);
-		this.save_primitive(`${cf}.height`,height);
-		flashSecureUrl&&this.ps.parse_url(cf,flashSecureUrl);
+	D_MicroformatEmbed(x) {
+		const cf = "D_CardCollection";
+		const { iframeUrl, flashUrl, width, height, flashSecureUrl, ...y } = this.s(
+			cf,
+			x,
+		);
+		this.g(y);
+		this.ps.parse_url(cf, iframeUrl);
+		flashUrl && this.ps.parse_url(cf, flashUrl);
+		this.save_primitive(`${cf}.width`, width);
+		this.save_primitive(`${cf}.height`, height);
+		flashSecureUrl && this.ps.parse_url(cf, flashSecureUrl);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_VideoCategory} x */
-	D_VideoCategory(x)
-	{
-		switch(x)
-		{
-			default: {
-				switch(x)
+	D_VideoCategory(x) {
+		switch (x) {
+			default:
 				{
+					switch (x) {
+					}
+					debugger;
 				}
-				debugger;
-			} break;
+				break;
 			case "News & Politics":
 			case "Nonprofits & Activism":
-			case "Travel & Events": case "Sports": case "Education": case "Pets & Animals":
-			case "Autos & Vehicles": case "Comedy": case "Entertainment": case "Film & Animation": case "Gaming":
-			case "Howto & Style": case "Music": case "People & Blogs": case "Science & Technology":
+			case "Travel & Events":
+			case "Sports":
+			case "Education":
+			case "Pets & Animals":
+			case "Autos & Vehicles":
+			case "Comedy":
+			case "Entertainment":
+			case "Film & Animation":
+			case "Gaming":
+			case "Howto & Style":
+			case "Music":
+			case "People & Blogs":
+			case "Science & Technology":
 		}
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_LiveBroadcastDetails} x */
-	D_LiveBroadcastDetails(x)
-	{
-		const cf="D_LiveBroadcastDetails";
-		const {isLiveNow,startTimestamp,...y}=this.s(cf,x);
+	D_LiveBroadcastDetails(x) {
+		const cf = "D_LiveBroadcastDetails";
+		const { isLiveNow, startTimestamp, ...y } = this.s(cf, x);
 		this.sm.a_primitive_bool(isLiveNow);
 		this.sm.a_primitive_str(startTimestamp);
-		if("endTimestamp" in y)
-		{
-			const {endTimestamp,...y1}=y; this.g(y1);
+		if ("endTimestamp" in y) {
+			const { endTimestamp, ...y1 } = y;
+			this.g(y1);
 			return;
 		}
 		this.g(y);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_AdaptiveFormatItem} x */
-	D_AdaptiveFormatItem(x)
-	{
-		const cf="D_AdaptiveFormatItem";
-		const {itag,url,mimeType,bitrate,width,height,initRange,indexRange,lastModified,contentLength,quality,xtags,fps,qualityLabel,projectionType,targetDurationSec,maxDvrDurationSec,audioTrack,averageBitrate,colorInfo,highReplication,audioQuality,approxDurationMs,audioSampleRate,audioChannels,loudnessDb,signatureCipher,...y}=this.s(cf,x); this.g(y);
-		this.t(audioTrack,this.D_AudioTrack);
+	D_AdaptiveFormatItem(x) {
+		const cf = "D_AdaptiveFormatItem";
+		const {
+			itag,
+			url,
+			mimeType,
+			bitrate,
+			width,
+			height,
+			initRange,
+			indexRange,
+			lastModified,
+			contentLength,
+			quality,
+			xtags,
+			fps,
+			qualityLabel,
+			projectionType,
+			targetDurationSec,
+			maxDvrDurationSec,
+			audioTrack,
+			averageBitrate,
+			colorInfo,
+			highReplication,
+			audioQuality,
+			approxDurationMs,
+			audioSampleRate,
+			audioChannels,
+			loudnessDb,
+			signatureCipher,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
+		this.t(audioTrack, this.D_AudioTrack);
 		this.sm.a_primitive_num(itag);
-		this.t(url,x => this.ps.parse_url(cf,x));
+		this.t(url, (x) => this.ps.parse_url(cf, x));
 		this.sm.a_primitive_str(mimeType);
 		this.sm.a_primitive_num(bitrate);
-		this.sm.t(width,this.sm.a_primitive_num);
-		this.sm.t(height,this.sm.a_primitive_num);
-		this.t(initRange,this.D_Range);
-		this.t(indexRange,this.D_Range);
-		this.t(lastModified,x => this.sm.a_primitive_str(x));
-		this.t(contentLength,x => this.sm.a_primitive_str(x));
+		this.sm.t(width, this.sm.a_primitive_num);
+		this.sm.t(height, this.sm.a_primitive_num);
+		this.t(initRange, this.D_Range);
+		this.t(indexRange, this.D_Range);
+		this.t(lastModified, (x) => this.sm.a_primitive_str(x));
+		this.t(contentLength, (x) => this.sm.a_primitive_str(x));
 		this.sm.a_primitive_str(quality);
-		this.t(fps,this.D_FormatFps);
-		this.t(qualityLabel,x => this.sm.a_primitive_str(x));
-		if(projectionType!=="RECTANGULAR") debugger;
-		this.t(targetDurationSec,x =>
-		{
-			switch(x)
-			{
-				default: debugger; break;
-				case 1: case 2:
+		this.t(fps, this.D_FormatFps);
+		this.t(qualityLabel, (x) => this.sm.a_primitive_str(x));
+		if (projectionType !== "RECTANGULAR") debugger;
+		this.t(targetDurationSec, (x) => {
+			switch (x) {
+				default:
+					debugger;
+					break;
+				case 1:
+				case 2:
 			}
 		});
-		this.t(maxDvrDurationSec,x => this.sm.cq(x,43200));
+		this.t(maxDvrDurationSec, (x) => this.sm.cq(x, 43200));
 		maxDvrDurationSec;
-		this.sm.t(averageBitrate,this.sm.a_primitive_num);
-		this.t(colorInfo,this.D_FormatColorInfo);
-		this.t(highReplication,x => {if(x!==true) debugger;});
-		this.t(audioQuality,x =>
-		{
-			switch(x)
-			{
-				default: debugger; break;
+		this.sm.t(averageBitrate, this.sm.a_primitive_num);
+		this.t(colorInfo, this.D_FormatColorInfo);
+		this.t(highReplication, (x) => {
+			if (x !== true) debugger;
+		});
+		this.t(audioQuality, (x) => {
+			switch (x) {
+				default:
+					debugger;
+					break;
 				case "AUDIO_QUALITY_LOW":
 				case "AUDIO_QUALITY_MEDIUM":
 			}
 		});
-		this.t(approxDurationMs,x => this.sm.a_primitive_str(x));
-		this.t(audioSampleRate,this.D_AudioSampleRate);
-		this.t(audioChannels,x =>
-		{
-			if(x!==2) debugger;
+		this.t(approxDurationMs, (x) => this.sm.a_primitive_str(x));
+		this.t(audioSampleRate, this.D_AudioSampleRate);
+		this.t(audioChannels, (x) => {
+			if (x !== 2) debugger;
 		});
-		this.sm.t(loudnessDb,this.sm.a_primitive_num);
-		this.t_cf(cf,signatureCipher,this.D_Format_signatureCipher);
+		this.sm.t(loudnessDb, this.sm.a_primitive_num);
+		this.t_cf(cf, signatureCipher, this.D_Format_signatureCipher);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_Card} x */
-	R_Card(x) {this.H_("cardRenderer",x,this.D_Card);}
+	R_Card(x) {
+		this.H_("cardRenderer", x, this.D_Card);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_InfoCardIcon} x */
-	R_InfoCardIcon(x) {this.H_("infoCardIconRenderer",x,this.D_InfoCardIcon);}
+	R_InfoCardIcon(x) {
+		this.H_("infoCardIconRenderer", x, this.D_InfoCardIcon);
+	}
 	/** @private @arg {"D_AdaptiveFormatItem"|"D_FormatItem"} cf @arg {import("../yt_json_types/ghi/group_G.ts").D_FormatItem_SignatureCipher_SP} x */
-	D_Format_signatureCipher(cf,x)
-	{
+	D_Format_signatureCipher(cf, x) {
 		/** @type {`${cf}:signatureCipher`} */
-		const cf1=`${cf}:signatureCipher`;
-		let {s: {},sp,url,...y}=this.parse_url_search_params(x); this.g(y);
-		switch(sp)
-		{
-			default: debugger; break;
-			case "sig": break;
+		const cf1 = `${cf}:signatureCipher`;
+		let { s: {}, sp, url, ...y } = this.parse_url_search_params(x);
+		this.g(y);
+		switch (sp) {
+			default:
+				debugger;
+				break;
+			case "sig":
+				break;
 		}
-		this.ps.parse_url(cf1,as_any(url));
+		this.ps.parse_url(cf1, as_any(url));
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_FormatColorInfo} x */
-	D_FormatColorInfo(x)
-	{
-		const cf="D_Range";
-		const {primaries,transferCharacteristics,matrixCoefficients,...y}=this.s(cf,x); this.g(y);
-		switch(primaries)
-		{
-			default: debugger; break;
+	D_FormatColorInfo(x) {
+		const cf = "D_Range";
+		const { primaries, transferCharacteristics, matrixCoefficients, ...y } =
+			this.s(cf, x);
+		this.g(y);
+		switch (primaries) {
+			default:
+				debugger;
+				break;
 			case "COLOR_PRIMARIES_BT709":
 			case "COLOR_PRIMARIES_BT2020":
 			case void 0:
 		}
-		switch(transferCharacteristics)
-		{
-			default: debugger; break;
+		switch (transferCharacteristics) {
+			default:
+				debugger;
+				break;
 			case "COLOR_TRANSFER_CHARACTERISTICS_ARIB_STD_B67":
 			case "COLOR_TRANSFER_CHARACTERISTICS_BT709":
 		}
-		switch(matrixCoefficients)
-		{
-			default: debugger; break;
+		switch (matrixCoefficients) {
+			default:
+				debugger;
+				break;
 			case "COLOR_MATRIX_COEFFICIENTS_BT709":
 			case "COLOR_MATRIX_COEFFICIENTS_BT2020_NCL":
 			case void 0:
 		}
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_FormatFps} x */
-	D_FormatFps(x)
-	{
-		const cf="D_FormatFps";
-		this.save_primitive(cf,x);
+	D_FormatFps(x) {
+		const cf = "D_FormatFps";
+		this.save_primitive(cf, x);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_Range} x */
-	D_Range(x)
-	{
-		const cf="D_Range";
-		const {start,end,...y}=this.s(cf,x); this.g(y);
+	D_Range(x) {
+		const cf = "D_Range";
+		const { start, end, ...y } = this.s(cf, x);
+		this.g(y);
 		this.sm.a_primitive_str(start);
 		this.sm.a_primitive_str(end);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_EndscreenElement} x */
-	D_EndscreenElement(x)
-	{
-		const cf="D_EndscreenElement";
-		const {style,image,playlistLength,icon,left,width,top,aspectRatio,startMs,endMs,title,metadata,callToAction,dismiss,endpoint,subscribersText,hovercardButton,trackingParams,productPrice,additionalFeesText,isSubscribe,id,thumbnailOverlays,...y}=this.s(cf,x); this.g(y);
-		switch(style)
-		{
-			default: debugger; break;
+	D_EndscreenElement(x) {
+		const cf = "D_EndscreenElement";
+		const {
+			style,
+			image,
+			playlistLength,
+			icon,
+			left,
+			width,
+			top,
+			aspectRatio,
+			startMs,
+			endMs,
+			title,
+			metadata,
+			callToAction,
+			dismiss,
+			endpoint,
+			subscribersText,
+			hovercardButton,
+			trackingParams,
+			productPrice,
+			additionalFeesText,
+			isSubscribe,
+			id,
+			thumbnailOverlays,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
+		switch (style) {
+			default:
+				debugger;
+				break;
 			case "CREATOR_MERCHANDISE":
 			case "CHANNEL":
 			case "VIDEO":
@@ -1150,8 +1475,8 @@ class Support_RS_Player extends BaseService
 			case "PLAYLIST":
 		}
 		this.sm.D_Thumbnail(image);
-		this.sm.t(playlistLength,this.sm.G_Text);
-		this.sm.t(icon,this.sm.D_Thumbnail);
+		this.sm.t(playlistLength, this.sm.G_Text);
+		this.sm.t(icon, this.sm.D_Thumbnail);
 		this.sm.a_primitive_num(left);
 		this.sm.a_primitive_num(width);
 		this.sm.a_primitive_num(top);
@@ -1160,492 +1485,744 @@ class Support_RS_Player extends BaseService
 		this.sm.a_primitive_str(endMs);
 		this.sm.G_Text(title);
 		this.sm.G_Text(metadata);
-		this.sm.t(callToAction,this.sm.G_Text);
-		this.sm.t(dismiss,this.sm.G_Text);
+		this.sm.t(callToAction, this.sm.G_Text);
+		this.sm.t(dismiss, this.sm.G_Text);
 		this.sm.D_EndscreenElement_EP(endpoint);
-		this.sm.t(subscribersText,this.sm.G_Text);
-		this.xm.t(hovercardButton,this.xm.R_SubscribeButton);
-		this.sm.t(productPrice,this.sm.G_Text);
-		this.sm.t(additionalFeesText,this.sm.G_Text);
-		this.sm.t(isSubscribe,this.sm.a_primitive_bool);
+		this.sm.t(subscribersText, this.sm.G_Text);
+		this.xm.t(hovercardButton, this.xm.R_SubscribeButton);
+		this.sm.t(productPrice, this.sm.G_Text);
+		this.sm.t(additionalFeesText, this.sm.G_Text);
+		this.sm.t(isSubscribe, this.sm.a_primitive_bool);
 		this.sm.a_primitive_str(id);
-		this.xm.tz(thumbnailOverlays,this.xm.G_ThumbnailOverlayItem);
+		this.xm.tz(thumbnailOverlays, this.xm.G_ThumbnailOverlayItem);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_AudioTrack} x */
-	D_AudioTrack(x)
-	{
-		const cf="D_AudioTrack";
-		const {displayName,id,audioIsDefault,...y}=this.s(cf,x); this.g(y);
+	D_AudioTrack(x) {
+		const cf = "D_AudioTrack";
+		const { displayName, id, audioIsDefault, ...y } = this.s(cf, x);
+		this.g(y);
 		this.sm.a_primitive_str(displayName);
-		this.save_primitive(`${cf}.id`,id);
-		this.sm.cq(audioIsDefault,false);
+		this.save_primitive(`${cf}.id`, id);
+		this.sm.cq(audioIsDefault, false);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_Card_Content} x */
-	D_Card_Content(x)
-	{
-		const cf="D_Card_Content"; this.sm.k(cf,x);
-		if("collaboratorInfoCardContentRenderer" in x) return this.R_CollaboratorInfoCardContent(x);
-		if("playlistInfoCardContentRenderer" in x) return this.R_PlaylistInfoCardContent(x);
-		if("simpleCardContentRenderer" in x) return this.xr.R_SimpleCardContent(x);
-		if("videoInfoCardContentRenderer" in x) return this.xr.R_VideoInfoCardContent(x);
+	D_Card_Content(x) {
+		const cf = "D_Card_Content";
+		this.sm.k(cf, x);
+		if ("collaboratorInfoCardContentRenderer" in x) {
+			return this.R_CollaboratorInfoCardContent(x);
+		}
+		if ("playlistInfoCardContentRenderer" in x) {
+			return this.R_PlaylistInfoCardContent(x);
+		}
+		if ("simpleCardContentRenderer" in x) return this.xr.R_SimpleCardContent(x);
+		if ("videoInfoCardContentRenderer" in x) {
+			return this.xr.R_VideoInfoCardContent(x);
+		}
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_Card} x */
-	D_Card(x)
-	{
-		const cf="D_Card";
-		const {teaser,content,cueRanges,icon,trackingParams,cardId,feature,...y}=this.s(cf,x); this.g(y);
+	D_Card(x) {
+		const cf = "D_Card";
+		const {
+			teaser,
+			content,
+			cueRanges,
+			icon,
+			trackingParams,
+			cardId,
+			feature,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
 		this.R_SimpleCardTeaser(teaser);
-		this.t(content,this.D_Card_Content);
-		this.z(cueRanges,this.D_CueRangeItem);
-		this.t(cardId,x => this.sm.a_primitive_str(x));
-		this.t(feature,x =>
-		{
-			if(x!=="cards") debugger;
+		this.t(content, this.D_Card_Content);
+		this.z(cueRanges, this.D_CueRangeItem);
+		this.t(cardId, (x) => this.sm.a_primitive_str(x));
+		this.t(feature, (x) => {
+			if (x !== "cards") debugger;
 		});
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_PlaylistInfoCardContent} x */
-	R_PlaylistInfoCardContent(x) {this.H_("playlistInfoCardContentRenderer",x,this.DI_PlaylistCardContent);}
+	R_PlaylistInfoCardContent(x) {
+		this.H_("playlistInfoCardContentRenderer", x, this.DI_PlaylistCardContent);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_PlaylistInfoCardContent} x */
-	DI_PlaylistCardContent(x) {x;}
+	DI_PlaylistCardContent(x) {
+		x;
+	}
 	/** @private @arg {import("../yt_json_types/r/r_sub/r/R_CollaboratorInfoCardContent.ts").R_CollaboratorInfoCardContent} x */
-	R_CollaboratorInfoCardContent(x) {this.H_("collaboratorInfoCardContentRenderer",x,this.D_CollaboratorInfoCardContent);}
+	R_CollaboratorInfoCardContent(x) {
+		this.H_(
+			"collaboratorInfoCardContentRenderer",
+			x,
+			this.D_CollaboratorInfoCardContent,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_CollaboratorInfoCardContent} x */
-	D_CollaboratorInfoCardContent(x) {x;}
+	D_CollaboratorInfoCardContent(x) {
+		x;
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_TrackingParams} x */
-	D_InfoCardIcon(x) {const {trackingParams,...y}=this.s("D_InfoCardIcon",x); this.g(y);}
+	D_InfoCardIcon(x) {
+		const { trackingParams, ...y } = this.s("D_InfoCardIcon", x);
+		this.g(y);
+	}
 	/** @private @arg {import("../yt_json_types/r/r_sub/r/R_SimpleCardTeaser.ts").R_SimpleCardTeaser} x */
-	R_SimpleCardTeaser(x) {this.H_("simpleCardTeaserRenderer",x,this.D_SimpleCardTeaser);}
+	R_SimpleCardTeaser(x) {
+		this.H_("simpleCardTeaserRenderer", x, this.D_SimpleCardTeaser);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_CueRangeItem} x */
-	D_CueRangeItem(x)
-	{
-		const cf="D_CueRangeItem",t=this;
-		const {startCardActiveMs,endCardActiveMs,teaserDurationMs,iconAfterTeaserMs,...y}=this.s(cf,x); this.g(y);
-		this.z([startCardActiveMs,endCardActiveMs],t.sm.pn);
-		this.save_primitive(`${cf}.teaserDurationMs`,this.sm.parse_number_template(teaserDurationMs));
-		this.save_primitive(`${cf}.endCardActiveMs`,this.sm.parse_number_template(endCardActiveMs));
+	D_CueRangeItem(x) {
+		const cf = "D_CueRangeItem", t = this;
+		const {
+			startCardActiveMs,
+			endCardActiveMs,
+			teaserDurationMs,
+			iconAfterTeaserMs,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
+		this.z([startCardActiveMs, endCardActiveMs], t.sm.pn);
+		this.save_primitive(
+			`${cf}.teaserDurationMs`,
+			this.sm.parse_number_template(teaserDurationMs),
+		);
+		this.save_primitive(
+			`${cf}.endCardActiveMs`,
+			this.sm.parse_number_template(endCardActiveMs),
+		);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_SimpleCardTeaser} x */
-	D_SimpleCardTeaser(x)
-	{
-		const cf="D_SimpleCardTeaser";
-		const {message,trackingParams,prominent,logVisibilityUpdates,onTapCommand,...y}=this.s(cf,x); this.g(y);
+	D_SimpleCardTeaser(x) {
+		const cf = "D_SimpleCardTeaser";
+		const {
+			message,
+			trackingParams,
+			prominent,
+			logVisibilityUpdates,
+			onTapCommand,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
 		this.sm.G_Text(message);
-		this.sm.cq(prominent,true);
-		this.sm.cq(logVisibilityUpdates,true);
-		this.sm.t(onTapCommand,this.sm.A_ChangeEngagementPanelVisibility);
+		this.sm.cq(prominent, true);
+		this.sm.cq(logVisibilityUpdates, true);
+		this.sm.t(onTapCommand, this.sm.A_ChangeEngagementPanelVisibility);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_LearningResource} x */
-	D_LearningResource(x)
-	{
-		const cf="D_LearningResource";
-		const {learningResourceType,educationalLevel,educationalLevelCountry,...y}=this.s(cf,x); this.g(y);
-		this.save_primitive("D_LearningResource.learningResourceType",learningResourceType);
-		educationalLevel&&this.save_primitive("D_LearningResource.educationalLevel",educationalLevel);
-		educationalLevelCountry&&this.save_primitive("D_LearningResource.educationalLevelCountry",educationalLevelCountry);
+	D_LearningResource(x) {
+		const cf = "D_LearningResource";
+		const {
+			learningResourceType,
+			educationalLevel,
+			educationalLevelCountry,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
+		this.save_primitive(
+			"D_LearningResource.learningResourceType",
+			learningResourceType,
+		);
+		educationalLevel &&
+			this.save_primitive(
+				"D_LearningResource.educationalLevel",
+				educationalLevel,
+			);
+		educationalLevelCountry &&
+			this.save_primitive(
+				"D_LearningResource.educationalLevelCountry",
+				educationalLevelCountry,
+			);
 	}
 }
-export_(exports => {exports.Support_RS_Player=Support_RS_Player;});
-class Support_RS_WatchPage extends BaseService
-{
+export_((exports) => {
+	exports.Support_RS_Player = Support_RS_Player;
+});
+class Support_RS_WatchPage extends BaseService {
 	/** @public @arg {import("../yt_json_types/ghi/group_G.ts").G_RS_WatchPage} x */
-	RS_WatchPage(x)
-	{
-		const cf="R_WatchPage"; this.sm.k(cf,x);
-		if("rootVe" in x) switch(x.rootVe)
-			{
-				case 3832: return this.RS_VE3832_Page_Watch(x);
-				default: debugger; return;
+	RS_WatchPage(x) {
+		const cf = "R_WatchPage";
+		this.sm.k(cf, x);
+		if ("rootVe" in x) {
+			switch (x.rootVe) {
+				case 3832:
+					return this.RS_VE3832_Page_Watch(x);
+				default:
+					debugger;
+					return;
 			}
+		}
 		this.RS_Page_Watch(x);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").RS_VE3832_Page_Watch} x */
-	RS_VE3832_Page_Watch(x)
-	{
-		const cf="R_WatchPage_VE3832"; this.sm.k(cf,x);
-		const {page: {},rootVe,url,endpoint,preconnect,playerResponse,response,csn,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	RS_VE3832_Page_Watch(x) {
+		const cf = "R_WatchPage_VE3832";
+		this.sm.k(cf, x);
+		const {
+			page: {},
+			rootVe,
+			url,
+			endpoint,
+			preconnect,
+			playerResponse,
+			response,
+			csn,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.rootVe(rootVe);
-		this.cq(rootVe,3832);
-		let wp_params=this.ht.D_WatchPageUrl(cf,url);
-		wp_params&&this.save_primitive(`VE3832.${cf}.wp_params`,wp_params);
+		this.cq(rootVe, 3832);
+		let wp_params = this.ht.D_WatchPageUrl(cf, url);
+		wp_params && this.save_primitive(`VE3832.${cf}.wp_params`, wp_params);
 		this.sm.E_Watch(endpoint);
-		if(preconnect!==void 0) this.ht.parse_preconnect_arr(preconnect);
+		if (preconnect !== void 0) this.ht.parse_preconnect_arr(preconnect);
 		this.x.get("x_RS_Player").RS_Player(playerResponse);
 		this.x.get("x_RS_Watch").RS_Watch(response);
-		this.t(csn,x => this.sm.D_VeCsn(x));
+		this.t(csn, (x) => this.sm.D_VeCsn(x));
 	}
 	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:Support_RS_WatchPage,x:T)=>U} F @arg {F} f */
-	t(x,f) {return this.t_base(x,f);}
+	t(x, f) {
+		return this.t_base(x, f);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").RS_Page_Watch} x */
-	RS_Page_Watch(x)
-	{
-		const cf="RS_Page_Watch"; this.sm.k(cf,x);
-		const {page: {},endpoint,response,playerResponse,url,previousCsn,csn,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	RS_Page_Watch(x) {
+		const cf = "RS_Page_Watch";
+		this.sm.k(cf, x);
+		const {
+			page: {},
+			endpoint,
+			response,
+			playerResponse,
+			url,
+			previousCsn,
+			csn,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.E_Watch(endpoint);
 		this.x.get("x_RS_Watch").RS_Watch(response);
 		this.x.get("x_RS_Player").RS_Player(playerResponse);
-		let wp_params=this.ht.D_WatchPageUrl(cf,url);
-		wp_params&&this.save_primitive(`${cf}.wp_params`,wp_params);
-		this.t(previousCsn,x => this.sm.D_VeCsn(x,{prev: true}));
-		this.t(csn,x => this.sm.D_VeCsn(x,{cur: true}));
+		let wp_params = this.ht.D_WatchPageUrl(cf, url);
+		wp_params && this.save_primitive(`${cf}.wp_params`, wp_params);
+		this.t(previousCsn, (x) => this.sm.D_VeCsn(x, { prev: true }));
+		this.t(csn, (x) => this.sm.D_VeCsn(x, { cur: true }));
 	}
 }
-export_(exports => {exports.Support_RS_WatchPage=Support_RS_WatchPage;});
-class Support_RS_Watch extends BaseService
-{
+export_((exports) => {
+	exports.Support_RS_WatchPage = Support_RS_WatchPage;
+});
+class Support_RS_Watch extends BaseService {
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").RS_Watch} x */
-	RS_Watch(x)
-	{
-		const cf="RS_Watch";
-		const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	RS_Watch(x) {
+		const cf = "RS_Watch";
+		const {
+			responseContext,
+			contents,
+			currentVideoEndpoint,
+			trackingParams,
+			playerOverlays,
+			onResponseReceivedEndpoints,
+			engagementPanels,
+			topbar,
+			pageVisualEffects,
+			frameworkUpdates,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.RC_ResponseContext(responseContext);
 		this.sm.R_TwoColumnWatchNextResults(contents);
 		this.sm.E_Watch(currentVideoEndpoint);
 		this.sm.R_PlayerOverlay(playerOverlays);
-		this.z(onResponseReceivedEndpoints,x => this.xm.GE_ResponseReceived(cf,x));
-		this.z(engagementPanels,x => this.xm.R_EngagementPanelSectionList(x));
+		this.z(
+			onResponseReceivedEndpoints,
+			(x) => this.xm.GE_ResponseReceived(cf, x),
+		);
+		this.z(engagementPanels, (x) => this.xm.R_EngagementPanelSectionList(x));
 		this.sm.R_DesktopTopbar(topbar);
-		this.z(pageVisualEffects,x => this.sm.R_CinematicContainer(x));
+		this.z(pageVisualEffects, (x) => this.sm.R_CinematicContainer(x));
 		this.sm.D_FrameworkUpdates(frameworkUpdates);
 	}
 }
-export_(exports => {exports.Support_RS_Watch=Support_RS_Watch;});
-class Support_RS_Page_Browse extends BaseService
-{
+export_((exports) => {
+	exports.Support_RS_Watch = Support_RS_Watch;
+});
+class Support_RS_Page_Browse extends BaseService {
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").G_RS_Page_Browse} ux */
-	G_RS_Page_Browse(ux)
-	{
-		let x=null,x2=null;
-		if("rootVe" in ux) x=ux; else x2=ux;
-		if(x!==null) switch(x.rootVe)
-			{
-				case 3854: {
-					const cf="RS_VE3854_BrowsePage";
-					const {rootVe,expirationTime,...y}=this.RS_Page_Browse_Omit(cf,x); this.g(y);
-					this._primitive_of(expirationTime,"number");
-					this.save_primitive(`${cf}.rootVe`,rootVe);
-				} break;
-				case 6827: {
-					const cf="RS_VE6827_BrowsePage";
-					const {rootVe,expirationTime,...y}=this.RS_Page_Browse_Omit(cf,x); this.g(y);
-					this._primitive_of(expirationTime,"number");
-					this.save_primitive(`${cf}.rootVe`,rootVe);
-				} break;
-				case 96368: {
-					const cf="RS_VE96368_BrowsePage";
-					const {rootVe,expirationTime,...y}=this.RS_Page_Browse_Omit(cf,x); this.g(y);
-					this._primitive_of(expirationTime,"number");
-					this.save_primitive(`${cf}.rootVe`,rootVe);
-				} break;
-				default: debugger; break;
+	G_RS_Page_Browse(ux) {
+		let x = null, x2 = null;
+		if ("rootVe" in ux) x = ux;
+		else x2 = ux;
+		if (x !== null) {
+			switch (x.rootVe) {
+				case 3854:
+					{
+						const cf = "RS_VE3854_BrowsePage";
+						const { rootVe, expirationTime, ...y } = this.RS_Page_Browse_Omit(
+							cf,
+							x,
+						);
+						this.g(y);
+						this._primitive_of(expirationTime, "number");
+						this.save_primitive(`${cf}.rootVe`, rootVe);
+					}
+					break;
+				case 6827:
+					{
+						const cf = "RS_VE6827_BrowsePage";
+						const { rootVe, expirationTime, ...y } = this.RS_Page_Browse_Omit(
+							cf,
+							x,
+						);
+						this.g(y);
+						this._primitive_of(expirationTime, "number");
+						this.save_primitive(`${cf}.rootVe`, rootVe);
+					}
+					break;
+				case 96368:
+					{
+						const cf = "RS_VE96368_BrowsePage";
+						const { rootVe, expirationTime, ...y } = this.RS_Page_Browse_Omit(
+							cf,
+							x,
+						);
+						this.g(y);
+						this._primitive_of(expirationTime, "number");
+						this.save_primitive(`${cf}.rootVe`, rootVe);
+					}
+					break;
+				default:
+					debugger;
+					break;
 			}
-		x=x2;
+		}
+		x = x2;
 		x2;
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").RS_Page_Browse} x */
-	RS_Page_Browse(x)
-	{
-		const cf="RS_Page_Browse";
-		if("rootVe" in x)
-		{
-			switch(x.rootVe)
-			{
-				case 3854: {
-					const {rootVe,expirationTime,...y}=this.RS_Page_Browse_Omit(cf,x); this.g(y);
-					this._primitive_of(expirationTime,"number");
-					this.save_primitive(`${cf}.rootVe`,rootVe);
-				} break;
-				default: debugger; break;
+	RS_Page_Browse(x) {
+		const cf = "RS_Page_Browse";
+		if ("rootVe" in x) {
+			switch (x.rootVe) {
+				case 3854:
+					{
+						const { rootVe, expirationTime, ...y } = this.RS_Page_Browse_Omit(
+							cf,
+							x,
+						);
+						this.g(y);
+						this._primitive_of(expirationTime, "number");
+						this.save_primitive(`${cf}.rootVe`, rootVe);
+					}
+					break;
+				default:
+					debugger;
+					break;
 			}
 			return;
 		}
-		if("expirationTime" in x)
-		{
-			const {expirationTime,...y}=this.RS_Page_Browse_Omit(cf,x); this.g(y);
-			this._primitive_of(expirationTime,"number");
+		if ("expirationTime" in x) {
+			const { expirationTime, ...y } = this.RS_Page_Browse_Omit(cf, x);
+			this.g(y);
+			this._primitive_of(expirationTime, "number");
 			return;
 		}
-		const {...y}=this.RS_Page_Browse_Omit(cf,x); this.g(y);
+		const { ...y } = this.RS_Page_Browse_Omit(cf, x);
+		this.g(y);
 	}
 	/** @private */
-	log_url=false;
+	log_url = false;
 	/** @private @arg {import("../yt_json_types/abc/group_C.ts").CF_RS_Page_Browse} cf @template {import("../yt_json_types/r/group_R.ts").G_RS_Page_Browse} T @arg {T} x */
-	RS_Page_Browse_Omit(cf,x)
-	{
-		const {url,endpoint,page,response,...y}=this.s(cf,x);
-		if(this.log_url) console.log("[browse_url] [%s]",JSON.stringify(url));
+	RS_Page_Browse_Omit(cf, x) {
+		const { url, endpoint, page, response, ...y } = this.s(cf, x);
+		if (this.log_url) console.log("[browse_url] [%s]", JSON.stringify(url));
 		debugger;
-		if(page!=="browse") debugger;
+		if (page !== "browse") debugger;
 		this.x.get("x_RS_Browse").RS_Browse(response);
 		return y;
 	}
 }
-export_(exports => {exports.Support_RS_Page_Browse=Support_RS_Page_Browse;});
-class Support_RS_Browse extends BaseService
-{
+export_((exports) => {
+	exports.Support_RS_Page_Browse = Support_RS_Page_Browse;
+});
+class Support_RS_Browse extends BaseService {
 	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:Support_RS_Browse,x:T)=>U} F @arg {F} f */
-	t(x,f) {return this.t_base(x,f);}
+	t(x, f) {
+		return this.t_base(x, f);
+	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").RS_Browse} x */
-	RS_Browse(x)
-	{
-		const cf="RS_Browse";
+	RS_Browse(x) {
+		const cf = "RS_Browse";
 		x: {
-			let kk=this.get_keys_of(x);
-			let jk=kk.filter(e =>
-			{
-				if(e==="responseContext") return false;
+			let kk = this.get_keys_of(x);
+			let jk = kk.filter((e) => {
+				if (e === "responseContext") return false;
 				return true;
 			}).join();
 			// contents,header [tag_1]
 			{
-				jk=kk.filter(e =>
-				{
-					if(e==="responseContext") return false;
-					if(e==="contents") return false;
-					if(e==="header") return false;
+				jk = kk.filter((e) => {
+					if (e === "responseContext") return false;
+					if (e === "contents") return false;
+					if (e === "header") return false;
 					return true;
 				}).join();
-				if(jk==="metadata,trackingParams,topbar,microformat,onResponseReceivedActions,frameworkUpdates") break x;
-				if(jk==="trackingParams,topbar,onResponseReceivedActions,frameworkUpdates") break x;
-				if(jk==="trackingParams,topbar,onResponseReceivedActions,cacheMetadata") break x;
-				if(jk==="metadata,trackingParams,topbar,microformat,frameworkUpdates") break x;
-				if(jk==="alerts,metadata,trackingParams,topbar,microformat,sidebar") break x;
-				if(jk==="trackingParams,topbar,observedStateTags,cacheMetadata") break x;
-				if(jk==="metadata,trackingParams,topbar,microformat,sidebar") break x;
-				if(jk==="trackingParams,topbar,onResponseReceivedActions") break x;
-				if(jk==="trackingParams,topbar,observedStateTags") break x;
-				if(jk==="trackingParams,topbar") break x;
-				if("contents" in x&&"header" in x)
-				{
-					console.log(`-- [RS_Browse.jk_gen_tag_1] --\n\nif(jk==="${jk}") break x;`);
+				if (
+					jk ===
+						"metadata,trackingParams,topbar,microformat,onResponseReceivedActions,frameworkUpdates"
+				) break x;
+				if (
+					jk ===
+						"trackingParams,topbar,onResponseReceivedActions,frameworkUpdates"
+				) break x;
+				if (
+					jk === "trackingParams,topbar,onResponseReceivedActions,cacheMetadata"
+				) break x;
+				if (
+					jk === "metadata,trackingParams,topbar,microformat,frameworkUpdates"
+				) break x;
+				if (
+					jk === "alerts,metadata,trackingParams,topbar,microformat,sidebar"
+				) break x;
+				if (jk === "trackingParams,topbar,observedStateTags,cacheMetadata") {
+					break x;
+				}
+				if (jk === "metadata,trackingParams,topbar,microformat,sidebar") {
+					break x;
+				}
+				if (jk === "trackingParams,topbar,onResponseReceivedActions") break x;
+				if (jk === "trackingParams,topbar,observedStateTags") break x;
+				if (jk === "trackingParams,topbar") break x;
+				if ("contents" in x && "header" in x) {
+					console.log(
+						`-- [RS_Browse.jk_gen_tag_1] --\n\nif(jk==="${jk}") break x;`,
+					);
 					break x;
 				}
 			}
 			// contents [tag_2]
 			{
-				jk=kk.filter(e =>
-				{
-					if(e==="responseContext") return false;
-					if(e==="contents") return false;
+				jk = kk.filter((e) => {
+					if (e === "responseContext") return false;
+					if (e === "contents") return false;
 					return true;
 				}).join();
-				if(jk==="trackingParams,topbar,sidebar") break x;
-				if(jk==="trackingParams,topbar") break x;
-				if("contents" in x)
-				{
-					console.log(`-- [RS_Browse.jk_gen_tag_2] --\n\nif(jk==="${jk}") break x;`);
+				if (jk === "trackingParams,topbar,sidebar") break x;
+				if (jk === "trackingParams,topbar") break x;
+				if ("contents" in x) {
+					console.log(
+						`-- [RS_Browse.jk_gen_tag_2] --\n\nif(jk==="${jk}") break x;`,
+					);
 					break x;
 				}
 			}
 			// -contents,header [tag_3]
 			{
-				jk=kk.filter(e =>
-				{
-					if(e==="responseContext") return false;
-					if(e==="header") return false;
+				jk = kk.filter((e) => {
+					if (e === "responseContext") return false;
+					if (e === "header") return false;
 					return true;
 				}).join();
-				if(jk==="trackingParams,onResponseReceivedActions") break x;
-				if("header" in x)
-				{
+				if (jk === "trackingParams,onResponseReceivedActions") break x;
+				if ("header" in x) {
 					console.log(`-- [RS_Browse.tag_3] --\n\nif(jk==="${jk}") break x;`);
 					break x;
 				}
 			}
 			// -contents,-header [tag_4]
 			{
-				if(jk==="continuationContents,metadata,trackingParams,microformat,onResponseReceivedActions,frameworkUpdates") break x;
-				if(jk==="trackingParams,onResponseReceivedEndpoints") break x;
-				if(jk==="trackingParams,onResponseReceivedActions") break x;
+				if (
+					jk ===
+						"continuationContents,metadata,trackingParams,microformat,onResponseReceivedActions,frameworkUpdates"
+				) break x;
+				if (jk === "trackingParams,onResponseReceivedEndpoints") break x;
+				if (jk === "trackingParams,onResponseReceivedActions") break x;
 				console.log(`-- [RS_Browse.tag_4] --\n\nif(jk==="${jk}") break x;`);
 				break x;
 			}
 		}
-		const {responseContext,header,trackingParams,onResponseReceivedActions,onResponseReceivedEndpoints,contents,topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,metadata,microformat,maxAgeStoreSeconds,background,continuationContents,alerts,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {
+			responseContext,
+			header,
+			trackingParams,
+			onResponseReceivedActions,
+			onResponseReceivedEndpoints,
+			contents,
+			topbar,
+			frameworkUpdates,
+			sidebar,
+			observedStateTags,
+			cacheMetadata,
+			metadata,
+			microformat,
+			maxAgeStoreSeconds,
+			background,
+			continuationContents,
+			alerts,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.RC_ResponseContext(responseContext);
-		this.xm.t(header,this.xm.G_BrowseHeader);
-		this.xm.tz(onResponseReceivedActions,this.xm.GA_ResponseReceived);
-		this.tz_cf(cf,onResponseReceivedEndpoints,this.xm.GE_ResponseReceived);
-		this.xm.t(contents,this.xm.G_BrowseContents);
-		this.sm.t(topbar,this.sm.R_DesktopTopbar);
-		this.sm.t(frameworkUpdates,this.sm.R_EntityBatchUpdate);
-		this.xm.t(sidebar,this.xm.G_BrowseSidebar);
-		this.sm.tz(observedStateTags,this.sm.B_StateTag);
-		this.sm.t(cacheMetadata,this.sm.D_Cache_MD);
-		this.xm.t(metadata,this.xm.G_Browse_MD);
-		this.sm.t(microformat,this.sm.R_Microformat);
-		this.t(maxAgeStoreSeconds,x => this._primitive_of(x,"number"));
-		this.xm.t(background,this.xm.R_MusicThumbnail);
-		this.xm.t(continuationContents,this.xm.RC_SectionList);
-		this.tz_cf(cf,alerts,this.sm.RS_Playlist_AlertItem);
+		this.xm.t(header, this.xm.G_BrowseHeader);
+		this.xm.tz(onResponseReceivedActions, this.xm.GA_ResponseReceived);
+		this.tz_cf(cf, onResponseReceivedEndpoints, this.xm.GE_ResponseReceived);
+		this.xm.t(contents, this.xm.G_BrowseContents);
+		this.sm.t(topbar, this.sm.R_DesktopTopbar);
+		this.sm.t(frameworkUpdates, this.sm.R_EntityBatchUpdate);
+		this.xm.t(sidebar, this.xm.G_BrowseSidebar);
+		this.sm.tz(observedStateTags, this.sm.B_StateTag);
+		this.sm.t(cacheMetadata, this.sm.D_Cache_MD);
+		this.xm.t(metadata, this.xm.G_Browse_MD);
+		this.sm.t(microformat, this.sm.R_Microformat);
+		this.t(maxAgeStoreSeconds, (x) => this._primitive_of(x, "number"));
+		this.xm.t(background, this.xm.R_MusicThumbnail);
+		this.xm.t(continuationContents, this.xm.RC_SectionList);
+		this.tz_cf(cf, alerts, this.sm.RS_Playlist_AlertItem);
 	}
 }
-export_(exports => {exports.Support_RS_Browse=Support_RS_Browse;});
-class Support_GenericApi extends BaseService
-{
+export_((exports) => {
+	exports.Support_RS_Browse = Support_RS_Browse;
+});
+class Support_GenericApi extends BaseService {
 	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:Support_GenericApi,x:T)=>U} F @arg {F} f */
-	t(x,f) {return this.t_base(x,f);}
+	t(x, f) {
+		return this.t_base(x, f);
+	}
 	/** @public @arg {Response} response @arg {import("../yt_json_types/ghi/group_G.ts").G_ResponseTypes} x */
-	G_ResponseTypes(response,x)
-	{
-		const cf="G_ResponseTypes"; this.sm.k(cf,x);
-		if(!response.ok)
-		{
-			console.log("not ok",x);
+	G_ResponseTypes(response, x) {
+		const cf = "G_ResponseTypes";
+		this.sm.k(cf, x);
+		if (!response.ok) {
+			console.log("not ok", x);
 			return;
 		}
 		/** @private @arg {{type:string}} x */
-		let g=x => {return this.save_primitive("need_api_type",x.type);};
-		switch(x.type) {case "_Generic": return g(x);}
-		/** @private */
-		this._current_response_type=x.type;
-		/** @private @type {{data:{responseContext:import("../yt_json_types/r/group_R.ts").RC_ResponseContext;}}} */
-		let v=x;
-		this.sm.RC_ResponseContext(v.data.responseContext);
-		x: if("actions" in x.data)
-		{
-			if(x.type==="account.account_menu") break x;
-			if(x.type==="browse.edit_playlist") break x;
-			if(x.type==="like.dislike") break x;
-			if(x.type==="notification.get_notification_menu") break x;
-			if(x.type==="notification.get_unseen_count") break x;
-			if(x.type==="notification.modify_channel_preference") break x;
-			if(x.type==="share.get_share_panel") break x;
-			if(x.type==="subscription.subscribe") break x;
-			if(x.type==="subscription.unsubscribe") break x;
-			if(x.type==="updated_metadata") break x;
-			if(x.type==="get_transcript") break x;
+		let g = (x) => {
+			return this.save_primitive("need_api_type", x.type);
+		};
+		switch (x.type) {
+			case "_Generic":
+				return g(x);
 		}
-		switch(x.type)
-		{
-			case "account.account_menu": return this.ht.RS_AccountMenu(x.data);
-			case "account.accounts_list": return this.ht.RS_AccountsList(x.data);
-			case "account.set_setting": return this.ht.RS_SetSetting(x.data);
-			case "att.get": return this.ht.RS_AttGet(x.data);
-			case "att.log": return this.ht.RS_AttLog_RC(x.data);
-			case "browse.edit_playlist": return this.RSB_EditPlaylist(x.data);
-			case "browse": return this.x.get("x_RS_Browse").RS_Browse(x.data);
-			case "feedback": return this.ht.RS_Feedback(x.data);
-			case "get_transcript": return this.ht.RSG_Transcript(x.data);
-			case "get_survey": return this.ht.RSG_Survey(x.data);
-			case "getAccountSwitcherEndpoint": return this.ht.REG_AccountSwitcher(x.data);
-			case "getDatasyncIdsEndpoint": return this.ht.REG_DatasyncIds(x.data);
-			case "guide": return this.ht.RS_Guide(x.data);
-			case "like.like": return this.ht.RSL_Like(x.data);
-			case "like.dislike": return this.ht.RSL_Dislike(x.data);
-			case "like.removelike": return this.ht.RSL_RemoveLike(x.data);
-			case "live_chat.get_live_chat_replay": return this.ht.RS_GetLiveChat(x.data);
-			case "live_chat.get_live_chat": return this.ht.RS_GetLiveChat(x.data);
-			case "music.get_search_suggestions": return this.ht.RSG_SearchSuggestions(x.data);
-			case "next": return this.ht.RS_Next(x.data);
-			case "notification.get_notification_menu": return this.ht.RSG_NotificationMenu(x.data);
-			case "notification.get_unseen_count": return this.RSG_GetUnseenCount(x.data);
-			case "notification.modify_channel_preference": return this.RSM_ChannelPreference(x.data);
-			case "notification.record_interactions": return this.RS_Success(x.data);
-			case "player": return this.x.get("x_RS_Player").RS_Player(x.data);
-			case "playlist.get_add_to_playlist": return this.RSG_AddToPlaylist(x.data);
-			case "reel.reel_item_watch": return this.ht.RS_WatchReelItem(x.data);
-			case "reel.reel_watch_sequence": return this.ht.RS_ReelWatchSequence(x.data);
-			case "share.get_share_panel": return this.ht.RSG_SharePanel(x.data);
-			case "subscription.subscribe": return this.ht.RS_Subscribe(x.data);
-			case "subscription.unsubscribe": return this.ht.RS_Unsubscribe(x.data);
-			case "search": return this.ht.RS_Search(x.data);
-			case "updated_metadata": return this.ht.RS_UpdateMetadata(x.data);
-			case "pdg.get_pdg_buy_flow": return this.ht.RSG_PdgBuyFlow(x.data);
-			default: debugger; return g(x);
+		/** @private */
+		this._current_response_type = x.type;
+		/** @private @type {{data:{responseContext:import("../yt_json_types/r/group_R.ts").RC_ResponseContext;}}} */
+		let v = x;
+		this.sm.RC_ResponseContext(v.data.responseContext);
+		x:
+		if ("actions" in x.data) {
+			if (x.type === "account.account_menu") break x;
+			if (x.type === "browse.edit_playlist") break x;
+			if (x.type === "like.dislike") break x;
+			if (x.type === "notification.get_notification_menu") break x;
+			if (x.type === "notification.get_unseen_count") break x;
+			if (x.type === "notification.modify_channel_preference") break x;
+			if (x.type === "share.get_share_panel") break x;
+			if (x.type === "subscription.subscribe") break x;
+			if (x.type === "subscription.unsubscribe") break x;
+			if (x.type === "updated_metadata") break x;
+			if (x.type === "get_transcript") break x;
+		}
+		switch (x.type) {
+			case "account.account_menu":
+				return this.ht.RS_AccountMenu(x.data);
+			case "account.accounts_list":
+				return this.ht.RS_AccountsList(x.data);
+			case "account.set_setting":
+				return this.ht.RS_SetSetting(x.data);
+			case "att.get":
+				return this.ht.RS_AttGet(x.data);
+			case "att.log":
+				return this.ht.RS_AttLog_RC(x.data);
+			case "browse.edit_playlist":
+				return this.RSB_EditPlaylist(x.data);
+			case "browse":
+				return this.x.get("x_RS_Browse").RS_Browse(x.data);
+			case "feedback":
+				return this.ht.RS_Feedback(x.data);
+			case "get_transcript":
+				return this.ht.RSG_Transcript(x.data);
+			case "get_survey":
+				return this.ht.RSG_Survey(x.data);
+			case "getAccountSwitcherEndpoint":
+				return this.ht.REG_AccountSwitcher(x.data);
+			case "getDatasyncIdsEndpoint":
+				return this.ht.REG_DatasyncIds(x.data);
+			case "guide":
+				return this.ht.RS_Guide(x.data);
+			case "like.like":
+				return this.ht.RSL_Like(x.data);
+			case "like.dislike":
+				return this.ht.RSL_Dislike(x.data);
+			case "like.removelike":
+				return this.ht.RSL_RemoveLike(x.data);
+			case "live_chat.get_live_chat_replay":
+				return this.ht.RS_GetLiveChat(x.data);
+			case "live_chat.get_live_chat":
+				return this.ht.RS_GetLiveChat(x.data);
+			case "music.get_search_suggestions":
+				return this.ht.RSG_SearchSuggestions(x.data);
+			case "next":
+				return this.ht.RS_Next(x.data);
+			case "notification.get_notification_menu":
+				return this.ht.RSG_NotificationMenu(x.data);
+			case "notification.get_unseen_count":
+				return this.RSG_GetUnseenCount(x.data);
+			case "notification.modify_channel_preference":
+				return this.RSM_ChannelPreference(x.data);
+			case "notification.record_interactions":
+				return this.RS_Success(x.data);
+			case "player":
+				return this.x.get("x_RS_Player").RS_Player(x.data);
+			case "playlist.get_add_to_playlist":
+				return this.RSG_AddToPlaylist(x.data);
+			case "reel.reel_item_watch":
+				return this.ht.RS_WatchReelItem(x.data);
+			case "reel.reel_watch_sequence":
+				return this.ht.RS_ReelWatchSequence(x.data);
+			case "share.get_share_panel":
+				return this.ht.RSG_SharePanel(x.data);
+			case "subscription.subscribe":
+				return this.ht.RS_Subscribe(x.data);
+			case "subscription.unsubscribe":
+				return this.ht.RS_Unsubscribe(x.data);
+			case "search":
+				return this.ht.RS_Search(x.data);
+			case "updated_metadata":
+				return this.ht.RS_UpdateMetadata(x.data);
+			case "pdg.get_pdg_buy_flow":
+				return this.ht.RSG_PdgBuyFlow(x.data);
+			default:
+				debugger;
+				return g(x);
 		}
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").RSG_AddToPlaylist} x */
-	RSG_AddToPlaylist(x)
-	{
-		const cf="RS_GetAddToPlaylist";
-		const {responseContext,contents,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(contents,this.R_AddToPlaylist);
+	RSG_AddToPlaylist(x) {
+		const cf = "RS_GetAddToPlaylist";
+		const { responseContext, contents, trackingParams, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.z(contents, this.R_AddToPlaylist);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").RSB_EditPlaylist} x */
-	RSB_EditPlaylist(x)
-	{
-		const cf="RSB_EditPlaylist";
-		const {responseContext,status,actions,playlistEditResults,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(status!=="STATUS_SUCCEEDED") debugger;
-		let [r]=this.z(actions,x =>
-		{
-			if("refreshPlaylistCommand" in x) return this.C_RefreshPlaylist(x);
-			if("openPopupAction" in x) return this.xm.TA_OpenPopup("TA_OpenPopup_Empty",x);
+	RSB_EditPlaylist(x) {
+		const cf = "RSB_EditPlaylist";
+		const {
+			responseContext,
+			status,
+			actions,
+			playlistEditResults,
+			trackingParams,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		if (status !== "STATUS_SUCCEEDED") debugger;
+		let [r] = this.z(actions, (x) => {
+			if ("refreshPlaylistCommand" in x) return this.C_RefreshPlaylist(x);
+			if ("openPopupAction" in x) {
+				return this.xm.TA_OpenPopup("TA_OpenPopup_Empty", x);
+			}
 		});
-		this.z(r,a => a);
-		this.z(playlistEditResults,this.g);
+		this.z(r, (a) => a);
+		this.z(playlistEditResults, this.g);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").RSM_ChannelPreference} x */
-	RSM_ChannelPreference(x)
-	{
-		const cf="RSM_ChannelPreference";
-		const {responseContext,actions,trackingParams,frameworkUpdates,channelId,newNotificationButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	RSM_ChannelPreference(x) {
+		const cf = "RSM_ChannelPreference";
+		const {
+			responseContext,
+			actions,
+			trackingParams,
+			frameworkUpdates,
+			channelId,
+			newNotificationButton,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.RC_ResponseContext(responseContext);
-		let [u1]=this.z(actions,x =>
-		{
-			if(!x.openPopupAction) debugger;
-			let a=this.xm.TA_OpenPopup(cf,x);
+		let [u1] = this.z(actions, (x) => {
+			if (!x.openPopupAction) debugger;
+			let a = this.xm.TA_OpenPopup(cf, x);
 			return this.T_OpenPopup_Toast(a);
 		});
-		this.sm.z(u1,this.sm.RA_Notification);
+		this.sm.z(u1, this.sm.RA_Notification);
 		this.sm.R_EntityBatchUpdate(frameworkUpdates);
 		this.sm.channelId(channelId);
 		this.xm.R_SubscriptionNotificationToggleButton(newNotificationButton);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").RS_Success} x */
-	RS_Success(x)
-	{
-		const cf="RS_Success";
-		const {responseContext,success,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this._primitive_of(success,"boolean");
+	RS_Success(x) {
+		const cf = "RS_Success";
+		const { responseContext, success, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this._primitive_of(success, "boolean");
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").RSG_GetUnseenCount} x */
-	RSG_GetUnseenCount(x)
-	{
-		const cf="RSG_GetUnseenCount";
-		const {responseContext,actions,unseenCount,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.tz(actions,(x =>
-		{
-			if("updateNotificationsUnseenCountAction" in x) return this.AU_NotificationsUnseenCount(x);
-		}));
-		if(unseenCount!==void 0) this.sm.a_primitive_num(unseenCount);
+	RSG_GetUnseenCount(x) {
+		const cf = "RSG_GetUnseenCount";
+		const { responseContext, actions, unseenCount, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.tz(actions, (x) => {
+			if ("updateNotificationsUnseenCountAction" in x) {
+				return this.AU_NotificationsUnseenCount(x);
+			}
+		});
+		if (unseenCount !== void 0) this.sm.a_primitive_num(unseenCount);
 	}
 	/** @private @arg {import("../yt_json_types/abc/A.ts").AU_NotificationsUnseenCount} x */
-	AU_NotificationsUnseenCount(x) {let [a,y]=this.sm.TE_Endpoint_2("AU_NotificationsUnseenCount","updateNotificationsUnseenCountAction",x); this.g(y); this.AD_UpdateNotificationsUnseenCount(a);}
+	AU_NotificationsUnseenCount(x) {
+		let [a, y] = this.sm.TE_Endpoint_2(
+			"AU_NotificationsUnseenCount",
+			"updateNotificationsUnseenCountAction",
+			x,
+		);
+		this.g(y);
+		this.AD_UpdateNotificationsUnseenCount(a);
+	}
 	/** @private @template T @arg {import("../yt_json_types/nop_q/Popup.ts").T_OpenPopup_Toast<T>} x */
-	T_OpenPopup_Toast(x)
-	{
-		const cf="T_OpenPopup_Toast";
-		const {popupType,popup,...y}=this.s(cf,x); this.g(y);
-		if(popupType!=="TOAST") return null;
+	T_OpenPopup_Toast(x) {
+		const cf = "T_OpenPopup_Toast";
+		const { popupType, popup, ...y } = this.s(cf, x);
+		this.g(y);
+		if (popupType !== "TOAST") return null;
 		return popup;
 	}
 	/** @private @arg {import("../yt_json_types/abc/AD.ts").AD_UpdateNotificationsUnseenCount} x */
-	AD_UpdateNotificationsUnseenCount(x)
-	{
-		const cf="AD_UpdateNotificationsUnseenCount";
-		const {handlerData,unseenCount,timeoutMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	AD_UpdateNotificationsUnseenCount(x) {
+		const cf = "AD_UpdateNotificationsUnseenCount";
+		const { handlerData, unseenCount, timeoutMs, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.a_primitive_str(handlerData);
 		this.sm.a_primitive_num(unseenCount);
 		this.sm.a_primitive_num(timeoutMs);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_AddToPlaylist} x */
-	R_AddToPlaylist(x) {this.H_("addToPlaylistRenderer",x,this.D_AddToPlaylist);}
+	R_AddToPlaylist(x) {
+		this.H_("addToPlaylistRenderer", x, this.D_AddToPlaylist);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_AddToPlaylist} x */
-	D_AddToPlaylist(x)
-	{
-		const cf="D_AddToPlaylist";
-		const {playlists,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(playlists,this.R_PlaylistAddToOption);
-		this.z(actions,this.R_AddToPlaylistCreate);
+	D_AddToPlaylist(x) {
+		const cf = "D_AddToPlaylist";
+		const { playlists, actions, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.z(playlists, this.R_PlaylistAddToOption);
+		this.z(actions, this.R_AddToPlaylistCreate);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_AddToPlaylistCreate} x */
-	R_AddToPlaylistCreate(x) {this.H_("addToPlaylistCreateRenderer",x,this.D_AddToPlaylistCreate);}
+	R_AddToPlaylistCreate(x) {
+		this.H_("addToPlaylistCreateRenderer", x, this.D_AddToPlaylistCreate);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_AddToPlaylistCreate} x */
-	D_AddToPlaylistCreate(x)
-	{
-		const cf="D_AddToPlaylistCreate";
-		const {openCreateLink,nameInput,privacyInput,createAction,serviceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_AddToPlaylistCreate(x) {
+		const cf = "D_AddToPlaylistCreate";
+		const {
+			openCreateLink,
+			nameInput,
+			privacyInput,
+			createAction,
+			serviceEndpoint,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		// this.sm.R_CompactLink(openCreateLink);
 		this.xm.R_TextInputFormField(nameInput);
 		this.R_Dropdown(privacyInput);
@@ -1653,176 +2230,274 @@ class Support_GenericApi extends BaseService
 		this.sm.E_CreatePlaylistService(serviceEndpoint);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_PlaylistAddToOption} x */
-	R_PlaylistAddToOption(x) {this.H_("playlistAddToOptionRenderer",x,this.D_PlaylistAddToOption);}
+	R_PlaylistAddToOption(x) {
+		this.H_("playlistAddToOptionRenderer", x, this.D_PlaylistAddToOption);
+	}
 	/** @private @arg {import("../yt_json_types/abc/group_C.ts").C_RefreshPlaylist} x */
-	C_RefreshPlaylist(x) {let [a,y]=this.sm.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",x); this.g(y); this.g(a);}
+	C_RefreshPlaylist(x) {
+		let [a, y] = this.sm.TE_Endpoint_2(
+			"C_RefreshPlaylist",
+			"refreshPlaylistCommand",
+			x,
+		);
+		this.g(y);
+		this.g(a);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_PlaylistAddToOption} x */
-	D_PlaylistAddToOption(x)
-	{
-		const cf="D_PlaylistAddToOption";
-		const {playlistId,title,privacy,containsSelectedVideos,privacyIcon,addToPlaylistServiceEndpoint,removeFromPlaylistServiceEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_PlaylistAddToOption(x) {
+		const cf = "D_PlaylistAddToOption";
+		const {
+			playlistId,
+			title,
+			privacy,
+			containsSelectedVideos,
+			privacyIcon,
+			addToPlaylistServiceEndpoint,
+			removeFromPlaylistServiceEndpoint,
+			trackingParams,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.playlistId(playlistId);
 		this.sm.G_Text(title);
-		switch(privacy)
-		{
-			default: debugger; break;
+		switch (privacy) {
+			default:
+				debugger;
+				break;
 			case "PRIVATE":
 			case "UNLISTED":
 			case "PUBLIC":
 		}
-		this.sm.cq(containsSelectedVideos,"NONE");
-		this.sm.cq(privacyIcon.iconType,"PRIVACY_PRIVATE");
+		this.sm.cq(containsSelectedVideos, "NONE");
+		this.sm.cq(privacyIcon.iconType, "PRIVACY_PRIVATE");
 		this.sm.E_PlaylistEdit(addToPlaylistServiceEndpoint);
 		this.sm.E_PlaylistEdit(removeFromPlaylistServiceEndpoint);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_Dropdown} x */
-	R_Dropdown(x) {this.H_("dropdownRenderer",x,this.D_Dropdown);}
+	R_Dropdown(x) {
+		this.H_("dropdownRenderer", x, this.D_Dropdown);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_Dropdown_Privacy} x */
-	D_Dropdown(x)
-	{
-		const cf="D_Dropdown";
-		const {entries,label,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(entries,this.R_PrivacyDropdownItem);
-		this.t(label,x => this.sm.cq(x,"Privacy"));
+	D_Dropdown(x) {
+		const cf = "D_Dropdown";
+		const { entries, label, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.z(entries, this.R_PrivacyDropdownItem);
+		this.t(label, (x) => this.sm.cq(x, "Privacy"));
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_PrivacyDropdownItem} x */
-	R_PrivacyDropdownItem(x) {this.H_("privacyDropdownItemRenderer",x,this.D_PrivacyDropdownItem);}
+	R_PrivacyDropdownItem(x) {
+		this.H_("privacyDropdownItemRenderer", x, this.D_PrivacyDropdownItem);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_PrivacyDropdownItem} x */
-	D_PrivacyDropdownItem(x)
-	{
-		const cf="D_PrivacyDropdownItem";
-		const {label,icon,description,int32Value,isSelected,accessibility,...y}=this.s(cf,x); this.g(y);
+	D_PrivacyDropdownItem(x) {
+		const cf = "D_PrivacyDropdownItem";
+		const {
+			label,
+			icon,
+			description,
+			int32Value,
+			isSelected,
+			accessibility,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
 		this.sm.G_Text(label);
-		if(icon.iconType!=="PRIVACY_PUBLIC") debugger;
+		if (icon.iconType !== "PRIVACY_PUBLIC") debugger;
 		this.sm.G_Text(description);
-		if(int32Value!==1) debugger;
-		if(isSelected!==false) debugger;
+		if (int32Value !== 1) debugger;
+		if (isSelected !== false) debugger;
 		this.xm.D_Label(accessibility);
 	}
 }
-export_(exports => {exports.Support_GenericApi=Support_GenericApi;});
-class Support_EventInput extends BaseService
-{
+export_((exports) => {
+	exports.Support_GenericApi = Support_GenericApi;
+});
+class Support_EventInput extends BaseService {
 	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:Support_EventInput,x:T)=>U} F @arg {F} f */
-	t(x,f) {return this.t_base(x,f);}
+	t(x, f) {
+		return this.t_base(x, f);
+	}
 	//#region Renderer & Group
 	//#endregion
 	/** @private @arg {import("../yt_json_types/r/r_sub/n/NavFinishDetail_Browse.ts").NavFinishDetail_Browse} x */
-	NavFinishDetail_Browse(x)
-	{
-		x; debugger;
+	NavFinishDetail_Browse(x) {
+		x;
+		debugger;
 	}
 	/** @private @arg {import("../yt_json_types/r/r_sub/n/NavFinishDetail_Channel.ts").NavFinishDetail_Channel} x */
-	NavFinishDetail_Channel(x)
-	{
-		const cf="R_PageTypeChannel";
-		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	NavFinishDetail_Channel(x) {
+		const cf = "R_PageTypeChannel";
+		const {
+			response,
+			endpoint,
+			pageType,
+			fromHistory,
+			navigationDoneMs,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.DataResponsePageType(response);
 		this.sm.E_VE3611(endpoint);
 		this.ps.parse_page_type(pageType);
-		this._primitive_of(fromHistory,"boolean");
+		this._primitive_of(fromHistory, "boolean");
 		this.sm.a_primitive_num(navigationDoneMs);
 	}
 	/** @private @arg {import("../yt_json_types/r/r_sub/n/NavFinishDetail_Playlist.ts").NavFinishDetail_Playlist} x */
-	NavFinishDetail_Playlist(x)
-	{
-		const cf="R_PageTypePlaylist";
-		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	NavFinishDetail_Playlist(x) {
+		const cf = "R_PageTypePlaylist";
+		const {
+			response,
+			endpoint,
+			pageType,
+			fromHistory,
+			navigationDoneMs,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.E_VE5754(endpoint);
 		this.DataResponsePageType(response);
 		this.ps.parse_page_type(pageType);
-		this._primitive_of(fromHistory,"boolean");
+		this._primitive_of(fromHistory, "boolean");
 		this.sm.a_primitive_num(navigationDoneMs);
 	}
 	/** @private @arg {import("../yt_json_types/r/r_sub/n/NavFinishDetail_Search.ts").NavFinishDetail_Search} x */
-	NavFinishDetail_Search(x)
-	{
-		const cf="R_PageTypeSearch";
-		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	NavFinishDetail_Search(x) {
+		const cf = "R_PageTypeSearch";
+		const {
+			response,
+			endpoint,
+			pageType,
+			fromHistory,
+			navigationDoneMs,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.E_Search(endpoint);
 		this.DataResponsePageType(response);
 		this.ps.parse_page_type(pageType);
-		this._primitive_of(fromHistory,"boolean");
+		this._primitive_of(fromHistory, "boolean");
 		this.sm.a_primitive_num(navigationDoneMs);
 	}
 	/** @private @arg {import("../yt_json_types/r/r_sub/n/NavFinishDetail_Settings.ts").NavFinishDetail_Settings} x */
-	NavFinishDetail_Settings(x)
-	{
-		const cf="R_PageTypeSettings";
-		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	NavFinishDetail_Settings(x) {
+		const cf = "R_PageTypeSettings";
+		const {
+			response,
+			endpoint,
+			pageType,
+			fromHistory,
+			navigationDoneMs,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		x: {
-			let x2=endpoint;
-			if("browseEndpoint" in x2) {this.sm.E_VE23462(x2); break x;}
-			x2===""; debugger;
+			let x2 = endpoint;
+			if ("browseEndpoint" in x2) {
+				this.sm.E_VE23462(x2);
+				break x;
+			}
+			x2 === "";
+			debugger;
 		}
-		if(response.page!=="settings") debugger;
+		if (response.page !== "settings") debugger;
 		this.G_RS_Page_Settings(response);
 		this.ps.parse_page_type(pageType);
-		this._primitive_of(fromHistory,"boolean");
+		this._primitive_of(fromHistory, "boolean");
 		this.sm.a_primitive_num(navigationDoneMs);
 	}
 	/** @private @arg {import("../yt_json_types/r/r_sub/n/NavFinishDetail_Shorts.ts").NavFinishDetail_Shorts} x */
-	NavFinishDetail_Shorts(x)
-	{
-		const cf="R_PageTypeShorts";
-		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	NavFinishDetail_Shorts(x) {
+		const cf = "R_PageTypeShorts";
+		const {
+			response,
+			endpoint,
+			pageType,
+			fromHistory,
+			navigationDoneMs,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.x.get("x_VE37414").E_VE37414_ReelWatch(endpoint);
 		this.DataResponsePageType(response);
 		this.ps.parse_page_type(pageType);
-		this._primitive_of(fromHistory,"boolean");
+		this._primitive_of(fromHistory, "boolean");
 		this.sm.a_primitive_num(navigationDoneMs);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").NavFinishDetail_Watch} x */
-	NavFinishDetail_Watch(x)
-	{
-		const cf="R_PageTypeWatch";
-		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	NavFinishDetail_Watch(x) {
+		const cf = "R_PageTypeWatch";
+		const {
+			response,
+			endpoint,
+			pageType,
+			fromHistory,
+			navigationDoneMs,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.E_Watch(endpoint);
 		this.DataResponsePageType(response);
 		this.ps.parse_page_type(pageType);
-		this._primitive_of(fromHistory,"boolean");
+		this._primitive_of(fromHistory, "boolean");
 		this.sm.a_primitive_num(navigationDoneMs);
 	}
 	//#region Event handlers
 	/** @public @arg {import("../yt_json_types/ghi/group_G.ts").G_NavFinishDetail} x */
-	YTNavigateFinishDetail(x)
-	{
-		const cf="YTNavigateFinishDetail"; this.sm.k(cf,x);
-		switch(x.pageType)
-		{
-			default: debugger; break;
-			case "browse": return this.NavFinishDetail_Browse(x);
-			case "channel": return this.NavFinishDetail_Channel(x);
-			case "playlist": return this.NavFinishDetail_Playlist(x);
-			case "search": return this.NavFinishDetail_Search(x);
-			case "settings": return this.NavFinishDetail_Settings(x);
-			case "shorts": return this.NavFinishDetail_Shorts(x);
-			case "watch": return this.NavFinishDetail_Watch(x);
+	YTNavigateFinishDetail(x) {
+		const cf = "YTNavigateFinishDetail";
+		this.sm.k(cf, x);
+		switch (x.pageType) {
+			default:
+				debugger;
+				break;
+			case "browse":
+				return this.NavFinishDetail_Browse(x);
+			case "channel":
+				return this.NavFinishDetail_Channel(x);
+			case "playlist":
+				return this.NavFinishDetail_Playlist(x);
+			case "search":
+				return this.NavFinishDetail_Search(x);
+			case "settings":
+				return this.NavFinishDetail_Settings(x);
+			case "shorts":
+				return this.NavFinishDetail_Shorts(x);
+			case "watch":
+				return this.NavFinishDetail_Watch(x);
 		}
 	}
 	//#endregion
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").G_RS_ByPageType} x */
-	DataResponsePageType(x)
-	{
+	DataResponsePageType(x) {
 		this.sm.RC_ResponseContext(x.response.responseContext);
-		switch(x.page)
-		{
-			case "browse": return this.x.get("x_RS_Page_Browse").G_RS_Page_Browse(x);
-			case "watch": return this.x.get("x_RS_WatchPage").RS_WatchPage(x);
-			case "channel": return this.RS_Page_Channel(x);
-			case "playlist": return this.G_RS_Page_Playlist(x);
-			case "settings": return this.G_RS_Page_Settings(x);
-			case "shorts": return this.G_RS_Page_Shorts(x);
-			case "search": return this.RS_Page_Search(x);
-			default: break;
+		switch (x.page) {
+			case "browse":
+				return this.x.get("x_RS_Page_Browse").G_RS_Page_Browse(x);
+			case "watch":
+				return this.x.get("x_RS_WatchPage").RS_WatchPage(x);
+			case "channel":
+				return this.RS_Page_Channel(x);
+			case "playlist":
+				return this.G_RS_Page_Playlist(x);
+			case "settings":
+				return this.G_RS_Page_Settings(x);
+			case "shorts":
+				return this.G_RS_Page_Shorts(x);
+			case "search":
+				return this.RS_Page_Search(x);
+			default:
+				break;
 		}
-		console.log("pt",x);
+		console.log("pt", x);
 	}
 	//#endregion
 	/** @template {{}} T @arg {{}} x @arg {()=>T|null} wx @returns {asserts x is T} */
-	assert_is_omit_key(x,wx)
-	{
-		function u1() {x; wx;}
+	assert_is_omit_key(x, wx) {
+		function u1() {
+			x;
+			wx;
+		}
 		u1;
 	}
 	/**
@@ -1830,426 +2505,577 @@ class Support_EventInput extends BaseService
 	 * @param {import("../yt_json_types/T_MakeHandlers.ts").T_MakeHandlers<T>} handlers
 	 * @returns {import("../yt_json_types/stu/group_T.ts").T_OmitKey<T,import("../yt_json_types/stu/group_T.ts").T_Split<"page,endpoint,response,url,expirationTime">[number]>}
 	 */
-	RS_Page_Type1(cf,x,handlers)
-	{
-		const {page: a,endpoint: b,response: c,url: d,expirationTime: e,...u}=this.s(cf,x);/*#destructure_done*/
+	RS_Page_Type1(cf, x, handlers) {
+		const {
+			page: a,
+			endpoint: b,
+			response: c,
+			url: d,
+			expirationTime: e,
+			...u
+		} = this.s(cf, x); /*#destructure_done*/
 		handlers.page?.(a);
 		handlers.endpoint?.(b);
 		handlers.response?.(c);
 		handlers.url?.(d);
 		handlers.expirationTime?.(e);
 		/** @returns {import("../yt_json_types/stu/group_T.ts").T_OmitKey<T,import("../yt_json_types/stu/group_T.ts").T_Split<"page,endpoint,response,url,expirationTime">[number]>|null} */
-		function wx() {return null;}
-		this.assert_is_omit_key(u,wx);
+		function wx() {
+			return null;
+		}
+		this.assert_is_omit_key(u, wx);
 		return u;
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").RS_ChannelPage} x */
-	RS_Page_Channel(x)
-	{
-		const cf="RS_Page_Channel";
+	RS_Page_Channel(x) {
+		const cf = "RS_Page_Channel";
 		/** @arg {import("../yt_json_types/r/group_R.ts").RS_ChannelPage["url"]} url */
-		const h_url=url =>
-		{
-			let [a,u]=split_string_once(url,"/"); this.sm.cq(a,"");
-			let c=split_string_once(u,"/");
-			if(c.length===1)
-			{
+		const h_url = (url) => {
+			let [a, u] = split_string_once(url, "/");
+			this.sm.cq(a, "");
+			let c = split_string_once(u, "/");
+			if (c.length === 1) {
 				return;
 			}
-			switch(c[0])
-			{
+			switch (c[0]) {
 				case "c": {
-					let [d,e]=c;
-					this.sm.cq(d,"c");
-					let f=split_string_once(e,"/");
-					if(f.length===2) debugger;
+					let [d, e] = c;
+					this.sm.cq(d, "c");
+					let f = split_string_once(e, "/");
+					if (f.length === 2) debugger;
 					return;
 				}
 			}
-			switch(c[0])
-			{
-				default: {
-					let [d,e]=c;
-					if(!d.startsWith("@")) debugger;
-					if(this.sm.str_is_search(e))
+			switch (c[0]) {
+				default:
 					{
-						let [p,s]=split_string_once(e,"?");
-						if(p!=="search") debugger;
-						let {query,...y}=this.parse_url_search_params(s); this.g(y);
-						this.sm.a_primitive_str(query);
-						return;
+						let [d, e] = c;
+						if (!d.startsWith("@")) debugger;
+						if (this.sm.str_is_search(e)) {
+							let [p, s] = split_string_once(e, "?");
+							if (p !== "search") debugger;
+							let { query, ...y } = this.parse_url_search_params(s);
+							this.g(y);
+							this.sm.a_primitive_str(query);
+							return;
+						}
+						switch (e) {
+							default:
+								e === "";
+								debugger;
+								break;
+							case "search":
+							case "shorts":
+							case "featured":
+							case "about":
+							case "videos":
+							case "playlists":
+							case "community":
+							case "channels":
+							case "shorts":
+						}
 					}
-					switch(e)
+					break;
+				case "channel":
 					{
-						default: e===""; debugger; break;
-						case "search": case "shorts": case "featured":
-						case "about": case "videos": case "playlists": case "community": case "channels": case "shorts":
+						let [, e] = c;
+						if (!this.sm.str_starts_with(e, "UC")) {
+							debugger;
+							break;
+						}
+						if (this.sm.str_is_search(e)) {
+							debugger;
+							break;
+						}
+						let p = split_string_once(e, "/");
+						this.sm.cq(p.length, 1);
+						this.sm.channelId(p[0]);
 					}
-
-				} break;
-				case "channel": {
-					let [,e]=c;
-					if(!this.sm.str_starts_with(e,"UC")) {debugger; break;}
-					if(this.sm.str_is_search(e)) {debugger; break;}
-					let p=split_string_once(e,"/"); this.sm.cq(p.length,1);
-					this.sm.channelId(p[0]);
-				} break;
+					break;
 			}
 		};
 		/** @arg {(typeof x)["endpoint"]} x */
-		let h_ep=x => this.sm.E_VE3611(x);
+		let h_ep = (x) => this.sm.E_VE3611(x);
 		/** @arg {(typeof x)["response"]} x */
-		let h_rs=x => this.ht.RS_Channel(x);
+		let h_rs = (x) => this.ht.RS_Channel(x);
 		/** @arg {(typeof x)["expirationTime"]} x */
-		let h_et=x => this.sm.a_primitive_num(x);
+		let h_et = (x) => this.sm.a_primitive_num(x);
 		/** @type {import("../yt_json_types/T_MakeHandlers.ts").T_MakeHandlers<typeof x>} */
-		const h_d={
-			page: x => this.sm.cq(x,"channel"),
+		const h_d = {
+			page: (x) => this.sm.cq(x, "channel"),
 			endpoint: h_ep,
 			response: h_rs,
 		};
-		if(!this.sm.is_EP_Val(x,3611)) debugger;
-		if("previousCsn" in x)
-		{
+		if (!this.sm.is_EP_Val(x, 3611)) debugger;
+		if ("previousCsn" in x) {
 			/** @type {import("../yt_json_types/T_MakeHandlers.ts").T_MakeHandlers<typeof x>} */
-			const handlers={...h_d,url: h_url,expirationTime: h_et};
-			let {previousCsn,...u1}=this.RS_Page_Type1(cf,x,handlers); this.g(u1);
-			this.sm.D_VeCsn(previousCsn,{prev: true});
+			const handlers = { ...h_d, url: h_url, expirationTime: h_et };
+			let { previousCsn, ...u1 } = this.RS_Page_Type1(cf, x, handlers);
+			this.g(u1);
+			this.sm.D_VeCsn(previousCsn, { prev: true });
 			return;
 		}
-		if("rootVe" in x)
-		{
+		if ("rootVe" in x) {
 			/** @type {import("../yt_json_types/T_MakeHandlers.ts").T_MakeHandlers<typeof x>} */
-			const handlers={
+			const handlers = {
 				page: h_d.page,
 				endpoint: h_d.endpoint,
 				response: h_d.response,
-				url: x => h_url(x),
+				url: (x) => h_url(x),
 				expirationTime: h_et,
 			};
-			const {rootVe,csn,...y}=this.RS_Page_Type1(cf,x,handlers); this.g(y);
+			const { rootVe, csn, ...y } = this.RS_Page_Type1(cf, x, handlers);
+			this.g(y);
 			this.sm.rootVe(rootVe);
-			this.cq(rootVe,3611);
-			this.sm.t(csn,this.sm.D_VeCsn);
+			this.cq(rootVe, 3611);
+			this.sm.t(csn, this.sm.D_VeCsn);
 			return;
 		}
-		if("csn" in x)
-		{
+		if ("csn" in x) {
 			/** @type {import("../yt_json_types/T_MakeHandlers.ts").T_MakeHandlers<typeof x>} */
-			const handlers={
+			const handlers = {
 				page: h_d.page,
 				endpoint: h_d.endpoint,
 				response: h_d.response,
-				url: x => h_url(x),
+				url: (x) => h_url(x),
 				expirationTime: h_et,
 			};
-			const {csn,graftedVes,...y}=this.RS_Page_Type1(cf,x,handlers); this.g(y);
-			this.sm.t(csn,this.sm.D_VeCsn);
-			this.z(graftedVes,this.D_GraftedVeItem);
+			const { csn, graftedVes, ...y } = this.RS_Page_Type1(cf, x, handlers);
+			this.g(y);
+			this.sm.t(csn, this.sm.D_VeCsn);
+			this.z(graftedVes, this.D_GraftedVeItem);
 			return;
 		}
 		/** @type {import("../yt_json_types/T_MakeHandlers.ts").T_MakeHandlers<typeof x>} */
-		const handlers={
+		const handlers = {
 			page: h_d.page,
 			endpoint: h_d.endpoint,
 			response: h_d.response,
 			/** @arg {import("../yt_json_types/ghi/group_G.ts").GU_VE3611_2} x */
-			url: x => h_url(x),
+			url: (x) => h_url(x),
 			expirationTime: h_et,
 		};
-		const {...y}=this.RS_Page_Type1(cf,x,handlers); this.g(y);
-		if(this.sm.is_not_empty_obj(y)) debugger;
+		const { ...y } = this.RS_Page_Type1(cf, x, handlers);
+		this.g(y);
+		if (this.sm.is_not_empty_obj(y)) debugger;
 	}
 	/** @private @arg {import("../yt_json_types/ghi/group_G.ts").G_RS_Page_Playlist} x */
-	G_RS_Page_Playlist(x)
-	{
-		const cf="R_PlaylistPage";
-		const {url,endpoint,page,response,...y}=this.s(cf,x);
-		if(page!=="playlist") debugger;
+	G_RS_Page_Playlist(x) {
+		const cf = "R_PlaylistPage";
+		const { url, endpoint, page, response, ...y } = this.s(cf, x);
+		if (page !== "playlist") debugger;
 		this.sm.E_VE5754(endpoint);
 		this.RS_Playlist(response);
 		this.sm.a_primitive_str(url);
-		if("rootVe" in y)
-		{
-			const {rootVe,...u}=this.s(cf,y); this.g(u);/*#destructure_done*/
-			switch(rootVe)
-			{
-				default: debugger; break;
-				case 5754: break;
+		if ("rootVe" in y) {
+			const { rootVe, ...u } = this.s(cf, y);
+			this.g(u); /*#destructure_done*/
+			switch (rootVe) {
+				default:
+					debugger;
+					break;
+				case 5754:
+					break;
 			}
 			return;
 		}
 		this.g(y);
 	}
 	/** @private @arg {import("../yt_json_types/ghi/group_G.ts").G_RS_SettingsPage} x */
-	G_RS_Page_Settings(x)
-	{
-		const cf="R_SettingsPage";
-		if("rootVe" in x) return this.RS_VE23462_Page_Settings(x);
-		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(page!=="settings") debugger;
+	G_RS_Page_Settings(x) {
+		const cf = "R_SettingsPage";
+		if ("rootVe" in x) return this.RS_VE23462_Page_Settings(x);
+		const { page, endpoint, response, url, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		if (page !== "settings") debugger;
 		this.sm.E_VE23462(endpoint);
 		this.RS_Settings(response);
 		this.sm.a_primitive_str(url);
 	}
 	/** @private @arg {import("../yt_json_types/ghi/group_G.ts").G_RS_ShortsPage} x */
-	G_RS_Page_Shorts(x)
-	{
-		const cf="RS_ShortsPage";
-		if("rootVe" in x) return this.RS_VE37414_Shorts(x);
-		const {page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,previousCsn,cachedReelWatchSequenceResponse,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(page!=="shorts") debugger;
+	G_RS_Page_Shorts(x) {
+		const cf = "RS_ShortsPage";
+		if ("rootVe" in x) return this.RS_VE37414_Shorts(x);
+		const {
+			page,
+			playerResponse,
+			endpoint,
+			response,
+			reelWatchSequenceResponse,
+			url,
+			previousCsn,
+			cachedReelWatchSequenceResponse,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		if (page !== "shorts") debugger;
 		this.x.get("x_VE37414").E_VE37414_ReelWatch(endpoint);
 		this.RS_Reel(response);
 		this.x.get("x_RS_Player").RS_Player(playerResponse);
-		this.t(reelWatchSequenceResponse,x => this.ht.RS_ReelWatchSequence(x));
-		if(!this.sm.str_starts_with(url,"/shorts/")) debugger;
-		if(url.includes("&")) debugger;
-		this.t(previousCsn,x => this.sm.D_VeCsn(x,{prev: true}));
-		this.t(cachedReelWatchSequenceResponse,x => this.ht.RS_ReelWatchSequence(x));
+		this.t(reelWatchSequenceResponse, (x) => this.ht.RS_ReelWatchSequence(x));
+		if (!this.sm.str_starts_with(url, "/shorts/")) debugger;
+		if (url.includes("&")) debugger;
+		this.t(previousCsn, (x) => this.sm.D_VeCsn(x, { prev: true }));
+		this.t(
+			cachedReelWatchSequenceResponse,
+			(x) => this.ht.RS_ReelWatchSequence(x),
+		);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").RS_SearchPage} x */
-	RS_Page_Search(x)
-	{
-		const cf="RS_SearchPage";
-		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(page!=="search") debugger;
+	RS_Page_Search(x) {
+		const cf = "RS_SearchPage";
+		const { page, endpoint, response, url, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		if (page !== "search") debugger;
 		this.sm.E_Search(endpoint);
 		this.ht.RS_Search(response);
-		if(!this.sm.str_starts_with(url,"/results?search_query=")) debugger;
-		if(url.includes("&")) debugger;
+		if (!this.sm.str_starts_with(url, "/results?search_query=")) debugger;
+		if (url.includes("&")) debugger;
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_GraftedVeItem} x */
-	D_GraftedVeItem(x)
-	{
-		const cf="D_GraftedVeItem";
-		const {veData,csn,...y}=this.s(cf,x); this.g(y);
+	D_GraftedVeItem(x) {
+		const cf = "D_GraftedVeItem";
+		const { veData, csn, ...y } = this.s(cf, x);
+		this.g(y);
 		this.sm.D_VeCsn(csn);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").RS_VE23462_Page_Settings} x */
-	RS_VE23462_Page_Settings(x)
-	{
-		const cf="Settings_VE23462";
-		const {page,endpoint,response,url,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(page!=="settings") debugger;
+	RS_VE23462_Page_Settings(x) {
+		const cf = "Settings_VE23462";
+		const { page, endpoint, response, url, rootVe, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		if (page !== "settings") debugger;
 		this.sm.E_VE23462(endpoint);
 		this.RS_Settings(response);
 		this.sm.a_primitive_str(url);
 		this.sm.rootVe(rootVe);
-		this.cq(rootVe,23462);
+		this.cq(rootVe, 23462);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").RS_VE37414_Shorts} x */
-	RS_VE37414_Shorts(x)
-	{
-		const cf="Shorts_VE37414";
-		const {rootVe,page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	RS_VE37414_Shorts(x) {
+		const cf = "Shorts_VE37414";
+		const {
+			rootVe,
+			page,
+			playerResponse,
+			endpoint,
+			response,
+			reelWatchSequenceResponse,
+			url,
+			cachedReelWatchSequenceResponse,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.rootVe(rootVe);
-		this.cq(rootVe,37414);
-		if(page!=="shorts") debugger;
+		this.cq(rootVe, 37414);
+		if (page !== "shorts") debugger;
 		this.x.get("x_RS_Player").RS_Player(playerResponse);
 		this.x.get("x_VE37414").E_VE37414_ReelWatch(endpoint);
 		this.RS_Reel(response);
-		this.t(reelWatchSequenceResponse,x => this.ht.RS_ReelWatchSequence(x));
-		if(!this.sm.str_starts_with(url,"/shorts/")) debugger;
-		if(url.includes("&")) debugger;
-		if(!cachedReelWatchSequenceResponse) debugger;
+		this.t(reelWatchSequenceResponse, (x) => this.ht.RS_ReelWatchSequence(x));
+		if (!this.sm.str_starts_with(url, "/shorts/")) debugger;
+		if (url.includes("&")) debugger;
+		if (!cachedReelWatchSequenceResponse) debugger;
 		this.ht.RS_ReelWatchSequence(cachedReelWatchSequenceResponse);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").RS_Reel} x */
-	RS_Reel(x)
-	{
-		const cf="RS_Reel";
-		const {responseContext,overlay,status,trackingParams,desktopTopbar,engagementPanels,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	RS_Reel(x) {
+		const cf = "RS_Reel";
+		const {
+			responseContext,
+			overlay,
+			status,
+			trackingParams,
+			desktopTopbar,
+			engagementPanels,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.xr.R_ReelPlayerOverlay(overlay);
-		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
+		if (status !== "REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
 		this.sm.R_DesktopTopbar(desktopTopbar);
-		if(!engagementPanels) debugger;
-		else {this.z(engagementPanels,x => this.xm.R_EngagementPanelSectionList(x));}
+		if (!engagementPanels) debugger;
+		else {this.z(engagementPanels, (x) =>
+				this.xm.R_EngagementPanelSectionList(x));}
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").RS_Playlist} x */
-	RS_Playlist(x)
-	{
-		const cf="RS_Playlist";
-		const {responseContext,contents,header,alerts,metadata,topbar,trackingParams,microformat,sidebar,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	RS_Playlist(x) {
+		const cf = "RS_Playlist";
+		const {
+			responseContext,
+			contents,
+			header,
+			alerts,
+			metadata,
+			topbar,
+			trackingParams,
+			microformat,
+			sidebar,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.xm.R_TwoColumnBrowseResults(contents);
 		this.xm.R_PlaylistHeader(header);
-		this.tz_cf(cf,alerts,this.sm.RS_Playlist_AlertItem);
+		this.tz_cf(cf, alerts, this.sm.RS_Playlist_AlertItem);
 		this.xr.R_Playlist_MD(metadata);
 		this.sm.R_DesktopTopbar(topbar);
 		this.sm.R_Microformat(microformat);
 		this.xr.R_PlaylistSidebar(sidebar);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").RS_Settings} x */
-	RS_Settings(x)
-	{
-		const cf="RS_Settings";
-		const {responseContext,contents,topbar,trackingParams,onResponseReceivedEndpoints,sidebar,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	RS_Settings(x) {
+		const cf = "RS_Settings";
+		const {
+			responseContext,
+			contents,
+			topbar,
+			trackingParams,
+			onResponseReceivedEndpoints,
+			sidebar,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.xm.R_TwoColumnBrowseResults(contents);
 		this.sm.R_DesktopTopbar(topbar);
-		this.tz(onResponseReceivedEndpoints,(this.g));
+		this.tz(onResponseReceivedEndpoints, this.g);
 		this.xr.R_SettingsSidebar(sidebar);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_Tab_WhatToWatch} x */
-	D_Tab_WhatToWatch(x)
-	{
-		const {selected,content,tabIdentifier: {},trackingParams,...y}=this.s("D_Tab_WhatToWatch",x); this.g(y);
-		this.sm.cq(selected,true);
+	D_Tab_WhatToWatch(x) {
+		const { selected, content, tabIdentifier: {}, trackingParams, ...y } = this
+			.s("D_Tab_WhatToWatch", x);
+		this.g(y);
+		this.sm.cq(selected, true);
 		this.sm.R_RichGrid(content);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_Tab_Library} x */
-	D_Tab_Library(x) {x;}
+	D_Tab_Library(x) {
+		x;
+	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_Tab} x */
-	R_Tab(x) {this.H_("tabRenderer",x,this.D_Tab);}
+	R_Tab(x) {
+		this.H_("tabRenderer", x, this.D_Tab);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_Tab} x */
-	D_Tab(x)
-	{
-		const cf="D_Tab";
-		if("tabIdentifier" in x)
-		{
-			let ux=x;
-			switch(x.tabIdentifier)
-			{
-				default: this.sm.codegen_typedef(`${cf}_${ux.tabIdentifier}`,x,false); break;
-				case "FEhistory": return this.D_Tab_History(x);
-				case "FEsubscriptions": return this.D_Tab_Subscriptions(x);
-				case "FEwhat_to_watch": return this.D_Tab_WhatToWatch(x);
-				case "FElibrary": return this.D_Tab_Library(x);
+	D_Tab(x) {
+		const cf = "D_Tab";
+		if ("tabIdentifier" in x) {
+			let ux = x;
+			switch (x.tabIdentifier) {
+				default:
+					this.sm.codegen_typedef(`${cf}_${ux.tabIdentifier}`, x, false);
+					break;
+				case "FEhistory":
+					return this.D_Tab_History(x);
+				case "FEsubscriptions":
+					return this.D_Tab_Subscriptions(x);
+				case "FEwhat_to_watch":
+					return this.D_Tab_WhatToWatch(x);
+				case "FElibrary":
+					return this.D_Tab_Library(x);
 			}
 			return;
 		}
-		if("selected" in x) {return;}
-		if("content" in x)
-		{
+		if ("selected" in x) return;
+		if ("content" in x) {
 			/** @type {`${typeof cf}_${"R_MusicQueue"}`} */
-			const cf2=`${cf}_${"R_MusicQueue"}`;
-			const {content,trackingParams,...y}=this.s(cf2,x); this.g(y);/*#destructure_done*/
+			const cf2 = `${cf}_${"R_MusicQueue"}`;
+			const { content, trackingParams, ...y } = this.s(cf2, x);
+			this.g(y); /*#destructure_done*/
 			this.sm.R_MusicQueue(content);
 			return;
 		}
 		x: {
-			if(!("endpoint" in x)) break x;
+			if (!("endpoint" in x)) break x;
 			/** @type {`${typeof cf}_WithEndpoint`} */
-			const cf2=`${cf}_WithEndpoint`;
-			const {endpoint,title,trackingParams,...y}=this.s(cf2,x); this.g(y);/*#destructure_done*/
+			const cf2 = `${cf}_WithEndpoint`;
+			const { endpoint, title, trackingParams, ...y } = this.s(cf2, x);
+			this.g(y); /*#destructure_done*/
 			y: {
-				if(this.sm.is_TE_VE(endpoint,3611)) {this.sm.E_VE3611(endpoint); break y;}
+				if (this.sm.is_TE_VE(endpoint, 3611)) {
+					this.sm.E_VE3611(endpoint);
+					break y;
+				}
 				debugger;
 			}
-			this.save_primitive(`${cf2}.title`,title);
+			this.save_primitive(`${cf2}.title`, title);
 		}
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_Tab_History} x */
-	D_Tab_History(x)
-	{
-		const cf="D_Tab_History";
-		const {selected,content,tabIdentifier: {},accessibility,trackingParams,...y}=this.s(cf,x); this.g(y);
-		if(selected!==true) debugger;
-		if(!content.sectionListRenderer) debugger;
+	D_Tab_History(x) {
+		const cf = "D_Tab_History";
+		const {
+			selected,
+			content,
+			tabIdentifier: {},
+			accessibility,
+			trackingParams,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
+		if (selected !== true) debugger;
+		if (!content.sectionListRenderer) debugger;
 		this.xm.R_SectionList(content);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_Tab_Subscriptions} x */
-	D_Tab_Subscriptions(x)
-	{
-		const cf="D_Tab_Subscriptions";
-		const {endpoint,selected,content,tabIdentifier: {},accessibility,trackingParams,...y}=this.s(cf,x); this.g(y);
+	D_Tab_Subscriptions(x) {
+		const cf = "D_Tab_Subscriptions";
+		const {
+			endpoint,
+			selected,
+			content,
+			tabIdentifier: {},
+			accessibility,
+			trackingParams,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
 		this.D_Tab_Subscriptions_EP(endpoint);
-		this.sm.cq(selected,true);
+		this.sm.cq(selected, true);
 		this.xm.R_SectionList(content);
 	}
 	/** @private @arg {Extract<import("../yt_json_types/d/group_D.ts").D_Tab,{tabIdentifier:"FEsubscriptions"}>["endpoint"]} x */
-	D_Tab_Subscriptions_EP(x)
-	{
-		if(this.sm.is_TE_VE(x,96368)) return this.sm.E_VE96368(x);
+	D_Tab_Subscriptions_EP(x) {
+		if (this.sm.is_TE_VE(x, 96368)) return this.sm.E_VE96368(x);
 	}
 }
-export_(exports => {exports.Support_EventInput=Support_EventInput;});
-class Support_VE extends BaseService
-{
+export_((exports) => {
+	exports.Support_EventInput = Support_EventInput;
+});
+class Support_VE extends BaseService {
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_VssLoggingContext} x */
-	R_VssLoggingContext(x) {this.H_("vssLoggingContext",x,this.D_VssLoggingContext);}
+	R_VssLoggingContext(x) {
+		this.H_("vssLoggingContext", x, this.D_VssLoggingContext);
+	}
 	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_VssLoggingContext} x */
-	D_VssLoggingContext(x)
-	{
-		const cf="D_VssLoggingContext";
-		const {serializedContextData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_VssLoggingContext(x) {
+		const cf = "D_VssLoggingContext";
+		const { serializedContextData, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 	}
 }
-export_(exports => {exports.Support_VE=Support_VE;});
-class Support_VE37414 extends BaseService
-{
+export_((exports) => {
+	exports.Support_VE = Support_VE;
+});
+class Support_VE37414 extends BaseService {
 	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:Support_VE37414,x:T)=>U} F @arg {F} f */
-	t(x,f) {return this.t_base(x,f);}
+	t(x, f) {
+		return this.t_base(x, f);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_SerializedContextData} x */
-	D_QoeLoggingContext(x)
-	{
-		const cf="D_QoeLoggingContext";
-		const {serializedContextData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_QoeLoggingContext(x) {
+		const cf = "D_QoeLoggingContext";
+		const { serializedContextData, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 	}
 	/** @private @arg {import("../yt_json_types/d/group_DE.ts").DE_ReelWatch} x */
-	DE_VE37414_ReelWatch(x)
-	{
-		const cf="DE_VE37414_ReelWatch";
-		const {videoId,playerParams,thumbnail,overlay,params,loggingContext,sequenceProvider,inputType,sequenceParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(videoId,x => this.sm.videoId(x));
-		this.sm.t(thumbnail,this.sm.D_Thumbnail);
+	DE_VE37414_ReelWatch(x) {
+		const cf = "DE_VE37414_ReelWatch";
+		const {
+			videoId,
+			playerParams,
+			thumbnail,
+			overlay,
+			params,
+			loggingContext,
+			sequenceProvider,
+			inputType,
+			sequenceParams,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.t(videoId, (x) => this.sm.videoId(x));
+		this.sm.t(thumbnail, this.sm.D_Thumbnail);
 		this.xr.R_ReelPlayerOverlay(overlay);
-		this.t(loggingContext,this.D_LoggingContext);
-		this.t(sequenceProvider,x => this.sm.cq(x,"REEL_WATCH_SEQUENCE_PROVIDER_RPC"));
-		this.t(inputType,x => this.sm.cq(x,"REEL_WATCH_INPUT_TYPE_SEEDLESS"));
+		this.t(loggingContext, this.D_LoggingContext);
+		this.t(
+			sequenceProvider,
+			(x) => this.sm.cq(x, "REEL_WATCH_SEQUENCE_PROVIDER_RPC"),
+		);
+		this.t(inputType, (x) => this.sm.cq(x, "REEL_WATCH_INPUT_TYPE_SEEDLESS"));
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_LoggingContext} x */
-	D_LoggingContext(x)
-	{
-		if(!x) {debugger; return;}
-		const cf="D_LoggingContext";
-		const {vssLoggingContext,qoeLoggingContext,...y}=this.s(cf,x); this.g(y);
+	D_LoggingContext(x) {
+		if (!x) {
+			debugger;
+			return;
+		}
+		const cf = "D_LoggingContext";
+		const { vssLoggingContext, qoeLoggingContext, ...y } = this.s(cf, x);
+		this.g(y);
 		this.x.get("x_VE").D_VssLoggingContext(vssLoggingContext);
 		this.D_QoeLoggingContext(qoeLoggingContext);
 	}
 	/** @public @arg {import("../yt_json_types/e/GR_E_VE.ts").E_VE37414_ReelWatch} x */
-	E_VE37414_ReelWatch(x) {const [a,b,y]=this.sm.TE_Endpoint_3("E_VE37414_ReelWatch","reelWatchEndpoint",x); this.g(y); this.M_VE37414(a); this.DE_VE37414_ReelWatch(b);}
+	E_VE37414_ReelWatch(x) {
+		const [a, b, y] = this.sm.TE_Endpoint_3(
+			"E_VE37414_ReelWatch",
+			"reelWatchEndpoint",
+			x,
+		);
+		this.g(y);
+		this.M_VE37414(a);
+		this.DE_VE37414_ReelWatch(b);
+	}
 	/** @private @arg {import("../yt_json_types/m/M.ts").M_VE37414} x */
-	M_VE37414(x) {this.T_WCM("M_VE37414",x,this.GM_VE37414);}
+	M_VE37414(x) {
+		this.T_WCM("M_VE37414", x, this.GM_VE37414);
+	}
 	/** @private @arg {import("../yt_json_types/ghi/group_G.ts").GM_VE37414} x @returns {`VE${rootVe}`} */
-	GM_VE37414(x)
-	{
-		const cf="GM_VE37414";
-		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	GM_VE37414(x) {
+		const cf = "GM_VE37414";
+		const { url, webPageType, rootVe, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		x: {
-			if(url==="/shorts/") break x;
-			let up=split_string_once(url,"/");
-			let [p1,p2]=up; if(p1!=="") debugger;
-			let u2=split_string_once(p2,"/");
-			let [p3,p4]=u2; if(p3!=="shorts") debugger;
+			if (url === "/shorts/") break x;
+			let up = split_string_once(url, "/");
+			let [p1, p2] = up;
+			if (p1 !== "") debugger;
+			let u2 = split_string_once(p2, "/");
+			let [p3, p4] = u2;
+			if (p3 !== "shorts") debugger;
 			this.sm.videoId(p4);
 		}
-		if(webPageType!=="WEB_PAGE_TYPE_SHORTS") debugger;
+		if (webPageType !== "WEB_PAGE_TYPE_SHORTS") debugger;
 		this.sm.rootVe(rootVe);
-		this.cq(rootVe,37414);
+		this.cq(rootVe, 37414);
 		return `VE${rootVe}`;
 	}
 }
-export_(exports => {exports.Support_VE37414=Support_VE37414;});
-class Support_Renderer extends BaseService
-{
+export_((exports) => {
+	exports.Support_VE37414 = Support_VE37414;
+});
+class Support_Renderer extends BaseService {
 	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:Support_Renderer,x:T)=>U} F @arg {F} f */
-	t(x,f) {return this.t_base(x,f);}
+	t(x, f) {
+		return this.t_base(x, f);
+	}
 	//#region data members
 	/** @type {Map<number,object>} */
-	view_conversion_info=new Map;
+	view_conversion_info = new Map();
 	//#endregion
 	//#region Endpoint methods
 	//#endregion
 	//#region Action methods
 	/** @private @arg {import("../yt_json_types/abc/A.ts").A_AddToGuideSection} x */
-	A_AddToGuideSection(x) {let [a,y]=this.sm.TE_Endpoint_2("A_AddToGuideSection","addToGuideSectionAction",x); this.g(y); this.AD_AddToGuideSection(a);}
+	A_AddToGuideSection(x) {
+		let [a, y] = this.sm.TE_Endpoint_2(
+			"A_AddToGuideSection",
+			"addToGuideSectionAction",
+			x,
+		);
+		this.g(y);
+		this.AD_AddToGuideSection(a);
+	}
 	/** @private @arg {import("../yt_json_types/abc/A.ts").A_ReplayChatItem} x */
-	A_ReplayChatItem(x) {this.H_("replayChatItemAction",x,this.AD_ReplayChatItem);}
+	A_ReplayChatItem(x) {
+		this.H_("replayChatItemAction", x, this.AD_ReplayChatItem);
+	}
 	/** @private @arg {import("../yt_json_types/abc/A.ts").A_AddChatItem} x */
-	A_AddChatItem(x)
-	{
-		const cf="A_AddChatItem";
-		const {clickTrackingParams,addChatItemAction,...y}=this.s(cf,x); this.g(y);
+	A_AddChatItem(x) {
+		const cf = "A_AddChatItem";
+		const { clickTrackingParams, addChatItemAction, ...y } = this.s(cf, x);
+		this.g(y);
 		this.AD_AddChatItem(addChatItemAction);
 	}
 	/**
@@ -2259,89 +3085,134 @@ class Support_Renderer extends BaseService
 	 * @param {(this:this,x:T_Endpoint[T_Key])=>R_D} f1
 	 * @returns {[typeof y,R_D]}
 	 */
-	TE_Endpoint_2_opt_v2(k,x,f1)
-	{
-		let keys=this.get_keys_of(x);
-		let s=new JsonReplacerState({
+	TE_Endpoint_2_opt_v2(k, x, f1) {
+		let keys = this.get_keys_of(x);
+		let s = new JsonReplacerState({
 			text_decoder: this._decoder,
-			cf: k,keys,is_root: true,
+			cf: k,
+			keys,
+			is_root: true,
 		});
-		let cf=this.cg.get_auto_type_name(s,x);
-		const {clickTrackingParams: a,[k]: b,...y}=this.s(cf,x);
-		const r1=f1.call(this,b);
-		return [y,r1];
+		let cf = this.cg.get_auto_type_name(s, x);
+		const { clickTrackingParams: a, [k]: b, ...y } = this.s(cf, x);
+		const r1 = f1.call(this, b);
+		return [y, r1];
 	}
 	// UpdateAction methods
 	/** @private @arg {import("../yt_json_types/abc/A.ts").AU_SubscribeButton} x */
-	AU_SubscribeButton(x) {this.TE_Endpoint_2_opt_v2("updateSubscribeButtonAction",x,this.AD_SubscribeButton);}
+	AU_SubscribeButton(x) {
+		this.TE_Endpoint_2_opt_v2(
+			"updateSubscribeButtonAction",
+			x,
+			this.AD_SubscribeButton,
+		);
+	}
 	// Command methods
 	/** @private @arg {import("../yt_json_types/abc/group_C.ts").C_RunAttestation} x */
-	C_RunAttestation(x) {this.TE_Endpoint_2_opt_v2("runAttestationCommand",x,this.D_RunAttestation);}
+	C_RunAttestation(x) {
+		this.TE_Endpoint_2_opt_v2(
+			"runAttestationCommand",
+			x,
+			this.D_RunAttestation,
+		);
+	}
 	//#endregion
 	//#region ActionData methods
 	/** @private @arg {import("../yt_json_types/abc/AD.ts").AD_AddToGuideSection} x */
-	AD_AddToGuideSection(x)
-	{
-		const cf="AD_AddToGuideSection";
-		const {handlerData,items,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		switch(handlerData)
-		{
-			case "GUIDE_ACTION_ADD_TO_PLAYLISTS": break;
-			case "GUIDE_ACTION_ADD_TO_SUBSCRIPTIONS": break;
+	AD_AddToGuideSection(x) {
+		const cf = "AD_AddToGuideSection";
+		const { handlerData, items, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		switch (handlerData) {
+			case "GUIDE_ACTION_ADD_TO_PLAYLISTS":
+				break;
+			case "GUIDE_ACTION_ADD_TO_SUBSCRIPTIONS":
+				break;
 		}
-		this.z(items,x => this.xr.R_GuideEntry(x));
+		this.z(items, (x) => this.xr.R_GuideEntry(x));
 	}
 	/** @private @arg {import("../yt_json_types/abc/AD.ts").AD_SubscribeButton} x */
-	AD_SubscribeButton(x)
-	{
-		const cf="AD_SubscribeButton";
-		const {subscribed,channelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	AD_SubscribeButton(x) {
+		const cf = "AD_SubscribeButton";
+		const { subscribed, channelId, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.a_primitive_bool(subscribed);
 		this.sm.channelId(channelId);
 	}
 	/** @private @arg {import("../yt_json_types/abc/AD.ts").AD_ReplayChatItem} x */
-	AD_ReplayChatItem(x)
-	{
-		const cf="AD_ReplayChatItem";
-		const {actions,videoOffsetTimeMsec,...y}=this.s(cf,x); this.g(y);
-		this.z(actions,this.A_AddChatItem);
+	AD_ReplayChatItem(x) {
+		const cf = "AD_ReplayChatItem";
+		const { actions, videoOffsetTimeMsec, ...y } = this.s(cf, x);
+		this.g(y);
+		this.z(actions, this.A_AddChatItem);
 		this.sm.a_primitive_str(videoOffsetTimeMsec);
 	}
 	/** @private @arg {import("../yt_json_types/abc/AD.ts").AD_AddChatItem} x */
-	AD_AddChatItem(x)
-	{
-		const cf="AD_AddChatItem";
-		const {item,clientId,...y}=this.s(cf,x); this.g(y);
+	AD_AddChatItem(x) {
+		const cf = "AD_AddChatItem";
+		const { item, clientId, ...y } = this.s(cf, x);
+		this.g(y);
 		this.xr.G_ChatItem(item);
-		this.t(clientId,x => this.save_primitive(`${cf}.clientId`,x));
+		this.t(clientId, (x) => this.save_primitive(`${cf}.clientId`, x));
 	}
 	// CommandData Data methods
 	/** @private @arg {"DC_PlayerSeek"} cf @arg {import("../yt_json_types/abc/group_C.ts").DC_Generic} x */
-	DC_Generic(cf,x) {this.y(cf,"continuation",x,() => {});}
+	DC_Generic(cf, x) {
+		this.y(cf, "continuation", x, () => {});
+	}
 	/** @private @arg {import("../yt_json_types/abc/group_C.ts").DC_PlayerSeek} x */
-	DC_PlayerSeek(x) {this.DC_Generic("DC_PlayerSeek",x);}
+	DC_PlayerSeek(x) {
+		this.DC_Generic("DC_PlayerSeek", x);
+	}
 	/** @private @arg {import("../yt_json_types/abc/group_C.ts").DC_LiveChatReplay} x */
-	DC_LiveChatReplay(x)
-	{
-		const cf="DC_LiveChatReplay";
-		const {continuation,timeUntilLastMessageMsec,...y}=this.s(cf,x); this.g(y);
+	DC_LiveChatReplay(x) {
+		const cf = "DC_LiveChatReplay";
+		const { continuation, timeUntilLastMessageMsec, ...y } = this.s(cf, x);
+		this.g(y);
 		this.sm.a_primitive_num(timeUntilLastMessageMsec);
 	}
 	// ContinuationData Renderer methods
 	/** @private @arg {import("../yt_json_types/abc/group_C.ts").CD_PlayerSeek} x */
-	CD_PlayerSeek(x) {this.y("CD_PlayerSeek","playerSeekContinuationData",x,this.DC_PlayerSeek);}
+	CD_PlayerSeek(x) {
+		this.y(
+			"CD_PlayerSeek",
+			"playerSeekContinuationData",
+			x,
+			this.DC_PlayerSeek,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/abc/group_C.ts").CD_LiveChatReplay} x */
-	CD_LiveChatReplay(x) {this.y("CD_LiveChatReplay","liveChatReplayContinuationData",x,this.DC_LiveChatReplay);}
+	CD_LiveChatReplay(x) {
+		this.y(
+			"CD_LiveChatReplay",
+			"liveChatReplayContinuationData",
+			x,
+			this.DC_LiveChatReplay,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/abc/group_C.ts").CD_Invalidation} x */
-	CD_Invalidation(x) {this.y("CD_Invalidation","invalidationContinuationData",x,this.DC_Invalidation);}
+	CD_Invalidation(x) {
+		this.y(
+			"CD_Invalidation",
+			"invalidationContinuationData",
+			x,
+			this.DC_Invalidation,
+		);
+	}
 	// ContinuationData Data methods
 	/** @private @arg {import("../yt_json_types/d/group_DC.ts").DC_Invalidation} x */
-	DC_Invalidation(x)
-	{
-		const cf="DC_Invalidation";
-		const {invalidationId,timeoutMs,continuation,clickTrackingParams,...y}=this.s(cf,x); this.g(y);
+	DC_Invalidation(x) {
+		const cf = "DC_Invalidation";
+		const {
+			invalidationId,
+			timeoutMs,
+			continuation,
+			clickTrackingParams,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
 		this.D_InvalidationId(invalidationId);
-		if(timeoutMs!==10000) debugger;
+		if (timeoutMs !== 10000) debugger;
 	}
 	// Endpoint Data methods
 	//#endregion
@@ -2349,269 +3220,431 @@ class Support_Renderer extends BaseService
 	//#endregion
 	//#region WebCommandMetadata methods
 	/** @private @arg {import("../yt_json_types/ghi/group_G.ts").GM_Browse} x */
-	GM_Browse(x) {this.sm.T_GM("GM_Browse",x,x => this.sm.cq(x,"/youtubei/v1/browse"));}
+	GM_Browse(x) {
+		this.sm.T_GM("GM_Browse", x, (x) => this.sm.cq(x, "/youtubei/v1/browse"));
+	}
 	/** @private @arg {import("../yt_json_types/ghi/group_G.ts").GM_Next} x */
-	GM_Next(x) {this.sm.T_GM("GM_Next",x,x => this.sm.cq(x,"/youtubei/v1/next"));}
+	GM_Next(x) {
+		this.sm.T_GM("GM_Next", x, (x) => this.sm.cq(x, "/youtubei/v1/next"));
+	}
 	//#endregion
 	//#region Renderer
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_SettingsSidebar} x */
-	R_SettingsSidebar(x) {this.H_("settingsSidebarRenderer",x,this.D_SettingsSidebar);}
+	R_SettingsSidebar(x) {
+		this.H_("settingsSidebarRenderer", x, this.D_SettingsSidebar);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_SettingsSidebar} x */
-	D_SettingsSidebar(x)
-	{
-		const cf="D_SettingsSidebar";
-		const {title,items,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_SettingsSidebar(x) {
+		const cf = "D_SettingsSidebar";
+		const { title, items, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.G_Text(title);
 		// this.sm.z(items,this.sm.R_CompactLink);
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_PlaylistSidebar} x */
-	R_PlaylistSidebar(x) {this.H_("playlistSidebarRenderer",x,this.D_PlaylistSidebar);}
+	R_PlaylistSidebar(x) {
+		this.H_("playlistSidebarRenderer", x, this.D_PlaylistSidebar);
+	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_PdgBuyFlow} x */
-	R_PdgBuyFlow(x) {this.H_("pdgBuyFlowRenderer",x,this.D_PdgBuyFlow);}
+	R_PdgBuyFlow(x) {
+		this.H_("pdgBuyFlowRenderer", x, this.D_PdgBuyFlow);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_PdgBuyFlow} x */
-	D_PdgBuyFlow(x)
-	{
-		const cf="D_PdgBuyFlow";
-		const {header,content,trackingParams,onCloseCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_PdgBuyFlow(x) {
+		const cf = "D_PdgBuyFlow";
+		const { header, content, trackingParams, onCloseCommand, ...y } = this.s(
+			cf,
+			x,
+		);
+		this.g(y); /*#destructure_done*/
 		this.R_PdgBuyFlowHeader(header);
-		this.z(content,x =>
-		{
-			if(!x.superVodBuyFlowContentRenderer) debugger;
+		this.z(content, (x) => {
+			if (!x.superVodBuyFlowContentRenderer) debugger;
 			return this.R_SuperVodBuyFlowContent(x);
 		});
-		if("getSurveyCommand" in onCloseCommand) return this.sm.C_GetSurvey(onCloseCommand);
-		{debugger;}
+		if ("getSurveyCommand" in onCloseCommand) {
+			return this.sm.C_GetSurvey(onCloseCommand);
+		}
+		{
+			debugger;
+		}
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_SuperVodBuyFlowContent} x */
-	R_SuperVodBuyFlowContent(x) {this.H_("superVodBuyFlowContentRenderer",x,this.D_SuperVodBuyFlowContent);}
+	R_SuperVodBuyFlowContent(x) {
+		this.H_("superVodBuyFlowContentRenderer", x, this.D_SuperVodBuyFlowContent);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_SuperVodBuyFlowContent} x */
-	D_SuperVodBuyFlowContent(x)
-	{
-		const cf="D_SuperVodBuyFlowContent";
-		const {description,buyButton,trackingParams,commentPreview,disclaimerText,colorSlider,defaultPriceTier,superThanksSelectedTierEntity,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.z([description,disclaimerText],this.sm.G_Text);
+	D_SuperVodBuyFlowContent(x) {
+		const cf = "D_SuperVodBuyFlowContent";
+		const {
+			description,
+			buyButton,
+			trackingParams,
+			commentPreview,
+			disclaimerText,
+			colorSlider,
+			defaultPriceTier,
+			superThanksSelectedTierEntity,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.sm.z([description, disclaimerText], this.sm.G_Text);
 		this.xm.R_Button(buyButton);
 		this.R_PdgCommentPreview(commentPreview);
 		this.R_PdgColorSlider(colorSlider);
-		console.log("defaultPriceTier",defaultPriceTier);
+		console.log("defaultPriceTier", defaultPriceTier);
 		this.ht.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_PdgColorSlider} x */
-	R_PdgColorSlider(x) {this.H_("pdgColorSliderRenderer",x,this.D_PdgColorSlider);}
+	R_PdgColorSlider(x) {
+		this.H_("pdgColorSliderRenderer", x, this.D_PdgColorSlider);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_PdgColorSlider} x */
-	D_PdgColorSlider(x)
-	{
-		const cf="D_PdgColorSlider";
-		const {notches,superThanksSelectedTierEntity,maxTierValue,minTierValue,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(notches,this.D_NotchesItem);
+	D_PdgColorSlider(x) {
+		const cf = "D_PdgColorSlider";
+		const {
+			notches,
+			superThanksSelectedTierEntity,
+			maxTierValue,
+			minTierValue,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.z(notches, this.D_NotchesItem);
 		this.ht.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
 		this.sm.G_Text(maxTierValue);
 		this.sm.G_Text(minTierValue);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_PdgCommentPreview} x */
-	R_PdgCommentPreview(x) {this.H_("pdgCommentPreviewRenderer",x,this.D_PdgCommentPreview);}
+	R_PdgCommentPreview(x) {
+		this.H_("pdgCommentPreviewRenderer", x, this.D_PdgCommentPreview);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_PdgCommentPreview} x */
-	D_PdgCommentPreview(x)
-	{
-		const cf="D_PdgCommentPreview";
-		const {title,authorThumbnail,authorText,commentOptionRenderers,defaultCommentText,editButton,superThanksSelectedTierEntity,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_PdgCommentPreview(x) {
+		const cf = "D_PdgCommentPreview";
+		const {
+			title,
+			authorThumbnail,
+			authorText,
+			commentOptionRenderers,
+			defaultCommentText,
+			editButton,
+			superThanksSelectedTierEntity,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.G_Text(title);
 		this.sm.D_Thumbnail(authorThumbnail);
 		this.sm.G_Text(authorText);
-		this.z(commentOptionRenderers,this.R_PdgCommentOption);
+		this.z(commentOptionRenderers, this.R_PdgCommentOption);
 		this.sm.G_Text(defaultCommentText);
 		this.xm.R_Button(editButton);
 		this.ht.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_PdgBuyFlowHeader} x */
-	R_PdgBuyFlowHeader(x) {this.H_("pdgBuyFlowHeaderRenderer",x,this.D_PdgBuyFlowHeader);}
+	R_PdgBuyFlowHeader(x) {
+		this.H_("pdgBuyFlowHeaderRenderer", x, this.D_PdgBuyFlowHeader);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_PdgBuyFlowHeader} x */
-	D_PdgBuyFlowHeader(x)
-	{
-		const cf="D_PdgBuyFlowHeader";
-		const {text,helpButton,dismissButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_PdgBuyFlowHeader(x) {
+		const cf = "D_PdgBuyFlowHeader";
+		const { text, helpButton, dismissButton, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.G_Text(text);
 		this.xm.R_Button(helpButton);
 		this.xm.R_Button(dismissButton);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_SingleColumnMusicWatchNextResults} x */
-	R_SingleColumnMusicWatchNextResults(x) {this.H_("singleColumnMusicWatchNextResultsRenderer",x,this.R_Tabbed);}
+	R_SingleColumnMusicWatchNextResults(x) {
+		this.H_("singleColumnMusicWatchNextResultsRenderer", x, this.R_Tabbed);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_Tabbed} x */
-	R_Tabbed(x) {this.H_("tabbedRenderer",x,this.R_WatchNextTabbedResults);}
+	R_Tabbed(x) {
+		this.H_("tabbedRenderer", x, this.R_WatchNextTabbedResults);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_WatchNextTabbedResults} x */
-	R_WatchNextTabbedResults(x) {this.H_("watchNextTabbedResultsRenderer",x,this.D_WatchNextTabbedResults);}
+	R_WatchNextTabbedResults(x) {
+		this.H_("watchNextTabbedResultsRenderer", x, this.D_WatchNextTabbedResults);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_WatchNextTabbedResults} x */
-	D_WatchNextTabbedResults(x)
-	{
-		const cf="D_WatchNextTabbedResults";
-		const {tabs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(tabs,x => this.x.get("x_EventInput").R_Tab(x));
+	D_WatchNextTabbedResults(x) {
+		const cf = "D_WatchNextTabbedResults";
+		const { tabs, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.z(tabs, (x) => this.x.get("x_EventInput").R_Tab(x));
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_TemplateUpdate} x */
-	R_TemplateUpdate(x) {this.H_("templateUpdate",x,this.D_TemplateUpdate);}
+	R_TemplateUpdate(x) {
+		this.H_("templateUpdate", x, this.D_TemplateUpdate);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_TemplateUpdate} x */
-	D_TemplateUpdate(x)
-	{
-		const cf="D_TemplateUpdate";
-		if("dependencies" in x)
-		{
-			const {identifier,dependencies,serializedTemplateConfig: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			let idp=split_string_once(identifier,"|");
-			switch(idp[0])
-			{
-				case "track_selection_sheet_option.eml": break;
-				case "bottom_sheet_list_option.eml": break;
-				default: debugger;
+	D_TemplateUpdate(x) {
+		const cf = "D_TemplateUpdate";
+		if ("dependencies" in x) {
+			const { identifier, dependencies, serializedTemplateConfig: a, ...y } =
+				this.s(cf, x);
+			this.g(y); /*#destructure_done*/
+			let idp = split_string_once(identifier, "|");
+			switch (idp[0]) {
+				case "track_selection_sheet_option.eml":
+					break;
+				case "bottom_sheet_list_option.eml":
+					break;
+				default:
+					debugger;
 			}
-			this.save_primitive("D_TemplateUpdate.identifier.id",idp[0]);
-			this.save_primitive("D_TemplateUpdate.identifier.hash",idp[1]);
-			this.t(dependencies,dep_arr =>
-			{
-				if(dep_arr.length!==1) debugger;
-				const dep=dep_arr[0];
-				let ddp=split_string_once(dep,"|");
-				switch(ddp[0])
-				{
-					case "bottom_sheet_list_option.eml": break;
-					case "switch_button.eml": break;
-					default: debugger;
+			this.save_primitive("D_TemplateUpdate.identifier.id", idp[0]);
+			this.save_primitive("D_TemplateUpdate.identifier.hash", idp[1]);
+			this.t(dependencies, (dep_arr) => {
+				if (dep_arr.length !== 1) debugger;
+				const dep = dep_arr[0];
+				let ddp = split_string_once(dep, "|");
+				switch (ddp[0]) {
+					case "bottom_sheet_list_option.eml":
+						break;
+					case "switch_button.eml":
+						break;
+					default:
+						debugger;
 				}
-				this.save_primitive(`D_TemplateUpdate.${idp[0]}.deps[0].id`,ddp[0]);
-				this.save_primitive(`D_TemplateUpdate.${idp[0]}.deps[0].hash`,ddp[1]);
+				this.save_primitive(`D_TemplateUpdate.${idp[0]}.deps[0].id`, ddp[0]);
+				this.save_primitive(`D_TemplateUpdate.${idp[0]}.deps[0].hash`, ddp[1]);
 			});
 			this.sm.a_primitive_str(a);
-		} else
-		{
-			const {identifier,serializedTemplateConfig: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			let idp=split_string_once(identifier,"|");
-			this.save_primitive("D_TemplateUpdate.identifier.id",idp[0]);
-			this.save_primitive("D_TemplateUpdate.identifier.hash",idp[1]);
+		} else {
+			const { identifier, serializedTemplateConfig: a, ...y } = this.s(cf, x);
+			this.g(y); /*#destructure_done*/
+			let idp = split_string_once(identifier, "|");
+			this.save_primitive("D_TemplateUpdate.identifier.id", idp[0]);
+			this.save_primitive("D_TemplateUpdate.identifier.hash", idp[1]);
 			this.sm.a_primitive_str(a);
 		}
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_Transcript} x */
-	R_Transcript(x) {this.H_("transcriptRenderer",x,this.D_Transcript);}
+	R_Transcript(x) {
+		this.H_("transcriptRenderer", x, this.D_Transcript);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_Transcript} x */
-	D_Transcript(x)
-	{
-		const cf="D_Transcript";
-		const {trackingParams,content: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_Transcript(x) {
+		const cf = "D_Transcript";
+		const { trackingParams, content: a, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.R_TranscriptSearchPanel(a);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_TranscriptSegmentList} x */
-	R_TranscriptSegmentList(x) {this.H_("transcriptSegmentListRenderer",x,this.D_TranscriptSegmentList);}
+	R_TranscriptSegmentList(x) {
+		this.H_("transcriptSegmentListRenderer", x, this.D_TranscriptSegmentList);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_TranscriptSegmentList} x */
-	D_TranscriptSegmentList(x)
-	{
-		const cf="D_TranscriptSegmentList";
-		const {initialSegments,noResultLabel,retryLabel,touchCaptionsEnabled,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(initialSegments,this.R_TranscriptSegment);
+	D_TranscriptSegmentList(x) {
+		const cf = "D_TranscriptSegmentList";
+		const {
+			initialSegments,
+			noResultLabel,
+			retryLabel,
+			touchCaptionsEnabled,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.z(initialSegments, this.R_TranscriptSegment);
 		this.sm.G_Text(noResultLabel);
 		this.sm.G_Text(retryLabel);
 		this.sm.a_primitive_bool(touchCaptionsEnabled);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_TranscriptFooter} x */
-	R_TranscriptFooter(x) {this.H_("transcriptFooterRenderer",x,this.D_TranscriptFooter);}
+	R_TranscriptFooter(x) {
+		this.H_("transcriptFooterRenderer", x, this.D_TranscriptFooter);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_TranscriptSearchPanel} x */
-	R_TranscriptSearchPanel(x) {this.H_("transcriptSearchPanelRenderer",x,this.D_TranscriptSearchPanel);}
+	R_TranscriptSearchPanel(x) {
+		this.H_("transcriptSearchPanelRenderer", x, this.D_TranscriptSearchPanel);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_TranscriptSearchPanel} x */
-	D_TranscriptSearchPanel(x)
-	{
-		const cf="D_TranscriptSearchPanel";
-		const {body,footer,trackingParams,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_TranscriptSearchPanel(x) {
+		const cf = "D_TranscriptSearchPanel";
+		const { body, footer, trackingParams, targetId, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.R_TranscriptSegmentList(body);
 		this.R_TranscriptFooter(footer);
-		if(targetId!=="engagement-panel-searchable-transcript-search-panel") debugger;
+		if (targetId !== "engagement-panel-searchable-transcript-search-panel") {
+			debugger;
+		}
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_TranscriptSegment} x */
-	R_TranscriptSegment(x) {this.H_("transcriptSegmentRenderer",x,this.D_TranscriptSegment);}
+	R_TranscriptSegment(x) {
+		this.H_("transcriptSegmentRenderer", x, this.D_TranscriptSegment);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_TranscriptSegment} x */
-	D_TranscriptSegment(x)
-	{
-		const cf="D_TranscriptSegment";
-		const {startMs,endMs,snippet,startTimeText,trackingParams,accessibility,targetId,...y}=this.s(cf,x); this.g(y);
+	D_TranscriptSegment(x) {
+		const cf = "D_TranscriptSegment";
+		const {
+			startMs,
+			endMs,
+			snippet,
+			startTimeText,
+			trackingParams,
+			accessibility,
+			targetId,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
 		this.sm.a_primitive_str(startMs);
 		this.sm.a_primitive_str(endMs);
 		this.sm.G_Text(snippet);
 		this.sm.G_Text(startTimeText);
 		this.sm.D_Accessibility(accessibility);
-		this.t(targetId,x => this.save_primitive(`${cf}.targetId`,x));
+		this.t(targetId, (x) => this.save_primitive(`${cf}.targetId`, x));
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_TranscriptFooter} x */
-	D_TranscriptFooter(x) {this.sm.H_("languageMenu",x,this.sm.R_SortFilterSubMenu);}
+	D_TranscriptFooter(x) {
+		this.sm.H_("languageMenu", x, this.sm.R_SortFilterSubMenu);
+	}
 	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_TimedTextApi} x */
-	D_TimedTextApi(x)
-	{
-		const cf="D_TimedTextApi";
-		let {v,caps,exp,xoaf,xoadf,xosf,hl,ip,ipbits,expire,signature,sparams,key,kind,lang,...y}=this.s(cf,x); this.g(y);
+	D_TimedTextApi(x) {
+		const cf = "D_TimedTextApi";
+		let {
+			v,
+			caps,
+			exp,
+			xoaf,
+			xoadf,
+			xosf,
+			hl,
+			ip,
+			ipbits,
+			expire,
+			signature,
+			sparams,
+			key,
+			kind,
+			lang,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
 		this.sm.videoId(v);
-		caps&&this.save_primitive(`${cf}.caps`,caps);
-		this.t(exp,x => this.cq(x,"xpo"));
-		this.save_primitive(`${cf}.xoaf`,xoaf);
-		xoadf&&this.save_primitive(`${cf}.xoadf`,xoadf);
-		xosf&&this.save_primitive(`${cf}.xosf`,xosf);
-		this.save_primitive(`${cf}.hl`,hl);
-		this.save_primitive(`${cf}.ip`,ip);
-		this.save_primitive(`${cf}.ipbits`,ipbits);
-		let e_num=this.sm.parse_number_template(expire);
-		if(Number.isNaN(e_num)) debugger;
+		caps && this.save_primitive(`${cf}.caps`, caps);
+		this.t(exp, (x) => this.cq(x, "xpo"));
+		this.save_primitive(`${cf}.xoaf`, xoaf);
+		xoadf && this.save_primitive(`${cf}.xoadf`, xoadf);
+		xosf && this.save_primitive(`${cf}.xosf`, xosf);
+		this.save_primitive(`${cf}.hl`, hl);
+		this.save_primitive(`${cf}.ip`, ip);
+		this.save_primitive(`${cf}.ipbits`, ipbits);
+		let e_num = this.sm.parse_number_template(expire);
+		if (Number.isNaN(e_num)) debugger;
 		this.sm.a_primitive_num(e_num);
 		this.ht.parse_signature(signature);
-		this.save_primitive(`${cf}.sparams`,sparams);
-		this.save_primitive(`${cf}.key`,key);
-		kind&&this.save_primitive(`${cf}.kind`,kind);
-		this.save_primitive(`${cf}.lang`,lang);
+		this.save_primitive(`${cf}.sparams`, sparams);
+		this.save_primitive(`${cf}.key`, key);
+		kind && this.save_primitive(`${cf}.kind`, kind);
+		this.save_primitive(`${cf}.lang`, lang);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_GuideSubscriptionsSection} x */
-	R_GuideSubscriptionsSection(x) {this.H_("guideSubscriptionsSectionRenderer",x,this.D_GuideSubscriptionsSection);}
+	R_GuideSubscriptionsSection(x) {
+		this.H_(
+			"guideSubscriptionsSectionRenderer",
+			x,
+			this.D_GuideSubscriptionsSection,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_GuideDownloadsEntry} x */
-	R_GuideDownloadsEntry(x) {this.H_("guideDownloadsEntryRenderer",x,this.D_GuideDownloadsEntry);}
+	R_GuideDownloadsEntry(x) {
+		this.H_("guideDownloadsEntryRenderer", x, this.D_GuideDownloadsEntry);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_GuideCollapsibleEntry} x */
-	R_GuideCollapsibleEntry(x) {this.H_("guideCollapsibleEntryRenderer",x,this.D_GuideCollapsibleEntry);}
+	R_GuideCollapsibleEntry(x) {
+		this.H_("guideCollapsibleEntryRenderer", x, this.D_GuideCollapsibleEntry);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_GuideCollapsibleSectionEntry} x */
-	R_GuideCollapsibleSectionEntry(x) {this.H_("guideCollapsibleSectionEntryRenderer",x,this.D_GuideCollapsibleSectionEntry);}
+	R_GuideCollapsibleSectionEntry(x) {
+		this.H_(
+			"guideCollapsibleSectionEntryRenderer",
+			x,
+			this.D_GuideCollapsibleSectionEntry,
+		);
+	}
 	/** @type {import("../yt_json_types/d/group_D.ts").D_GuideEntry_IconType_Obj} */
-	D_GuideEntry_IconType={
+	D_GuideEntry_IconType = {
 		WithNavEP: [
-			"MY_VIDEOS","TRENDING","WATCH_HISTORY","WATCH_LATER","CLAPPERBOARD","MUSIC","LIVE",
-			"GAMING_LOGO","COURSE","TROPHY","NEWS","YOUTUBE_ROUND","FASHION_LOGO","FLAG",
-			"CREATOR_STUDIO_RED_LOGO","YOUTUBE_MUSIC","YOUTUBE_KIDS_ROUND","UNPLUGGED_LOGO","SETTINGS",
+			"MY_VIDEOS",
+			"TRENDING",
+			"WATCH_HISTORY",
+			"WATCH_LATER",
+			"CLAPPERBOARD",
+			"MUSIC",
+			"LIVE",
+			"GAMING_LOGO",
+			"COURSE",
+			"TROPHY",
+			"NEWS",
+			"YOUTUBE_ROUND",
+			"FASHION_LOGO",
+			"FLAG",
+			"CREATOR_STUDIO_RED_LOGO",
+			"YOUTUBE_MUSIC",
+			"YOUTUBE_KIDS_ROUND",
+			"UNPLUGGED_LOGO",
+			"SETTINGS",
 			"ADD_CIRCLE",
 		],
 		WithIcon: [
-			"HELP","FEEDBACK",
-		]
+			"HELP",
+			"FEEDBACK",
+		],
 	};
 	/** @type {Extract<import("../yt_json_types/d/group_D.ts").D_GuideEntry,{icon:any}>['icon']['iconType'][]} */
-	D_GuideEntry_MissingIconType=[];
+	D_GuideEntry_MissingIconType = [];
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_GuideEntry} x */
-	R_GuideEntry(x) {this.H_("guideEntryRenderer",x,this.D_GuideEntry);}
+	R_GuideEntry(x) {
+		this.H_("guideEntryRenderer", x, this.D_GuideEntry);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_GuideEntry} x */
-	D_GuideEntry(x)
-	{
-		const cf="D_GuideEntry";
-		if("targetId" in x) return this.D_GuideEntry_WithTargetId(cf,x);
-		if("icon" in x) return this.D_GuideEntry_WithIcon(cf,x);
-		if("presentationStyle" in x)
-		{
-			const {navigationEndpoint,thumbnail,badges,trackingParams,formattedTitle,accessibility,entryData,presentationStyle,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_GuideEntry(x) {
+		const cf = "D_GuideEntry";
+		if ("targetId" in x) return this.D_GuideEntry_WithTargetId(cf, x);
+		if ("icon" in x) return this.D_GuideEntry_WithIcon(cf, x);
+		if ("presentationStyle" in x) {
+			const {
+				navigationEndpoint,
+				thumbnail,
+				badges,
+				trackingParams,
+				formattedTitle,
+				accessibility,
+				entryData,
+				presentationStyle,
+				...y
+			} = this.s(cf, x);
+			this.g(y); /*#destructure_done*/
 			this.sm.E_VE3611(navigationEndpoint);
 			this.sm.D_Thumbnail(thumbnail);
 			this.D_LiveBroadcastingBadge(badges);
 			this.sm.G_Text(formattedTitle);
 			this.sm.D_Accessibility(accessibility);
 			this.R_GuideEntryData(entryData);
-			switch(presentationStyle)
-			{
+			switch (presentationStyle) {
 				case "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT":
-				case "GUIDE_ENTRY_PRESENTATION_STYLE_NONE": break;
-				default: console.log(`[D_GuideEntry_PresentationType]\n\n\ncase"${presentationStyle}":`); break;
+				case "GUIDE_ENTRY_PRESENTATION_STYLE_NONE":
+					break;
+				default:
+					console.log(
+						`[D_GuideEntry_PresentationType]\n\n\ncase"${presentationStyle}":`,
+					);
+					break;
 			}
 			return;
 		}
-		if("entryData" in x)
-		{
-			const {navigationEndpoint,thumbnail,trackingParams,formattedTitle,accessibility,entryData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if ("entryData" in x) {
+			const {
+				navigationEndpoint,
+				thumbnail,
+				trackingParams,
+				formattedTitle,
+				accessibility,
+				entryData,
+				...y
+			} = this.s(cf, x);
+			this.g(y); /*#destructure_done*/
 			this.sm.E_VE3611(navigationEndpoint);
 			this.sm.D_Thumbnail(thumbnail);
 			this.sm.G_Text(formattedTitle);
@@ -2621,518 +3654,824 @@ class Support_Renderer extends BaseService
 		}
 	}
 	/** @private @arg {"D_GuideEntry"} cf @arg {Extract<import("../yt_json_types/d/group_D.ts").D_GuideEntry,{targetId:any;}>|import("../yt_json_types/d/group_D.ts").D_GuideEntry_OfflineDownloadEntry|import("../yt_json_types/d/group_D.ts").D_GuideEntry_VideoLibrary} x */
-	D_GuideEntry_WithTargetId(cf,x)
-	{
-		const {navigationEndpoint,icon,targetId,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
+	D_GuideEntry_WithTargetId(cf, x) {
+		const { navigationEndpoint, icon, targetId, isPrimary, ...y } = this
+			.D_GuideEntry_Omit(cf, x);
+		this.g(y);
 		{
 			// let x2=navigationEndpoint;
 			debugger;
 		}
-		if(icon.iconType!=="VIDEO_LIBRARY_WHITE") debugger;
-		this.sm.T_Icon_AnyOf("D_GuideEntry_Icon",icon,["OFFLINE_DOWNLOAD","VIDEO_LIBRARY_WHITE"]);
+		if (icon.iconType !== "VIDEO_LIBRARY_WHITE") debugger;
+		this.sm.T_Icon_AnyOf("D_GuideEntry_Icon", icon, [
+			"OFFLINE_DOWNLOAD",
+			"VIDEO_LIBRARY_WHITE",
+		]);
 		this.D_GuideEntry_TargetId(targetId);
-		if(isPrimary!==true) debugger;
+		if (isPrimary !== true) debugger;
 	}
 	/** @private @arg {"D_GuideEntry"} cf1 @arg {import("../yt_json_types/d/group_D.ts").D_GuideEntry} x */
-	D_GuideEntry_WithIcon(cf1,x)
-	{
-		const cf2="D_GuideEntry_WithIcon";
-		if("entryData" in x)
-		{
-			if("icon" in x)
-			{
-				const {navigationEndpoint,icon,entryData,...y}=this.D_GuideEntry_Omit(cf2,x); this.g(y);
+	D_GuideEntry_WithIcon(cf1, x) {
+		const cf2 = "D_GuideEntry_WithIcon";
+		if ("entryData" in x) {
+			if ("icon" in x) {
+				const { navigationEndpoint, icon, entryData, ...y } = this
+					.D_GuideEntry_Omit(cf2, x);
+				this.g(y);
 				this.sm.E_VE5754(navigationEndpoint);
-				switch(icon.iconType)
-				{
-					default: icon===""; this.sm.codegen_typedef(cf1,x); break;
-					case "LIKES_PLAYLIST": case "PLAYLISTS":
+				switch (icon.iconType) {
+					default:
+						icon === "";
+						this.sm.codegen_typedef(cf1, x);
+						break;
+					case "LIKES_PLAYLIST":
+					case "PLAYLISTS":
 				}
 				return this.R_GuideEntryData(entryData);
 			}
-			if("presentationStyle" in x)
-			{
-				const {entryData,presentationStyle,navigationEndpoint,thumbnail,badges,...y}=this.D_GuideEntry_Omit(cf2,x); this.g(y);/*#destructure_done*/
+			if ("presentationStyle" in x) {
+				const {
+					entryData,
+					presentationStyle,
+					navigationEndpoint,
+					thumbnail,
+					badges,
+					...y
+				} = this.D_GuideEntry_Omit(cf2, x);
+				this.g(y); /*#destructure_done*/
 				this.R_GuideEntryData(entryData);
-				if(!navigationEndpoint.browseEndpoint) debugger;
-				if(presentationStyle!=="GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT") debugger;
+				if (!navigationEndpoint.browseEndpoint) debugger;
+				if (
+					presentationStyle !== "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT"
+				) debugger;
 				this.sm.D_Thumbnail(thumbnail);
 				this.D_LiveBroadcastingBadge(badges);
 				return;
 			}
-			const {entryData,navigationEndpoint,thumbnail,...y}=this.D_GuideEntry_Omit(cf2,x); this.g(y);/*#destructure_done*/
+			const { entryData, navigationEndpoint, thumbnail, ...y } = this
+				.D_GuideEntry_Omit(cf2, x);
+			this.g(y); /*#destructure_done*/
 			this.R_GuideEntryData(entryData);
-			if(!navigationEndpoint.browseEndpoint) debugger;
+			if (!navigationEndpoint.browseEndpoint) debugger;
 			this.sm.D_Thumbnail(thumbnail);
 			return;
 		}
-		if("navigationEndpoint" in x) return this.D_GuideEntry_WithNavEP(cf1,x);
-		if("isPrimary" in x) return this.D_GuideEntry_WithPrimary(cf1,x);
-		if("serviceEndpoint" in x)
-		{
-			const {accessibility,formattedTitle,icon,serviceEndpoint,trackingParams,...y}=this.s(cf1,x); this.g(y);
+		if ("navigationEndpoint" in x) return this.D_GuideEntry_WithNavEP(cf1, x);
+		if ("isPrimary" in x) return this.D_GuideEntry_WithPrimary(cf1, x);
+		if ("serviceEndpoint" in x) {
+			const {
+				accessibility,
+				formattedTitle,
+				icon,
+				serviceEndpoint,
+				trackingParams,
+				...y
+			} = this.s(cf1, x);
+			this.g(y);
 			this.sm.D_Accessibility(accessibility);
 			this.sm.G_Text(formattedTitle);
-			let is_not_in_set=this.sm.T_Icon_AnyOf("D_GuideEntry_WithIcon:icon",icon,this.D_GuideEntry_IconType.WithIcon);
-			if(is_not_in_set) this.sm.onMissingIcon(cf2,icon,x,this.D_GuideEntry_IconType.WithIcon,this.D_GuideEntry_MissingIconType);
+			let is_not_in_set = this.sm.T_Icon_AnyOf(
+				"D_GuideEntry_WithIcon:icon",
+				icon,
+				this.D_GuideEntry_IconType.WithIcon,
+			);
+			if (is_not_in_set) {
+				this.sm.onMissingIcon(
+					cf2,
+					icon,
+					x,
+					this.D_GuideEntry_IconType.WithIcon,
+					this.D_GuideEntry_MissingIconType,
+				);
+			}
 			/** @type {`${cf2}.SE_Signal`} */
-			const cf3=`${cf2}.SE_Signal`;
-			let [a,b]=this.sm.T_SE_Signal(cf3,serviceEndpoint);
+			const cf3 = `${cf2}.SE_Signal`;
+			let [a, b] = this.sm.T_SE_Signal(cf3, serviceEndpoint);
 			this.sm.M_SendPost(a);
 			this.xm.G_ClientSignal(b);
 			return;
 		}
-		if("icon" in x&&"trackingParams" in x&&"formattedTitle" in x&&"accessibility" in x)
-		{
-			const {icon,trackingParams,formattedTitle,accessibility,...y}=this.s(cf1,x); this.g(y);
+		if (
+			"icon" in x && "trackingParams" in x && "formattedTitle" in x &&
+			"accessibility" in x
+		) {
+			const { icon, trackingParams, formattedTitle, accessibility, ...y } = this
+				.s(cf1, x);
+			this.g(y);
 			this.sm.D_Accessibility(accessibility);
 			this.sm.G_Text(formattedTitle);
 			this.sm.D_Accessibility(accessibility);
 			return;
 		}
-		this.sm.codegen_typedef(cf1,x);
+		this.sm.codegen_typedef(cf1, x);
 	}
 	/** @private @template {Extract<import("../yt_json_types/d/group_D.ts").D_GuideEntry,{accessibility:any}>} T @arg {import("../yt_json_types/abc/group_C.ts").CF_D_GuideEntry} cf @arg {T} x */
-	D_GuideEntry_Omit(cf,x)
-	{
-		const {accessibility,formattedTitle,trackingParams,...y}=this.s(cf,x);
+	D_GuideEntry_Omit(cf, x) {
+		const { accessibility, formattedTitle, trackingParams, ...y } = this.s(
+			cf,
+			x,
+		);
 		this.sm.D_Accessibility(accessibility);
 		this.sm.G_Text(formattedTitle);
 		return y;
 	}
 	/** @arg {Extract<import("../yt_json_types/d/group_D.ts").D_GuideEntry,{targetId:any;}>["targetId"]} x */
-	D_GuideEntry_TargetId(x)
-	{
-		const cf="D_GuideEntry_TargetId";
-		switch(x)
-		{
-			default: this.cg.codegen_case(cf,x); break;
+	D_GuideEntry_TargetId(x) {
+		const cf = "D_GuideEntry_TargetId";
+		switch (x) {
+			default:
+				this.cg.codegen_case(cf, x);
+				break;
 			case "downloads-guide-item":
 			case "library-guide-item":
 		}
 	}
 	/** @arg {"D_GuideEntry"} cf1 @arg {import("../yt_json_types/d/group_D.ts").D_GuideEntry_WithNavEP} x */
-	D_GuideEntry_WithNavEP(cf1,x)
-	{
-		const cf2="D_GuideEntry_WithNavEP";
-		if("targetId" in x) return this.D_GuideEntry_WithTargetId(cf1,x);
-		if("isPrimary" in x)
-		{
-			const {navigationEndpoint,icon,isPrimary,...y}=this.D_GuideEntry_Omit(cf1,x); this.g(y);
-			if(!navigationEndpoint.browseEndpoint) debugger;
-			switch(icon.iconType)
-			{
-				case "SUBSCRIPTIONS": break;
-				case "WHAT_TO_WATCH": break;
-				default: debugger; break;
+	D_GuideEntry_WithNavEP(cf1, x) {
+		const cf2 = "D_GuideEntry_WithNavEP";
+		if ("targetId" in x) return this.D_GuideEntry_WithTargetId(cf1, x);
+		if ("isPrimary" in x) {
+			const { navigationEndpoint, icon, isPrimary, ...y } = this
+				.D_GuideEntry_Omit(cf1, x);
+			this.g(y);
+			if (!navigationEndpoint.browseEndpoint) debugger;
+			switch (icon.iconType) {
+				case "SUBSCRIPTIONS":
+					break;
+				case "WHAT_TO_WATCH":
+					break;
+				default:
+					debugger;
+					break;
 			}
-			if(isPrimary!==true) debugger;
+			if (isPrimary !== true) debugger;
 			return;
 		}
-		const {navigationEndpoint,icon,...y}=this.D_GuideEntry_Omit(cf1,x); this.g(y);
+		const { navigationEndpoint, icon, ...y } = this.D_GuideEntry_Omit(cf1, x);
+		this.g(y);
 		x: {
-			let x2=navigationEndpoint;
-			if("browseEndpoint" in x2)
-			{
-				x2; debugger;
+			let x2 = navigationEndpoint;
+			if ("browseEndpoint" in x2) {
+				x2;
+				debugger;
 				break x;
 			}
-			if("urlEndpoint" in x2)
-			{
+			if ("urlEndpoint" in x2) {
 				this.xm.E_Url(x2);
 				break x;
 			}
 			debugger;
 		}
-		let is_not_in_set=this.sm.T_Icon_AnyOf("D_GuideEntry_WithNavEP:icon",icon,this.D_GuideEntry_IconType.WithNavEP);
-		if(is_not_in_set) this.sm.onMissingIcon(cf2,icon,x,this.D_GuideEntry_IconType.WithNavEP,this.D_GuideEntry_MissingIconType);
+		let is_not_in_set = this.sm.T_Icon_AnyOf(
+			"D_GuideEntry_WithNavEP:icon",
+			icon,
+			this.D_GuideEntry_IconType.WithNavEP,
+		);
+		if (is_not_in_set) {
+			this.sm.onMissingIcon(
+				cf2,
+				icon,
+				x,
+				this.D_GuideEntry_IconType.WithNavEP,
+				this.D_GuideEntry_MissingIconType,
+			);
+		}
 		{
-			let x2=navigationEndpoint;
-			if("urlEndpoint" in x2) return this.xm.E_Url(x2);
-			if("browseEndpoint" in x2)
-			{
-				x2; debugger;
+			let x2 = navigationEndpoint;
+			if ("urlEndpoint" in x2) return this.xm.E_Url(x2);
+			if ("browseEndpoint" in x2) {
+				x2;
+				debugger;
 				return;
-			};
+			}
 		}
 	}
 	/** @private @arg {"D_GuideEntry"} cf1 @arg {import("../yt_json_types/d/group_D.ts").D_GuideEntry_WithPrimary} x */
-	D_GuideEntry_WithPrimary(cf1,x)
-	{
+	D_GuideEntry_WithPrimary(cf1, x) {
 		/** @type {`${cf1}_WithPrimary`} */
-		const cf2=`${cf1}_WithPrimary`;
-		const {icon,isPrimary,serviceEndpoint,...y}=this.D_GuideEntry_Omit(cf2,x); this.g(y);
-		if(icon.iconType!=="TAB_SHORTS") debugger;
-		if(isPrimary!==true) debugger;
+		const cf2 = `${cf1}_WithPrimary`;
+		const { icon, isPrimary, serviceEndpoint, ...y } = this.D_GuideEntry_Omit(
+			cf2,
+			x,
+		);
+		this.g(y);
+		if (icon.iconType !== "TAB_SHORTS") debugger;
+		if (isPrimary !== true) debugger;
 		x: {
-			let x=serviceEndpoint;
-			if("reelWatchEndpoint" in x)
-			{
+			let x = serviceEndpoint;
+			if ("reelWatchEndpoint" in x) {
 				this.x.get("x_VE37414").E_VE37414_ReelWatch(x);
 				break x;
 			}
-			if("signalServiceEndpoint" in x)
-			{
+			if ("signalServiceEndpoint" in x) {
 				debugger;
 				break x;
 			}
-			x===""; debugger;
+			x === "";
+			debugger;
 		}
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_GuideEntryData} x */
-	R_GuideEntryData(x) {this.H_("guideEntryData",x,this.D_GuideEntryData);}
+	R_GuideEntryData(x) {
+		this.H_("guideEntryData", x, this.D_GuideEntryData);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_GuideEntryData} x */
-	D_GuideEntryData(x)
-	{
-		const cf="D_GuideEntryData";
-		const {guideEntryId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_GuideEntryData(x) {
+		const cf = "D_GuideEntryData";
+		const { guideEntryId, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.guideEntryId(guideEntryId);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_GuideSection} x */
-	R_GuideSection(x) {this.H_("guideSectionRenderer",x,this.D_GuideSection);}
+	R_GuideSection(x) {
+		this.H_("guideSectionRenderer", x, this.D_GuideSection);
+	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_ResourceStatusInResponseCheck} x */
-	R_ResourceStatusInResponseCheck(x) {this.H_("resourceStatusInResponseCheck",x,this.D_ResourceStatusInResponseCheck);}
+	R_ResourceStatusInResponseCheck(x) {
+		this.H_(
+			"resourceStatusInResponseCheck",
+			x,
+			this.D_ResourceStatusInResponseCheck,
+		);
+	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_ReportFormModal} x */
-	R_ReportFormModal(x) {this.H_("reportFormModalRenderer",x,this.g);}
+	R_ReportFormModal(x) {
+		this.H_("reportFormModalRenderer", x, this.g);
+	}
 	/** @arg {import("../yt_json_types/r/group_R.ts").R_RichShelf} x */
-	R_RichShelf(x) {this.H_("richShelfRenderer",x,this.D_RichShelf);}
+	R_RichShelf(x) {
+		this.H_("richShelfRenderer", x, this.D_RichShelf);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_RichShelf} x */
-	D_RichShelf(x)
-	{
-		const cf="D_RichShelf";
+	D_RichShelf(x) {
+		const cf = "D_RichShelf";
 		/** @type {import("../yt_json_types/stu/group_T.ts").T_UnionToPartial<import("../yt_json_types/d/group_D.ts").D_RichShelf>} */
-		let pt=x;
-		const {icon,title,contents,trackingParams,menu,showMoreButton,rowIndex,...y}=this.s(cf,pt); this.g(y);
-		if(icon)
-		{
-			switch(icon.iconType)
-			{
-				default: this.cg.codegen_case(`${cf}.icon`,icon.iconType); break;
-				case "YOUTUBE_SHORTS_BRAND_24": break;
+		let pt = x;
+		const {
+			icon,
+			title,
+			contents,
+			trackingParams,
+			menu,
+			showMoreButton,
+			rowIndex,
+			...y
+		} = this.s(cf, pt);
+		this.g(y);
+		if (icon) {
+			switch (icon.iconType) {
+				default:
+					this.cg.codegen_case(`${cf}.icon`, icon.iconType);
+					break;
+				case "YOUTUBE_SHORTS_BRAND_24":
+					break;
 			}
 		}
 		this.sm.G_Text(title);
-		this.sm.z(contents,this.sm.R_RichItem);
+		this.sm.z(contents, this.sm.R_RichItem);
 		this.sm.R_Menu(menu);
 		this.xm.R_Button(showMoreButton);
-		switch(rowIndex)
-		{
-			default: this.cg.codegen_case(`${cf}.rowIndex`,rowIndex); break;
-			case 2: case 4: break;
+		switch (rowIndex) {
+			default:
+				this.cg.codegen_case(`${cf}.rowIndex`, rowIndex);
+				break;
+			case 2:
+			case 4:
+				break;
 		}
 	}
 	/** @arg {import("../yt_json_types/r/group_R.ts").R_RatingSurveyOption} x */
-	R_RatingSurveyOption(x) {this.H_("ratingSurveyOptionRenderer",x,this.D_RatingSurveyOption);}
+	R_RatingSurveyOption(x) {
+		this.H_("ratingSurveyOptionRenderer", x, this.D_RatingSurveyOption);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_RatingSurveyOption} x */
-	D_RatingSurveyOption(x)
-	{
-		const cf="D_ExpandableSurveyResponse";
-		const {responseText,defaultStateIcon,onStateIcon,followUpCommand,responseEndpoint,trackingParams,checked,selected,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_RatingSurveyOption(x) {
+		const cf = "D_ExpandableSurveyResponse";
+		const {
+			responseText,
+			defaultStateIcon,
+			onStateIcon,
+			followUpCommand,
+			responseEndpoint,
+			trackingParams,
+			checked,
+			selected,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.G_Text(responseText);
-		if(defaultStateIcon.iconType!=="STAR_BORDER") debugger;
-		if(onStateIcon.iconType!=="STAR") debugger;
+		if (defaultStateIcon.iconType !== "STAR_BORDER") debugger;
+		if (onStateIcon.iconType !== "STAR") debugger;
 		this.ht.C_FollowUp(followUpCommand);
 		this.sm.E_Feedback(responseEndpoint);
 		this.sm.a_primitive_bool(checked);
 		this.sm.a_primitive_bool(selected);
 	}
 	/** @arg {import("../yt_json_types/r/group_R.ts").R_RatingSurvey} x */
-	R_RatingSurvey(x) {this.H_("ratingSurveyRenderer",x,this.D_RatingSurvey);}
+	R_RatingSurvey(x) {
+		this.H_("ratingSurveyRenderer", x, this.D_RatingSurvey);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_RatingSurvey} x */
-	D_RatingSurvey(x)
-	{
-		const cf="D_ExpandableSurveyResponse";
-		const {ratings,trackingParams,notSureButton,undoButton,notSureEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(ratings,x => this.xr.R_RatingSurveyOption(x));
+	D_RatingSurvey(x) {
+		const cf = "D_ExpandableSurveyResponse";
+		const {
+			ratings,
+			trackingParams,
+			notSureButton,
+			undoButton,
+			notSureEndpoint,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.z(ratings, (x) => this.xr.R_RatingSurveyOption(x));
 		this.xm.R_Button(notSureButton);
 		this.xm.R_Button(undoButton);
 		this.g(notSureEndpoint);
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_Channel_MD} x */
-	R_Channel_MD(x) {this.H_("channelMetadataRenderer",x,this.D_Channel_MD);}
+	R_Channel_MD(x) {
+		this.H_("channelMetadataRenderer", x, this.D_Channel_MD);
+	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_Playlist_MD} x */
-	R_Playlist_MD(x) {this.H_("playlistMetadataRenderer",x,this.D_Playlist_MD);}
+	R_Playlist_MD(x) {
+		this.H_("playlistMetadataRenderer", x, this.D_Playlist_MD);
+	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_ChannelSwitcherPage} x */
-	R_ChannelSwitcherPage(x) {this.H_("channelSwitcherPageRenderer",x,this.D_ChannelSwitcherPage);}
+	R_ChannelSwitcherPage(x) {
+		this.H_("channelSwitcherPageRenderer", x, this.D_ChannelSwitcherPage);
+	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_Message} x */
-	R_Message(x) {this.H_("messageRenderer",x,this.D_Message);}
+	R_Message(x) {
+		this.H_("messageRenderer", x, this.D_Message);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_Message} x */
-	D_Message(x)
-	{
-		const cf="D_Message";
-		const {text,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_Message(x) {
+		const cf = "D_Message";
+		const { text, trackingParams, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.G_Text(text);
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_ConversationBar} x */
-	R_ConversationBar(x) {this.H_("conversationBarRenderer",x,this.R_AvailabilityMessage);}
+	R_ConversationBar(x) {
+		this.H_("conversationBarRenderer", x, this.R_AvailabilityMessage);
+	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_AvailabilityMessage} x */
-	R_AvailabilityMessage(x) {this.H_("availabilityMessage",x,x => this.R_Message(x));}
+	R_AvailabilityMessage(x) {
+		this.H_("availabilityMessage", x, (x) => this.R_Message(x));
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_LiveBroadcastingBadge} x */
-	D_LiveBroadcastingBadge(x)
-	{
-		const cf="D_LiveBroadcastingBadge";
-		const {liveBroadcasting,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_LiveBroadcastingBadge(x) {
+		const cf = "D_LiveBroadcastingBadge";
+		const { liveBroadcasting, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.a_primitive_bool(liveBroadcasting);
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_LiveChatParticipantsList} x */
-	R_LiveChatParticipantsList(x) {this.H_("liveChatParticipantsListRenderer",x,this.g);}
+	R_LiveChatParticipantsList(x) {
+		this.H_("liveChatParticipantsListRenderer", x, this.g);
+	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_LiveChatTicker} x */
-	R_LiveChatTicker(x) {this.H_("liveChatTickerRenderer",x,this.g);}
+	R_LiveChatTicker(x) {
+		this.H_("liveChatTickerRenderer", x, this.g);
+	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_LiveChatItemList} x */
-	R_LiveChatItemList(x) {this.H_("liveChatItemListRenderer",x,this.g);}
+	R_LiveChatItemList(x) {
+		this.H_("liveChatItemListRenderer", x, this.g);
+	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_LiveChatMessageInput} x */
-	R_LiveChatMessageInput(x) {this.H_("liveChatMessageInputRenderer",x,this.g);}
+	R_LiveChatMessageInput(x) {
+		this.H_("liveChatMessageInputRenderer", x, this.g);
+	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_LiveChatViewerEngagementMessage} x */
-	R_LiveChatViewerEngagementMessage(x) {this.H_("liveChatViewerEngagementMessageRenderer",x,this.D_LiveChatViewerEngagementMessage);}
+	R_LiveChatViewerEngagementMessage(x) {
+		this.H_(
+			"liveChatViewerEngagementMessageRenderer",
+			x,
+			this.D_LiveChatViewerEngagementMessage,
+		);
+	}
 	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_LiveChatViewerEngagementMessage} x */
-	D_LiveChatViewerEngagementMessage(x)
-	{
-		const cf="D_LiveChatViewerEngagementMessage";
-		const {id,timestampUsec,icon,message,actionButton,trackingParams,...y}=this.s(cf,x); this.g(y);
+	D_LiveChatViewerEngagementMessage(x) {
+		const cf = "D_LiveChatViewerEngagementMessage";
+		const {
+			id,
+			timestampUsec,
+			icon,
+			message,
+			actionButton,
+			trackingParams,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_LiveChatPlaceholderItem} x */
-	R_LiveChatPlaceholderItem(x) {this.H_("liveChatPlaceholderItemRenderer",x,this.D_LiveChatPlaceholderItem);}
+	R_LiveChatPlaceholderItem(x) {
+		this.H_(
+			"liveChatPlaceholderItemRenderer",
+			x,
+			this.D_LiveChatPlaceholderItem,
+		);
+	}
 	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_LiveChatPlaceholderItem} x */
-	D_LiveChatPlaceholderItem(x)
-	{
-		const cf="D_LiveChatPlaceholderItem";
-		const {id,timestampUsec,...y}=this.s(cf,x); this.g(y);
-		console.log(`${cf}.id`,id);
-		let u_seconds=this.sm.parse_number_template(timestampUsec);
+	D_LiveChatPlaceholderItem(x) {
+		const cf = "D_LiveChatPlaceholderItem";
+		const { id, timestampUsec, ...y } = this.s(cf, x);
+		this.g(y);
+		console.log(`${cf}.id`, id);
+		let u_seconds = this.sm.parse_number_template(timestampUsec);
 		this.sm.a_primitive_num(u_seconds);
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_LiveChatTextMessage} x */
-	R_LiveChatTextMessage(x) {this.H_("liveChatTextMessageRenderer",x,this.D_LiveChatTextMessage);}
+	R_LiveChatTextMessage(x) {
+		this.H_("liveChatTextMessageRenderer", x, this.D_LiveChatTextMessage);
+	}
 	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_LiveChatTextMessage} x */
-	D_LiveChatTextMessage(x)
-	{
-		const cf="D_LiveChatTextMessage";
-		const {message,authorName,authorPhoto,contextMenuEndpoint,id,authorBadges,timestampUsec,authorExternalChannelId,contextMenuAccessibility,timestampText,...y}=this.s(cf,x); this.g(y);
+	D_LiveChatTextMessage(x) {
+		const cf = "D_LiveChatTextMessage";
+		const {
+			message,
+			authorName,
+			authorPhoto,
+			contextMenuEndpoint,
+			id,
+			authorBadges,
+			timestampUsec,
+			authorExternalChannelId,
+			contextMenuAccessibility,
+			timestampText,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
 		this.sm.G_Text(message);
-		console.log(`${cf}.id`,id);
+		console.log(`${cf}.id`, id);
 	}
 	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_LiveChatEmoji} x */
-	D_LiveChatEmoji(x)
-	{
-		const cf="D_LiveChatEmoji";
-		const {isLocked,...y}=this.sm.D_CustomEmoji_Omit(cf,x); this.g(y);
+	D_LiveChatEmoji(x) {
+		const cf = "D_LiveChatEmoji";
+		const { isLocked, ...y } = this.sm.D_CustomEmoji_Omit(cf, x);
+		this.g(y);
 		this.sm.a_primitive_bool(isLocked);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_ChannelSwitcherHeader} x */
-	R_ChannelSwitcherHeader(x) {this.H_("channelSwitcherHeaderRenderer",x,this.D_ChannelSwitcherHeader);}
+	R_ChannelSwitcherHeader(x) {
+		this.H_("channelSwitcherHeaderRenderer", x, this.D_ChannelSwitcherHeader);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ChannelSwitcherPage} x */
-	D_ChannelSwitcherPage(x)
-	{
-		const cf="D_ChannelSwitcherPage";
-		const {header,targetId,contents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_ChannelSwitcherPage(x) {
+		const cf = "D_ChannelSwitcherPage";
+		const { header, targetId, contents, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.R_ChannelSwitcherHeader(header);
-		this.sm.cq(targetId,"ceq");
-		this.z(contents,this.G_ChannelSwitcherContent);
+		this.sm.cq(targetId, "ceq");
+		this.z(contents, this.G_ChannelSwitcherContent);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ChannelSwitcherHeader} x */
-	D_ChannelSwitcherHeader(x)
-	{
-		const cf="D_ChannelSwitcherHeader";
-		const {title,button,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_ChannelSwitcherHeader(x) {
+		const cf = "D_ChannelSwitcherHeader";
+		const { title, button, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.G_Text(title);
 		this.xm.R_Button(button);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ChipColorPalette} x */
-	D_ChipColorPalette(x) {const cf="D_ChipColorPalette"; this.sm.codegen_typedef(cf,x); this.sm.GEN(cf,x);}
+	D_ChipColorPalette(x) {
+		const cf = "D_ChipColorPalette";
+		this.sm.codegen_typedef(cf, x);
+		this.sm.GEN(cf, x);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_Channel_MD} x */
-	D_Channel_MD(x)
-	{
-		const cf="D_Channel_MD";
-		const {title,description,androidDeepLink,iosAppindexingLink,isFamilySafe,facebookProfileId,externalId,androidAppindexingLink,availableCountryCodes,avatar,rssUrl,keywords,ownerUrls,channelUrl,vanityChannelUrl,...u}=this.s(cf,x);
-		this.t(facebookProfileId,x => this.sm.a_primitive_str(x));
+	D_Channel_MD(x) {
+		const cf = "D_Channel_MD";
+		const {
+			title,
+			description,
+			androidDeepLink,
+			iosAppindexingLink,
+			isFamilySafe,
+			facebookProfileId,
+			externalId,
+			androidAppindexingLink,
+			availableCountryCodes,
+			avatar,
+			rssUrl,
+			keywords,
+			ownerUrls,
+			channelUrl,
+			vanityChannelUrl,
+			...u
+		} = this.s(cf, x);
+		this.t(facebookProfileId, (x) => this.sm.a_primitive_str(x));
 		this.sm.a_primitive_str(title);
 		this.sm.a_primitive_str(description);
 		this.sm.a_primitive_str(androidDeepLink);
 		this.sm.a_primitive_str(iosAppindexingLink);
-		this.sm.cq(isFamilySafe,true);
+		this.sm.cq(isFamilySafe, true);
 		this.sm.a_primitive_str(externalId);
 		this.sm.a_primitive_str(androidAppindexingLink);
-		this.z(availableCountryCodes,x => this.sm.a_primitive_str(x));
+		this.z(availableCountryCodes, (x) => this.sm.a_primitive_str(x));
 		this.sm.D_Thumbnail(avatar);
 		this.sm.a_primitive_str(rssUrl);
 		this.sm.a_primitive_str(keywords);
-		if(ownerUrls.length!==1) debugger;
-		let ur=this._convert_url_to_obj(ownerUrls[0]);
-		this.sm.cq(this.sm.str_starts_with_rx("/@",ur.pathname),true);
+		if (ownerUrls.length !== 1) debugger;
+		let ur = this._convert_url_to_obj(ownerUrls[0]);
+		this.sm.cq(this.sm.str_starts_with_rx("/@", ur.pathname), true);
 		this.sm.a_primitive_str(channelUrl);
 		this.sm.a_primitive_str(vanityChannelUrl);
-		const {channelConversionUrl,...y}=u; this.g(y);/*#destructure_done*/
-		this.t_cf(`${cf}.channelConversionUrl`,channelConversionUrl,(cf,x) => this.ps.parse_url(cf,x));
+		const { channelConversionUrl, ...y } = u;
+		this.g(y); /*#destructure_done*/
+		this.t_cf(
+			`${cf}.channelConversionUrl`,
+			channelConversionUrl,
+			(cf, x) => this.ps.parse_url(cf, x),
+		);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_PdgCommentOption} x */
-	R_PdgCommentOption(x) {this.H_("pdgCommentOptionRenderer",x,this.D_PdgCommentOption);}
+	R_PdgCommentOption(x) {
+		this.H_("pdgCommentOptionRenderer", x, this.D_PdgCommentOption);
+	}
 	/** @arg {import("../yt_json_types/r/group_R.ts").R_InlineSurvey} x */
-	R_InlineSurvey(x) {this.H_("inlineSurveyRenderer",x,this.D_InlineSurvey);}
+	R_InlineSurvey(x) {
+		this.H_("inlineSurveyRenderer", x, this.D_InlineSurvey);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_InlineSurvey} x */
-	D_InlineSurvey(x)
-	{
-		const cf="D_InlineSurvey";
-		const {dismissalEndpoint,title,subtitle,inlineContent,response,trackingParams,dismissalText,impressionEndpoints,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.codegen_typedef(`${cf}.dismissalEndpoint`,dismissalEndpoint);
+	D_InlineSurvey(x) {
+		const cf = "D_InlineSurvey";
+		const {
+			dismissalEndpoint,
+			title,
+			subtitle,
+			inlineContent,
+			response,
+			trackingParams,
+			dismissalText,
+			impressionEndpoints,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.sm.codegen_typedef(`${cf}.dismissalEndpoint`, dismissalEndpoint);
 		this.sm.G_Text(title);
 		this.sm.G_Text(subtitle);
 		this.sm.R_CompactVideo(inlineContent);
 		this.xr.R_ExpandableSurveyResponse(response);
 		this.sm.G_Text(dismissalText);
-		this.z(impressionEndpoints,this.g);
+		this.z(impressionEndpoints, this.g);
 	}
 	/** @arg {import("../yt_json_types/r/group_R.ts").R_SourcePivotHeader} x */
-	R_SourcePivotHeader(x) {this.H_("sourcePivotHeaderRenderer",x,this.D_SourcePivotHeader);}
+	R_SourcePivotHeader(x) {
+		this.H_("sourcePivotHeaderRenderer", x, this.D_SourcePivotHeader);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_SourcePivotHeader} x */
-	D_SourcePivotHeader(x)
-	{
-		const cf="D_SourcePivotHeader";
-		const {headerInformation,buttonRow,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_SourcePivotHeader(x) {
+		const cf = "D_SourcePivotHeader";
+		const { headerInformation, buttonRow, trackingParams, ...y } = this.s(
+			cf,
+			x,
+		);
+		this.g(y); /*#destructure_done*/
 		this.xr.R_ProfilePageHeaderInformationViewModel(headerInformation);
 		this.xr.R_ProfilePageHeaderButtonRowViewModel(buttonRow);
 	}
 	/** @arg {import("../yt_json_types/r/group_R.ts").R_ProfilePageHeaderInformationViewModel} x */
-	R_ProfilePageHeaderInformationViewModel(x) {this.H_("profilePageHeaderInformationViewModel",x,this.D_ProfilePageHeaderInformation);}
+	R_ProfilePageHeaderInformationViewModel(x) {
+		this.H_(
+			"profilePageHeaderInformationViewModel",
+			x,
+			this.D_ProfilePageHeaderInformation,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ProfilePageHeaderInformation} x */
-	D_ProfilePageHeaderInformation(x)
-	{
-		const cf="D_ProfilePageHeaderInformation";
-		const {title,metadata,thumbnail,alignment,onTap,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_ProfilePageHeaderInformation(x) {
+		const cf = "D_ProfilePageHeaderInformation";
+		const { title, metadata, thumbnail, alignment, onTap, ...y } = this.s(
+			cf,
+			x,
+		);
+		this.g(y); /*#destructure_done*/
 		this.xr.R_ProfilePageHeaderTitleViewModel(title);
 		this.xr.R_ProfilePageHeaderMetadataViewModel(metadata);
 		this.xr.R_ProfilePageHeaderThumbnailViewModel(thumbnail);
-		if(alignment!=="a") debugger;
+		if (alignment !== "a") debugger;
 		this.ht.C_Innertube(onTap);
 	}
 	/** @arg {import("../yt_json_types/r/group_R.ts").R_ProfilePageHeaderTitleViewModel} x */
-	R_ProfilePageHeaderTitleViewModel(x) {this.H_("profilePageHeaderTitleViewModel",x,this.D_ProfilePageHeaderTitle);}
+	R_ProfilePageHeaderTitleViewModel(x) {
+		this.H_(
+			"profilePageHeaderTitleViewModel",
+			x,
+			this.D_ProfilePageHeaderTitle,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ProfilePageHeaderTitle} x */
-	D_ProfilePageHeaderTitle(x) {this.y("D_ProfilePageHeaderTitle","title",x,this.D_ProfilePageHeaderTitle_Content);}
+	D_ProfilePageHeaderTitle(x) {
+		this.y(
+			"D_ProfilePageHeaderTitle",
+			"title",
+			x,
+			this.D_ProfilePageHeaderTitle_Content,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ProfilePageHeaderTitle_Content} x */
-	D_ProfilePageHeaderTitle_Content(x) {this.sm.y("D_ProfilePageHeaderTitle_Content","content",x,this.sm.a_primitive_str);}
+	D_ProfilePageHeaderTitle_Content(x) {
+		this.sm.y(
+			"D_ProfilePageHeaderTitle_Content",
+			"content",
+			x,
+			this.sm.a_primitive_str,
+		);
+	}
 	/** @arg {import("../yt_json_types/r/group_R.ts").R_ProfilePageHeaderThumbnailViewModel} x */
-	R_ProfilePageHeaderThumbnailViewModel(x) {this.H_("profilePageHeaderThumbnailViewModel",x,this.g);}
+	R_ProfilePageHeaderThumbnailViewModel(x) {
+		this.H_("profilePageHeaderThumbnailViewModel", x, this.g);
+	}
 	/** @arg {import("../yt_json_types/r/group_R.ts").R_ProfilePageHeaderMetadataViewModel} x */
-	R_ProfilePageHeaderMetadataViewModel(x) {this.H_("profilePageHeaderMetadataViewModel",x,this.g);}
+	R_ProfilePageHeaderMetadataViewModel(x) {
+		this.H_("profilePageHeaderMetadataViewModel", x, this.g);
+	}
 	/** @arg {import("../yt_json_types/r/group_R.ts").R_ProfilePageHeaderButtonRowViewModel} x */
-	R_ProfilePageHeaderButtonRowViewModel(x) {this.H_("profilePageHeaderButtonRowViewModel",x,this.g);}
+	R_ProfilePageHeaderButtonRowViewModel(x) {
+		this.H_("profilePageHeaderButtonRowViewModel", x, this.g);
+	}
 	/** @arg {import("../yt_json_types/r/group_R.ts").R_ExpandableSurveyResponse} x */
-	R_ExpandableSurveyResponse(x) {this.H_("expandableSurveyResponseRenderer",x,this.D_ExpandableSurveyResponse);}
+	R_ExpandableSurveyResponse(x) {
+		this.H_(
+			"expandableSurveyResponseRenderer",
+			x,
+			this.D_ExpandableSurveyResponse,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ExpandableSurveyResponse} x */
-	D_ExpandableSurveyResponse(x)
-	{
-		const cf="D_ExpandableSurveyResponse";
-		const {options,submitButton,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_ExpandableSurveyResponse(x) {
+		const cf = "D_ExpandableSurveyResponse";
+		const { options, submitButton, trackingParams, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.xr.R_RatingSurvey(options);
 		this.xm.R_Button(submitButton);
 	}
 	/** @arg {import("../yt_json_types/r/group_R.ts").R_AutomixPreviewVideo} x */
-	R_AutomixPreviewVideo(x) {this.H_("automixPreviewVideoRenderer",x,this.g);}
+	R_AutomixPreviewVideo(x) {
+		this.H_("automixPreviewVideoRenderer", x, this.g);
+	}
 	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_AttBgChallenge} x */
-	D_AttBgChallenge(x)
-	{
-		const cf="D_AttBgChallenge";
-		const {interpreterUrl,interpreterHash,program,globalName,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(interpreterUrl,a =>
-		{
-			let uw=this.sm.UrlWrappedValueT(a);
+	D_AttBgChallenge(x) {
+		const cf = "D_AttBgChallenge";
+		const { interpreterUrl, interpreterHash, program, globalName, ...y } = this
+			.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.t(interpreterUrl, (a) => {
+			let uw = this.sm.UrlWrappedValueT(a);
 			this.sm.a_primitive_str(uw);
 		});
 		this.sm.a_primitive_str(interpreterHash);
 		this.sm.a_primitive_str(program);
-		if(globalName!=="trayride") debugger;
+		if (globalName !== "trayride") debugger;
 	}
 	/** @public @arg {import("../yt_json_types/r/r_sub/r/R_DynamicReadaheadConfig.ts").R_DynamicReadaheadConfig} x */
-	R_DynamicReadaheadConfig(x) {this.H_("dynamicReadaheadConfig",x,this.D_DynamicReadaheadConfig);}
+	R_DynamicReadaheadConfig(x) {
+		this.H_("dynamicReadaheadConfig", x, this.D_DynamicReadaheadConfig);
+	}
 	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_DynamicReadaheadConfig} x */
-	D_DynamicReadaheadConfig(x)
-	{
-		const cf="D_DynamicReadaheadConfig";
-		const {maxReadAheadMediaTimeMs,minReadAheadMediaTimeMs,readAheadGrowthRateMs,...y}=this.s(cf,x); this.g(y);
-		this.t(maxReadAheadMediaTimeMs,x => this.sm.cq(x,120000));
-		this.sm.cq(minReadAheadMediaTimeMs,15000);
-		this.sm.cq(readAheadGrowthRateMs,1000);
+	D_DynamicReadaheadConfig(x) {
+		const cf = "D_DynamicReadaheadConfig";
+		const {
+			maxReadAheadMediaTimeMs,
+			minReadAheadMediaTimeMs,
+			readAheadGrowthRateMs,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
+		this.t(maxReadAheadMediaTimeMs, (x) => this.sm.cq(x, 120000));
+		this.sm.cq(minReadAheadMediaTimeMs, 15000);
+		this.sm.cq(readAheadGrowthRateMs, 1000);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_PdgCommentChip} x */
-	R_PdgCommentChip(x) {this.H_("pdgCommentChipRenderer",x,this.D_PdgCommentChip);}
+	R_PdgCommentChip(x) {
+		this.H_("pdgCommentChipRenderer", x, this.D_PdgCommentChip);
+	}
 	/** @public @arg {import("../yt_json_types/nop_q/Popup.ts").A_FancyDismissibleDialog} x */
-	A_FancyDismissibleDialog(x)
-	{
-		let dl=this.xm.TA_OpenPopup("A_FancyDismissibleDialog",x);
-		let pu=this.Popup_DL_DismissibleDialog(dl);
+	A_FancyDismissibleDialog(x) {
+		let dl = this.xm.TA_OpenPopup("A_FancyDismissibleDialog", x);
+		let pu = this.Popup_DL_DismissibleDialog(dl);
 		this.sm.R_FancyDismissibleDialog(pu);
 	}
 	/** @protected @arg {import("../yt_json_types/nop_q/Popup.ts").Popup_DL_DismissibleDialog} x */
-	Popup_DL_DismissibleDialog(x)
-	{
-		const {popup,popupType,beReused,...y}=this.s("Popup_DL_DismissibleDialog",x); this.g(y);/*#destructure_done*/
-		this.sm.cq(popupType,"DIALOG");
-		this.t(beReused,x => this.sm.cq(x,true));
+	Popup_DL_DismissibleDialog(x) {
+		const { popup, popupType, beReused, ...y } = this.s(
+			"Popup_DL_DismissibleDialog",
+			x,
+		);
+		this.g(y); /*#destructure_done*/
+		this.sm.cq(popupType, "DIALOG");
+		this.t(beReused, (x) => this.sm.cq(x, true));
 		return popup;
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_Dropdown} x */
-	R_Dropdown(x) {this.H_("dropdownRenderer",x,this.D_Dropdown);}
+	R_Dropdown(x) {
+		this.H_("dropdownRenderer", x, this.D_Dropdown);
+	}
 	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_Dropdown} x */
-	D_Dropdown(x)
-	{
-		const cf="D_Dropdown";
-		const {entries,label,...y}=this.s(cf,x); this.g(y);
-		this.z(entries,x =>
-		{
-			if("privacyDropdownItemRenderer" in x) return this.R_PrivacyDropdownItem(x);
+	D_Dropdown(x) {
+		const cf = "D_Dropdown";
+		const { entries, label, ...y } = this.s(cf, x);
+		this.g(y);
+		this.z(entries, (x) => {
+			if ("privacyDropdownItemRenderer" in x) {
+				return this.R_PrivacyDropdownItem(x);
+			}
 			debugger;
 		});
-		this.t(label,x => this.sm.a_primitive_str(x));
+		this.t(label, (x) => this.sm.a_primitive_str(x));
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_PrivacyDropdownItem} x */
-	R_PrivacyDropdownItem(x) {this.H_("privacyDropdownItemRenderer",x,this.D_PrivacyDropdownItem);}
+	R_PrivacyDropdownItem(x) {
+		this.H_("privacyDropdownItemRenderer", x, this.D_PrivacyDropdownItem);
+	}
 	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_PrivacyDropdownItem} x */
-	D_PrivacyDropdownItem(x)
-	{
-		const cf="D_PrivacyDropdownItem";
-		const {label,icon,description,int32Value,isSelected,accessibility,...y}=this.s(cf,x); this.g(y);
+	D_PrivacyDropdownItem(x) {
+		const cf = "D_PrivacyDropdownItem";
+		const {
+			label,
+			icon,
+			description,
+			int32Value,
+			isSelected,
+			accessibility,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
 		this.sm.G_Text(label);
-		this.sm.T_Icon(cf,icon);
+		this.sm.T_Icon(cf, icon);
 		this.sm.G_Text(description);
-		switch(int32Value)
-		{
-			default: debugger; break;
-			case 0: case 1: case 2:
+		switch (int32Value) {
+			default:
+				debugger;
+				break;
+			case 0:
+			case 1:
+			case 2:
 		}
 		this.sm.a_primitive_bool(isSelected);
 		this.xm.D_Label(accessibility);
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_C4TabbedHeader} x */
-	R_C4TabbedHeader(x) {this.H_("c4TabbedHeaderRenderer",x,this.D_C4TabbedHeader);}
+	R_C4TabbedHeader(x) {
+		this.H_("c4TabbedHeaderRenderer", x, this.D_C4TabbedHeader);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_C4TabbedHeader} x */
-	D_C4TabbedHeader(x)
-	{
-		const cf="D_C4TabbedHeader";
-		const {channelId,title,navigationEndpoint,avatar,banner,badges,headerLinks,subscribeButton,subscriberCountText,tvBanner,mobileBanner,trackingParams,sponsorButton,channelHandleText,videosCountText,...u}=this.s(cf,x);
+	D_C4TabbedHeader(x) {
+		const cf = "D_C4TabbedHeader";
+		const {
+			channelId,
+			title,
+			navigationEndpoint,
+			avatar,
+			banner,
+			badges,
+			headerLinks,
+			subscribeButton,
+			subscriberCountText,
+			tvBanner,
+			mobileBanner,
+			trackingParams,
+			sponsorButton,
+			channelHandleText,
+			videosCountText,
+			...u
+		} = this.s(cf, x);
 		this.sm.channelId(channelId);
 		this.sm.a_primitive_str(title);
 		this.sm.E_VE3611(navigationEndpoint);
 		this.sm.D_Thumbnail(avatar);
 		this.sm.D_Thumbnail(banner);
-		this.sm.tz(badges,this.sm.RMD_Badge);
-		this.sm.t(headerLinks,this.sm.R_ChannelHeaderLinks);
+		this.sm.tz(badges, this.sm.RMD_Badge);
+		this.sm.t(headerLinks, this.sm.R_ChannelHeaderLinks);
 		this.xm.R_SubscribeButton(subscribeButton);
 		this.sm.G_Text(subscriberCountText);
 		this.sm.D_Thumbnail(tvBanner);
 		this.sm.D_Thumbnail(mobileBanner);
-		this.xm.t(sponsorButton,this.xm.R_Button);
+		this.xm.t(sponsorButton, this.xm.R_Button);
 		this.sm.G_Text(channelHandleText);
 		this.sm.G_Text(videosCountText);
-		const {visitTracking,...y}=u; this.g(y);
-		this.t(visitTracking,this.D_RemarketingPing);
+		const { visitTracking, ...y } = u;
+		this.g(y);
+		this.t(visitTracking, this.D_RemarketingPing);
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_ActiveAccountHeader} x */
-	R_ActiveAccountHeader(x) {this.H_("activeAccountHeaderRenderer",x,this.D_ActiveAccountHeader);}
+	R_ActiveAccountHeader(x) {
+		this.H_("activeAccountHeaderRenderer", x, this.D_ActiveAccountHeader);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").D_ActiveAccountHeader} x */
-	D_ActiveAccountHeader(x)
-	{
-		const cf="D_ActiveAccountHeader";
-		const {accountName,accountPhoto,settingsEndpoint,manageAccountTitle,trackingParams,channelHandle,...y}=this.s(cf,x); this.g(y);
+	D_ActiveAccountHeader(x) {
+		const cf = "D_ActiveAccountHeader";
+		const {
+			accountName,
+			accountPhoto,
+			settingsEndpoint,
+			manageAccountTitle,
+			trackingParams,
+			channelHandle,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
 		this.sm.G_Text(accountName);
 		this.sm.D_Thumbnail(accountPhoto);
 		this.sm.E_ApplicationSettings(settingsEndpoint);
@@ -3140,566 +4479,792 @@ class Support_Renderer extends BaseService
 		this.sm.G_Text(channelHandle);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").R_DismissalFollowUp} x */
-	R_DismissalFollowUp(x) {this.H_("dismissalFollowUpRenderer",x,this.D_DismissalFollowUp);}
+	R_DismissalFollowUp(x) {
+		this.H_("dismissalFollowUpRenderer", x, this.D_DismissalFollowUp);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_DismissalFollowUp} x */
-	D_DismissalFollowUp(x)
-	{
-		const cf="D_DismissalFollowUp";
-		const {trackingParams,dismissalReasonsPrompt,reasons,cancelButton,submitButton,submitFeedbackEndpoint,dismissalViewStyle,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_DismissalFollowUp(x) {
+		const cf = "D_DismissalFollowUp";
+		const {
+			trackingParams,
+			dismissalReasonsPrompt,
+			reasons,
+			cancelButton,
+			submitButton,
+			submitFeedbackEndpoint,
+			dismissalViewStyle,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.G_Text(dismissalReasonsPrompt);
-		this.z(reasons,this.R_DismissalReasonText);
+		this.z(reasons, this.R_DismissalReasonText);
 		this.xm.R_Button(cancelButton);
 		this.xm.R_Button(submitButton);
 		this.sm.E_SubmitFeedback(submitFeedbackEndpoint);
-		this.sm.cq(dismissalViewStyle,"DISMISSAL_VIEW_STYLE_COMPACT_TALL");
+		this.sm.cq(dismissalViewStyle, "DISMISSAL_VIEW_STYLE_COMPACT_TALL");
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_MacroMarkersListItem} x */
-	R_MacroMarkersListItem(x) {this.H_("macroMarkersListItemRenderer",x,this.D_MacroMarkersListItem);}
+	R_MacroMarkersListItem(x) {
+		this.H_("macroMarkersListItemRenderer", x, this.D_MacroMarkersListItem);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_MacroMarkersListItem} x */
-	D_MacroMarkersListItem(x)
-	{
-		const cf="D_MacroMarkersListItem";
-		if("playerStateEntityKey" in x)
-		{
-			const {title,timeDescription,thumbnail,onTap,trackingParams,shareButton,repeatButton,macroMarkerRepeatStateEntityKey: a,endRepeatCommand,playerStateEntityKey: b,carouselType,lightColorPalette,darkColorPalette,timeDescriptionA11yLabel,...y}=this.s(cf,x); this.g(y);
+	D_MacroMarkersListItem(x) {
+		const cf = "D_MacroMarkersListItem";
+		if ("playerStateEntityKey" in x) {
+			const {
+				title,
+				timeDescription,
+				thumbnail,
+				onTap,
+				trackingParams,
+				shareButton,
+				repeatButton,
+				macroMarkerRepeatStateEntityKey: a,
+				endRepeatCommand,
+				playerStateEntityKey: b,
+				carouselType,
+				lightColorPalette,
+				darkColorPalette,
+				timeDescriptionA11yLabel,
+				...y
+			} = this.s(cf, x);
+			this.g(y);
 			this.sm.G_Text(title);
 			this.sm.G_Text(timeDescription);
 			this.sm.D_Thumbnail(thumbnail);
 			this.sm.E_Watch(onTap);
 			this.xm.R_Button(shareButton);
-			this.xm.t(repeatButton,this.xm.R_ToggleButton);
-			this.sm.t(endRepeatCommand,this.sm.C_CommandExecutor);
-			if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
+			this.xm.t(repeatButton, this.xm.R_ToggleButton);
+			this.sm.t(endRepeatCommand, this.sm.C_CommandExecutor);
+			if (
+				carouselType !==
+					"MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT"
+			) debugger;
 			this.sm.a_primitive_str(timeDescriptionA11yLabel);
-			this.t_cf(cf,lightColorPalette,(cf,x) => this.sm.D_LightColorPalette(cf,x));
-			this.t_cf(cf,darkColorPalette,(cf,x) => this.sm.D_DarkColorPalette(cf,x));
+			this.t_cf(
+				cf,
+				lightColorPalette,
+				(cf, x) => this.sm.D_LightColorPalette(cf, x),
+			);
+			this.t_cf(
+				cf,
+				darkColorPalette,
+				(cf, x) => this.sm.D_DarkColorPalette(cf, x),
+			);
 			return;
 		}
-		const {title,timeDescription,thumbnail,onTap,trackingParams,carouselType,layout,...y}=this.s(cf,x); this.g(y);
+		const {
+			title,
+			timeDescription,
+			thumbnail,
+			onTap,
+			trackingParams,
+			carouselType,
+			layout,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
 		this.sm.G_Text(title);
 		this.sm.G_Text(timeDescription);
 		this.sm.D_Thumbnail(thumbnail);
 		this.sm.E_Watch(onTap);
-		if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
-		if(layout!=="MACRO_MARKERS_LIST_ITEM_RENDERER_LAYOUT_VERTICAL") debugger;
+		if (
+			carouselType !== "MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT"
+		) debugger;
+		if (layout !== "MACRO_MARKERS_LIST_ITEM_RENDERER_LAYOUT_VERTICAL") debugger;
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_MacroMarkersInfoItem} x */
-	R_MacroMarkersInfoItem(x) {this.H_("macroMarkersInfoItemRenderer",x,this.D_MacroMarkersInfoItem);}
+	R_MacroMarkersInfoItem(x) {
+		this.H_("macroMarkersInfoItemRenderer", x, this.D_MacroMarkersInfoItem);
+	}
 	/** @private @arg {import("../yt_json_types/r/r_sub/r/D_MacroMarkersInfoItem.ts").D_MacroMarkersInfoItem} x */
-	D_MacroMarkersInfoItem(x)
-	{
-		const cf="D_MacroMarkersList";
-		const {infoText,menu,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_MacroMarkersInfoItem(x) {
+		const cf = "D_MacroMarkersList";
+		const { infoText, menu, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.G_Text(infoText);
 		this.sm.R_Menu(menu);
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_MacroMarkersList} x */
-	R_MacroMarkersList(x) {this.H_("macroMarkersListRenderer",x,this.D_MacroMarkersList);}
+	R_MacroMarkersList(x) {
+		this.H_("macroMarkersListRenderer", x, this.D_MacroMarkersList);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_MacroMarkersList} x */
-	D_MacroMarkersList(x)
-	{
-		const cf="D_MacroMarkersList";
-		const {contents,syncButtonLabel,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(contents,x =>
-		{
-			if("macroMarkersListItemRenderer" in x) return this.R_MacroMarkersListItem(x);
-			if("macroMarkersInfoItemRenderer" in x) return this.R_MacroMarkersInfoItem(x);
+	D_MacroMarkersList(x) {
+		const cf = "D_MacroMarkersList";
+		const { contents, syncButtonLabel, trackingParams, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.z(contents, (x) => {
+			if ("macroMarkersListItemRenderer" in x) {
+				return this.R_MacroMarkersListItem(x);
+			}
+			if ("macroMarkersInfoItemRenderer" in x) {
+				return this.R_MacroMarkersInfoItem(x);
+			}
 			debugger;
 		});
 		this.sm.G_Text(syncButtonLabel);
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_HorizontalCardList} x */
-	R_HorizontalCardList(x) {this.H_("horizontalCardListRenderer",x,this.D_HorizontalCardList);}
+	R_HorizontalCardList(x) {
+		this.H_("horizontalCardListRenderer", x, this.D_HorizontalCardList);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_HorizontalCardList} x */
-	D_HorizontalCardList(x)
-	{
-		const cf="D_HorizontalCardList";
-		const {cards,trackingParams,header,style,centerItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(cards,x =>
-		{
-			if("macroMarkersListItemRenderer" in x) return this.R_MacroMarkersListItem(x);
-			if("placeDataViewModel" in x) return this.ht.VM_PlaceData(x);
-			x===""; debugger;
+	D_HorizontalCardList(x) {
+		const cf = "D_HorizontalCardList";
+		const { cards, trackingParams, header, style, centerItems, ...y } = this.s(
+			cf,
+			x,
+		);
+		this.g(y); /*#destructure_done*/
+		this.z(cards, (x) => {
+			if ("macroMarkersListItemRenderer" in x) {
+				return this.R_MacroMarkersListItem(x);
+			}
+			if ("placeDataViewModel" in x) return this.ht.VM_PlaceData(x);
+			x === "";
+			debugger;
 		});
 		this.sm.R_RichListHeader(header);
 		x: {
-			let x1=style;
-			if("styleType" in x1) {this.sm.cq(x1.styleType,"HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION"); break x;}
-			if("type" in x1) {this.sm.cq(x1.type,"HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION"); break x;}
-			this.sm.cq(x1+"1",x1+"");
+			let x1 = style;
+			if ("styleType" in x1) {
+				this.sm.cq(
+					x1.styleType,
+					"HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION",
+				);
+				break x;
+			}
+			if ("type" in x1) {
+				this.sm.cq(
+					x1.type,
+					"HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION",
+				);
+				break x;
+			}
+			this.sm.cq(x1 + "1", x1 + "");
 		}
-		this.sm.cq(centerItems,false);
+		this.sm.cq(centerItems, false);
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_StructuredDescriptionContent} x */
-	R_StructuredDescriptionContent(x) {this.H_("structuredDescriptionContentRenderer",x,this.D_StructuredDescriptionContent);}
+	R_StructuredDescriptionContent(x) {
+		this.H_(
+			"structuredDescriptionContentRenderer",
+			x,
+			this.D_StructuredDescriptionContent,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_StructuredDescriptionContent} x */
-	D_StructuredDescriptionContent(x) {this.H_("items",x,x => this.z(x,this.G_StructuredDescriptionContentItem));}
+	D_StructuredDescriptionContent(x) {
+		this.H_(
+			"items",
+			x,
+			(x) => this.z(x, this.G_StructuredDescriptionContentItem),
+		);
+	}
 	/** @private @arg {import("../yt_json_types/ghi/group_G.ts").G_StructuredDescriptionContentItem} x */
-	G_StructuredDescriptionContentItem(x)
-	{
-		if("expandableVideoDescriptionBodyRenderer" in x) return this.ht.R_ExpandableVideoDescriptionBody(x);
-		if("horizontalCardListRenderer" in x) return this.R_HorizontalCardList(x);
-		if("videoDescriptionHeaderRenderer" in x) return this.sm.R_VideoDescriptionHeader(x);
-		if("videoDescriptionMusicSectionRenderer" in x) return this.ht.R_VideoDescriptionMusicSection(x);
-		if("videoDescriptionCourseSectionRenderer" in x) return this.sm.R_VideoDescriptionCourseSection(x);
+	G_StructuredDescriptionContentItem(x) {
+		if ("expandableVideoDescriptionBodyRenderer" in x) {
+			return this.ht.R_ExpandableVideoDescriptionBody(x);
+		}
+		if ("horizontalCardListRenderer" in x) return this.R_HorizontalCardList(x);
+		if ("videoDescriptionHeaderRenderer" in x) {
+			return this.sm.R_VideoDescriptionHeader(x);
+		}
+		if ("videoDescriptionMusicSectionRenderer" in x) {
+			return this.ht.R_VideoDescriptionMusicSection(x);
+		}
+		if ("videoDescriptionCourseSectionRenderer" in x) {
+			return this.sm.R_VideoDescriptionCourseSection(x);
+		}
 	}
 	/** @public @arg {import("../yt_json_types/nop_q/Popup.ts").A_GetSystemMenu} x */
-	A_GetSystemMenu(x)
-	{
-		const cf="A_GetSystemMenu";
-		let pu=this.xm.TA_OpenPopup(cf,x);
+	A_GetSystemMenu(x) {
+		const cf = "A_GetSystemMenu";
+		let pu = this.xm.TA_OpenPopup(cf, x);
 		this.Popup_DD_SystemMenu(pu);
 	}
 	/** @private @arg {import("../yt_json_types/nop_q/Popup.ts").Popup_DD_SystemMenu} x */
-	Popup_DD_SystemMenu(x)
-	{
-		let m=this.sm.T_OpenPopup_Dropdown("Popup_DD_SystemMenu",x);
-		this.t(m,this.R_SystemMenu);
+	Popup_DD_SystemMenu(x) {
+		let m = this.sm.T_OpenPopup_Dropdown("Popup_DD_SystemMenu", x);
+		this.t(m, this.R_SystemMenu);
 	}
 	/** @public @arg {import("../yt_json_types/nop_q/Popup.ts").R_SystemMenu} x */
-	R_SystemMenu(x) {this.t(this.sm.TR_MultiPageMenu("R_SystemMenu",x),this.MP_SystemMenu);}
+	R_SystemMenu(x) {
+		this.t(this.sm.TR_MultiPageMenu("R_SystemMenu", x), this.MP_SystemMenu);
+	}
 	/** @public @arg {import("../yt_json_types/nop_q/Popup.ts").MP_SystemMenu} x */
-	MP_SystemMenu(x)
-	{
-		const cf="MP_SystemMenu";
-		const {header,sections,trackingParams,style,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	MP_SystemMenu(x) {
+		const cf = "MP_SystemMenu";
+		const { header, sections, trackingParams, style, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.xr.R_ActiveAccountHeader(header);
-		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_SYSTEM") debugger;
+		if (style !== "MULTI_PAGE_MENU_STYLE_TYPE_SYSTEM") debugger;
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").R_DismissalReasonText} x */
-	R_DismissalReasonText(x) {this.H_("dismissalReasonTextRenderer",x,this.D_DismissalReasonText);}
+	R_DismissalReasonText(x) {
+		this.H_("dismissalReasonTextRenderer", x, this.D_DismissalReasonText);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_DismissalReasonText} x */
-	D_DismissalReasonText(x)
-	{
-		const cf="D_DismissalReasonText";
-		const {trackingParams,text,feedbackToken,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_DismissalReasonText(x) {
+		const cf = "D_DismissalReasonText";
+		const { trackingParams, text, feedbackToken, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.G_Text(text);
-		this.sm.save_b64_binary(`${cf}.feedbackToken`,feedbackToken);
+		this.sm.save_b64_binary(`${cf}.feedbackToken`, feedbackToken);
 	}
 	//#endregion
 	//#region Group Union
 	//#region G_
 	/** @private @arg {import("../yt_json_types/ghi/group_G.ts").G_ChannelSwitcherContent} x */
-	G_ChannelSwitcherContent(x)
-	{
-		if("buttonRenderer" in x) return this.xm.R_Button(x);
-		if("accountItem" in x) return this.ht.A_AccountItem(x);
+	G_ChannelSwitcherContent(x) {
+		if ("buttonRenderer" in x) return this.xm.R_Button(x);
+		if ("accountItem" in x) return this.ht.A_AccountItem(x);
 	}
 	/** @public @arg {import("../yt_json_types/ghi/group_G.ts").G_NextContents} x */
-	G_NextContents(x)
-	{
-		if("twoColumnWatchNextResults" in x) return this.sm.R_TwoColumnWatchNextResults(x);
-		if("singleColumnMusicWatchNextResultsRenderer" in x) return this.R_SingleColumnMusicWatchNextResults(x);
+	G_NextContents(x) {
+		if ("twoColumnWatchNextResults" in x) {
+			return this.sm.R_TwoColumnWatchNextResults(x);
+		}
+		if ("singleColumnMusicWatchNextResultsRenderer" in x) {
+			return this.R_SingleColumnMusicWatchNextResults(x);
+		}
 	}
 	/** @public @arg {import("../yt_json_types/ghi/group_G.ts").G_GuideSectionItem} x */
-	G_GuideSectionItem(x)
-	{
-		if("guideEntryRenderer" in x) return this.R_GuideEntry(x);
-		if("guideCollapsibleSectionEntryRenderer" in x) return this.R_GuideCollapsibleSectionEntry(x);
-		if("guideDownloadsEntryRenderer" in x) return this.R_GuideDownloadsEntry(x);
-		if("guideCollapsibleEntryRenderer" in x) return this.R_GuideCollapsibleEntry(x);
-		if("guideSubscriptionsSectionRenderer" in x) return this.R_GuideSubscriptionsSection(x);
-		if("guideSectionRenderer" in x) return this.R_GuideSection(x);
+	G_GuideSectionItem(x) {
+		if ("guideEntryRenderer" in x) return this.R_GuideEntry(x);
+		if ("guideCollapsibleSectionEntryRenderer" in x) {
+			return this.R_GuideCollapsibleSectionEntry(x);
+		}
+		if ("guideDownloadsEntryRenderer" in x) {
+			return this.R_GuideDownloadsEntry(x);
+		}
+		if ("guideCollapsibleEntryRenderer" in x) {
+			return this.R_GuideCollapsibleEntry(x);
+		}
+		if ("guideSubscriptionsSectionRenderer" in x) {
+			return this.R_GuideSubscriptionsSection(x);
+		}
+		if ("guideSectionRenderer" in x) return this.R_GuideSection(x);
 	}
 	/** @public @arg {import("../yt_json_types/ghi/group_G.ts").G_ChatItem} x */
-	G_ChatItem(x)
-	{
-		if("liveChatTextMessageRenderer" in x) return this.R_LiveChatTextMessage(x);
-		if("liveChatPlaceholderItemRenderer" in x) return this.R_LiveChatPlaceholderItem(x);
-		if("liveChatViewerEngagementMessageRenderer" in x) return this.R_LiveChatViewerEngagementMessage(x);
+	G_ChatItem(x) {
+		if ("liveChatTextMessageRenderer" in x) {
+			return this.R_LiveChatTextMessage(x);
+		}
+		if ("liveChatPlaceholderItemRenderer" in x) {
+			return this.R_LiveChatPlaceholderItem(x);
+		}
+		if ("liveChatViewerEngagementMessageRenderer" in x) {
+			return this.R_LiveChatViewerEngagementMessage(x);
+		}
 	}
 	/** @public @arg {import("../yt_json_types/ghi/group_G.ts").G_RS_Subscribe_Action} x */
-	G_RS_Subscribe_Action(x)
-	{
-		const cf="RS_Subscribe_ActionItem";
-		if("openPopupAction" in x)
-		{
+	G_RS_Subscribe_Action(x) {
+		const cf = "RS_Subscribe_ActionItem";
+		if ("openPopupAction" in x) {
 			/** @type {`${typeof cf}_Action`} */
-			const cf1=`${cf}_Action`;
-			const {clickTrackingParams,openPopupAction,...y}=this.s(cf1,x); this.g(y);
-			console.log(`[${cf}.openPopupAction]`,openPopupAction);
+			const cf1 = `${cf}_Action`;
+			const { clickTrackingParams, openPopupAction, ...y } = this.s(cf1, x);
+			this.g(y);
+			console.log(`[${cf}.openPopupAction]`, openPopupAction);
 			return;
 		}
-		if("addToGuideSectionAction" in x) return this.A_AddToGuideSection(x);
-		if("runAttestationCommand" in x) return this.C_RunAttestation(x);
-		if("updateSubscribeButtonAction" in x) return this.AU_SubscribeButton(x);
+		if ("addToGuideSectionAction" in x) return this.A_AddToGuideSection(x);
+		if ("runAttestationCommand" in x) return this.C_RunAttestation(x);
+		if ("updateSubscribeButtonAction" in x) return this.AU_SubscribeButton(x);
 	}
 	/** @public @arg {import("../yt_json_types/ghi/group_G.ts").G_LiveChatContinuationItem} x */
-	G_LiveChatContinuationItem(x)
-	{
-		if("invalidationContinuationData" in x) return this.CD_Invalidation(x);
-		if("liveChatReplayContinuationData" in x) return this.CD_LiveChatReplay(x);
-		if("playerSeekContinuationData" in x) return this.CD_PlayerSeek(x);
+	G_LiveChatContinuationItem(x) {
+		if ("invalidationContinuationData" in x) return this.CD_Invalidation(x);
+		if ("liveChatReplayContinuationData" in x) return this.CD_LiveChatReplay(x);
+		if ("playerSeekContinuationData" in x) return this.CD_PlayerSeek(x);
 	}
 	/** @public @arg {import("../yt_json_types/ghi/group_G.ts").G_RA_LiveChatContinuationActions} x */
-	G_LiveChatContinuationActions(x)
-	{
-		if("replayChatItemAction" in x) return this.A_ReplayChatItem(x);
-		if("addChatItemAction" in x) return this.A_AddChatItem(x);
+	G_LiveChatContinuationActions(x) {
+		if ("replayChatItemAction" in x) return this.A_ReplayChatItem(x);
+		if ("addChatItemAction" in x) return this.A_AddChatItem(x);
 	}
 	/** @public @arg {import("../yt_json_types/ghi/group_G.ts").G_WatchNext} x */
-	G_WatchNext(x)
-	{
-		if("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
-		if("compactVideoRenderer" in x) return this.sm.R_CompactVideo(x);
-		if("compactPlaylistRenderer" in x) return this.sm.R_CompactPlaylist(x);
+	G_WatchNext(x) {
+		if ("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
+		if ("compactVideoRenderer" in x) return this.sm.R_CompactVideo(x);
+		if ("compactPlaylistRenderer" in x) return this.sm.R_CompactPlaylist(x);
 	}
 	/** @public @arg {import("../yt_json_types/d/group_D.ts").G_MenuNavigationItem_NavEP} x */
-	G_MenuNavigationItem_NavEP(x)
-	{
-		if("userFeedbackEndpoint" in x) return this.sm.E_UserFeedback(x);
-		if("openPopupAction" in x) return this.GA_MenuNavigationPopup(x);
-		if("adFeedbackEndpoint" in x) return this.E_AdFeedback(x);
-		if("urlEndpoint" in x) return this.xm.E_Url(x);
+	G_MenuNavigationItem_NavEP(x) {
+		if ("userFeedbackEndpoint" in x) return this.sm.E_UserFeedback(x);
+		if ("openPopupAction" in x) return this.GA_MenuNavigationPopup(x);
+		if ("adFeedbackEndpoint" in x) return this.E_AdFeedback(x);
+		if ("urlEndpoint" in x) return this.xm.E_Url(x);
 		debugger;
 	}
 	/** @public @arg {import("../yt_json_types/e/E.ts").E_AdFeedback} x */
-	E_AdFeedback(x)
-	{
-		const cf="E_AdFeedback";
-		let [d,{loggingUrls,...y}]=this.sm.TE_Endpoint_2(cf,"adFeedbackEndpoint",x); this.g(y);
+	E_AdFeedback(x) {
+		const cf = "E_AdFeedback";
+		let [d, { loggingUrls, ...y }] = this.sm.TE_Endpoint_2(
+			cf,
+			"adFeedbackEndpoint",
+			x,
+		);
+		this.g(y);
 		this.DE_AdFeedback(d);
-		let [r]=this.z(loggingUrls,x => this.xm.T_BaseUrl(x));
-		this.z(r,x => this.ps.parse_url(`${cf}.loggingUrls[]`,x));
+		let [r] = this.z(loggingUrls, (x) => this.xm.T_BaseUrl(x));
+		this.z(r, (x) => this.ps.parse_url(`${cf}.loggingUrls[]`, x));
 	}
 	/** @public @arg {import("../yt_json_types/d/group_DE.ts").DE_AdFeedback} x */
-	DE_AdFeedback(x) {x;}
+	DE_AdFeedback(x) {
+		x;
+	}
 	//#endregion
 	//#region GA_
 	/** @private @arg {import("../yt_json_types/ghi/group_G.ts").GA_MenuNavigationPopup} x */
-	GA_MenuNavigationPopup(x)
-	{
-		const cf="GA_MenuNavigationPopup";
-		const {clickTrackingParams,openPopupAction: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	GA_MenuNavigationPopup(x) {
+		const cf = "GA_MenuNavigationPopup";
+		const { clickTrackingParams, openPopupAction: a, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		{
-			const {popup,popupType,beReused,...y}=this.s("Popup_DL_MenuNavigation",a); this.g(y);
+			const { popup, popupType, beReused, ...y } = this.s(
+				"Popup_DL_MenuNavigation",
+				a,
+			);
+			this.g(y);
 			x: {
-				let x2=popup; this.sm.k("G_MenuNavigationPopup",x2);
-				if("aboutThisAdRenderer" in x2) {this.sm.R_AboutThisAd(x2); break x;}
-				if("fancyDismissibleDialogRenderer" in x2) {this.sm.R_FancyDismissibleDialog(x2); break x;}
+				let x2 = popup;
+				this.sm.k("G_MenuNavigationPopup", x2);
+				if ("aboutThisAdRenderer" in x2) {
+					this.sm.R_AboutThisAd(x2);
+					break x;
+				}
+				if ("fancyDismissibleDialogRenderer" in x2) {
+					this.sm.R_FancyDismissibleDialog(x2);
+					break x;
+				}
 				debugger;
 			}
-			this.sm.cq(popupType,"DIALOG");
-			this.t(beReused,x => this.sm.cq(x,true));
+			this.sm.cq(popupType, "DIALOG");
+			this.t(beReused, (x) => this.sm.cq(x, true));
 		}
 	}
 	//#endregion
 	//#endregion
 	//#region Data methods
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_PlaylistSidebar} x */
-	D_PlaylistSidebar(x)
-	{
-		const cf="D_PlaylistSidebar";
-		const {items,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.xm.z(items,this.xm.G_PlaylistSidebarItem);
+	D_PlaylistSidebar(x) {
+		const cf = "D_PlaylistSidebar";
+		const { items, trackingParams, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.xm.z(items, this.xm.G_PlaylistSidebarItem);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_NotchesItem} x */
-	D_NotchesItem(x)
-	{
-		const cf="NotchesItem";
-		const {linearGradientCssStyle,knobColorArgb,purchaseCommand,tierValue,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(linearGradientCssStyle) {debugger;}
-		if(knobColorArgb!==4280191205) debugger;
+	D_NotchesItem(x) {
+		const cf = "NotchesItem";
+		const {
+			linearGradientCssStyle,
+			knobColorArgb,
+			purchaseCommand,
+			tierValue,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		if (linearGradientCssStyle) debugger;
+		if (knobColorArgb !== 4280191205) debugger;
 		this.sm.E_YpcGetCart(purchaseCommand);
 		this.sm.G_Text(tierValue);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_GuideCollapsibleEntry} x */
-	D_GuideCollapsibleEntry(x)
-	{
-		const cf="D_GuideCollapsibleEntry";
-		const {expanderItem,expandableItems,collapserItem,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_GuideCollapsibleEntry(x) {
+		const cf = "D_GuideCollapsibleEntry";
+		const { expanderItem, expandableItems, collapserItem, ...y } = this.s(
+			cf,
+			x,
+		);
+		this.g(y); /*#destructure_done*/
 		this.R_GuideEntry(expanderItem);
-		this.z(expandableItems,x =>
-		{
-			if("guideEntryRenderer" in x) return this.G_GuideSectionItem(x);
+		this.z(expandableItems, (x) => {
+			if ("guideEntryRenderer" in x) return this.G_GuideSectionItem(x);
 		});
 		this.R_GuideEntry(collapserItem);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_GuideDownloadsEntry} x */
-	D_GuideDownloadsEntry(x)
-	{
-		const cf="D_GuideDownloadsEntry";
-		const {alwaysShow,entryRenderer,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(alwaysShow!==false) debugger;
-		if(!entryRenderer.guideEntryRenderer) debugger;
+	D_GuideDownloadsEntry(x) {
+		const cf = "D_GuideDownloadsEntry";
+		const { alwaysShow, entryRenderer, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		if (alwaysShow !== false) debugger;
+		if (!entryRenderer.guideEntryRenderer) debugger;
 		this.R_GuideEntry(entryRenderer);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_GuideSubscriptionsSection} x */
-	D_GuideSubscriptionsSection(x)
-	{
-		const cf="D_GuideSubscriptionsSection";
-		const {sort,items,trackingParams,formattedTitle,handlerDatas,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(sort!=="CHANNEL_ACTIVITY") debugger;
-		this.z(items,x =>
-		{
-			if("guideEntryRenderer" in x) return this.G_GuideSectionItem(x);
-			if("guideCollapsibleEntryRenderer" in x) return this.G_GuideSectionItem(x);
-			let ua=this.get_keys_of(x);
-			if(ua.length>0) console.log("[G_GuideSubscriptionsSectionItem.key]",ua);
+	D_GuideSubscriptionsSection(x) {
+		const cf = "D_GuideSubscriptionsSection";
+		const { sort, items, trackingParams, formattedTitle, handlerDatas, ...y } =
+			this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		if (sort !== "CHANNEL_ACTIVITY") debugger;
+		this.z(items, (x) => {
+			if ("guideEntryRenderer" in x) return this.G_GuideSectionItem(x);
+			if ("guideCollapsibleEntryRenderer" in x) {
+				return this.G_GuideSectionItem(x);
+			}
+			let ua = this.get_keys_of(x);
+			if (ua.length > 0) {
+				console.log("[G_GuideSubscriptionsSectionItem.key]", ua);
+			}
 		});
-		this.sm.t(formattedTitle,this.sm.G_Text);
-		if(!this.eq_keys(handlerDatas,["GUIDE_ACTION_ADD_TO_SUBSCRIPTIONS","GUIDE_ACTION_REMOVE_FROM_SUBSCRIPTIONS"])) debugger;
+		this.sm.t(formattedTitle, this.sm.G_Text);
+		if (
+			!this.eq_keys(handlerDatas, [
+				"GUIDE_ACTION_ADD_TO_SUBSCRIPTIONS",
+				"GUIDE_ACTION_REMOVE_FROM_SUBSCRIPTIONS",
+			])
+		) debugger;
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_GuideSection} x */
-	D_GuideSection(x)
-	{
-		const cf="D_GuideSection";
-		const {items,trackingParams,formattedTitle,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(items,this.G_GuideSectionItem);
-		this.sm.t(formattedTitle,this.sm.G_Text);
+	D_GuideSection(x) {
+		const cf = "D_GuideSection";
+		const { items, trackingParams, formattedTitle, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.z(items, this.G_GuideSectionItem);
+		this.sm.t(formattedTitle, this.sm.G_Text);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_GuideCollapsibleSectionEntry} x */
-	D_GuideCollapsibleSectionEntry(x)
-	{
-		const cf="D_GuideCollapsibleSectionEntry";
-		const {headerEntry,expanderIcon,collapserIcon,sectionItems,handlerDatas,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_GuideCollapsibleSectionEntry(x) {
+		const cf = "D_GuideCollapsibleSectionEntry";
+		const {
+			headerEntry,
+			expanderIcon,
+			collapserIcon,
+			sectionItems,
+			handlerDatas,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.R_GuideEntry(headerEntry);
-		this.sm.T_Icon("D_Guide_ExpandIcon",expanderIcon);
-		this.sm.T_Icon("D_Guide_CollapseIcon",collapserIcon);
-		this.z(sectionItems,this.G_GuideSectionItem);
-		if(handlerDatas[0]!=="GUIDE_ACTION_ADD_TO_PLAYLISTS") debugger;
-		if(handlerDatas[1]!=="GUIDE_ACTION_REMOVE_FROM_PLAYLISTS") debugger;
-		if(handlerDatas.length!==2) debugger;
+		this.sm.T_Icon("D_Guide_ExpandIcon", expanderIcon);
+		this.sm.T_Icon("D_Guide_CollapseIcon", collapserIcon);
+		this.z(sectionItems, this.G_GuideSectionItem);
+		if (handlerDatas[0] !== "GUIDE_ACTION_ADD_TO_PLAYLISTS") debugger;
+		if (handlerDatas[1] !== "GUIDE_ACTION_REMOVE_FROM_PLAYLISTS") debugger;
+		if (handlerDatas.length !== 2) debugger;
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ResourceStatusInResponseCheck} x */
-	D_ResourceStatusInResponseCheck(x)
-	{
-		const cf="D_ResourceStatusInResponseCheckData";
-		const {serverBuildLabel,resourceStatuses: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_ResourceStatusInResponseCheck(x) {
+		const cf = "D_ResourceStatusInResponseCheckData";
+		const { serverBuildLabel, resourceStatuses: a, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.a_primitive_str(serverBuildLabel);
-		this.z(a,this.D_ElementResourceStatus);
+		this.z(a, this.D_ElementResourceStatus);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ElementResourceStatus} x */
-	D_ElementResourceStatus(x)
-	{
-		const cf="D_ElementResourceStatus";
-		const {identifier,status,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(status!=="ELEMENTS_RESOURCE_STATUS_ATTACHED") debugger;
+	D_ElementResourceStatus(x) {
+		const cf = "D_ElementResourceStatus";
+		const { identifier, status, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		if (status !== "ELEMENTS_RESOURCE_STATUS_ATTACHED") debugger;
 		this.sm.a_primitive_str(identifier);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_Playlist_MD} x */
-	D_Playlist_MD(x)
-	{
-		const cf="D_Playlist_MD";
-		const {title,iosAppindexingLink,androidAppindexingLink,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_Playlist_MD(x) {
+		const cf = "D_Playlist_MD";
+		const { title, iosAppindexingLink, androidAppindexingLink, ...y } = this.s(
+			cf,
+			x,
+		);
+		this.g(y); /*#destructure_done*/
 		this.sm.a_primitive_str(title);
 		this.sm.a_primitive_str(iosAppindexingLink);
 		this.sm.a_primitive_str(androidAppindexingLink);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_PdgCommentOption} x */
-	D_PdgCommentOption(x)
-	{
-		const cf="D_PdgCommentOption";
-		const {commentText,chipRenderer,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_PdgCommentOption(x) {
+		const cf = "D_PdgCommentOption";
+		const { commentText, chipRenderer, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.G_Text(commentText);
 		this.R_PdgCommentChip(chipRenderer);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_PdgCommentChip} x */
-	D_PdgCommentChip(x)
-	{
-		const cf="D_PdgCommentChip";
-		const {chipText,chipColorPalette,chipIcon,trackingParams,...y}=this.s(cf,x); this.g(y);
+	D_PdgCommentChip(x) {
+		const cf = "D_PdgCommentChip";
+		const { chipText, chipColorPalette, chipIcon, trackingParams, ...y } = this
+			.s(cf, x);
+		this.g(y);
 		this.sm.G_Text(chipText);
 		this.D_ChipColorPalette(chipColorPalette);
-		if(chipIcon.iconType!=="FILL_DOLLAR_SIGN_HEART_12") debugger;
+		if (chipIcon.iconType !== "FILL_DOLLAR_SIGN_HEART_12") debugger;
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_RemarketingPing} x */
-	D_RemarketingPing(x)
-	{
-		const cf="D_RemarketingPing",{remarketingPing,...y}=this.s(cf,x),t=this; this.g(y);
-		let tr=t._convert_url_to_obj(remarketingPing);
-		t.sm.cq(tr.host,"www.youtube.com");
-		let [r,...p]=split_string(tr.pathname,"/"); t.sm.cq(r,"");
-		t.sm.cq(p[0],"pagead"); t.sm.cq(p[1],"viewthroughconversion");
-		let np=this.sm.parse_number_template(p[2]);
-		if(this.view_conversion_info.has(np)) return;
-		let sp=this.parse_url_search_params(tr.search);
-		let kk=this.get_keys_of(sp);
-		console.log(`[${cf}]`,"[keys]",kk.join());
-		this.view_conversion_info.set(np,sp);
+	D_RemarketingPing(x) {
+		const cf = "D_RemarketingPing",
+			{ remarketingPing, ...y } = this.s(cf, x),
+			t = this;
+		this.g(y);
+		let tr = t._convert_url_to_obj(remarketingPing);
+		t.sm.cq(tr.host, "www.youtube.com");
+		let [r, ...p] = split_string(tr.pathname, "/");
+		t.sm.cq(r, "");
+		t.sm.cq(p[0], "pagead");
+		t.sm.cq(p[1], "viewthroughconversion");
+		let np = this.sm.parse_number_template(p[2]);
+		if (this.view_conversion_info.has(np)) return;
+		let sp = this.parse_url_search_params(tr.search);
+		let kk = this.get_keys_of(sp);
+		console.log(`[${cf}]`, "[keys]", kk.join());
+		this.view_conversion_info.set(np, sp);
 	}
 	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_ExternalChannelId} x */
-	D_ExternalChannelId(x)
-	{
-		const cf="D_ExternalChannelId";
-		const {externalChannelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_ExternalChannelId(x) {
+		const cf = "D_ExternalChannelId";
+		const { externalChannelId, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.channelId(externalChannelId);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_InvalidationId} x */
-	D_InvalidationId(x)
-	{
-		const cf="D_InvalidationId";
-		const {objectSource,objectId,topic,subscribeToGcmTopics,protoCreationTimestampMs,...y}=this.s(cf,x); this.g(y);
+	D_InvalidationId(x) {
+		const cf = "D_InvalidationId";
+		const {
+			objectSource,
+			objectId,
+			topic,
+			subscribeToGcmTopics,
+			protoCreationTimestampMs,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
 		this.sm.a_primitive_num(objectSource);
-		console.log(`[${cf}.objectId]`,objectId);
-		console.log(`[${cf}.topic]`,topic);
-		if(subscribeToGcmTopics!==true) debugger;
-		console.log(`[${cf}.protoCreationTimestampMs]`,protoCreationTimestampMs);
+		console.log(`[${cf}.objectId]`, objectId);
+		console.log(`[${cf}.topic]`, topic);
+		if (subscribeToGcmTopics !== true) debugger;
+		console.log(`[${cf}.protoCreationTimestampMs]`, protoCreationTimestampMs);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_RunAttestation} x */
-	D_RunAttestation(x)
-	{
-		const cf="D_RunAttestation";
-		const {ids,engagementType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(ids,this.D_ExternalChannelId);
-		if(engagementType!=="ENGAGEMENT_TYPE_SUBSCRIBE") debugger;
+	D_RunAttestation(x) {
+		const cf = "D_RunAttestation";
+		const { ids, engagementType, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.z(ids, this.D_ExternalChannelId);
+		if (engagementType !== "ENGAGEMENT_TYPE_SUBSCRIBE") debugger;
 	}
 	//#endregion
 	//#region New Data methods
 	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_FeedbackResponseProcessedStatus} x */
-	D_FeedbackResponseProcessedStatus(x)
-	{
-		const cf="D_FeedbackResponseProcessedStatus";
-		const {isProcessed,followUpDialog,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this._primitive_of(isProcessed,"boolean");
-		this.t(followUpDialog,this.R_DismissalFollowUp);
+	D_FeedbackResponseProcessedStatus(x) {
+		const cf = "D_FeedbackResponseProcessedStatus";
+		const { isProcessed, followUpDialog, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this._primitive_of(isProcessed, "boolean");
+		this.t(followUpDialog, this.R_DismissalFollowUp);
 	}
 	//#endregion
 	//#region new
 	/** @template {import("../yt_json_types/abc/group_C.ts").C_Continuation} BT @template {BT["continuationCommand"]["request"]} T @arg {BT} x @arg {T} t @returns {x is {continuationCommand:{request:T}}} */
-	is_C_Continuation_one(x,t) {return x.continuationCommand.request===t;}
+	is_C_Continuation_one(x, t) {
+		return x.continuationCommand.request === t;
+	}
 	/** @public @arg {import("../yt_json_types/abc/group_C.ts").C_Continuation} x */
-	C_Continuation(x)
-	{
-		if(this.is_C_Continuation_one(x,"CONTINUATION_REQUEST_TYPE_BROWSE"))
-		{
-			const [a,b,y]=this.sm.TE_Endpoint_Opt_3("C_Continuation","continuationCommand",x); this.g(y);
-			this.t(a,this.M_Browse);
+	C_Continuation(x) {
+		if (this.is_C_Continuation_one(x, "CONTINUATION_REQUEST_TYPE_BROWSE")) {
+			const [a, b, y] = this.sm.TE_Endpoint_Opt_3(
+				"C_Continuation",
+				"continuationCommand",
+				x,
+			);
+			this.g(y);
+			this.t(a, this.M_Browse);
 			this.DC_Continuation_Browse(b);
 			return;
 		}
-		if(this.is_C_Continuation_one(x,"CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE"))
-		{
-			const [a,b,y]=this.sm.TE_Endpoint_Opt_3("C_Continuation","continuationCommand",x); this.g(y);
-			this.t(a,this.M_Next);
+		if (
+			this.is_C_Continuation_one(
+				x,
+				"CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE",
+			)
+		) {
+			const [a, b, y] = this.sm.TE_Endpoint_Opt_3(
+				"C_Continuation",
+				"continuationCommand",
+				x,
+			);
+			this.g(y);
+			this.t(a, this.M_Next);
 			this.DC_Continuation_ReelWatchSeq(b);
 			return;
 		}
-		if(this.is_C_Continuation_one(x,"CONTINUATION_REQUEST_TYPE_WATCH_NEXT"))
-		{
-			const [a,b,y]=this.sm.TE_Endpoint_Opt_3("C_Continuation","continuationCommand",x); this.g(y);
-			this.t(a,this.M_Next);
+		if (this.is_C_Continuation_one(x, "CONTINUATION_REQUEST_TYPE_WATCH_NEXT")) {
+			const [a, b, y] = this.sm.TE_Endpoint_Opt_3(
+				"C_Continuation",
+				"continuationCommand",
+				x,
+			);
+			this.g(y);
+			this.t(a, this.M_Next);
 			this.DC_Continuation_WatchNext(b);
 			return;
 		}
 		debugger;
 	}
 	/** @public @arg {import("../yt_json_types/d/group_DC.ts").DC_Continuation} x */
-	DC_Continuation(x)
-	{
-		if("continuationCommand" in x) debugger;
-		const cf="DC_Continuation";
-		switch(x.request)
-		{
-			default: debugger; break;
+	DC_Continuation(x) {
+		if ("continuationCommand" in x) debugger;
+		const cf = "DC_Continuation";
+		switch (x.request) {
+			default:
+				debugger;
+				break;
 			case "CONTINUATION_REQUEST_TYPE_BROWSE": {
-				if("command" in x) {return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);}
-				return this.g(this.DC_Continuation_Omit(cf,x));
+				if ("command" in x) {
+					return this.y(
+						cf,
+						"command",
+						this.DC_Continuation_Omit(cf, x),
+						this.C_ShowReloadUi,
+					);
+				}
+				return this.g(this.DC_Continuation_Omit(cf, x));
 			}
-			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": return this.g(this.DC_Continuation_Omit(cf,x));
+			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE":
+				return this.g(this.DC_Continuation_Omit(cf, x));
 			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": {
-				if("command" in x) {return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);}
-				return this.g(this.DC_Continuation_Omit(cf,x));
+				if ("command" in x) {
+					return this.y(
+						cf,
+						"command",
+						this.DC_Continuation_Omit(cf, x),
+						this.C_ShowReloadUi,
+					);
+				}
+				return this.g(this.DC_Continuation_Omit(cf, x));
 			}
 		}
 	}
 	/** @private @arg {import("../yt_json_types/abc/group_C.ts").C_ShowReloadUi} x */
-	C_ShowReloadUi(x)
-	{
-		const cf="C_ShowReloadUi";
-		const {clickTrackingParams,showReloadUiCommand: a,...y}=this.s(cf,x); this.g(y);//#destructure
+	C_ShowReloadUi(x) {
+		const cf = "C_ShowReloadUi";
+		const { clickTrackingParams, showReloadUiCommand: a, ...y } = this.s(cf, x);
+		this.g(y); //#destructure
 		this.DC_ShowReloadUi(a);
 	}
 	/** @private @arg {import("../yt_json_types/abc/group_C.ts").DC_ShowReloadUi} x */
-	DC_ShowReloadUi(x) {this.y("DC_ShowReloadUi","targetId",x,this.D_UiTargetId);}
+	DC_ShowReloadUi(x) {
+		this.y("DC_ShowReloadUi", "targetId", x, this.D_UiTargetId);
+	}
 	/** @type {import("../yt_json_types/d/group_D.ts").D_UiTargetId[]} */
-	reload_ui_target_id_arr=[];
+	reload_ui_target_id_arr = [];
 	/** @arg {import("../yt_json_types/d/group_D.ts").D_UiTargetId} x */
-	D_UiTargetId(x)
-	{
-		if(this.sm.is_yt_uuid(x)) return;
-		switch(x)
-		{
-			default: if(!this.reload_ui_target_id_arr.includes(x)) {this.reload_ui_target_id_arr.push(x); debugger;} break;
+	D_UiTargetId(x) {
+		if (this.sm.is_yt_uuid(x)) return;
+		switch (x) {
+			default:
+				if (!this.reload_ui_target_id_arr.includes(x)) {
+					this.reload_ui_target_id_arr.push(x);
+					debugger;
+				}
+				break;
 			case "comments-section":
-			case "browse-feedFEwhat_to_watch": case "watch-next-feed": case "engagement-panel-comments-section":
+			case "browse-feedFEwhat_to_watch":
+			case "watch-next-feed":
+			case "engagement-panel-comments-section":
 		}
 	}
 	/** @template {{}} T @arg {{}} x @arg {()=>T|null} wx @returns {asserts x is T} */
-	assert_is_omit_key(x,wx) {x; wx;}
+	assert_is_omit_key(x, wx) {
+		x;
+		wx;
+	}
 	/** @private @template {import("../yt_json_types/d/group_DC.ts").DC_Continuation} T @arg {"DC_Continuation"} cf @arg {T} x @returns {import("../yt_json_types/stu/group_T.ts").T_OmitKey<T,"token"|"request">} */
-	DC_Continuation_Omit(cf,x)
-	{
-		const {token,request,...y}=this.s(cf,x);
+	DC_Continuation_Omit(cf, x) {
+		const { token, request, ...y } = this.s(cf, x);
 		/** @returns {import("../yt_json_types/stu/group_T.ts").T_OmitKey<T,"token"|"request">|null} */
-		function gu() {return null;}
-		this.assert_is_omit_key(y,gu);
+		function gu() {
+			return null;
+		}
+		this.assert_is_omit_key(y, gu);
 		return y;
 	}
 	/** @public @arg {import("../yt_json_types/abc/group_C.ts").DC_Continuation_Browse} x */
-	DC_Continuation_Browse(x)
-	{
-		const cf="DC_Continuation_Browse";
-		const {token,request,command,...y}=this.s(cf,x); this.g(y);
-		this.save_enum(`${cf}.request`,"CONTINUATION_REQUEST_TYPE",request);
-		this.t(command,this.C_ShowReloadUi);
+	DC_Continuation_Browse(x) {
+		const cf = "DC_Continuation_Browse";
+		const { token, request, command, ...y } = this.s(cf, x);
+		this.g(y);
+		this.save_enum(`${cf}.request`, "CONTINUATION_REQUEST_TYPE", request);
+		this.t(command, this.C_ShowReloadUi);
 	}
 	/** @public @arg {import("../yt_json_types/abc/group_C.ts").DC_Continuation_ReelWatchSeq} x */
-	DC_Continuation_ReelWatchSeq(x)
-	{
-		const cf="DC_Continuation_ReelWatchSeq";
-		const {token,request,...y}=this.s(cf,x); this.g(y);
-		this.save_enum(`${cf}.request`,"CONTINUATION_REQUEST_TYPE",request);
+	DC_Continuation_ReelWatchSeq(x) {
+		const cf = "DC_Continuation_ReelWatchSeq";
+		const { token, request, ...y } = this.s(cf, x);
+		this.g(y);
+		this.save_enum(`${cf}.request`, "CONTINUATION_REQUEST_TYPE", request);
 	}
 	/** @public @arg {import("../yt_json_types/abc/group_C.ts").DC_Continuation_WatchNext} x */
-	DC_Continuation_WatchNext(x)
-	{
-		const cf="DC_Continuation_WatchNext";
-		const {token,request,command,...y}=this.s(cf,x); this.g(y);
-		this.save_enum(`${cf}.request`,"CONTINUATION_REQUEST_TYPE",request);
-		this.t(command,this.C_ShowReloadUi);
+	DC_Continuation_WatchNext(x) {
+		const cf = "DC_Continuation_WatchNext";
+		const { token, request, command, ...y } = this.s(cf, x);
+		this.g(y);
+		this.save_enum(`${cf}.request`, "CONTINUATION_REQUEST_TYPE", request);
+		this.t(command, this.C_ShowReloadUi);
 	}
 	/** @protected @arg {import("../yt_json_types/m/M.ts").M_Browse} x */
-	M_Browse(x) {this.T_WCM("M_Browse",x,x => this.GM_Browse(x));}
+	M_Browse(x) {
+		this.T_WCM("M_Browse", x, (x) => this.GM_Browse(x));
+	}
 	/** @protected @arg {import("../yt_json_types/m/M.ts").M_Next} x */
-	M_Next(x) {this.T_WCM("M_Next",x,x => this.GM_Next(x));}
+	M_Next(x) {
+		this.T_WCM("M_Next", x, (x) => this.GM_Next(x));
+	}
 	/** @public @arg {import("../yt_json_types/abc/A.ts").TA_Continuation<"engagement-panel-comments-section", import("../yt_json_types/ghi/group_G.ts").G_CommentsSection>} x */
-	A_CommentsSectionContinuation_2(x)
-	{
-		const cf="A_CommentsSectionContinuation";
-		const {targetId,continuationItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.targetId(cf,targetId);
-		this.z(continuationItems,x =>
-		{
-			if("commentThreadRenderer" in x) return this.sm.R_CommentThread(x);
-			if("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
+	A_CommentsSectionContinuation_2(x) {
+		const cf = "A_CommentsSectionContinuation";
+		const { targetId, continuationItems, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.sm.targetId(cf, targetId);
+		this.z(continuationItems, (x) => {
+			if ("commentThreadRenderer" in x) return this.sm.R_CommentThread(x);
+			if ("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
 		});
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_AuthorCommentBadge} x */
-	R_AuthorCommentBadge(x) {this.H_("authorCommentBadgeRenderer",x,this.D_AuthorCommentBadge);}
+	R_AuthorCommentBadge(x) {
+		this.H_("authorCommentBadgeRenderer", x, this.D_AuthorCommentBadge);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_AuthorCommentBadge} x */
-	D_AuthorCommentBadge(x)
-	{
-		const cf="D_AuthorCommentBadge";
-		const {icon,color,authorText,authorEndpoint,iconTooltip,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_AuthorCommentBadge(x) {
+		const cf = "D_AuthorCommentBadge";
+		const { icon, color, authorText, authorEndpoint, iconTooltip, ...y } = this
+			.s(cf, x);
+		this.g(y); /*#destructure_done*/
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_SponsorCommentBadge} x */
-	R_SponsorCommentBadge(x) {this.H_("sponsorCommentBadgeRenderer",x,this.D_SponsorCommentBadge);}
+	R_SponsorCommentBadge(x) {
+		this.H_("sponsorCommentBadgeRenderer", x, this.D_SponsorCommentBadge);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_SponsorCommentBadge} x */
-	D_SponsorCommentBadge(x)
-	{
-		const cf="D_SponsorCommentBadge";
-		const {customBadge,tooltip,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_SponsorCommentBadge(x) {
+		const cf = "D_SponsorCommentBadge";
+		const { customBadge, tooltip, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.D_Thumbnail(customBadge);
 		this.sm.a_primitive_str(tooltip);
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_VideoInfoCardContent} x */
-	R_VideoInfoCardContent(x) {this.H_("videoInfoCardContentRenderer",x,this.D_VideoInfoCardContent);}
+	R_VideoInfoCardContent(x) {
+		this.H_("videoInfoCardContentRenderer", x, this.D_VideoInfoCardContent);
+	}
 	/** @private @arg {import("../yt_json_types/r/r_sub/r/R_VideoInfoCardContent.ts").D_VideoInfoCardContent} x */
-	D_VideoInfoCardContent(x)
-	{
-		const cf="D_VideoInfoCardContent";
-		const {videoThumbnail,lengthString,videoTitle,channelName,viewCountText,action,trackingParams,...y}=this.s(cf,x); this.g(y);
+	D_VideoInfoCardContent(x) {
+		const cf = "D_VideoInfoCardContent";
+		const {
+			videoThumbnail,
+			lengthString,
+			videoTitle,
+			channelName,
+			viewCountText,
+			action,
+			trackingParams,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
 		this.sm.D_Thumbnail(videoThumbnail);
 		this.sm.G_Text(lengthString);
 		this.sm.G_Text(videoTitle);
@@ -3708,53 +5273,102 @@ class Support_Renderer extends BaseService
 		this.sm.E_Watch(action);
 	}
 	/** @public @arg {import("../yt_json_types/r/r_sub/r/R_SimpleCardContent.ts").R_SimpleCardContent} x */
-	R_SimpleCardContent(x) {this.H_("simpleCardContentRenderer",x,this.D_SimpleCardContent);}
+	R_SimpleCardContent(x) {
+		this.H_("simpleCardContentRenderer", x, this.D_SimpleCardContent);
+	}
 	/** @private @arg {import("../yt_json_types/r/r_sub/r/R_SimpleCardContent.ts").D_SimpleCardContent} x */
-	D_SimpleCardContent(x)
-	{
-		const cf="D_SimpleCardContent";
-		const {image,title,actionButton,trackingParams,displayDomain,showLinkIcon,callToAction,command,...y}=this.s(cf,x); this.g(y);
+	D_SimpleCardContent(x) {
+		const cf = "D_SimpleCardContent";
+		const {
+			image,
+			title,
+			actionButton,
+			trackingParams,
+			displayDomain,
+			showLinkIcon,
+			callToAction,
+			command,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
 		this.sm.D_Thumbnail(image);
 		this.sm.G_Text(title);
 		this.R_SimpleCardButton(actionButton);
 		this.sm.G_Text(displayDomain);
-		this.sm.cq(showLinkIcon,true);
+		this.sm.cq(showLinkIcon, true);
 		this.sm.G_Text(callToAction);
-		if(command.urlEndpoint) this.xm.E_Url(command);
+		if (command.urlEndpoint) this.xm.E_Url(command);
 		else debugger;
 	}
 	/** @private @arg {import("../yt_json_types/r/r_sub/r/R_SimpleCardButton.ts").R_SimpleCardButton} x */
-	R_SimpleCardButton(x) {this.H_("simpleCardButtonRenderer",x,this.g);}
+	R_SimpleCardButton(x) {
+		this.H_("simpleCardButtonRenderer", x, this.g);
+	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_ReelPlayerOverlay} x */
-	R_ReelPlayerOverlay(x) {this.H_("reelPlayerOverlayRenderer",x,this.D_ReelPlayerOverlay);}
+	R_ReelPlayerOverlay(x) {
+		this.H_("reelPlayerOverlayRenderer", x, this.D_ReelPlayerOverlay);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ReelPlayerOverlay} x */
-	D_ReelPlayerOverlay(x)
-	{
-		const cf="D_ReelPlayerOverlay";
-		const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,videoInteractions,...u}=this.s(cf,x);/*#destructure_partial*/
-		this.sm.t(likeButton,this.sm.R_LikeButton);
-		this.t(reelPlayerHeaderSupportedRenderers,this.R_ReelPlayerHeader);
-		this.sm.t(menu,this.sm.R_Menu);
-		this.xm.t(nextItemButton,this.xm.R_Button);
-		this.xm.t(prevItemButton,this.xm.R_Button);
-		this.xm.t(subscribeButtonRenderer,this.xm.R_SubscribeButton);
-		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
-		this.xm.t(viewCommentsButton,this.xm.R_Button);
-		this.t(videoInteractions,this.g);
-		const {trackingParams,reelPlayerNavigationModel,shareButton,pivotButton,multimixAttributionLabel,badge,...y}=u; this.g(y);/*#destructure_done*/
-		{const x2=reelPlayerNavigationModel; this.t(x2,this.sm.wg(x2,"REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED"));}
-		this.xm.t(shareButton,this.xm.R_Button);
-		this.t(pivotButton,this.R_PivotButton);
-		this.t(multimixAttributionLabel,this.R_ReelMultimixAttributionLabel);
-		this.sm.t(badge,this.sm.RMD_Badge);
+	D_ReelPlayerOverlay(x) {
+		const cf = "D_ReelPlayerOverlay";
+		const {
+			likeButton,
+			reelPlayerHeaderSupportedRenderers,
+			menu,
+			nextItemButton,
+			prevItemButton,
+			subscribeButtonRenderer,
+			style,
+			viewCommentsButton,
+			videoInteractions,
+			...u
+		} = this.s(cf, x); /*#destructure_partial*/
+		this.sm.t(likeButton, this.sm.R_LikeButton);
+		this.t(reelPlayerHeaderSupportedRenderers, this.R_ReelPlayerHeader);
+		this.sm.t(menu, this.sm.R_Menu);
+		this.xm.t(nextItemButton, this.xm.R_Button);
+		this.xm.t(prevItemButton, this.xm.R_Button);
+		this.xm.t(subscribeButtonRenderer, this.xm.R_SubscribeButton);
+		if (style !== "REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
+		this.xm.t(viewCommentsButton, this.xm.R_Button);
+		this.t(videoInteractions, this.g);
+		const {
+			trackingParams,
+			reelPlayerNavigationModel,
+			shareButton,
+			pivotButton,
+			multimixAttributionLabel,
+			badge,
+			...y
+		} = u;
+		this.g(y); /*#destructure_done*/
+		{
+			const x2 = reelPlayerNavigationModel;
+			this.t(x2, this.sm.wg(x2, "REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED"));
+		}
+		this.xm.t(shareButton, this.xm.R_Button);
+		this.t(pivotButton, this.R_PivotButton);
+		this.t(multimixAttributionLabel, this.R_ReelMultimixAttributionLabel);
+		this.sm.t(badge, this.sm.RMD_Badge);
 	}
 	/** @use_import D_ReelPlayerOverlay @public @arg {import("../yt_json_types/r/group_R.ts").R_ReelPlayerHeader} x */
-	R_ReelPlayerHeader(x) {this.H_("reelPlayerHeaderRenderer",x,this.D_ReelPlayerHeader);}
+	R_ReelPlayerHeader(x) {
+		this.H_("reelPlayerHeaderRenderer", x, this.D_ReelPlayerHeader);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ReelPlayerHeader} x */
-	D_ReelPlayerHeader(x)
-	{
-		const cf="D_ReelPlayerHeader";
-		const {reelTitleText,timestampText,channelNavigationEndpoint,channelTitleText,channelThumbnail,trackingParams,accessibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_ReelPlayerHeader(x) {
+		const cf = "D_ReelPlayerHeader";
+		const {
+			reelTitleText,
+			timestampText,
+			channelNavigationEndpoint,
+			channelTitleText,
+			channelThumbnail,
+			trackingParams,
+			accessibility,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.G_Text(reelTitleText);
 		this.sm.G_Text(timestampText);
 		this.sm.E_VE3611(channelNavigationEndpoint);
@@ -3763,611 +5377,1004 @@ class Support_Renderer extends BaseService
 		this.sm.D_Accessibility(accessibility);
 	}
 	/** @use_import D_ReelPlayerOverlay @public @arg {import("../yt_json_types/r/group_R.ts").R_ReelMultimixAttributionLabel} x */
-	R_ReelMultimixAttributionLabel(x) {this.H_("reelMultimixAttributionLabelRenderer",x,this.D_ReelMultimixAttributionLabel);}
+	R_ReelMultimixAttributionLabel(x) {
+		this.H_(
+			"reelMultimixAttributionLabelRenderer",
+			x,
+			this.D_ReelMultimixAttributionLabel,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ReelMultimixAttributionLabel} x */
-	D_ReelMultimixAttributionLabel(x)
-	{
-		const cf="D_ReelMultimixAttributionLabel";
-		const {icon,title,command,a11yLabel,trackingParams,...y}=this.s(cf,x); this.g(y);
-		this.sm.T_Icon(cf,icon);
+	D_ReelMultimixAttributionLabel(x) {
+		const cf = "D_ReelMultimixAttributionLabel";
+		const { icon, title, command, a11yLabel, trackingParams, ...y } = this.s(
+			cf,
+			x,
+		);
+		this.g(y);
+		this.sm.T_Icon(cf, icon);
 		this.sm.G_Text(title);
-		if(!command.watchEndpoint) debugger;
+		if (!command.watchEndpoint) debugger;
 		this.sm.E_Watch(command);
 		this.sm.a_primitive_str(a11yLabel);
 	}
 	/** @use_import D_ReelPlayerOverlay @public @arg {import("../yt_json_types/r/group_R.ts").R_PivotButton} x */
-	R_PivotButton(x) {this.H_("pivotButtonRenderer",x,this.D_PivotButton);}
+	R_PivotButton(x) {
+		this.H_("pivotButtonRenderer", x, this.D_PivotButton);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_PivotButton} x */
-	D_PivotButton(x)
-	{
-		const cf="D_PivotButton";
-		const {thumbnail,onClickCommand,trackingParams,contentDescription,soundAttributionTitle,backgroundColor,icon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.t(thumbnail,this.sm.D_Thumbnail);
-		this.t(onClickCommand,x =>
-		{
-			if("addToToastAction" in x) return this.sm.A_AddToToast(x);
+	D_PivotButton(x) {
+		const cf = "D_PivotButton";
+		const {
+			thumbnail,
+			onClickCommand,
+			trackingParams,
+			contentDescription,
+			soundAttributionTitle,
+			backgroundColor,
+			icon,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.sm.t(thumbnail, this.sm.D_Thumbnail);
+		this.t(onClickCommand, (x) => {
+			if ("addToToastAction" in x) return this.sm.A_AddToToast(x);
 			this.sm.E_VE3611(x);
 		});
-		this.sm.t(contentDescription,this.sm.G_Text);
-		this.sm.t(soundAttributionTitle,this.sm.G_Text);
-		this.t(backgroundColor,x =>
-		{
-			switch(x)
-			{
-				default: debugger; break;
+		this.sm.t(contentDescription, this.sm.G_Text);
+		this.sm.t(soundAttributionTitle, this.sm.G_Text);
+		this.t(backgroundColor, (x) => {
+			switch (x) {
+				default:
+					debugger;
+					break;
 				case "THEME_ATTRIBUTE_OVERLAY_BACKGROUND_MEDIUM":
 			}
 		});
 	}
 	//#endregion
 }
-export_(exports => {exports.Support_Renderer=Support_Renderer;});
-class ForService_XMethods extends BaseService
-{
+export_((exports) => {
+	exports.Support_Renderer = Support_Renderer;
+});
+class ForService_XMethods extends BaseService {
 	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:ForService_XMethods,x:T)=>U} F @arg {F} f */
-	t(x,f) {return this.t_base(x,f);}
+	t(x, f) {
+		return this.t_base(x, f);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_VoiceSearchDialog} x */
-	R_VoiceSearchDialog(x) {this.H_("voiceSearchDialogRenderer",x,this.D_VoiceSearchDialog);}
+	R_VoiceSearchDialog(x) {
+		this.H_("voiceSearchDialogRenderer", x, this.D_VoiceSearchDialog);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_VoiceSearchDialog} x */
-	D_VoiceSearchDialog(x)
-	{
-		const cf="D_VoiceSearchDialog";
-		const {trackingParams,exitButton,...y}=this.s(cf,x);
+	D_VoiceSearchDialog(x) {
+		const cf = "D_VoiceSearchDialog";
+		const { trackingParams, exitButton, ...y } = this.s(cf, x);
 		this.xm.R_Button(exitButton);
-		let u=Object.entries(y);
-		for(let x of u)
-		{
-			let c=x[1];
-			if("runs" in c)
-			{
+		let u = Object.entries(y);
+		for (let x of u) {
+			let c = x[1];
+			if ("runs" in c) {
 				this.sm.G_Text(c);
 				continue;
 			}
 		}
 	}
 	/** @protected @arg {import("../yt_json_types/e/E.ts").E_SignalService_SendPost} x */
-	E_SignalService_SendPost(x) {const [a,b]=this.sm.T_SE_Signal("E_SignalService_SendPost",x); this.sm.M_SendPost(a); this.G_ClientSignal(b);}
+	E_SignalService_SendPost(x) {
+		const [a, b] = this.sm.T_SE_Signal("E_SignalService_SendPost", x);
+		this.sm.M_SendPost(a);
+		this.G_ClientSignal(b);
+	}
 	/** @public @arg {import("../yt_json_types/ghi/group_G.ts").G_ClientSignal} x */
-	G_ClientSignal(x)
-	{
-		const cf="G_ClientSignal";
-		let {signal,actions,...y}=this.s(cf,x); this.g(y);
-		this.save_primitive(`${cf}.signal`,signal);
-		this.z(actions,this.G_ClientSignal_Item);
+	G_ClientSignal(x) {
+		const cf = "G_ClientSignal";
+		let { signal, actions, ...y } = this.s(cf, x);
+		this.g(y);
+		this.save_primitive(`${cf}.signal`, signal);
+		this.z(actions, this.G_ClientSignal_Item);
 	}
 	/** @arg {import("../yt_json_types/ghi/group_G.ts").G_ClientSignal_Item} x */
-	G_ClientSignal_Item(x)
-	{
-		const cf="G_ClientSignal_Item"; this.sm.k(cf,x);
-		if("openPopupAction" in x) return this.S_Client_Popup(x);
-		if("showEngagementPanelEndpoint" in x) return this.E_ShowEngagementPanel(x);
-		if("sendFeedbackAction" in x) return this.A_SendFeedback(x);
-		if("signalAction" in x) return this.A_Signal(x);
-		if("addToPlaylistCommand" in x) return this.sm.C_AddToPlaylist(x);
-		this.sm.codegen_typedef(cf,x);
+	G_ClientSignal_Item(x) {
+		const cf = "G_ClientSignal_Item";
+		this.sm.k(cf, x);
+		if ("openPopupAction" in x) return this.S_Client_Popup(x);
+		if ("showEngagementPanelEndpoint" in x) {
+			return this.E_ShowEngagementPanel(x);
+		}
+		if ("sendFeedbackAction" in x) return this.A_SendFeedback(x);
+		if ("signalAction" in x) return this.A_Signal(x);
+		if ("addToPlaylistCommand" in x) return this.sm.C_AddToPlaylist(x);
+		this.sm.codegen_typedef(cf, x);
 	}
 	/** @private @arg {Extract<import("../yt_json_types/ghi/group_G.ts").G_ClientSignal_Item,import("../yt_json_types/nop_q/Popup.ts").TA_OpenPopup<import("../yt_json_types/nop_q/Popup.ts").Popup_ClientSignal>>} x */
-	S_Client_Popup(x)
-	{
-		const cf="S_Client_Popup";
-		const {clickTrackingParams,openPopupAction,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	S_Client_Popup(x) {
+		const cf = "S_Client_Popup";
+		const { clickTrackingParams, openPopupAction, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.S_Client_OpenPopupAction(openPopupAction);
 	}
 	/** @private @arg {Extract<import("../yt_json_types/ghi/group_G.ts").G_ClientSignal_Item,import("../yt_json_types/nop_q/Popup.ts").TA_OpenPopup<any>>['openPopupAction']} x */
-	S_Client_OpenPopupAction(x)
-	{
-		const cf="S_VoiceSearchPopup_Dialog";
-		switch(x.popupType)
-		{
-			default: debugger; break;
-			case "DIALOG": {
-				const {popup,popupType,beReused,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.t(beReused,x => this.sm.cq(x,true));
-				if(!popup.confirmDialogRenderer) {this.sm.codegen_typedef(cf,x); break;}
-				this.sm.R_ConfirmDialog(popup);
-			} break;
-			case "TOAST": {
-				const {popup,popupType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				if(!popup.notificationActionRenderer) {this.sm.codegen_typedef(cf,x); break;}
-				this.sm.RA_Notification(popup);
-			} break;
-			case "TOP_ALIGNED_DIALOG": {
-				const {popup,popupType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				if(!popup.voiceSearchDialogRenderer) {this.sm.codegen_typedef(cf,x); break;}
-				this.R_VoiceSearchDialog(popup);
-			} break;
+	S_Client_OpenPopupAction(x) {
+		const cf = "S_VoiceSearchPopup_Dialog";
+		switch (x.popupType) {
+			default:
+				debugger;
+				break;
+			case "DIALOG":
+				{
+					const { popup, popupType, beReused, ...y } = this.s(cf, x);
+					this.g(y); /*#destructure_done*/
+					this.t(beReused, (x) => this.sm.cq(x, true));
+					if (!popup.confirmDialogRenderer) {
+						this.sm.codegen_typedef(cf, x);
+						break;
+					}
+					this.sm.R_ConfirmDialog(popup);
+				}
+				break;
+			case "TOAST":
+				{
+					const { popup, popupType, ...y } = this.s(cf, x);
+					this.g(y); /*#destructure_done*/
+					if (!popup.notificationActionRenderer) {
+						this.sm.codegen_typedef(cf, x);
+						break;
+					}
+					this.sm.RA_Notification(popup);
+				}
+				break;
+			case "TOP_ALIGNED_DIALOG":
+				{
+					const { popup, popupType, ...y } = this.s(cf, x);
+					this.g(y); /*#destructure_done*/
+					if (!popup.voiceSearchDialogRenderer) {
+						this.sm.codegen_typedef(cf, x);
+						break;
+					}
+					this.R_VoiceSearchDialog(popup);
+				}
+				break;
 		}
 	}
 	/** @private @arg {import("../yt_json_types/abc/A.ts").A_SendFeedback} x */
-	A_SendFeedback(x) {let [a,b]=this.sm.TE_Endpoint_2("A_SendFeedback","sendFeedbackAction",x); this.g(b); this.AD_SendFeedback(a);}
+	A_SendFeedback(x) {
+		let [a, b] = this.sm.TE_Endpoint_2(
+			"A_SendFeedback",
+			"sendFeedbackAction",
+			x,
+		);
+		this.g(b);
+		this.AD_SendFeedback(a);
+	}
 	/** @private @arg {import("../yt_json_types/e/E.ts").E_ShowEngagementPanel} x */
-	E_ShowEngagementPanel(x) {let [a,b]=this.sm.TE_Endpoint_2("E_ShowEngagementPanel","showEngagementPanelEndpoint",x); this.g(b); this.DE_ShowEngagementPanel(a);}
+	E_ShowEngagementPanel(x) {
+		let [a, b] = this.sm.TE_Endpoint_2(
+			"E_ShowEngagementPanel",
+			"showEngagementPanelEndpoint",
+			x,
+		);
+		this.g(b);
+		this.DE_ShowEngagementPanel(a);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_DE.ts").DE_ShowEngagementPanel} x */
-	DE_ShowEngagementPanel(x)
-	{
-		const cf="D_ShowEngagementPanel";
-		const {panelIdentifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
+	DE_ShowEngagementPanel(x) {
+		const cf = "D_ShowEngagementPanel";
+		const { panelIdentifier, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		if (panelIdentifier !== "engagement-panel-searchable-transcript") debugger;
 	}
 	/** @private @arg {import("../yt_json_types/abc/A.ts").A_Signal} x */
-	A_Signal(x) {let [a,y]=this.sm.TE_Endpoint_2("A_Signal","signalAction",x); this.g(y); this.AD_Signal(a);}
+	A_Signal(x) {
+		let [a, y] = this.sm.TE_Endpoint_2("A_Signal", "signalAction", x);
+		this.g(y);
+		this.AD_Signal(a);
+	}
 	/** @arg {Extract<import("../yt_json_types/nop_q/Popup.ts").G_Popup_All,{popupType:"DIALOG"}>["popup"]} x */
-	G_Popup_DL(x)
-	{
-		if("confirmDialogRenderer" in x) return this.sm.R_ConfirmDialog(x);
-		if("unifiedSharePanelRenderer" in x) return this.sm.R_UnifiedSharePanel(x);
-		if("fancyDismissibleDialogRenderer" in x) return this.sm.R_FancyDismissibleDialog(x);
-		if("aboutThisAdRenderer" in x) return this.sm.R_AboutThisAd(x);
-		if("pdgBuyFlowRenderer" in x) return this.xr.R_PdgBuyFlow(x);
-		x===""; debugger;
+	G_Popup_DL(x) {
+		if ("confirmDialogRenderer" in x) return this.sm.R_ConfirmDialog(x);
+		if ("unifiedSharePanelRenderer" in x) return this.sm.R_UnifiedSharePanel(x);
+		if ("fancyDismissibleDialogRenderer" in x) {
+			return this.sm.R_FancyDismissibleDialog(x);
+		}
+		if ("aboutThisAdRenderer" in x) return this.sm.R_AboutThisAd(x);
+		if ("pdgBuyFlowRenderer" in x) return this.xr.R_PdgBuyFlow(x);
+		x === "";
+		debugger;
 	}
 	/** @public @template {{}} T @arg {import("../yt_json_types/abc/group_C.ts").CF_TA_OpenPopup} cf @arg {import("../yt_json_types/nop_q/Popup.ts").TA_OpenPopup<T>} x */
-	TA_OpenPopup(cf,x)
-	{
+	TA_OpenPopup(cf, x) {
 		/** @type {import("../yt_json_types/nop_q/Popup.ts").TA_OpenPopup<unknown>} */
-		let xp=x;
-		const {clickTrackingParams,openPopupAction: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		let xp = x;
+		const { clickTrackingParams, openPopupAction: a, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		/** @type {import("../yt_json_types/nop_q/Popup.ts").G_OpenPopup_All["openPopupAction"]|import("../yt_json_types/nop_q/Popup.ts").G_Popup_All|{}|null|undefined} */
-		let ax=xp.openPopupAction;
-		if(ax&&typeof ax==="object"&&"popupType" in ax&&"popup" in ax)
-		{
-			switch(ax.popupType)
-			{
-				default: debugger; ax===""; break;
-				case "DIALOG": this.G_Popup_DL(ax.popup); break;
-				case "TOAST": {
-					let x1=ax.popup;
-					if("notificationActionRenderer" in x1) {this.sm.RA_Notification(x1); break;}
+		let ax = xp.openPopupAction;
+		if (ax && typeof ax === "object" && "popupType" in ax && "popup" in ax) {
+			switch (ax.popupType) {
+				default:
 					debugger;
-				} break;
-				case "TOP_ALIGNED_DIALOG": {
-					let x1=ax.popup;
-					if("voiceSearchDialogRenderer" in x1) {this.R_VoiceSearchDialog(x1); break;}
-					debugger;
-				} break;
-				case "DROPDOWN": {
-					let x1=ax.popup;
-					if("menuPopupRenderer" in x1) {this.sm.R_MenuPopup(x1); break;}
-					let a_menu=x1.multiPageMenuRenderer;
-					if(!a_menu) return a;
-					switch(a_menu.style)
+					ax === "";
+					break;
+				case "DIALOG":
+					this.G_Popup_DL(ax.popup);
+					break;
+				case "TOAST":
 					{
-						default: debugger; break;
-						case "MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT": this.sm.MP_LoadingAccountMenu(a_menu); break;
-						case "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS": {
-							if("showLoadingSpinner" in a_menu) {this.sm.MP_LoadingNotificationMenu(a_menu); break;}
-							if("header" in a_menu) {this.ht.MP_NotificationMenu(a_menu); break;}
-							debugger;
-						} break;
-						case "MULTI_PAGE_MENU_STYLE_TYPE_SYSTEM": this.xr.MP_SystemMenu(a_menu); break;
+						let x1 = ax.popup;
+						if ("notificationActionRenderer" in x1) {
+							this.sm.RA_Notification(x1);
+							break;
+						}
+						debugger;
 					}
-				} break;
+					break;
+				case "TOP_ALIGNED_DIALOG":
+					{
+						let x1 = ax.popup;
+						if ("voiceSearchDialogRenderer" in x1) {
+							this.R_VoiceSearchDialog(x1);
+							break;
+						}
+						debugger;
+					}
+					break;
+				case "DROPDOWN":
+					{
+						let x1 = ax.popup;
+						if ("menuPopupRenderer" in x1) {
+							this.sm.R_MenuPopup(x1);
+							break;
+						}
+						let a_menu = x1.multiPageMenuRenderer;
+						if (!a_menu) return a;
+						switch (a_menu.style) {
+							default:
+								debugger;
+								break;
+							case "MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT":
+								this.sm.MP_LoadingAccountMenu(a_menu);
+								break;
+							case "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS":
+								{
+									if ("showLoadingSpinner" in a_menu) {
+										this.sm.MP_LoadingNotificationMenu(a_menu);
+										break;
+									}
+									if ("header" in a_menu) {
+										this.ht.MP_NotificationMenu(a_menu);
+										break;
+									}
+									debugger;
+								}
+								break;
+							case "MULTI_PAGE_MENU_STYLE_TYPE_SYSTEM":
+								this.xr.MP_SystemMenu(a_menu);
+								break;
+						}
+					}
+					break;
 			}
-		} else
-		{
-			ax; debugger;
+		} else {
+			ax;
+			debugger;
 		}
 		return a;
 	}
 	/** @public @arg {import("../yt_json_types/abc/group_C.ts").CF_GE_ResponseReceived} cf @arg {import("../yt_json_types/ghi/group_G.ts").GE_ResponseReceived} x */
-	GE_ResponseReceived(cf,x)
-	{
-		this.save_primitive(`${cf}.response_endpoint`,x);
-		if("signalServiceEndpoint" in x) return this.xm.E_SignalService_SendPost(x);
-		if("adsControlFlowOpportunityReceivedCommand" in x) return this.sm.C_AdsControlFlowOpportunityReceived(x);
-		if("changeKeyedMarkersVisibilityCommand" in x) return this.sm.C_ChangeKeyedMarkersVisibility(x);
-		if("loadMarkersCommand" in x) return this.sm.C_LoadMarkers(x);
-		if("reloadContinuationItemsCommand" in x) return this.sm.C_ReloadContinuationItems(x);
-		if("appendContinuationItemsAction" in x) return this.sm.A_AppendContinuationItems(x);
+	GE_ResponseReceived(cf, x) {
+		this.save_primitive(`${cf}.response_endpoint`, x);
+		if ("signalServiceEndpoint" in x) {
+			return this.xm.E_SignalService_SendPost(x);
+		}
+		if ("adsControlFlowOpportunityReceivedCommand" in x) {
+			return this.sm.C_AdsControlFlowOpportunityReceived(x);
+		}
+		if ("changeKeyedMarkersVisibilityCommand" in x) {
+			return this.sm.C_ChangeKeyedMarkersVisibility(x);
+		}
+		if ("loadMarkersCommand" in x) return this.sm.C_LoadMarkers(x);
+		if ("reloadContinuationItemsCommand" in x) {
+			return this.sm.C_ReloadContinuationItems(x);
+		}
+		if ("appendContinuationItemsAction" in x) {
+			return this.sm.A_AppendContinuationItems(x);
+		}
 		debugger;
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ToggleButton_ToggledSrvEP} x */
-	D_ToggleButton_ToggledSrvEP(x)
-	{
-		const cf="D_ToggleButton_ToggledSrvEP"; this.sm.k(cf,x);
-		if("performCommentActionEndpoint" in x) return this.sm.E_PerformCommentAction(x);
-		if("likeEndpoint" in x) return this.sm.E_Like(x);
-		if("signalServiceEndpoint" in x) return this.xm.E_SignalService_SendPost(x);
-		if("commandExecutorCommand" in x) return this.sm.C_CommandExecutor(x);
-		if("removeUpcomingEventReminderEndpoint" in x) return this.sm.E_RemoveUpcomingEventReminder(x);
-		x===""; debugger;
+	D_ToggleButton_ToggledSrvEP(x) {
+		const cf = "D_ToggleButton_ToggledSrvEP";
+		this.sm.k(cf, x);
+		if ("performCommentActionEndpoint" in x) {
+			return this.sm.E_PerformCommentAction(x);
+		}
+		if ("likeEndpoint" in x) return this.sm.E_Like(x);
+		if ("signalServiceEndpoint" in x) {
+			return this.xm.E_SignalService_SendPost(x);
+		}
+		if ("commandExecutorCommand" in x) return this.sm.C_CommandExecutor(x);
+		if ("removeUpcomingEventReminderEndpoint" in x) {
+			return this.sm.E_RemoveUpcomingEventReminder(x);
+		}
+		x === "";
+		debugger;
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ToggleButton_DefaultSrvEP} x */
-	D_ToggleButton_DefaultSrvEP(x)
-	{
-		const cf="D_ToggleButton_DefaultSrvEP"; this.sm.k(cf,x);
-		if("performCommentActionEndpoint" in x) return this.sm.E_PerformCommentAction(x);
-		if("repeatChapterCommand" in x) return this.sm.C_RepeatChapter(x);
-		if("commandExecutorCommand" in x) return this.sm.C_CommandExecutor(x);
-		if("signalServiceEndpoint" in x) return this.xm.E_SignalService_SendPost(x);
-		if("addUpcomingEventReminderEndpoint" in x) return this.sm.E_AddUpcomingEventReminder(x);
-		x===""; debugger;
+	D_ToggleButton_DefaultSrvEP(x) {
+		const cf = "D_ToggleButton_DefaultSrvEP";
+		this.sm.k(cf, x);
+		if ("performCommentActionEndpoint" in x) {
+			return this.sm.E_PerformCommentAction(x);
+		}
+		if ("repeatChapterCommand" in x) return this.sm.C_RepeatChapter(x);
+		if ("commandExecutorCommand" in x) return this.sm.C_CommandExecutor(x);
+		if ("signalServiceEndpoint" in x) {
+			return this.xm.E_SignalService_SendPost(x);
+		}
+		if ("addUpcomingEventReminderEndpoint" in x) {
+			return this.sm.E_AddUpcomingEventReminder(x);
+		}
+		x === "";
+		debugger;
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_SubscribeButton} x */
-	R_SubscribeButton(x) {this.H_("subscribeButtonRenderer",x,this.D_SubscribeButton);}
+	R_SubscribeButton(x) {
+		this.H_("subscribeButtonRenderer", x, this.D_SubscribeButton);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_SubscribeButton} x */
-	D_SubscribeButton(x)
-	{
-		const cf="D_SubscribeButton";
-		const {enabled,buttonText,subscribed,type,channelId,trackingParams,showPreferences,...y1}=this.s(cf,x);
+	D_SubscribeButton(x) {
+		const cf = "D_SubscribeButton";
+		const {
+			enabled,
+			buttonText,
+			subscribed,
+			type,
+			channelId,
+			trackingParams,
+			showPreferences,
+			...y1
+		} = this.s(cf, x);
 		this.sm.a_primitive_bool(enabled);
-		this.sm.t(buttonText,this.sm.G_Text);
-		this.sm.t(subscribed,this.sm.a_primitive_bool);
-		this.t(type,x => this.sm.cq(x,"FREE"));
-		this.sm.t(channelId,this.sm.channelId);
-		this.sm.t(showPreferences,this.sm.a_primitive_bool);
-		let [p1,o1]=this.sm.unwrap_prefix(y1,"subscribed");
+		this.sm.t(buttonText, this.sm.G_Text);
+		this.sm.t(subscribed, this.sm.a_primitive_bool);
+		this.t(type, (x) => this.sm.cq(x, "FREE"));
+		this.sm.t(channelId, this.sm.channelId);
+		this.sm.t(showPreferences, this.sm.a_primitive_bool);
+		let [p1, o1] = this.sm.unwrap_prefix(y1, "subscribed");
 		this.sm.D_SubscribeButton_SubscribedPrefix(p1);
-		let [p2,o2]=this.sm.unwrap_prefix(o1,"unsubscribed");
+		let [p2, o2] = this.sm.unwrap_prefix(o1, "unsubscribed");
 		this.sm.D_SubscribeButton_UnsubscribedPrefix(p2);
-		let [p3,o3]=this.sm.unwrap_prefix(o2,"subscribe");
+		let [p3, o3] = this.sm.unwrap_prefix(o2, "subscribe");
 		this.sm.D_SubscribeButton_SubscribePrefix(p3);
-		let [p4,{...o4}]=this.sm.unwrap_prefix(o3,"unsubscribe");
+		let [p4, { ...o4 }] = this.sm.unwrap_prefix(o3, "unsubscribe");
 		this.sm.D_SubscribeButton_UnsubscribePrefix(p4);
-		const {onSubscribeEndpoints,onUnsubscribeEndpoints,targetId,notificationPreferenceButton,...y2}=o4;
-		this.xm.tz(onSubscribeEndpoints,this.xm.E_Subscribe);
-		this.xm.tz(onUnsubscribeEndpoints,this.xm.E_SignalService_SendPost);
-		this.t(targetId,x => this.sm.cq(x,"watch-subscribe"));
-		this.t(notificationPreferenceButton,this.R_SubscriptionNotificationToggleButton);
-		const {serviceEndpoints,...y}=y2; this.g(y);
-		this.tz(serviceEndpoints,x =>
-		{
-			if("subscribeEndpoint" in x) return this.xm.E_Subscribe(x);
-			if("signalServiceEndpoint" in x) return this.xm.E_SignalService_SendPost(x);
+		const {
+			onSubscribeEndpoints,
+			onUnsubscribeEndpoints,
+			targetId,
+			notificationPreferenceButton,
+			...y2
+		} = o4;
+		this.xm.tz(onSubscribeEndpoints, this.xm.E_Subscribe);
+		this.xm.tz(onUnsubscribeEndpoints, this.xm.E_SignalService_SendPost);
+		this.t(targetId, (x) => this.sm.cq(x, "watch-subscribe"));
+		this.t(
+			notificationPreferenceButton,
+			this.R_SubscriptionNotificationToggleButton,
+		);
+		const { serviceEndpoints, ...y } = y2;
+		this.g(y);
+		this.tz(serviceEndpoints, (x) => {
+			if ("subscribeEndpoint" in x) return this.xm.E_Subscribe(x);
+			if ("signalServiceEndpoint" in x) {
+				return this.xm.E_SignalService_SendPost(x);
+			}
 			debugger;
 		});
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_Button_SE} x */
-	D_Button_SE(x)
-	{
-		const cf="D_Button_SE";
-		if("signalServiceEndpoint" in x) return this.xm.E_SignalService_SendPost(x);
-		if("ypcGetOffersEndpoint" in x) return this.xm.E_YpcGetOffers(x);
-		if("shareEntityServiceEndpoint" in x) return this.sm.E_ShareEntityService(x);
-		if("unsubscribeEndpoint" in x) return this.xm.E_Unsubscribe(x);
-		if("createCommentEndpoint" in x) return this.xm.E_CreateComment(x);
-		if("getPdgBuyFlowCommand" in x) return this.sm.C_GetPdgBuyFlow(x);
-		if("createCommentReplyEndpoint" in x) return this.sm.E_CreateCommentReply(x);
-		if("feedbackEndpoint" in x) return this.sm.E_Feedback(x);
-		if("ypcGetOfflineUpsellEndpoint" in x) return this.sm.E_YpcGetOfflineUpsell(x);
-		x===""; this.sm.GEN(cf,x);
+	D_Button_SE(x) {
+		const cf = "D_Button_SE";
+		if ("signalServiceEndpoint" in x) {
+			return this.xm.E_SignalService_SendPost(x);
+		}
+		if ("ypcGetOffersEndpoint" in x) return this.xm.E_YpcGetOffers(x);
+		if ("shareEntityServiceEndpoint" in x) {
+			return this.sm.E_ShareEntityService(x);
+		}
+		if ("unsubscribeEndpoint" in x) return this.xm.E_Unsubscribe(x);
+		if ("createCommentEndpoint" in x) return this.xm.E_CreateComment(x);
+		if ("getPdgBuyFlowCommand" in x) return this.sm.C_GetPdgBuyFlow(x);
+		if ("createCommentReplyEndpoint" in x) {
+			return this.sm.E_CreateCommentReply(x);
+		}
+		if ("feedbackEndpoint" in x) return this.sm.E_Feedback(x);
+		if ("ypcGetOfflineUpsellEndpoint" in x) {
+			return this.sm.E_YpcGetOfflineUpsell(x);
+		}
+		x === "";
+		this.sm.GEN(cf, x);
 	}
 	/**
 	 * @private @template {import("../yt_json_types/d/group_D.ts").D_ThumbnailOverlayToggleButton} T @arg {"D_ThumbnailOverlayToggleButton"} cf @arg {T} x
 	 * @returns {[p1,p2,o2]}
 	 */
-	D_ThumbnailOverlayToggleButton_Omit(cf,x)
-	{
-		this.sm.k(cf,x);
-		let [p1,{...o1}]=this.sm.unwrap_prefix(x,"toggled");
-		let [p2,{trackingParams,...o2}]=this.sm.unwrap_prefix(o1,"untoggled");
-		return [p1,p2,o2];
+	D_ThumbnailOverlayToggleButton_Omit(cf, x) {
+		this.sm.k(cf, x);
+		let [p1, { ...o1 }] = this.sm.unwrap_prefix(x, "toggled");
+		let [p2, { trackingParams, ...o2 }] = this.sm.unwrap_prefix(
+			o1,
+			"untoggled",
+		);
+		return [p1, p2, o2];
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_ThumbnailOverlayToggleButton} x */
-	R_ThumbnailOverlayToggleButton(x) {this.H_("thumbnailOverlayToggleButtonRenderer",x,this.D_ThumbnailOverlayToggleButton);}
+	R_ThumbnailOverlayToggleButton(x) {
+		this.H_(
+			"thumbnailOverlayToggleButtonRenderer",
+			x,
+			this.D_ThumbnailOverlayToggleButton,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ThumbnailOverlayToggleButton} x */
-	D_ThumbnailOverlayToggleButton(x)
-	{
-		const cf="D_ThumbnailOverlayToggleButton";
-		if("toggledServiceEndpoint" in x)
-		{
-			const [o1,o2,{isToggled,...y}]=this.D_ThumbnailOverlayToggleButton_Omit(cf,x); this.g(y);
-			this.sm.cq(isToggled,false);
+	D_ThumbnailOverlayToggleButton(x) {
+		const cf = "D_ThumbnailOverlayToggleButton";
+		if ("toggledServiceEndpoint" in x) {
+			const [o1, o2, { isToggled, ...y }] = this
+				.D_ThumbnailOverlayToggleButton_Omit(cf, x);
+			this.g(y);
+			this.sm.cq(isToggled, false);
 			this.D_ThumbnailOverlayToggleButton_ToggledPrefix_1(o1);
 			this.D_ThumbnailOverlayToggleButton_UntoggledPrefix_1(o2);
 			return;
 		}
-		const [o1,o2,y]=this.D_ThumbnailOverlayToggleButton_Omit(cf,x); this.g(y);
+		const [o1, o2, y] = this.D_ThumbnailOverlayToggleButton_Omit(cf, x);
+		this.g(y);
 		this.D_ThumbnailOverlayToggleButton_ToggledPrefix_2(o1);
 		this.D_ThumbnailOverlayToggleButton_UntoggledPrefix_2(o2);
 	}
 	/** @private @arg {import("../yt_json_types/stu/group_T.ts").T_RemovePrefix<import("../yt_json_types/d/group_D.ts").D_ThumbnailOverlayToggleButton_1,"untoggled">} x */
-	D_ThumbnailOverlayToggleButton_UntoggledPrefix_1(x)
-	{
-		const cf="D_ThumbnailOverlayToggleButton_UntoggledPrefix_1";
-		const {accessibility,icon,tooltip,serviceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_ThumbnailOverlayToggleButton_UntoggledPrefix_1(x) {
+		const cf = "D_ThumbnailOverlayToggleButton_UntoggledPrefix_1";
+		const { accessibility, icon, tooltip, serviceEndpoint, ...y } = this.s(
+			cf,
+			x,
+		);
+		this.g(y); /*#destructure_done*/
 		this.sm.D_Accessibility(accessibility);
-		this.sm.T_Icon(`${cf}:icon`,icon);
-		if(tooltip!=="Watch Later") debugger;
+		this.sm.T_Icon(`${cf}:icon`, icon);
+		if (tooltip !== "Watch Later") debugger;
 		this.sm.E_PlaylistEdit(serviceEndpoint);
 	}
 	/** @private @arg {import("../yt_json_types/stu/group_T.ts").T_RemovePrefix<import("../yt_json_types/d/group_D.ts").D_ThumbnailOverlayToggleButton_2,"toggled">} x */
-	D_ThumbnailOverlayToggleButton_ToggledPrefix_2(x)
-	{
-		const cf="D_ThumbnailOverlayToggleButton_ToggledPrefix";
-		const {accessibility,icon,tooltip,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_ThumbnailOverlayToggleButton_ToggledPrefix_2(x) {
+		const cf = "D_ThumbnailOverlayToggleButton_ToggledPrefix";
+		const { accessibility, icon, tooltip, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.D_Accessibility(accessibility);
-		this.sm.T_Icon(`${cf}:icon`,icon);
-		if(tooltip!=="Added") debugger;
+		this.sm.T_Icon(`${cf}:icon`, icon);
+		if (tooltip !== "Added") debugger;
 	}
 	/** @private @arg {import("../yt_json_types/stu/group_T.ts").T_RemovePrefix<import("../yt_json_types/d/group_D.ts").D_ThumbnailOverlayToggleButton_1,"toggled">} x */
-	D_ThumbnailOverlayToggleButton_ToggledPrefix_1(x)
-	{
-		const cf="D_ThumbnailOverlayToggleButton_ToggledPrefix";
-		const {accessibility,icon,tooltip,serviceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_ThumbnailOverlayToggleButton_ToggledPrefix_1(x) {
+		const cf = "D_ThumbnailOverlayToggleButton_ToggledPrefix";
+		const { accessibility, icon, tooltip, serviceEndpoint, ...y } = this.s(
+			cf,
+			x,
+		);
+		this.g(y); /*#destructure_done*/
 		this.sm.D_Accessibility(accessibility);
-		this.sm.T_Icon(`${cf}:icon`,icon);
-		if(tooltip!=="Added") debugger;
+		this.sm.T_Icon(`${cf}:icon`, icon);
+		if (tooltip !== "Added") debugger;
 		this.sm.E_PlaylistEdit(serviceEndpoint);
 	}
 	/** @private @arg {import("../yt_json_types/stu/group_T.ts").T_RemovePrefix<import("../yt_json_types/d/group_D.ts").D_ThumbnailOverlayToggleButton_2,"untoggled">} x */
-	D_ThumbnailOverlayToggleButton_UntoggledPrefix_2(x)
-	{
-		const cf="D_ThumbnailOverlayToggleButton_UntoggledPrefix_2";
-		const {accessibility,icon,tooltip,serviceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_ThumbnailOverlayToggleButton_UntoggledPrefix_2(x) {
+		const cf = "D_ThumbnailOverlayToggleButton_UntoggledPrefix_2";
+		const { accessibility, icon, tooltip, serviceEndpoint, ...y } = this.s(
+			cf,
+			x,
+		);
+		this.g(y); /*#destructure_done*/
 		this.sm.D_Accessibility(accessibility);
-		this.sm.T_Icon(`${cf}:icon`,icon);
-		if(tooltip!=="Add to queue") debugger;
+		this.sm.T_Icon(`${cf}:icon`, icon);
+		if (tooltip !== "Add to queue") debugger;
 		this.xm.E_SignalService_SendPost(serviceEndpoint);
 	}
 	/** @private @arg {import("../yt_json_types/abc/AD.ts").AD_Signal} x */
-	AD_Signal(x)
-	{
-		const cf="AD_Signal";
-		const {signal,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		switch(signal)
-		{
-			default: debugger; break;
-			case "ENABLE_CHROME_NOTIFICATIONS": case "HELP": case "HISTORY_BACK": case "HISTORY_FORWARD": case "SKIP_NAVIGATION": case "TOGGLE_TRANSCRIPT_TIMESTAMPS":
+	AD_Signal(x) {
+		const cf = "AD_Signal";
+		const { signal, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		switch (signal) {
+			default:
+				debugger;
+				break;
+			case "ENABLE_CHROME_NOTIFICATIONS":
+			case "HELP":
+			case "HISTORY_BACK":
+			case "HISTORY_FORWARD":
+			case "SKIP_NAVIGATION":
+			case "TOGGLE_TRANSCRIPT_TIMESTAMPS":
 		}
 	}
 	/** @private @arg {import("../yt_json_types/abc/AD.ts").AD_SendFeedback} x */
-	AD_SendFeedback(x) {const cf="AD_SendFeedback",{bucket,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/ if(bucket!=="Kevlar") debugger;}
+	AD_SendFeedback(x) {
+		const cf = "AD_SendFeedback", { bucket, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		if (bucket !== "Kevlar") debugger;
+	}
 	/** @public @arg {import("../yt_json_types/d/group_D.ts").R_Button} x */
-	R_Button(x) {this.H_("buttonRenderer",x,this.D_Button);}
+	R_Button(x) {
+		this.H_("buttonRenderer", x, this.D_Button);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_Button_targetId} x */
-	D_Button_targetId(x)
-	{
-		let cf="D_Button_targetId";
-		switch(x)
-		{
-			default: debugger; x===""; break;
+	D_Button_targetId(x) {
+		let cf = "D_Button_targetId";
+		switch (x) {
+			default:
+				debugger;
+				x === "";
+				break;
 			case "watch-supervod-button":
 			case "clip-info-button":
 			case "create-clip-button-action-bar":
 			case "sponsorships-button":
 		}
-		this.sm.targetId(cf,x);
+		this.sm.targetId(cf, x);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_Button_NavEP} x */
-	D_Button_NavEP(x)
-	{
-		if("shareEntityServiceEndpoint" in x) return this.sm.E_ShareEntityService(x);
-		if("browseEndpoint" in x)
-		{
+	D_Button_NavEP(x) {
+		if ("shareEntityServiceEndpoint" in x) {
+			return this.sm.E_ShareEntityService(x);
+		}
+		if ("browseEndpoint" in x) {
 			this.sm.E_VE23462(x);
 			debugger;
 		}
-		if("watchEndpoint" in x) return this.sm.E_Watch(x);
-		if("urlEndpoint" in x) return this.xm.E_Url(x);
-		if("openPopupAction" in x) return this.xr.A_FancyDismissibleDialog(x);
-		if("createCommentReplyDialogEndpoint" in x) return this.sm.E_CreateCommentReplyDialog(x);
+		if ("watchEndpoint" in x) return this.sm.E_Watch(x);
+		if ("urlEndpoint" in x) return this.xm.E_Url(x);
+		if ("openPopupAction" in x) return this.xr.A_FancyDismissibleDialog(x);
+		if ("createCommentReplyDialogEndpoint" in x) {
+			return this.sm.E_CreateCommentReplyDialog(x);
+		}
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_Button} x */
-	D_Button(x)
-	{
-		const cf="D_Button";
-		const {style,size,isDisabled,serviceEndpoint,text,icon,navigationEndpoint,accessibility,tooltip,trackingParams,hint,iconPosition,accessibilityData,targetId,command,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.t(hint,this.sm.R_Hint);
-		this.t(iconPosition,x => this.save_enum(cf,"BUTTON_ICON_POSITION_TYPE",x));
-		this.t(targetId,this.D_Button_targetId);
-		this.t(serviceEndpoint,this.D_Button_SE);
-		this.t(style,x => this.save_primitive(`${cf}.style`,x));
-		this.sm.t(isDisabled,this.sm.a_primitive_bool);
-		this.sm.t(text,this.sm.G_Text);
-		this.t(icon,x => this.sm.T_Icon(`${cf}.icon`,x));
-		this.t(navigationEndpoint,this.D_Button_NavEP);
-		this.xm.t(accessibility,this.xm.D_Label);
-		this.t(tooltip,x => this.sm.a_primitive_str(x));
-		this.sm.t(accessibilityData,this.sm.D_Accessibility);
-		this.xm.t(command,this.xm.GC_Button);
+	D_Button(x) {
+		const cf = "D_Button";
+		const {
+			style,
+			size,
+			isDisabled,
+			serviceEndpoint,
+			text,
+			icon,
+			navigationEndpoint,
+			accessibility,
+			tooltip,
+			trackingParams,
+			hint,
+			iconPosition,
+			accessibilityData,
+			targetId,
+			command,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.sm.t(hint, this.sm.R_Hint);
+		this.t(
+			iconPosition,
+			(x) => this.save_enum(cf, "BUTTON_ICON_POSITION_TYPE", x),
+		);
+		this.t(targetId, this.D_Button_targetId);
+		this.t(serviceEndpoint, this.D_Button_SE);
+		this.t(style, (x) => this.save_primitive(`${cf}.style`, x));
+		this.sm.t(isDisabled, this.sm.a_primitive_bool);
+		this.sm.t(text, this.sm.G_Text);
+		this.t(icon, (x) => this.sm.T_Icon(`${cf}.icon`, x));
+		this.t(navigationEndpoint, this.D_Button_NavEP);
+		this.xm.t(accessibility, this.xm.D_Label);
+		this.t(tooltip, (x) => this.sm.a_primitive_str(x));
+		this.sm.t(accessibilityData, this.sm.D_Accessibility);
+		this.xm.t(command, this.xm.GC_Button);
 	}
 	/** @public @arg {import("../yt_json_types/ghi/group_G.ts").G_ThumbnailOverlayItem} x */
-	G_ThumbnailOverlayItem(x)
-	{
-		const cf="G_ThumbnailOverlayItem";
-		if("thumbnailOverlayBottomPanelRenderer" in x) return this.R_ThumbnailOverlayBottomPanel(x);
-		if("thumbnailOverlayEndorsementRenderer" in x) return this.R_ThumbnailOverlayEndorsement(x);
-		if("thumbnailOverlayHoverTextRenderer" in x) return this.R_ThumbnailOverlayHoverText(x);
-		if("thumbnailOverlayInlineUnplayableRenderer" in x) return this.R_ThumbnailOverlayInlineUnplayable(x);
-		if("thumbnailOverlayLoadingPreviewRenderer" in x) return this.R_ThumbnailOverlayLoadingPreview(x);
-		if("thumbnailOverlayNowPlayingRenderer" in x) return this.R_ThumbnailOverlayNowPlaying(x);
-		if("thumbnailOverlayResumePlaybackRenderer" in x) return this.R_ThumbnailOverlayResumePlayback(x);
-		if("thumbnailOverlaySidePanelRenderer" in x) return this.R_ThumbnailOverlaySidePanel(x);
-		if("thumbnailOverlayTimeStatusRenderer" in x) return this.R_ThumbnailOverlayTimeStatus(x);
-		if("thumbnailOverlayToggleButtonRenderer" in x) return this.R_ThumbnailOverlayToggleButton(x);
-		this.sm.codegen_typedef(`ThumbnailOverlay$${cf}`,x);
+	G_ThumbnailOverlayItem(x) {
+		const cf = "G_ThumbnailOverlayItem";
+		if ("thumbnailOverlayBottomPanelRenderer" in x) {
+			return this.R_ThumbnailOverlayBottomPanel(x);
+		}
+		if ("thumbnailOverlayEndorsementRenderer" in x) {
+			return this.R_ThumbnailOverlayEndorsement(x);
+		}
+		if ("thumbnailOverlayHoverTextRenderer" in x) {
+			return this.R_ThumbnailOverlayHoverText(x);
+		}
+		if ("thumbnailOverlayInlineUnplayableRenderer" in x) {
+			return this.R_ThumbnailOverlayInlineUnplayable(x);
+		}
+		if ("thumbnailOverlayLoadingPreviewRenderer" in x) {
+			return this.R_ThumbnailOverlayLoadingPreview(x);
+		}
+		if ("thumbnailOverlayNowPlayingRenderer" in x) {
+			return this.R_ThumbnailOverlayNowPlaying(x);
+		}
+		if ("thumbnailOverlayResumePlaybackRenderer" in x) {
+			return this.R_ThumbnailOverlayResumePlayback(x);
+		}
+		if ("thumbnailOverlaySidePanelRenderer" in x) {
+			return this.R_ThumbnailOverlaySidePanel(x);
+		}
+		if ("thumbnailOverlayTimeStatusRenderer" in x) {
+			return this.R_ThumbnailOverlayTimeStatus(x);
+		}
+		if ("thumbnailOverlayToggleButtonRenderer" in x) {
+			return this.R_ThumbnailOverlayToggleButton(x);
+		}
+		this.sm.codegen_typedef(`ThumbnailOverlay$${cf}`, x);
 	}
 	/** @protected @arg {import("../yt_json_types/r/group_R.ts").R_HeroPlaylistThumbnail} x */
-	R_HeroPlaylistThumbnail(x) {this.H_("heroPlaylistThumbnailRenderer",x,this.D_HeroPlaylistThumbnail);}
+	R_HeroPlaylistThumbnail(x) {
+		this.H_("heroPlaylistThumbnailRenderer", x, this.D_HeroPlaylistThumbnail);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_HeroPlaylistThumbnail} x */
-	D_HeroPlaylistThumbnail(x)
-	{
-		const cf="D_HeroPlaylistThumbnail";
-		const {thumbnail,maxRatio,trackingParams,onTap,thumbnailOverlays,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_HeroPlaylistThumbnail(x) {
+		const cf = "D_HeroPlaylistThumbnail";
+		const {
+			thumbnail,
+			maxRatio,
+			trackingParams,
+			onTap,
+			thumbnailOverlays,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.D_Thumbnail(thumbnail);
-		if(this.sm.num_to_string(maxRatio)!=="0.5625") debugger;
+		if (this.sm.num_to_string(maxRatio) !== "0.5625") debugger;
 		this.sm.E_Watch(onTap);
 		this.G_ThumbnailOverlayItem(thumbnailOverlays);
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_EndScreenVideo} x */
-	R_EndScreenVideo(x) {this.H_("endScreenVideoRenderer",x,this.D_EndScreenVideo);}
+	R_EndScreenVideo(x) {
+		this.H_("endScreenVideoRenderer", x, this.D_EndScreenVideo);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_EndScreenVideo} x */
-	D_EndScreenVideo(x)
-	{
-		const cf="D_EndScreenVideo";
-		const {videoId,shortViewCountText,shortBylineText,thumbnail,thumbnailOverlays,title,trackingParams,lengthInSeconds,lengthText,publishedTimeText,navigationEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_EndScreenVideo(x) {
+		const cf = "D_EndScreenVideo";
+		const {
+			videoId,
+			shortViewCountText,
+			shortBylineText,
+			thumbnail,
+			thumbnailOverlays,
+			title,
+			trackingParams,
+			lengthInSeconds,
+			lengthText,
+			publishedTimeText,
+			navigationEndpoint,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.a_primitive_str(videoId);
 		this.sm.G_Text(shortViewCountText);
 		this.sm.G_Text(shortBylineText);
 		this.sm.D_Thumbnail(thumbnail);
-		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
+		this.z(thumbnailOverlays, this.G_ThumbnailOverlayItem);
 		this.sm.G_Text(title);
-		this.sm.t(lengthInSeconds,this.sm.a_primitive_num);
-		this.sm.t(lengthText,this.sm.G_Text);
+		this.sm.t(lengthInSeconds, this.sm.a_primitive_num);
+		this.sm.t(lengthText, this.sm.G_Text);
 		this.sm.G_Text(publishedTimeText);
 		x: {
-			let x=navigationEndpoint;
-			if("watchEndpoint" in x) {this.sm.E_Watch(x); break x;}
-			if(!x.reelWatchEndpoint) debugger;
+			let x = navigationEndpoint;
+			if ("watchEndpoint" in x) {
+				this.sm.E_Watch(x);
+				break x;
+			}
+			if (!x.reelWatchEndpoint) debugger;
 		}
 	}
 	/** @public @arg {import("../yt_json_types/abc/group_C.ts").CF_D_Menu_Omit} cf @template {{thumbnailOverlays:import("../yt_json_types/ghi/group_G.ts").G_ThumbnailOverlayItem[]}} T @arg {T} x */
-	D_Omit_ThumbnailOverlay(cf,x)
-	{
-		const {thumbnailOverlays,...y}=this.s(cf,x);
-		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
+	D_Omit_ThumbnailOverlay(cf, x) {
+		const { thumbnailOverlays, ...y } = this.s(cf, x);
+		this.z(thumbnailOverlays, this.G_ThumbnailOverlayItem);
 		return y;
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_PlaylistPanelVideo} x */
-	R_PlaylistPanelVideo(x) {this.H_("playlistPanelVideoRenderer",x,this.D_PlaylistPanelVideo);}
+	R_PlaylistPanelVideo(x) {
+		this.H_("playlistPanelVideoRenderer", x, this.D_PlaylistPanelVideo);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_PlaylistPanelVideo} x */
-	D_PlaylistPanelVideo(x)
-	{
-		const cf="D_PlaylistPanelVideo";
-		const {thumbnail,thumbnailOverlays,title,trackingParams,videoId,playlistSetVideoId,darkColorPalette,lightColorPalette,longBylineText,shortBylineText,selected,lengthText,menu,navigationEndpoint,...y}=this.s(cf,x);/*#destructure_off*/
+	D_PlaylistPanelVideo(x) {
+		const cf = "D_PlaylistPanelVideo";
+		const {
+			thumbnail,
+			thumbnailOverlays,
+			title,
+			trackingParams,
+			videoId,
+			playlistSetVideoId,
+			darkColorPalette,
+			lightColorPalette,
+			longBylineText,
+			shortBylineText,
+			selected,
+			lengthText,
+			menu,
+			navigationEndpoint,
+			...y
+		} = this.s(cf, x); /*#destructure_off*/
 		this.sm.D_Thumbnail(thumbnail);
-		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
+		this.z(thumbnailOverlays, this.G_ThumbnailOverlayItem);
 		this.sm.G_Text(title);
 		this.sm.videoId(videoId);
 		this.sm.a_primitive_str(playlistSetVideoId);
-		this.sm.D_DarkColorPalette(cf,darkColorPalette);
-		this.sm.D_LightColorPalette(cf,lightColorPalette);
+		this.sm.D_DarkColorPalette(cf, darkColorPalette);
+		this.sm.D_LightColorPalette(cf, lightColorPalette);
 		this.sm.G_Text(longBylineText);
 		this.sm.G_Text(shortBylineText);
 		this.sm.a_primitive_bool(selected);
 		this.sm.G_Text(lengthText);
 		this.sm.R_Menu(menu);
 		this.sm.E_Watch(navigationEndpoint);
-		if("indexText" in y) return this.y(cf,"indexText",y,this.sm.G_Text);
-		let kl=this.get_keys_of(y).length;
-		if(kl>0)
-		{
-			this.sm.codegen_typedef(`${cf}:omit`,y);
+		if ("indexText" in y) return this.y(cf, "indexText", y, this.sm.G_Text);
+		let kl = this.get_keys_of(y).length;
+		if (kl > 0) {
+			this.sm.codegen_typedef(`${cf}:omit`, y);
 		}
 		this.g(y);
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_ToggleButton} x */
-	R_ToggleButton(x) {this.H_("toggleButtonRenderer",x,this.D_ToggleButton);}
+	R_ToggleButton(x) {
+		this.H_("toggleButtonRenderer", x, this.D_ToggleButton);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ToggleButton} x */
-	D_ToggleButton(x)
-	{
-		const cf="D_ToggleButton";
-		const {style,isToggled,isDisabled,defaultIcon,defaultText,defaultServiceEndpoint,toggledText,toggledServiceEndpoint,...u}=this.s(cf,x);
-		this.t(style,x => this.save_primitive(`${cf}.style`,x.styleType));
-		this.sm.t(isToggled,this.sm.a_primitive_bool);
-		this.t(isDisabled,x => this.sm.cq(x,false));
-		this.t(defaultIcon,x => this.save_primitive(`${cf}.defaultIcon.type`,x.iconType));
-		this.sm.t(defaultText,this.sm.G_Text);
-		this.t(defaultServiceEndpoint,this.D_ToggleButton_DefaultSrvEP);
-		this.sm.t(toggledText,this.sm.G_Text);
-		this.t(toggledServiceEndpoint,this.D_ToggleButton_ToggledSrvEP);
-		const {accessibility,trackingParams,defaultTooltip,toggledTooltip,toggledStyle,accessibilityData,toggleButtonSupportedData,targetId,...u2}=u;/*#destructure_done*/
-		this.xm.t(accessibility,this.xm.D_Label);
-		this.t(toggledStyle,x => this.save_primitive(`${cf}.toggledStyle.type`,x.styleType));
-		this.t(defaultTooltip,x => this.add_string_to_map(cf,"defaultTooltip",x));
-		this.t(toggledTooltip,x => this.add_string_to_map(cf,"toggledTooltip",x));
-		this.sm.t(accessibilityData,this.sm.D_Accessibility);
-		this.t(targetId,x =>
-		{
-			switch(x)
-			{
-				default: debugger; break;
-				case "watch-dislike": case "watch-like":
+	D_ToggleButton(x) {
+		const cf = "D_ToggleButton";
+		const {
+			style,
+			isToggled,
+			isDisabled,
+			defaultIcon,
+			defaultText,
+			defaultServiceEndpoint,
+			toggledText,
+			toggledServiceEndpoint,
+			...u
+		} = this.s(cf, x);
+		this.t(style, (x) => this.save_primitive(`${cf}.style`, x.styleType));
+		this.sm.t(isToggled, this.sm.a_primitive_bool);
+		this.t(isDisabled, (x) => this.sm.cq(x, false));
+		this.t(
+			defaultIcon,
+			(x) => this.save_primitive(`${cf}.defaultIcon.type`, x.iconType),
+		);
+		this.sm.t(defaultText, this.sm.G_Text);
+		this.t(defaultServiceEndpoint, this.D_ToggleButton_DefaultSrvEP);
+		this.sm.t(toggledText, this.sm.G_Text);
+		this.t(toggledServiceEndpoint, this.D_ToggleButton_ToggledSrvEP);
+		const {
+			accessibility,
+			trackingParams,
+			defaultTooltip,
+			toggledTooltip,
+			toggledStyle,
+			accessibilityData,
+			toggleButtonSupportedData,
+			targetId,
+			...u2
+		} = u; /*#destructure_done*/
+		this.xm.t(accessibility, this.xm.D_Label);
+		this.t(
+			toggledStyle,
+			(x) => this.save_primitive(`${cf}.toggledStyle.type`, x.styleType),
+		);
+		this.t(
+			defaultTooltip,
+			(x) => this.add_string_to_map(cf, "defaultTooltip", x),
+		);
+		this.t(
+			toggledTooltip,
+			(x) => this.add_string_to_map(cf, "toggledTooltip", x),
+		);
+		this.sm.t(accessibilityData, this.sm.D_Accessibility);
+		this.t(targetId, (x) => {
+			switch (x) {
+				default:
+					debugger;
+					break;
+				case "watch-dislike":
+				case "watch-like":
 			}
 		});
-		const {size,toggledAccessibilityData,...y}=u2; this.g(y);
-		this.t(size,x => this.sm.cq(x.sizeType,"SIZE_DEFAULT"));
-		this.sm.t(toggledAccessibilityData,this.sm.D_Accessibility);
+		const { size, toggledAccessibilityData, ...y } = u2;
+		this.g(y);
+		this.t(size, (x) => this.sm.cq(x.sizeType, "SIZE_DEFAULT"));
+		this.sm.t(toggledAccessibilityData, this.sm.D_Accessibility);
 	}
 	/** @type {Map<string,[string,string[]][]>} */
-	strings_map=new Map;
+	strings_map = new Map();
 	/** @private @arg {import("../yt_json_types/abc/group_C.ts").CF_add_string_to_map} cf @arg {"defaultTooltip"|"toggledTooltip"|"accessibilityData.accessibilityData.label"} k_arg @arg {string} x */
-	add_string_to_map(cf,k_arg,x)
-	{
+	add_string_to_map(cf, k_arg, x) {
 		/** @type {`${typeof cf}::${typeof k_arg}`} */
-		let k=`${cf}::${k_arg}`;
-		let group_arr=this.get_strings_map_item(cf);
-		let group_entry=group_arr.find(e => e[0]===k);
+		let k = `${cf}::${k_arg}`;
+		let group_arr = this.get_strings_map_item(cf);
+		let group_entry = group_arr.find((e) => e[0] === k);
 		x: {
-			if(!group_entry) break x;
-			if(group_entry[1].includes(x)) return;
+			if (!group_entry) break x;
+			if (group_entry[1].includes(x)) return;
 			group_entry[1].push(x);
 		}
-		group_arr.push([k,[x]]);
+		group_arr.push([k, [x]]);
 	}
 	/** @arg {string} key */
-	get_strings_map_item(key)
-	{
-		let group_arr=this.strings_map.get(key);
-		if(!group_arr) this.strings_map.set(key,group_arr=[]);
+	get_strings_map_item(key) {
+		let group_arr = this.strings_map.get(key);
+		if (!group_arr) this.strings_map.set(key, group_arr = []);
 		return group_arr;
 	}
 	/** @private @arg {import("../yt_json_types/e/E.ts").E_Unsubscribe} x */
-	E_Unsubscribe(x) {const [a,b,y]=this.sm.TE_Endpoint_3("E_Unsubscribe","unsubscribeEndpoint",x); this.g(y); this.DE_Unsubscribe(b); this.M_Unsubscribe(a);}
+	E_Unsubscribe(x) {
+		const [a, b, y] = this.sm.TE_Endpoint_3(
+			"E_Unsubscribe",
+			"unsubscribeEndpoint",
+			x,
+		);
+		this.g(y);
+		this.DE_Unsubscribe(b);
+		this.M_Unsubscribe(a);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_DE.ts").DE_Unsubscribe} x */
-	DE_Unsubscribe(x)
-	{
-		const cf="DE_Unsubscribe";
-		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.z(channelIds,this.sm.channelId);
+	DE_Unsubscribe(x) {
+		const cf = "DE_Unsubscribe";
+		const { channelIds, params, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.sm.z(channelIds, this.sm.channelId);
 	}
 	/** @private @arg {import("../yt_json_types/e/E.ts").E_CreateComment} x */
-	E_CreateComment(x) {const [a,b,y]=this.sm.TE_Endpoint_3("E_CreateComment","createCommentEndpoint",x); this.g(y); this.DE_CreateComment(b); this.M_CreateComment(a);}
+	E_CreateComment(x) {
+		const [a, b, y] = this.sm.TE_Endpoint_3(
+			"E_CreateComment",
+			"createCommentEndpoint",
+			x,
+		);
+		this.g(y);
+		this.DE_CreateComment(b);
+		this.M_CreateComment(a);
+	}
 	/** @private @arg {import("../yt_json_types/e/E.ts").E_Subscribe} x */
-	E_Subscribe(x) {const [a,b,y]=this.sm.TE_Endpoint_3("E_Subscribe","subscribeEndpoint",x); this.g(y); this.M_Subscribe(a); this.DE_Subscribe(b);}
+	E_Subscribe(x) {
+		const [a, b, y] = this.sm.TE_Endpoint_3(
+			"E_Subscribe",
+			"subscribeEndpoint",
+			x,
+		);
+		this.g(y);
+		this.M_Subscribe(a);
+		this.DE_Subscribe(b);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_DE.ts").DE_Subscribe} x */
-	DE_Subscribe(x)
-	{
-		const cf="DE_Subscribe";
-		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.z(channelIds,this.sm.channelId);
+	DE_Subscribe(x) {
+		const cf = "DE_Subscribe";
+		const { channelIds, params, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.sm.z(channelIds, this.sm.channelId);
 	}
 	/** @private @arg {import("../yt_json_types/m/M.ts").M_Subscribe} x */
-	M_Subscribe(x) {this.T_WCM("M_Subscribe",x,this.GM_Subscribe);}
+	M_Subscribe(x) {
+		this.T_WCM("M_Subscribe", x, this.GM_Subscribe);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_ThumbnailOverlayBottomPanel} x */
-	R_ThumbnailOverlayBottomPanel(x) {this.H_("thumbnailOverlayBottomPanelRenderer",x,this.D_ThumbnailOverlayBottomPanel);}
+	R_ThumbnailOverlayBottomPanel(x) {
+		this.H_(
+			"thumbnailOverlayBottomPanelRenderer",
+			x,
+			this.D_ThumbnailOverlayBottomPanel,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_ThumbnailOverlayEndorsement} x */
-	R_ThumbnailOverlayEndorsement(x) {this.H_("thumbnailOverlayEndorsementRenderer",x,this.D_ThumbnailOverlayEndorsement);}
+	R_ThumbnailOverlayEndorsement(x) {
+		this.H_(
+			"thumbnailOverlayEndorsementRenderer",
+			x,
+			this.D_ThumbnailOverlayEndorsement,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_ThumbnailOverlayHoverText} x */
-	R_ThumbnailOverlayHoverText(x) {this.H_("thumbnailOverlayHoverTextRenderer",x,this.D_ThumbnailOverlayHoverText);}
+	R_ThumbnailOverlayHoverText(x) {
+		this.H_(
+			"thumbnailOverlayHoverTextRenderer",
+			x,
+			this.D_ThumbnailOverlayHoverText,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_ThumbnailOverlayInlineUnplayable} x */
-	R_ThumbnailOverlayInlineUnplayable(x) {this.H_("thumbnailOverlayInlineUnplayableRenderer",x,this.D_ThumbnailOverlayInlineUnplayable);}
+	R_ThumbnailOverlayInlineUnplayable(x) {
+		this.H_(
+			"thumbnailOverlayInlineUnplayableRenderer",
+			x,
+			this.D_ThumbnailOverlayInlineUnplayable,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_ThumbnailOverlayLoadingPreview} x */
-	R_ThumbnailOverlayLoadingPreview(x) {this.H_("thumbnailOverlayLoadingPreviewRenderer",x,this.D_ThumbnailOverlayLoadingPreview);}
+	R_ThumbnailOverlayLoadingPreview(x) {
+		this.H_(
+			"thumbnailOverlayLoadingPreviewRenderer",
+			x,
+			this.D_ThumbnailOverlayLoadingPreview,
+		);
+	}
 	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_ThumbnailOverlayLoadingPreview} x */
-	D_ThumbnailOverlayLoadingPreview(x) {this.sm.H_s("text",x,this.sm.G_Text);}
+	D_ThumbnailOverlayLoadingPreview(x) {
+		this.sm.H_s("text", x, this.sm.G_Text);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_ThumbnailOverlayNowPlaying} x */
-	R_ThumbnailOverlayNowPlaying(x) {this.H_("thumbnailOverlayNowPlayingRenderer",x,this.D_ThumbnailOverlayNowPlaying);}
+	R_ThumbnailOverlayNowPlaying(x) {
+		this.H_(
+			"thumbnailOverlayNowPlayingRenderer",
+			x,
+			this.D_ThumbnailOverlayNowPlaying,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ThumbnailOverlayNowPlaying} x */
-	D_ThumbnailOverlayNowPlaying(x) {const cf="D_ThumbnailOverlayNowPlaying"; this.sm.y(cf,"text",x,this.sm.G_Text);}
+	D_ThumbnailOverlayNowPlaying(x) {
+		const cf = "D_ThumbnailOverlayNowPlaying";
+		this.sm.y(cf, "text", x, this.sm.G_Text);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_ThumbnailOverlayResumePlayback} x */
-	R_ThumbnailOverlayResumePlayback(x) {this.H_("thumbnailOverlayResumePlaybackRenderer",x,this.D_ThumbnailOverlayResumePlayback);}
+	R_ThumbnailOverlayResumePlayback(x) {
+		this.H_(
+			"thumbnailOverlayResumePlaybackRenderer",
+			x,
+			this.D_ThumbnailOverlayResumePlayback,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_ThumbnailOverlaySidePanel} x */
-	R_ThumbnailOverlaySidePanel(x) {this.H_("thumbnailOverlaySidePanelRenderer",x,this.D_ThumbnailOverlaySidePanel);}
+	R_ThumbnailOverlaySidePanel(x) {
+		this.H_(
+			"thumbnailOverlaySidePanelRenderer",
+			x,
+			this.D_ThumbnailOverlaySidePanel,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_ThumbnailOverlayTimeStatus} x */
-	R_ThumbnailOverlayTimeStatus(x) {this.H_("thumbnailOverlayTimeStatusRenderer",x,this.D_ThumbnailOverlayTimeStatus);}
+	R_ThumbnailOverlayTimeStatus(x) {
+		this.H_(
+			"thumbnailOverlayTimeStatusRenderer",
+			x,
+			this.D_ThumbnailOverlayTimeStatus,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ThumbnailOverlayResumePlayback} x */
-	D_ThumbnailOverlayResumePlayback(x) {this.y("D_ThumbnailOverlayResumePlayback","percentDurationWatched",x,x => this.save_primitive("resume_playback.percentDurationWatched",x));}
+	D_ThumbnailOverlayResumePlayback(x) {
+		this.y(
+			"D_ThumbnailOverlayResumePlayback",
+			"percentDurationWatched",
+			x,
+			(x) => this.save_primitive("resume_playback.percentDurationWatched", x),
+		);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ThumbnailOverlayTimeStatus} x */
-	D_ThumbnailOverlayTimeStatus(x)
-	{
-		const cf="D_ThumbnailOverlayTimeStatus";
-		const {style,text,...y}=this.s(cf,x);
-		switch(style)
-		{
-			default: debugger; break;
+	D_ThumbnailOverlayTimeStatus(x) {
+		const cf = "D_ThumbnailOverlayTimeStatus";
+		const { style, text, ...y } = this.s(cf, x);
+		switch (style) {
+			default:
+				debugger;
+				break;
 			case "DEFAULT":
 			case "LIVE":
 			case "SHORTS":
 			case "UPCOMING":
 		}
-		if("icon" in y)
-		{
-			const {icon,...u}=this.s(cf,y); this.g(u);/*#destructure_done*/
-			switch(icon.iconType)
-			{
-				default: debugger; break;
+		if ("icon" in y) {
+			const { icon, ...u } = this.s(cf, y);
+			this.g(u); /*#destructure_done*/
+			switch (icon.iconType) {
+				default:
+					debugger;
+					break;
 				case "LIVE":
 				case "YOUTUBE_SHORTS_FILL_NO_TRIANGLE_RED_16":
 			}
@@ -4375,1011 +6382,1513 @@ class ForService_XMethods extends BaseService
 		}
 		this.g(y);
 	}
-	make_icon_types_map()
-	{
+	make_icon_types_map() {
 		/** @type {import("../yt_json_types/d/group_D.ts").D_ThumbnailOverlaySidePanel_iconTypes} */
-		let r=[
-			"PLAY_ALL","PLAYLISTS",
+		let r = [
+			"PLAY_ALL",
+			"PLAYLISTS",
 		];
-		const mi={
+		const mi = {
 			known: r,
 			/** @type {string[]} */
-			unknown: []
+			unknown: [],
 		};
-		const k="D_ThumbnailOverlaySidePanel";
+		const k = "D_ThumbnailOverlaySidePanel";
 		/** @type {Map<typeof k,typeof mi>} */
-		let mp=new Map([
-			[k,mi]
+		let mp = new Map([
+			[k, mi],
 		]);
 		return mp;
 	}
-	icon_types_map=this.make_icon_types_map();
+	icon_types_map = this.make_icon_types_map();
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ThumbnailOverlaySidePanel} x */
-	D_ThumbnailOverlaySidePanel(x)
-	{
-		const cf="D_ThumbnailOverlaySidePanel";
-		const {text,icon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_ThumbnailOverlaySidePanel(x) {
+		const cf = "D_ThumbnailOverlaySidePanel";
+		const { text, icon, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.G_Text(text);
-		let store=this.icon_types_map.get(cf);
-		if(!store) return;
-		const {known,unknown}=store;
-		let missing=this.sm.T_Icon_AnyOf("D_Icon_ThumbnailOverlaySidePanel",icon,known);
-		if(missing) this.sm.onMissingIcon(cf,icon,x,known,unknown);
+		let store = this.icon_types_map.get(cf);
+		if (!store) return;
+		const { known, unknown } = store;
+		let missing = this.sm.T_Icon_AnyOf(
+			"D_Icon_ThumbnailOverlaySidePanel",
+			icon,
+			known,
+		);
+		if (missing) this.sm.onMissingIcon(cf, icon, x, known, unknown);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ThumbnailOverlayBottomPanel} x */
-	D_ThumbnailOverlayBottomPanel(x) {this.y("D_ThumbnailOverlayBottomPanel","icon",x,this.D_MixIcon);}
+	D_ThumbnailOverlayBottomPanel(x) {
+		this.y("D_ThumbnailOverlayBottomPanel", "icon", x, this.D_MixIcon);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ThumbnailOverlayEndorsement} x */
-	D_ThumbnailOverlayEndorsement(x)
-	{
-		const cf="D_ThumbnailOverlayEndorsement";
-		const {text,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_ThumbnailOverlayEndorsement(x) {
+		const cf = "D_ThumbnailOverlayEndorsement";
+		const { text, trackingParams, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.G_Text(text);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ThumbnailOverlayInlineUnplayable} x */
-	D_ThumbnailOverlayInlineUnplayable(x)
-	{
-		const cf="D_ThumbnailOverlayInlineUnplayable";
-		const {text,icon,...y}=this.s(cf,x); this.g(y);
+	D_ThumbnailOverlayInlineUnplayable(x) {
+		const cf = "D_ThumbnailOverlayInlineUnplayable";
+		const { text, icon, ...y } = this.s(cf, x);
+		this.g(y);
 		this.sm.G_Text(text);
-		this.sm.cq(icon.iconType,"PLAY_DISABLED");
+		this.sm.cq(icon.iconType, "PLAY_DISABLED");
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ThumbnailOverlayHoverText} x */
-	D_ThumbnailOverlayHoverText(x)
-	{
-		const cf="D_ThumbnailOverlayHoverText";
-		const {text,icon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_ThumbnailOverlayHoverText(x) {
+		const cf = "D_ThumbnailOverlayHoverText";
+		const { text, icon, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.G_Text(text);
-		if(icon.iconType!=="PLAY_ALL") debugger;
+		if (icon.iconType !== "PLAY_ALL") debugger;
 	}
 	/** @private @arg {import("../yt_json_types/d/group_DE.ts").DE_CreateComment} x */
-	DE_CreateComment(x) {const {createCommentParams,...y}=this.s("DE_CreateComment",x); this.g(y);}
+	DE_CreateComment(x) {
+		const { createCommentParams, ...y } = this.s("DE_CreateComment", x);
+		this.g(y);
+	}
 	/** @private @arg {import("../yt_json_types/e/E.ts").E_YpcGetOffers} x */
-	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.sm.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_YpcGetOffers(a); this.DE_YpcGetOffers(b);}
+	E_YpcGetOffers(x) {
+		const cf = "E_YpcGetOffers",
+			[a, b, y] = this.sm.TE_Endpoint_3(cf, "ypcGetOffersEndpoint", x);
+		this.g(y);
+		this.M_YpcGetOffers(a);
+		this.DE_YpcGetOffers(b);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_DE.ts").DE_YpcGetOffers} x */
-	DE_YpcGetOffers(x) {this.sm.D_Params("DE_YpcGetOffers",x);}
+	DE_YpcGetOffers(x) {
+		this.sm.D_Params("DE_YpcGetOffers", x);
+	}
 	/** @private @arg {import("../yt_json_types/stu/group_T.ts").T_Icon<"MIX">} x */
-	D_MixIcon(x) {this.sm.T_Icon("D_MixIcon",x);}
+	D_MixIcon(x) {
+		this.sm.T_Icon("D_MixIcon", x);
+	}
 	/** @private @arg {import("../yt_json_types/m/M.ts").M_YpcGetOffers} x */
-	M_YpcGetOffers(x) {this.T_WCM("M_YpcGetOffers",x,this.GM_YpcGetOffers);}
+	M_YpcGetOffers(x) {
+		this.T_WCM("M_YpcGetOffers", x, this.GM_YpcGetOffers);
+	}
 	/** @private @arg {import("../yt_json_types/m/M.ts").M_CreateComment} x */
-	M_CreateComment(x) {this.T_WCM("M_CreateComment",x,this.GM_CreateComment);}
+	M_CreateComment(x) {
+		this.T_WCM("M_CreateComment", x, this.GM_CreateComment);
+	}
 	/** @private @arg {import("../yt_json_types/m/M.ts").M_Unsubscribe} x */
-	M_Unsubscribe(x) {this.T_WCM("M_Unsubscribe",x,this.GM_Unsubscribe);}
+	M_Unsubscribe(x) {
+		this.T_WCM("M_Unsubscribe", x, this.GM_Unsubscribe);
+	}
 	/** @private @arg {import("../yt_json_types/ghi/group_G.ts").GM_Unsubscribe} x */
-	GM_Unsubscribe(x) {this.T_GM("GM_GetTranscript",x,x => this.sm.cq(x,"/youtubei/v1/subscription/unsubscribe"));}
+	GM_Unsubscribe(x) {
+		this.T_GM(
+			"GM_GetTranscript",
+			x,
+			(x) => this.sm.cq(x, "/youtubei/v1/subscription/unsubscribe"),
+		);
+	}
 	/** @private @arg {import("../yt_json_types/ghi/group_G.ts").GM_YpcGetOffers} x */
-	GM_YpcGetOffers(x) {this.T_GM("GM_YpcGetOffers",x,x => this.sm.cq(x,"/youtubei/v1/ypc/get_offers"));}
+	GM_YpcGetOffers(x) {
+		this.T_GM(
+			"GM_YpcGetOffers",
+			x,
+			(x) => this.sm.cq(x, "/youtubei/v1/ypc/get_offers"),
+		);
+	}
 	/** @private @arg {import("../yt_json_types/ghi/group_G.ts").GM_CreateComment} x */
-	GM_CreateComment(x) {this.T_GM("GM_CreateComment",x,x => this.sm.cq(x,"/youtubei/v1/comment/create_comment"));}
+	GM_CreateComment(x) {
+		this.T_GM(
+			"GM_CreateComment",
+			x,
+			(x) => this.sm.cq(x, "/youtubei/v1/comment/create_comment"),
+		);
+	}
 	/** @private @arg {import("../yt_json_types/ghi/group_G.ts").GM_Subscribe} x */
-	GM_Subscribe(x) {this.T_GM("GM_Subscribe",x,x => this.sm.cq(x,"/youtubei/v1/subscription/subscribe"));}
+	GM_Subscribe(x) {
+		this.T_GM(
+			"GM_Subscribe",
+			x,
+			(x) => this.sm.cq(x, "/youtubei/v1/subscription/subscribe"),
+		);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_FeedTabbedHeader} x */
-	R_FeedTabbedHeader(x) {this.H_("feedTabbedHeaderRenderer",x,this.D_FeedTabbedHeader);}
+	R_FeedTabbedHeader(x) {
+		this.H_("feedTabbedHeaderRenderer", x, this.D_FeedTabbedHeader);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_FeedTabbedHeader} x */
-	D_FeedTabbedHeader(x)
-	{
-		const cf="D_FeedTabbedHeader";
-		const {title,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_FeedTabbedHeader(x) {
+		const cf = "D_FeedTabbedHeader";
+		const { title, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.G_Text(title);
 	}
 	/** @public @arg {import("../yt_json_types/ghi/group_G.ts").G_BrowseHeader} x */
-	G_BrowseHeader(x)
-	{
-		if("feedTabbedHeaderRenderer" in x) return this.R_FeedTabbedHeader(x);
-		if("c4TabbedHeaderRenderer" in x) return this.xr.R_C4TabbedHeader(x);
-		if("playlistHeaderRenderer" in x) return this.xm.R_PlaylistHeader(x);
+	G_BrowseHeader(x) {
+		if ("feedTabbedHeaderRenderer" in x) return this.R_FeedTabbedHeader(x);
+		if ("c4TabbedHeaderRenderer" in x) return this.xr.R_C4TabbedHeader(x);
+		if ("playlistHeaderRenderer" in x) return this.xm.R_PlaylistHeader(x);
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_MusicThumbnail} x */
-	R_MusicThumbnail(x) {this.H_("musicThumbnailRenderer",x,this.D_MusicThumbnail);}
+	R_MusicThumbnail(x) {
+		this.H_("musicThumbnailRenderer", x, this.D_MusicThumbnail);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_MusicThumbnail} x */
-	D_MusicThumbnail(x)
-	{
-		const cf="D_MusicThumbnail";
-		const {trackingParams: a,thumbnail,thumbnailCrop,thumbnailScale,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_MusicThumbnail(x) {
+		const cf = "D_MusicThumbnail";
+		const {
+			trackingParams: a,
+			thumbnail,
+			thumbnailCrop,
+			thumbnailScale,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.D_Thumbnail(thumbnail);
-		if(thumbnailCrop!=="MUSIC_THUMBNAIL_CROP_UNSPECIFIED") debugger;
-		if(thumbnailScale!=="MUSIC_THUMBNAIL_SCALE_UNSPECIFIED") debugger;
+		if (thumbnailCrop !== "MUSIC_THUMBNAIL_CROP_UNSPECIFIED") debugger;
+		if (thumbnailScale !== "MUSIC_THUMBNAIL_SCALE_UNSPECIFIED") debugger;
 	}
 	/** @public @arg {import("../yt_json_types/ghi/group_G.ts").G_Browse_MD} x */
-	G_Browse_MD(x)
-	{
-		if("channelMetadataRenderer" in x) return this.xr.R_Channel_MD(x);
-		if("playlistMetadataRenderer" in x) return this.xr.R_Playlist_MD(x);
+	G_Browse_MD(x) {
+		if ("channelMetadataRenderer" in x) return this.xr.R_Channel_MD(x);
+		if ("playlistMetadataRenderer" in x) return this.xr.R_Playlist_MD(x);
 	}
 	/** @public @arg {import("../yt_json_types/ghi/group_G.ts").G_BrowseSidebar} x */
-	G_BrowseSidebar(x)
-	{
-		if("settingsSidebarRenderer" in x) return this.xr.R_SettingsSidebar(x);
-		if("playlistSidebarRenderer" in x) return this.xr.R_PlaylistSidebar(x);
+	G_BrowseSidebar(x) {
+		if ("settingsSidebarRenderer" in x) return this.xr.R_SettingsSidebar(x);
+		if ("playlistSidebarRenderer" in x) return this.xr.R_PlaylistSidebar(x);
 	}
 	/** @private @arg {import("../yt_json_types/abc/group_C.ts").C_ResetChannelUnreadCount} x */
-	C_ResetChannelUnreadCount(x) {let [a,y]=this.sm.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.DC_ResetChannelUnreadCount(a);}
+	C_ResetChannelUnreadCount(x) {
+		let [a, y] = this.sm.TE_Endpoint_2(
+			"C_ResetChannelUnreadCount",
+			"resetChannelUnreadCountCommand",
+			x,
+		);
+		this.g(y);
+		this.DC_ResetChannelUnreadCount(a);
+	}
 	/** @private @arg {import("../yt_json_types/abc/group_C.ts").DC_ResetChannelUnreadCount} x */
-	DC_ResetChannelUnreadCount(x)
-	{
-		const cf="DC_ResetChannelUnreadCount";
-		const {channelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	DC_ResetChannelUnreadCount(x) {
+		const cf = "DC_ResetChannelUnreadCount";
+		const { channelId, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.channelId(channelId);
 	}
 	/** @public @arg {import("../yt_json_types/ghi/group_G.ts").GA_ResponseReceived} x */
-	GA_ResponseReceived(x)
-	{
-		if("adsControlFlowOpportunityReceivedCommand" in x) return this.sm.C_AdsControlFlowOpportunityReceived(x);
-		if("appendContinuationItemsAction" in x) return this.sm.A_AppendContinuationItems(x);
-		if("reloadContinuationItemsCommand" in x) return this.sm.C_ReloadContinuationItems(x);
-		if("resetChannelUnreadCountCommand" in x) return this.xm.C_ResetChannelUnreadCount(x);
+	GA_ResponseReceived(x) {
+		if ("adsControlFlowOpportunityReceivedCommand" in x) {
+			return this.sm.C_AdsControlFlowOpportunityReceived(x);
+		}
+		if ("appendContinuationItemsAction" in x) {
+			return this.sm.A_AppendContinuationItems(x);
+		}
+		if ("reloadContinuationItemsCommand" in x) {
+			return this.sm.C_ReloadContinuationItems(x);
+		}
+		if ("resetChannelUnreadCountCommand" in x) {
+			return this.xm.C_ResetChannelUnreadCount(x);
+		}
 	}
 	/** @public @arg {import("../yt_json_types/ghi/group_G.ts").G_BrowseContents} x */
-	G_BrowseContents(x)
-	{
-		if("twoColumnBrowseResultsRenderer" in x) return this.xm.R_TwoColumnBrowseResults(x);
-		if("feedFilterChipBarRenderer" in x) return this.sm.R_FeedFilterChipBar(x);
+	G_BrowseContents(x) {
+		if ("twoColumnBrowseResultsRenderer" in x) {
+			return this.xm.R_TwoColumnBrowseResults(x);
+		}
+		if ("feedFilterChipBarRenderer" in x) return this.sm.R_FeedFilterChipBar(x);
 	}
 	/** @private @arg {import("../yt_json_types/abc/G_DC_SectionList_BrowseFeed_ChannelFeatured.ts").G_DC_SectionList_BrowseFeed_ChannelFeatured} x */
-	DC_SectionList_BrowseFeed_ChannelFeatured(x)
-	{
-		let b_info=this.sm.is_browse_feedUC(x);
-		if(!b_info[0])
-		{
+	DC_SectionList_BrowseFeed_ChannelFeatured(x) {
+		let b_info = this.sm.is_browse_feedUC(x);
+		if (!b_info[0]) {
 			debugger;
 			return;
 		}
-		let [,bp]=b_info;
-		if(bp[0]===2)
-		{
-			let [,sa,,last_part]=bp;
-			console.log("target_id.last_part",last_part);
-			if(this.sm.str_starts_with_rx(sa,"UC"))
-			{
-				let floc=sa.indexOf("featured");
-				if(floc<0) {debugger; return;}
-				let s1=sa.slice(0,floc);
-				let s2=sa.slice(floc);
-				console.log("[RichGrid.targetId]",x.targetId);
-				console.log("[target_id_parse]",s1,s2);
+		let [, bp] = b_info;
+		if (bp[0] === 2) {
+			let [, sa, , last_part] = bp;
+			console.log("target_id.last_part", last_part);
+			if (this.sm.str_starts_with_rx(sa, "UC")) {
+				let floc = sa.indexOf("featured");
+				if (floc < 0) {
+					debugger;
+					return;
+				}
+				let s1 = sa.slice(0, floc);
+				let s2 = sa.slice(floc);
+				console.log("[RichGrid.targetId]", x.targetId);
+				console.log("[target_id_parse]", s1, s2);
 			}
 			return;
 		}
-		let [,,channelId,last_part]=bp;
-		switch(last_part)
-		{
-			default: debugger; break;
-			case "featured": case "search":
+		let [, , channelId, last_part] = bp;
+		switch (last_part) {
+			default:
+				debugger;
+				break;
+			case "featured":
+			case "search":
 		}
 		this.sm.channelId(channelId);
 	}
 	/** @private @arg {import("../yt_json_types/d/mod_D/_T/DC_SectionList_BrowseFeed_History.ts").DC_SectionList_BrowseFeed_History} x */
-	D_SectionList_BrowseFeed_History(x)
-	{
-		const cf="D_SectionList_BrowseFeed_History";
-		const {contents,trackingParams,header,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(contents,x =>
-		{
-			if("itemSectionRenderer" in x) return this.sm.TR_SectionListItem_3_Empty(x);
-			if("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
-			if("musicCarouselShelfRenderer" in x) return this.sm.R_MusicCarouselShelf(x);
-			if("musicShelfRenderer" in x) return this.sm.R_MusicShelf(x);
+	D_SectionList_BrowseFeed_History(x) {
+		const cf = "D_SectionList_BrowseFeed_History";
+		const { contents, trackingParams, header, targetId, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.z(contents, (x) => {
+			if ("itemSectionRenderer" in x) {
+				return this.sm.TR_SectionListItem_3_Empty(x);
+			}
+			if ("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
+			if ("musicCarouselShelfRenderer" in x) {
+				return this.sm.R_MusicCarouselShelf(x);
+			}
+			if ("musicShelfRenderer" in x) return this.sm.R_MusicShelf(x);
 		});
 		this.sm.R_TextHeader(header);
-		if(targetId!=="browse-feedFEhistory") debugger;
+		if (targetId !== "browse-feedFEhistory") debugger;
 	}
 	/** @private @arg {import("../yt_json_types/abc/group_C.ts").DC_SectionList_BrowseFeed_Subscriptions} x */
-	D_SectionList_BrowseFeed_Subscriptions(x)
-	{
-		const cf="D_SectionList_BrowseFeed_Subscriptions";
-		const {contents,trackingParams,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(contents,x =>
-		{
-			if("itemSectionRenderer" in x) return this.sm.TR_SectionListItem_3_Empty(x);
-			if("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
-			if("musicCarouselShelfRenderer" in x) return this.sm.R_MusicCarouselShelf(x);
-			if("musicShelfRenderer" in x) return this.sm.R_MusicShelf(x);
+	D_SectionList_BrowseFeed_Subscriptions(x) {
+		const cf = "D_SectionList_BrowseFeed_Subscriptions";
+		const { contents, trackingParams, targetId, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.z(contents, (x) => {
+			if ("itemSectionRenderer" in x) {
+				return this.sm.TR_SectionListItem_3_Empty(x);
+			}
+			if ("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
+			if ("musicCarouselShelfRenderer" in x) {
+				return this.sm.R_MusicCarouselShelf(x);
+			}
+			if ("musicShelfRenderer" in x) return this.sm.R_MusicShelf(x);
 		});
-		if(targetId!=="browse-feedFEsubscriptions") debugger;
+		if (targetId !== "browse-feedFEsubscriptions") debugger;
 	}
 	/** @private @arg {import("../yt_json_types/abc/group_C.ts").DC_SectionList_SearchFeed} x */
-	DC_SectionList_SearchFeed(x)
-	{
-		const cf="DC_SectionList_SearchFeed";
-		const {trackingParams,targetId,contents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(targetId!=="search-feed") debugger;
-		this.sm.z(contents,this.sm.TR_SectionListItem_3_Empty);
+	DC_SectionList_SearchFeed(x) {
+		const cf = "DC_SectionList_SearchFeed";
+		const { trackingParams, targetId, contents, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		if (targetId !== "search-feed") debugger;
+		this.sm.z(contents, this.sm.TR_SectionListItem_3_Empty);
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").RC_SectionList} x */
-	RC_SectionList(x) {this.H_("sectionListContinuation",x,this.GD_RC_SectionList);}
+	RC_SectionList(x) {
+		this.H_("sectionListContinuation", x, this.GD_RC_SectionList);
+	}
 	/** @public @arg {import("../yt_json_types/ghi/group_G.ts").GD_RC_SectionList} x */
-	GD_RC_SectionList(x)
-	{
-		const cf="GD_RC_SectionList";
-		if("targetId" in x)
-		{
-			switch(x.targetId)
-			{
-				default: return this.DC_SectionList_BrowseFeed_ChannelFeatured(x);
-				case "browse-feedFEhistory": return this.D_SectionList_BrowseFeed_History(x);
-				case "browse-feedFEsubscriptions": return this.D_SectionList_BrowseFeed_Subscriptions(x);
-				case "search-feed": return this.DC_SectionList_SearchFeed(x);
+	GD_RC_SectionList(x) {
+		const cf = "GD_RC_SectionList";
+		if ("targetId" in x) {
+			switch (x.targetId) {
+				default:
+					return this.DC_SectionList_BrowseFeed_ChannelFeatured(x);
+				case "browse-feedFEhistory":
+					return this.D_SectionList_BrowseFeed_History(x);
+				case "browse-feedFEsubscriptions":
+					return this.D_SectionList_BrowseFeed_Subscriptions(x);
+				case "search-feed":
+					return this.DC_SectionList_SearchFeed(x);
 			}
 		}
-		if("contents" in x)
-		{
+		if ("contents" in x) {
 			return;
 		}
-		if("disablePullToRefresh" in x)
-		{
-			const {trackingParams,disablePullToRefresh,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			if(disablePullToRefresh!==true) debugger;
+		if ("disablePullToRefresh" in x) {
+			const { trackingParams, disablePullToRefresh, ...y } = this.s(cf, x);
+			this.g(y); /*#destructure_done*/
+			if (disablePullToRefresh !== true) debugger;
 			return;
 		}
 		debugger;
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_SectionList} x */
-	R_SectionList(x) {this.H_("sectionListRenderer",x,this.GD_RC_SectionList);}
+	R_SectionList(x) {
+		this.H_("sectionListRenderer", x, this.GD_RC_SectionList);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_ExpandableTab} x */
-	R_ExpandableTab(x) {this.H_("expandableTabRenderer",x,this.D_ExpandableTab);}
+	R_ExpandableTab(x) {
+		this.H_("expandableTabRenderer", x, this.D_ExpandableTab);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ExpandableTab} x */
-	D_ExpandableTab(x)
-	{
-		const cf="D_ExpandableTab";
-		if(x.selected)
-		{
-			const {endpoint,title,selected,expandedText,content,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_ExpandableTab(x) {
+		const cf = "D_ExpandableTab";
+		if (x.selected) {
+			const { endpoint, title, selected, expandedText, content, ...y } = this.s(
+				cf,
+				x,
+			);
+			this.g(y); /*#destructure_done*/
 			this.sm.E_VE3611(endpoint);
 			this.sm.a_primitive_str(title);
 			this.sm.a_primitive_bool(selected);
-			this.sm.t(expandedText,this.sm.a_primitive_str);
-			return this.t(content,this.R_SectionList);
+			this.sm.t(expandedText, this.sm.a_primitive_str);
+			return this.t(content, this.R_SectionList);
 		}
-		const {endpoint,title,selected,...y}=this.s(cf,x);/*#destructure_later*/
+		const { endpoint, title, selected, ...y } = this.s(
+			cf,
+			x,
+		); /*#destructure_later*/
 		this.sm.E_VE3611(endpoint);
 		this.sm.a_primitive_str(title);
 		this.sm.a_primitive_bool(selected);
-		if("expandedText" in y)
-		{
-			const {expandedText,...y1}=y; this.g(y1);
-			return this.sm.t(expandedText,this.sm.a_primitive_str);
+		if ("expandedText" in y) {
+			const { expandedText, ...y1 } = y;
+			this.g(y1);
+			return this.sm.t(expandedText, this.sm.a_primitive_str);
 		}
 		this.g(y);
 	}
 	/** @private @arg {import("../yt_json_types/stu/group_S.ts").SI_VE139722_EngagementPanel} x */
-	SI_VE139722_EngagementPanel(x)
-	{
-		const cf="SI_VE139722_EngagementPanel";
-		const {content,header,veType: {},targetId,visibility,loggingDirectives,continuationService,identifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	SI_VE139722_EngagementPanel(x) {
+		const cf = "SI_VE139722_EngagementPanel";
+		const {
+			content,
+			header,
+			veType: {},
+			targetId,
+			visibility,
+			loggingDirectives,
+			continuationService,
+			identifier,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.R_SectionList(content);
-		this.sm.t(header,this.sm.R_EngagementPanelTitleHeader);
-		if(targetId!=="engagement-panel-comments-section") debugger;
-		this.sm.targetId(cf,targetId);
-		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+		this.sm.t(header, this.sm.R_EngagementPanelTitleHeader);
+		if (targetId !== "engagement-panel-comments-section") debugger;
+		this.sm.targetId(cf, targetId);
+		if (visibility !== "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 		this.sm.D_LoggingDirectives(loggingDirectives);
-		if(continuationService!=="ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE") debugger;
-		if(!identifier) debugger;
-		let a1=this.sm.GT_ShortsSurfaceIdentifier(identifier);
-		if(a1!=="shorts-comments-panel") debugger;
+		if (
+			continuationService !== "ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE"
+		) debugger;
+		if (!identifier) debugger;
+		let a1 = this.sm.GT_ShortsSurfaceIdentifier(identifier);
+		if (a1 !== "shorts-comments-panel") debugger;
 	}
 	/** @private @arg {import("../yt_json_types/stu/group_S.ts").SI_VE76278_EngagementPanel} x */
-	SI_VE76278_EngagementPanel(x)
-	{
-		const cf="SI_VE76278_EngagementPanel";
-		const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,...y}=this.s(cf,x);
-		if(panelIdentifier!=="comment-item-section") debugger;
+	SI_VE76278_EngagementPanel(x) {
+		const cf = "SI_VE76278_EngagementPanel";
+		const {
+			panelIdentifier,
+			header,
+			content,
+			veType: {},
+			targetId,
+			visibility,
+			loggingDirectives,
+			...y
+		} = this.s(cf, x);
+		if (panelIdentifier !== "comment-item-section") debugger;
 		this.sm.R_EngagementPanelTitleHeader(header);
 		this.R_SectionList(content);
-		if(targetId!=="engagement-panel-comments-section") debugger;
-		this.sm.targetId(cf,targetId);
-		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+		if (targetId !== "engagement-panel-comments-section") debugger;
+		this.sm.targetId(cf, targetId);
+		if (visibility !== "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 		this.sm.D_LoggingDirectives(loggingDirectives);
-		if("identifier" in y)
-		{
-			this.sm.force_parse_identifier("SI_VE76278_Identifier",y);
+		if ("identifier" in y) {
+			this.sm.force_parse_identifier("SI_VE76278_Identifier", y);
 			return;
 		}
 		this.g(y);
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_EngagementPanelSectionList} x */
-	R_EngagementPanelSectionList(x) {this.H_("engagementPanelSectionListRenderer",x,this.D_EngagementPanelSectionList);}
+	R_EngagementPanelSectionList(x) {
+		this.H_(
+			"engagementPanelSectionListRenderer",
+			x,
+			this.D_EngagementPanelSectionList,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_EngagementPanelSectionList} x */
-	D_EngagementPanelSectionList(x)
-	{
-		const cf="D_EngagementPanelSectionList"; this.sm.k(cf,x);
-		if("veType" in x)
-		{
-			switch(x.veType)
-			{
-				default: debugger; break;
-				case 76278: return this.SI_VE76278_EngagementPanel(x);
-				case 99999: return this.SI_VE99999_EngagementPanel(x);
-				case 126250: return this.SI_VE126250_EngagementPanel(x);
-				case 124975: return this.SI_VE124975_EngagementPanel(x);
-				case 139722: return this.SI_VE139722_EngagementPanel(x);
+	D_EngagementPanelSectionList(x) {
+		const cf = "D_EngagementPanelSectionList";
+		this.sm.k(cf, x);
+		if ("veType" in x) {
+			switch (x.veType) {
+				default:
+					debugger;
+					break;
+				case 76278:
+					return this.SI_VE76278_EngagementPanel(x);
+				case 99999:
+					return this.SI_VE99999_EngagementPanel(x);
+				case 126250:
+					return this.SI_VE126250_EngagementPanel(x);
+				case 124975:
+					return this.SI_VE124975_EngagementPanel(x);
+				case 139722:
+					return this.SI_VE139722_EngagementPanel(x);
 			}
 			return;
 		}
-		if("targetId" in x) return this.G_SI_DB_EngagementPanel(x);
-		x===""; this.codegen_typedef(cf,x);
+		if ("targetId" in x) return this.G_SI_DB_EngagementPanel(x);
+		x === "";
+		this.codegen_typedef(cf, x);
 	}
 	/** @public @arg {import("../yt_json_types/ghi/group_G.ts").G_SI_DB_EngagementPanel} x */
-	G_SI_DB_EngagementPanel(x)
-	{
-		const cf="DB_SI_EngagementPanel";
-		switch(x.targetId)
-		{
-			default: x===""; debugger; break;
-			case "engagement-panel-ads": return this.sm.SI_DB_EngagementPanel_Ads(x);
-			case "engagement-panel-clip-create":/*GE*/{
-				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,onShowCommands,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				if(panelIdentifier!=="engagement-panel-clip-create") debugger;
-				this.sm.R_EngagementPanelTitleHeader(header);
-				this.sm.R_ClipSection(content);
-				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-				this.sm.D_LoggingDirectives(loggingDirectives);
-				this.z(onShowCommands,this.G_EngagementPanelSectionShowCommands);
-			} break;
-			case "engagement-panel-macro-markers-description-chapters":/*GE*/{
-				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				if(panelIdentifier!=="engagement-panel-macro-markers-description-chapters") debugger;
-				this.sm.R_EngagementPanelTitleHeader(header);
-				this.xr.R_MacroMarkersList(content);
-				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-				this.sm.D_LoggingDirectives(loggingDirectives);
-			} break;
-			case "engagement-panel-macro-markers-auto-chapters":/*GE*/{
-				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				if(panelIdentifier!=="engagement-panel-macro-markers-auto-chapters") debugger;
-				this.sm.R_EngagementPanelTitleHeader(header);
-				this.xr.R_MacroMarkersList(content);
-				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-				this.sm.D_LoggingDirectives(loggingDirectives);
-			} break;
+	G_SI_DB_EngagementPanel(x) {
+		const cf = "DB_SI_EngagementPanel";
+		switch (x.targetId) {
+			default:
+				x === "";
+				debugger;
+				break;
+			case "engagement-panel-ads":
+				return this.sm.SI_DB_EngagementPanel_Ads(x);
+			case "engagement-panel-clip-create":/*GE*/
+				{
+					const {
+						panelIdentifier,
+						header,
+						content,
+						targetId: {},
+						visibility,
+						loggingDirectives,
+						onShowCommands,
+						...y
+					} = this.s(cf, x);
+					this.g(y); /*#destructure_done*/
+					if (panelIdentifier !== "engagement-panel-clip-create") debugger;
+					this.sm.R_EngagementPanelTitleHeader(header);
+					this.sm.R_ClipSection(content);
+					if (visibility !== "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+					this.sm.D_LoggingDirectives(loggingDirectives);
+					this.z(onShowCommands, this.G_EngagementPanelSectionShowCommands);
+				}
+				break;
+			case "engagement-panel-macro-markers-description-chapters":/*GE*/
+				{
+					const {
+						panelIdentifier,
+						header,
+						content,
+						targetId: {},
+						visibility,
+						loggingDirectives,
+						...y
+					} = this.s(cf, x);
+					this.g(y); /*#destructure_done*/
+					if (
+						panelIdentifier !==
+							"engagement-panel-macro-markers-description-chapters"
+					) debugger;
+					this.sm.R_EngagementPanelTitleHeader(header);
+					this.xr.R_MacroMarkersList(content);
+					if (visibility !== "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+					this.sm.D_LoggingDirectives(loggingDirectives);
+				}
+				break;
+			case "engagement-panel-macro-markers-auto-chapters":/*GE*/
+				{
+					const {
+						panelIdentifier,
+						header,
+						content,
+						targetId: {},
+						visibility,
+						loggingDirectives,
+						...y
+					} = this.s(cf, x);
+					this.g(y); /*#destructure_done*/
+					if (
+						panelIdentifier !== "engagement-panel-macro-markers-auto-chapters"
+					) debugger;
+					this.sm.R_EngagementPanelTitleHeader(header);
+					this.xr.R_MacroMarkersList(content);
+					if (visibility !== "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+					this.sm.D_LoggingDirectives(loggingDirectives);
+				}
+				break;
 		}
 	}
 	/** @private @arg {import("../yt_json_types/stu/group_S.ts").SI_VE99999_EngagementPanel} x */
-	SI_VE99999_EngagementPanel(x)
-	{
-		const cf="SI_VE99999_EngagementPanel";
-		const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(panelIdentifier!=="shopping_panel_for_entry_point_5") debugger;
+	SI_VE99999_EngagementPanel(x) {
+		const cf = "SI_VE99999_EngagementPanel";
+		const {
+			panelIdentifier,
+			header,
+			content,
+			veType: {},
+			targetId,
+			visibility,
+			loggingDirectives,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		if (panelIdentifier !== "shopping_panel_for_entry_point_5") debugger;
 		this.sm.R_EngagementPanelTitleHeader(header);
 		this.sm.R_ProductList(content);
-		if(targetId!=="shopping_panel_for_entry_point_5") debugger;
-		this.sm.targetId(cf,targetId);
-		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+		if (targetId !== "shopping_panel_for_entry_point_5") debugger;
+		this.sm.targetId(cf, targetId);
+		if (visibility !== "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 		this.sm.D_LoggingDirectives(loggingDirectives);
 	}
 	/** @private @arg {import("../yt_json_types/stu/group_S.ts").SI_VE126250_EngagementPanel} x */
-	SI_VE126250_EngagementPanel(x)
-	{
-		const cf="SI_VE126250_EngagementPanel";
-		const {panelIdentifier,header,content,veType: {},targetId,visibility,onShowCommands,loggingDirectives,...y}=this.s(cf,x);
-		if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
+	SI_VE126250_EngagementPanel(x) {
+		const cf = "SI_VE126250_EngagementPanel";
+		const {
+			panelIdentifier,
+			header,
+			content,
+			veType: {},
+			targetId,
+			visibility,
+			onShowCommands,
+			loggingDirectives,
+			...y
+		} = this.s(cf, x);
+		if (panelIdentifier !== "engagement-panel-searchable-transcript") debugger;
 		this.sm.R_EngagementPanelTitleHeader(header);
 		this.sm.R_ContinuationItem(content);
-		if(targetId!=="engagement-panel-searchable-transcript") debugger;
-		this.sm.targetId(cf,targetId);
-		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+		if (targetId !== "engagement-panel-searchable-transcript") debugger;
+		this.sm.targetId(cf, targetId);
+		if (visibility !== "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 		this.sm.D_LoggingDirectives(loggingDirectives);
-		if("identifier" in y)
-		{
-			this.sm.force_parse_identifier("SI_VE126250_Identifier",y);
+		if ("identifier" in y) {
+			this.sm.force_parse_identifier("SI_VE126250_Identifier", y);
 			return;
 		}
 		this.g(y);
 	}
 	/** @private @arg {import("../yt_json_types/stu/group_S.ts").SI_VE124975_EngagementPanel} x */
-	SI_VE124975_EngagementPanel(x)
-	{
-		const cf="SI_VE124975_EngagementPanel";
-		const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,identifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(panelIdentifier&&panelIdentifier!=="engagement-panel-structured-description") debugger;
+	SI_VE124975_EngagementPanel(x) {
+		const cf = "SI_VE124975_EngagementPanel";
+		const {
+			panelIdentifier,
+			header,
+			content,
+			veType: {},
+			targetId,
+			visibility,
+			loggingDirectives,
+			identifier,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		if (
+			panelIdentifier &&
+			panelIdentifier !== "engagement-panel-structured-description"
+		) debugger;
 		this.sm.R_EngagementPanelTitleHeader(header);
 		this.xr.R_StructuredDescriptionContent(content);
-		if(targetId!=="engagement-panel-structured-description") debugger;
-		this.sm.targetId(cf,targetId);
-		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+		if (targetId !== "engagement-panel-structured-description") debugger;
+		this.sm.targetId(cf, targetId);
+		if (visibility !== "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 		this.sm.D_LoggingDirectives(loggingDirectives);
-		if(identifier)
-		{
-			let a1=this.sm.GT_ShortsSurfaceIdentifier(identifier);
-			if(a1!=="engagement-panel-structured-description") debugger;
+		if (identifier) {
+			let a1 = this.sm.GT_ShortsSurfaceIdentifier(identifier);
+			if (a1 !== "engagement-panel-structured-description") debugger;
 		}
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_TwoColumnBrowseResults} x */
-	R_TwoColumnBrowseResults(x) {this.H_("twoColumnBrowseResultsRenderer",x,this.D_TwoColumnBrowseResults);}
+	R_TwoColumnBrowseResults(x) {
+		this.H_("twoColumnBrowseResultsRenderer", x, this.D_TwoColumnBrowseResults);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_TwoColumnBrowseResults} x */
-	D_TwoColumnBrowseResults(x)
-	{
-		const cf="D_TwoColumnBrowseResults";
-		const {tabs,secondaryContents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(tabs,this.RG_Result);
-		this.t(secondaryContents,this.G_SecondaryContents);
+	D_TwoColumnBrowseResults(x) {
+		const cf = "D_TwoColumnBrowseResults";
+		const { tabs, secondaryContents, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.z(tabs, this.RG_Result);
+		this.t(secondaryContents, this.G_SecondaryContents);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").RG_Result} x */
-	RG_Result(x)
-	{
-		const cf="RG_Result";
-		if("tabRenderer" in x) return this.x.get("x_EventInput").R_Tab(x);
-		if("expandableTabRenderer" in x) return this.R_ExpandableTab(x);
-		x===""; this.codegen_typedef(cf,x);
+	RG_Result(x) {
+		const cf = "RG_Result";
+		if ("tabRenderer" in x) return this.x.get("x_EventInput").R_Tab(x);
+		if ("expandableTabRenderer" in x) return this.R_ExpandableTab(x);
+		x === "";
+		this.codegen_typedef(cf, x);
 	}
 	/** @private @arg {import("../yt_json_types/ghi/group_G.ts").G_EngagementPanelSectionShowCommands} x */
-	G_EngagementPanelSectionShowCommands(x)
-	{
-		if("changeEngagementPanelVisibilityAction" in x) return this.sm.A_ChangeEngagementPanelVisibility(x);
-		if("showEngagementPanelScrimAction" in x) return this.sm.A_ShowEngagementPanelScrim(x);
-		if("scrollToEngagementPanelCommand" in x) return this.sm.C_ScrollToEngagementPanel(x);
+	G_EngagementPanelSectionShowCommands(x) {
+		if ("changeEngagementPanelVisibilityAction" in x) {
+			return this.sm.A_ChangeEngagementPanelVisibility(x);
+		}
+		if ("showEngagementPanelScrimAction" in x) {
+			return this.sm.A_ShowEngagementPanelScrim(x);
+		}
+		if ("scrollToEngagementPanelCommand" in x) {
+			return this.sm.C_ScrollToEngagementPanel(x);
+		}
 	}
 	/** @private @arg {import("../yt_json_types/ghi/group_G.ts").G_SecondaryContents} x */
-	G_SecondaryContents(x)
-	{
-		const cf="G_SecondaryContents";
-		if("profileColumnRenderer" in x) return this.R_ProfileColumn(x);
-		if("browseFeedActionsRenderer" in x) return this.R_BrowseFeedActions(x);
-		x===""; this.codegen_typedef(cf,x);
+	G_SecondaryContents(x) {
+		const cf = "G_SecondaryContents";
+		if ("profileColumnRenderer" in x) return this.R_ProfileColumn(x);
+		if ("browseFeedActionsRenderer" in x) return this.R_BrowseFeedActions(x);
+		x === "";
+		this.codegen_typedef(cf, x);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_BrowseFeedActions} x */
-	R_BrowseFeedActions(x) {this.H_("browseFeedActionsRenderer",x,this.D_BrowseFeedActions);}
+	R_BrowseFeedActions(x) {
+		this.H_("browseFeedActionsRenderer", x, this.D_BrowseFeedActions);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_BrowseFeedActions} x */
-	D_BrowseFeedActions(x) {this.H_("contents",x,x => this.z(x,this.G_BrowseFeedContent));}
+	D_BrowseFeedActions(x) {
+		this.H_("contents", x, (x) => this.z(x, this.G_BrowseFeedContent));
+	}
 	/** @private @arg {import("../yt_json_types/ghi/group_G.ts").G_BrowseFeedContent} x */
-	G_BrowseFeedContent(x)
-	{
-		const cf="G_BrowseFeedContent";
-		if("searchBoxRenderer" in x) return this.sm.R_SearchBox(x);
-		if("subFeedSelectorRenderer" in x) return this.sm.R_SubFeedSelector(x);
-		if("buttonRenderer" in x) return this.xm.R_Button(x);
-		if("compactLinkRenderer" in x) return /*this.sm.R_CompactLink(x)*/;
-		x===""; this.codegen_typedef(cf,x);
+	G_BrowseFeedContent(x) {
+		const cf = "G_BrowseFeedContent";
+		if ("searchBoxRenderer" in x) return this.sm.R_SearchBox(x);
+		if ("subFeedSelectorRenderer" in x) return this.sm.R_SubFeedSelector(x);
+		if ("buttonRenderer" in x) return this.xm.R_Button(x);
+		if ("compactLinkRenderer" in x) return; /*this.sm.R_CompactLink(x)*/
+		x === "";
+		this.codegen_typedef(cf, x);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_ProfileColumn} x */
-	R_ProfileColumn(x) {this.H_("profileColumnRenderer",x,this.D_ProfileColumn);}
+	R_ProfileColumn(x) {
+		this.H_("profileColumnRenderer", x, this.D_ProfileColumn);
+	}
 	/** @public @arg {import("../yt_json_types/abc/group_C.ts").CF_T_Items} cf @template T @private @arg {import("../yt_json_types/stu/group_T.ts").T_Items<T>} x */
-	T_Items(cf,x) {return this.sm.w(cf,"items",x);}
+	T_Items(cf, x) {
+		return this.sm.w(cf, "items", x);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ProfileColumn} x */
-	D_ProfileColumn(x) {this.z(this.T_Items("D_ProfileColumn",x),this.G_ProfileColumnItem);}
+	D_ProfileColumn(x) {
+		this.z(this.T_Items("D_ProfileColumn", x), this.G_ProfileColumnItem);
+	}
 	/** @private @arg {import("../yt_json_types/ghi/group_G.ts").G_ProfileColumnItem} x */
-	G_ProfileColumnItem(x)
-	{
-		const cf="G_ProfileColumnItem";
-		if("profileColumnStatsRenderer" in x) return this.sm.R_ProfileColumnStats(x);
-		if("profileColumnUserInfoRenderer" in x) return this.sm.R_ProfileColumnUserInfo(x);
-		x===""; this.codegen_typedef(cf,x);
+	G_ProfileColumnItem(x) {
+		const cf = "G_ProfileColumnItem";
+		if ("profileColumnStatsRenderer" in x) {
+			return this.sm.R_ProfileColumnStats(x);
+		}
+		if ("profileColumnUserInfoRenderer" in x) {
+			return this.sm.R_ProfileColumnUserInfo(x);
+		}
+		x === "";
+		this.codegen_typedef(cf, x);
 	}
 	/** @public @arg {import("../yt_json_types/e/E.ts").E_Upload} x */
-	E_VE83769_Upload(x) {const [a,b,y]=this.sm.TE_Endpoint_3("E_VE83769_Upload","uploadEndpoint",x); this.g(y); this.M_Url(a); this.sm.B_Hack(b);}
+	E_VE83769_Upload(x) {
+		const [a, b, y] = this.sm.TE_Endpoint_3(
+			"E_VE83769_Upload",
+			"uploadEndpoint",
+			x,
+		);
+		this.g(y);
+		this.M_Url(a);
+		this.sm.B_Hack(b);
+	}
 	/** @public @arg {import("../yt_json_types/e/E.ts").E_SignalNavigation} x */
-	E_SignalNavigation(x) {const [a,b,y]=this.sm.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.M_Url(a); this.DE_SignalNavigation(b);}
+	E_SignalNavigation(x) {
+		const [a, b, y] = this.sm.TE_Endpoint_3(
+			"E_SignalNavigation",
+			"signalNavigationEndpoint",
+			x,
+		);
+		this.g(y);
+		this.M_Url(a);
+		this.DE_SignalNavigation(b);
+	}
 	/** @public @arg {import("../yt_json_types/e/E.ts").E_Url} x */
-	E_Url(x)
-	{
-		const [a,b,{loggingUrls,...y}]=this.sm.TE_Endpoint_3("E_Url","urlEndpoint",x); this.g(y);
-		this.M_Url(a); this.DE_Url(b); this.tz(loggingUrls,this.DU_BaseUrl);
+	E_Url(x) {
+		const [a, b, { loggingUrls, ...y }] = this.sm.TE_Endpoint_3(
+			"E_Url",
+			"urlEndpoint",
+			x,
+		);
+		this.g(y);
+		this.M_Url(a);
+		this.DE_Url(b);
+		this.tz(loggingUrls, this.DU_BaseUrl);
 	}
 	/** @public @arg {import("../yt_json_types/m/M.ts").M_Url} x */
-	M_Url(x) {this.T_WCM("M_Url",x,this.GM_Url);}
+	M_Url(x) {
+		this.T_WCM("M_Url", x, this.GM_Url);
+	}
 	/** @private @arg {import("../yt_json_types/ghi/group_G.ts").GM_Url} x */
-	GM_Url(x)
-	{
-		const cf="GM_Url";
-		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	GM_Url(x) {
+		const cf = "GM_Url";
+		const { url, webPageType, rootVe, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.GU_Url(url);
-		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
+		if (webPageType !== "WEB_PAGE_TYPE_UNKNOWN") debugger;
 		this.sm.rootVe(rootVe);
-		this.cq(rootVe,83769);
+		this.cq(rootVe, 83769);
 	}
 	/** @public @arg {NonNullable<import("../yt_json_types/e/E.ts").E_Url["loggingUrls"]>[number]} x */
-	DU_BaseUrl(x)
-	{
-		const cf="DU_BaseUrl";
-		const {baseUrl,elapsedMediaTimeSeconds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	DU_BaseUrl(x) {
+		const cf = "DU_BaseUrl";
+		const { baseUrl, elapsedMediaTimeSeconds, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.DU_Url(baseUrl);
-		this.sm.t(elapsedMediaTimeSeconds,this.sm.a_primitive_num);
+		this.sm.t(elapsedMediaTimeSeconds, this.sm.a_primitive_num);
 	}
 	/** @private @arg {NonNullable<import("../yt_json_types/e/E.ts").E_Url["loggingUrls"]>[number]["baseUrl"]} x */
-	DU_Url(x)
-	{
-		const uo=this._convert_url_to_obj(x);
-		let {...pp}=this.parse_url_search_params(uo.search);
-		this.DU_UrlParse({host: uo.host,pathname: uo.pathname,search: pp});
+	DU_Url(x) {
+		const uo = this._convert_url_to_obj(x);
+		let { ...pp } = this.parse_url_search_params(uo.search);
+		this.DU_UrlParse({ host: uo.host, pathname: uo.pathname, search: pp });
 	}
 	/** @arg {import("../yt_json_types/d/group_D.ts").DU_UrlParse} x */
-	DU_UrlParse(x)
-	{
-		const cf="DU_UrlParse";
-		this.save_primitive(`${cf}.host`,x.host);
-		this.save_primitive(`${cf}.pathname`,x.pathname);
-		switch(x.pathname)
-		{
-			default: debugger; break;
-			case "/pagead/aclk": this.ht.DU_UrlParams_PageAd_AClk(x.search); break;
-			case "/pagead/paralleladinteraction": this.sm.DU_UrlParams_PageadParallelAdInteraction(x.search); break;
+	DU_UrlParse(x) {
+		const cf = "DU_UrlParse";
+		this.save_primitive(`${cf}.host`, x.host);
+		this.save_primitive(`${cf}.pathname`, x.pathname);
+		switch (x.pathname) {
+			default:
+				debugger;
+				break;
+			case "/pagead/aclk":
+				this.ht.DU_UrlParams_PageAd_AClk(x.search);
+				break;
+			case "/pagead/paralleladinteraction":
+				this.sm.DU_UrlParams_PageadParallelAdInteraction(x.search);
+				break;
 		}
 	}
 	/** @private @arg {import("../yt_json_types/d/group_DE.ts").DE_Url} x */
-	DE_Url(x)
-	{
-		const cf="DE_VE83769_Url";
-		const {url,...u}=this.s(cf,x);/*#destructure_later*/
+	DE_Url(x) {
+		const cf = "DE_VE83769_Url";
+		const { url, ...u } = this.s(cf, x); /*#destructure_later*/
 		this.GM_E_VE83769_Url_TargetUrlType(url);
-		if("nofollow" in u&&"target" in u)
-		{
-			const {target,nofollow,...y}=u; this.g(y); /*#destructure_done*/
-			if(target!=="TARGET_NEW_WINDOW") debugger;
-			if(nofollow!==true) debugger;
+		if ("nofollow" in u && "target" in u) {
+			const { target, nofollow, ...y } = u;
+			this.g(y); /*#destructure_done*/
+			if (target !== "TARGET_NEW_WINDOW") debugger;
+			if (nofollow !== true) debugger;
 			return;
 		}
-		if("nofollow" in u)
-		{
-			const {nofollow,...y}=u; this.g(y);/*#destructure_done*/
-			if(nofollow!==true) debugger;
+		if ("nofollow" in u) {
+			const { nofollow, ...y } = u;
+			this.g(y); /*#destructure_done*/
+			if (nofollow !== true) debugger;
 			return;
 		}
-		if("target" in u)
-		{
-			const {target,...y}=u; this.g(y); /*#destructure_done*/
-			if(target!=="TARGET_NEW_WINDOW") debugger;
+		if ("target" in u) {
+			const { target, ...y } = u;
+			this.g(y); /*#destructure_done*/
+			if (target !== "TARGET_NEW_WINDOW") debugger;
 			return;
 		}
-		if("grwOpenInOverride" in u)
-		{
-			let x=this.sm.ws("grwOpenInOverride",u);
-			this.save_enum(`${cf}.grwOpenInOverride`,"GRW_OPEN_IN_OVERRIDE",x);
+		if ("grwOpenInOverride" in u) {
+			let x = this.sm.ws("grwOpenInOverride", u);
+			this.save_enum(`${cf}.grwOpenInOverride`, "GRW_OPEN_IN_OVERRIDE", x);
 			return;
 		}
 		this.g(u);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_DE.ts").DE_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
-	GM_E_VE83769_Url_TargetUrlType(x)
-	{
-		const rp="https://www.youtube.com/redirect?";
-		if(this.str_starts_with_rx(rp,x))
-		{
+	GM_E_VE83769_Url_TargetUrlType(x) {
+		const rp = "https://www.youtube.com/redirect?";
+		if (this.str_starts_with_rx(rp, x)) {
 			/** @type {import("../yt_json_types/ghi/group_G.ts").GU_VE83769_Url_Redirect} */
-			let arg_x=as(x);
+			let arg_x = as(x);
 			return this.sm.GU_YoutubeUrlRedirect(arg_x);
 		}
-		let sp=this._convert_url_to_obj(x);
-		if(this.str_starts_with_rx("https://",sp.href)) {return;}
+		let sp = this._convert_url_to_obj(x);
+		if (this.str_starts_with_rx("https://", sp.href)) return;
 		this.xm.GU_Url(sp.href);
 	}
 	/** @private @arg {import("../yt_json_types/ghi/group_G.ts").GU_VE83769_Url} x */
-	GU_Url(x)
-	{
-		if(this.str_starts_with_rx("/",x))
-		{
-			switch(x)
-			{
-				default: x===""; debugger; break;
-				case "/upload": break;
+	GU_Url(x) {
+		if (this.str_starts_with_rx("/", x)) {
+			switch (x) {
+				default:
+					x === "";
+					debugger;
+					break;
+				case "/upload":
+					break;
 			}
 			return;
 		}
-		if(this.str_starts_with_rx("https://www.youtube.com/redirect?",x)) return;
-		if(this.str_starts_with_rx("https://youtube.com",x))
-		{
-			let up=this._convert_url_to_obj(x);
-			this.ht.parse_url_alt("GU_Url",up.pathname);
+		if (this.str_starts_with_rx("https://www.youtube.com/redirect?", x)) return;
+		if (this.str_starts_with_rx("https://youtube.com", x)) {
+			let up = this._convert_url_to_obj(x);
+			this.ht.parse_url_alt("GU_Url", up.pathname);
 			return;
 		}
 		this.GU_UrlObj(x);
-		const hn_yt_studio="https://studio.youtube.com";
-		const hn_yt_music="https://music.youtube.com";
-		const hn_yt_kids="https://www.youtubekids.com";
-		const hn_yt_tv="https://tv.youtube.com";
-		if(this.str_starts_with_rx(hn_yt_studio,x)) return;
-		if(this.str_starts_with_rx(hn_yt_music,x)) return;
-		if(this.str_starts_with_rx(hn_yt_kids,x)) return;
-		if(this.str_starts_with_rx(hn_yt_tv,x)) return;
-		if(this.str_starts_with_rx("https://www.google.com",x)) return;
-		if(this.str_starts_with_rx("https://myactivity.google.com",x)) return;
-		if(this.str_starts_with_rx("https://support.google.com",x)) return;
-		if(this.str_starts_with_rx("https://www.googleadservices.com",x)) return;
-		if(this.str_starts_with_rx("https://googleads.g.doubleclick.net",x)) return;
+		const hn_yt_studio = "https://studio.youtube.com";
+		const hn_yt_music = "https://music.youtube.com";
+		const hn_yt_kids = "https://www.youtubekids.com";
+		const hn_yt_tv = "https://tv.youtube.com";
+		if (this.str_starts_with_rx(hn_yt_studio, x)) return;
+		if (this.str_starts_with_rx(hn_yt_music, x)) return;
+		if (this.str_starts_with_rx(hn_yt_kids, x)) return;
+		if (this.str_starts_with_rx(hn_yt_tv, x)) return;
+		if (this.str_starts_with_rx("https://www.google.com", x)) return;
+		if (this.str_starts_with_rx("https://myactivity.google.com", x)) return;
+		if (this.str_starts_with_rx("https://support.google.com", x)) return;
+		if (this.str_starts_with_rx("https://www.googleadservices.com", x)) return;
+		if (this.str_starts_with_rx("https://googleads.g.doubleclick.net", x)) {
+			return;
+		}
 		x;
 	}
 	/** @private @arg {Extract<import("../yt_json_types/ghi/group_G.ts").GU_VE83769_Url,`https://${string}`>} x */
-	GU_UrlObj(x)
-	{
-		let up=this._convert_url_to_obj(x);
+	GU_UrlObj(x) {
+		let up = this._convert_url_to_obj(x);
 		/** @template {string} T @arg {{host:T}} u */
-		function get_host(u) {return u.host;}
-		switch(up.host)
-		{
-			case "googleads.g.doubleclick.net": return;
-			case "music.youtube.com": return this.sm.handle_yt_music_url(up.href);
-			case "myaccount.google.com": return;
-			case "myactivity.google.com": return;
-			case "studio.youtube.com": return this.sm.D_YtStudio_Url(up.href);
-			case "support.google.com": return;
-			case "tv.youtube.com": return;
-			case "www.google.com": return;
-			case "www.googleadservices.com": return;
-			case "www.youtube.com": return this.sm.GU_FullYoutubeUrl(up.href);
-			case "www.youtubekids.com": return this.sm.D_YoutubeKidsUrl(up.href);
-			case "youtube.com": return;
-			default: get_host(up)===""; console.log("new GU_UrlObj.host",get_host(up)); break;
+		function get_host(u) {
+			return u.host;
+		}
+		switch (up.host) {
+			case "googleads.g.doubleclick.net":
+				return;
+			case "music.youtube.com":
+				return this.sm.handle_yt_music_url(up.href);
+			case "myaccount.google.com":
+				return;
+			case "myactivity.google.com":
+				return;
+			case "studio.youtube.com":
+				return this.sm.D_YtStudio_Url(up.href);
+			case "support.google.com":
+				return;
+			case "tv.youtube.com":
+				return;
+			case "www.google.com":
+				return;
+			case "www.googleadservices.com":
+				return;
+			case "www.youtube.com":
+				return this.sm.GU_FullYoutubeUrl(up.href);
+			case "www.youtubekids.com":
+				return this.sm.D_YoutubeKidsUrl(up.href);
+			case "youtube.com":
+				return;
+			default:
+				get_host(up) === "";
+				console.log("new GU_UrlObj.host", get_host(up));
+				break;
 		}
 	}
 	/** @public @template {string} T @arg {import("../yt_json_types/stu/group_T.ts").T_BaseUrl<T>} x */
-	T_BaseUrl(x)
-	{
-		const cf="T_BaseUrl";
-		const {baseUrl,elapsedMediaTimeSeconds,...y}=this.s(cf,x); this.g(y);
-		this.t(elapsedMediaTimeSeconds,x => this.sm.a_primitive_num(x));
+	T_BaseUrl(x) {
+		const cf = "T_BaseUrl";
+		const { baseUrl, elapsedMediaTimeSeconds, ...y } = this.s(cf, x);
+		this.g(y);
+		this.t(elapsedMediaTimeSeconds, (x) => this.sm.a_primitive_num(x));
 		return baseUrl;
 	}
 	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_PlaybackTracking} x */
-	D_PlaybackTracking(x)
-	{
-		const cf="D_PlaybackTracking"; this.sm.k(cf,x);
-		let [a,u]=this.sm.unwrap_prefix(x,"videostats");
+	D_PlaybackTracking(x) {
+		const cf = "D_PlaybackTracking";
+		this.sm.k(cf, x);
+		let [a, u] = this.sm.unwrap_prefix(x, "videostats");
 		{
-			const {defaultFlushIntervalSeconds,delayplayUrl,playbackUrl,scheduledFlushWalltimeSeconds,watchtimeUrl,...y}=a; this.g(y);
+			const {
+				defaultFlushIntervalSeconds,
+				delayplayUrl,
+				playbackUrl,
+				scheduledFlushWalltimeSeconds,
+				watchtimeUrl,
+				...y
+			} = a;
+			this.g(y);
 		}
-		const {atrUrl,ptrackingUrl,qoeUrl,youtubeRemarketingUrl,...y}=u; this.g(y);
-		this.D_UrlAndElapsedMediaTime(atrUrl,x => this.sm.a_primitive_str(x));
+		const { atrUrl, ptrackingUrl, qoeUrl, youtubeRemarketingUrl, ...y } = u;
+		this.g(y);
+		this.D_UrlAndElapsedMediaTime(atrUrl, (x) => this.sm.a_primitive_str(x));
 		this.sm.a_primitive_str(this.T_BaseUrl(ptrackingUrl));
 		this.sm.a_primitive_str(this.T_BaseUrl(qoeUrl));
-		let r=this.sm.t(youtubeRemarketingUrl,this.T_BaseUrl);
-		this.t(r,this.sm.a_primitive_str);
+		let r = this.sm.t(youtubeRemarketingUrl, this.T_BaseUrl);
+		this.t(r, this.sm.a_primitive_str);
 	}
 	/** @template T @private @arg {import("../yt_json_types/d/group_D.ts").D_UrlAndElapsedMediaTime<T>} x @arg {(this:this,x:T)=>void} f */
-	D_UrlAndElapsedMediaTime(x,f)
-	{
-		const cf="D_UrlAndElapsedMediaTime";
-		const {baseUrl,elapsedMediaTimeSeconds,...y}=this.s(cf,x); this.g(y);
-		f.call(this,baseUrl);
+	D_UrlAndElapsedMediaTime(x, f) {
+		const cf = "D_UrlAndElapsedMediaTime";
+		const { baseUrl, elapsedMediaTimeSeconds, ...y } = this.s(cf, x);
+		this.g(y);
+		f.call(this, baseUrl);
 		this.sm.a_primitive_num(elapsedMediaTimeSeconds);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ActiveView} x */
-	D_ActiveView(x)
-	{
-		const cf="D_ActiveView";
-		const {viewableCommands,endOfSessionCommands,regexUriMacroValidator,...y}=this.s(cf,x); this.g(y);
-		this.z(viewableCommands,this.E_Pinging);
-		this.z(endOfSessionCommands,this.E_Pinging);
+	D_ActiveView(x) {
+		const cf = "D_ActiveView";
+		const {
+			viewableCommands,
+			endOfSessionCommands,
+			regexUriMacroValidator,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
+		this.z(viewableCommands, this.E_Pinging);
+		this.z(endOfSessionCommands, this.E_Pinging);
 		this.sm.D_EmptyMap(regexUriMacroValidator);
 	}
 	/** @public @arg {import("../yt_json_types/e/E.ts").E_Pinging} x */
-	E_Pinging(x)
-	{
-		const cf="E_Pinging";
-		const {clickTrackingParams,loggingUrls,pingingEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	E_Pinging(x) {
+		const cf = "E_Pinging";
+		const { clickTrackingParams, loggingUrls, pingingEndpoint, ...y } = this.s(
+			cf,
+			x,
+		);
+		this.g(y); /*#destructure_done*/
 		this.sm.B_Hack(pingingEndpoint);
-		let [r]=this.z(loggingUrls,this.T_BaseUrl);
-		this.z(r,x =>
-		{
-			let pr=this._convert_url_to_obj(x);
-			switch(pr.host)
-			{
-				case "pagead2.googlesyndication.com": {
-					if(pr.pathname!=="/pcs/activeview") debugger;
-					const {xai,sai,sig,cid,acvw,...y}=this.parse_url_search_params(pr.search); this.g(y);
-				} break;
-				case "googleads.g.doubleclick.net": {
-					if(pr.pathname!=="/pagead/interaction/") debugger;
-					let {ai,sigh,label,...y}=this.parse_url_search_params(pr.search); this.g(y);
-					if(label!=="noop_tap") debugger;
-				} break;
-				default: debugger; break;
-			};
+		let [r] = this.z(loggingUrls, this.T_BaseUrl);
+		this.z(r, (x) => {
+			let pr = this._convert_url_to_obj(x);
+			switch (pr.host) {
+				case "pagead2.googlesyndication.com":
+					{
+						if (pr.pathname !== "/pcs/activeview") debugger;
+						const { xai, sai, sig, cid, acvw, ...y } = this
+							.parse_url_search_params(pr.search);
+						this.g(y);
+					}
+					break;
+				case "googleads.g.doubleclick.net":
+					{
+						if (pr.pathname !== "/pagead/interaction/") debugger;
+						let { ai, sigh, label, ...y } = this.parse_url_search_params(
+							pr.search,
+						);
+						this.g(y);
+						if (label !== "noop_tap") debugger;
+					}
+					break;
+				default:
+					debugger;
+					break;
+			}
 		});
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_ClientForecastingAd} x */
-	R_ClientForecastingAd(x) {this.H_("clientForecastingAdRenderer",x,this.D_ClientForecastingAd);}
+	R_ClientForecastingAd(x) {
+		this.H_("clientForecastingAdRenderer", x, this.D_ClientForecastingAd);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ClientForecastingAd} x */
-	D_ClientForecastingAd(x)
-	{
-		const cf="D_ClientForecastingAd";
-		const {impressionUrls,...y}=this.s(cf,x); this.g(y);
-		let r=this.tz(impressionUrls,this.T_BaseUrl);
-		this.t(r,([x]) => this.z(x,x => this.ps.parse_url(`${cf}.impressionUrl`,x)));
+	D_ClientForecastingAd(x) {
+		const cf = "D_ClientForecastingAd";
+		const { impressionUrls, ...y } = this.s(cf, x);
+		this.g(y);
+		let r = this.tz(impressionUrls, this.T_BaseUrl);
+		this.t(
+			r,
+			([x]) => this.z(x, (x) => this.ps.parse_url(`${cf}.impressionUrl`, x)),
+		);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ImpressionCommand} x */
-	D_ImpressionCommand(x)
-	{
-		const cf="D_ImpressionCommand";
-		const {clickTrackingParams,loggingUrls,pingingEndpoint,...y}=this.s(cf,x); this.g(y);
-		let [r]=this.z(loggingUrls,this.T_BaseUrl);
-		this.z(r,x => this.ps.parse_url(`${cf}:LoggingUrlItem`,x));
+	D_ImpressionCommand(x) {
+		const cf = "D_ImpressionCommand";
+		const { clickTrackingParams, loggingUrls, pingingEndpoint, ...y } = this.s(
+			cf,
+			x,
+		);
+		this.g(y);
+		let [r] = this.z(loggingUrls, this.T_BaseUrl);
+		this.z(r, (x) => this.ps.parse_url(`${cf}:LoggingUrlItem`, x));
 		this.sm.B_Hack(pingingEndpoint);
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_PromotedSparklesWeb} x */
-	R_PromotedSparklesWeb(x) {this.H_("promotedSparklesWebRenderer",x,this.D_PromotedSparklesWeb);}
+	R_PromotedSparklesWeb(x) {
+		this.H_("promotedSparklesWebRenderer", x, this.D_PromotedSparklesWeb);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_PromotedSparklesWeb} x */
-	D_PromotedSparklesWeb(x)
-	{
-		const cf="D_PromotedSparklesWeb";
-		const {thumbnail,icon,title,description,websiteText,actionButton,navigationEndpoint,impressionCommands,noopTapEndpoints,menu,activeView,trackingParams,clickLocationTargets,adBadge,...y}=this.s(cf,x); this.g(y);
+	D_PromotedSparklesWeb(x) {
+		const cf = "D_PromotedSparklesWeb";
+		const {
+			thumbnail,
+			icon,
+			title,
+			description,
+			websiteText,
+			actionButton,
+			navigationEndpoint,
+			impressionCommands,
+			noopTapEndpoints,
+			menu,
+			activeView,
+			trackingParams,
+			clickLocationTargets,
+			adBadge,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
 		this.sm.D_Thumbnail(thumbnail);
-		this.sm.T_Icon(`${cf}:icon`,icon);
+		this.sm.T_Icon(`${cf}:icon`, icon);
 		this.sm.G_Text(title);
 		this.sm.G_Text(description);
 		this.sm.G_Text(websiteText);
 		this.xm.R_Button(actionButton);
 		this.xm.E_Url(navigationEndpoint);
-		this.z(impressionCommands,this.D_ImpressionCommand);
-		this.tz(noopTapEndpoints,this.E_Pinging);
+		this.z(impressionCommands, this.D_ImpressionCommand);
+		this.tz(noopTapEndpoints, this.E_Pinging);
 		this.sm.R_Menu(menu);
-		this.t(activeView,this.D_ActiveView);
-		this.z(clickLocationTargets,this.D_ClickLocationTarget);
-		this.sm.t(adBadge,this.sm.RMD_Badge);
+		this.t(activeView, this.D_ActiveView);
+		this.z(clickLocationTargets, this.D_ClickLocationTarget);
+		this.sm.t(adBadge, this.sm.RMD_Badge);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ClickLocationTarget} x */
-	D_ClickLocationTarget(x)
-	{
-		const cf="D_ClickLocationTarget";
-		const {location,code,behaviorType,...y}=this.s(cf,x); this.g(y);
-		this.save_enum(cf,"PROMOTED_SPARKLES_CLICK_LOCATION",location);
-		this.save_primitive(`${cf}.code`,code);
-		this.save_enum(cf,"PROMOTED_SPARKLES_CLICK_BEHAVIOR_TYPE",behaviorType);
+	D_ClickLocationTarget(x) {
+		const cf = "D_ClickLocationTarget";
+		const { location, code, behaviorType, ...y } = this.s(cf, x);
+		this.g(y);
+		this.save_enum(cf, "PROMOTED_SPARKLES_CLICK_LOCATION", location);
+		this.save_primitive(`${cf}.code`, code);
+		this.save_enum(cf, "PROMOTED_SPARKLES_CLICK_BEHAVIOR_TYPE", behaviorType);
 	}
 	/** @private @arg {import("../yt_json_types/d/group_DE.ts").DE_SignalNavigation} x */
-	DE_SignalNavigation(x)
-	{
-		const cf="DE_SignalNavigation",a=this.sm.T_Signal(cf,x);
-		switch(a)
-		{
-			default: this.cg.codegen_case(`${cf}.signal`,a); break;
+	DE_SignalNavigation(x) {
+		const cf = "DE_SignalNavigation", a = this.sm.T_Signal(cf, x);
+		switch (a) {
+			default:
+				this.cg.codegen_case(`${cf}.signal`, a);
+				break;
 			case "CHANNEL_SWITCHER":
 			case "LIVE_CONTROL_ROOM":
 		}
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_PlaylistHeader} x */
-	R_PlaylistHeader(x) {this.H_("playlistHeaderRenderer",x,this.D_PlaylistHeader);}
+	R_PlaylistHeader(x) {
+		this.H_("playlistHeaderRenderer", x, this.D_PlaylistHeader);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_PlaylistHeader} x */
-	D_PlaylistHeader(x)
-	{
-		const cf="D_PlaylistHeader";
-		const {playButton,playlistHeaderBanner,playlistId,privacy,shufflePlayButton,trackingParams,editableDetails,editorEndpoint,isEditable,ownerEndpoint,serviceEndpoints,moreActionsMenu,title,numVideosText,descriptionTapText,descriptionText,onDescriptionTap,shareData,stats,briefStats,byline,ownerText,viewCountText,cinematicContainer,...y}=this.s(cf,x);
+	D_PlaylistHeader(x) {
+		const cf = "D_PlaylistHeader";
+		const {
+			playButton,
+			playlistHeaderBanner,
+			playlistId,
+			privacy,
+			shufflePlayButton,
+			trackingParams,
+			editableDetails,
+			editorEndpoint,
+			isEditable,
+			ownerEndpoint,
+			serviceEndpoints,
+			moreActionsMenu,
+			title,
+			numVideosText,
+			descriptionTapText,
+			descriptionText,
+			onDescriptionTap,
+			shareData,
+			stats,
+			briefStats,
+			byline,
+			ownerText,
+			viewCountText,
+			cinematicContainer,
+			...y
+		} = this.s(cf, x);
 		this.xm.R_Button(playButton);
 		this.xm.R_HeroPlaylistThumbnail(playlistHeaderBanner);
 		this.sm.playlistId(playlistId);
-		this.save_primitive(`${cf}.privacy`,privacy);
+		this.save_primitive(`${cf}.privacy`, privacy);
 		this.xm.R_Button(shufflePlayButton);
 		this.sm.D_EditableDetails(editableDetails);
-		this.sm.t(editorEndpoint,this.sm.E_PlaylistEditor);
+		this.sm.t(editorEndpoint, this.sm.E_PlaylistEditor);
 		this.sm.a_primitive_bool(isEditable);
 		this.sm.E_VE3611(ownerEndpoint);
-		this.z(serviceEndpoints,x =>
-		{
-			if("playlistEditEndpoint" in x) return this.sm.E_PlaylistEdit(x);
-			if("deletePlaylistEndpoint" in x) return this.sm.E_PlaylistDelete(x);
-			this.sm.codegen_typedef("EF_PlaylistHeader",x,false);
+		this.z(serviceEndpoints, (x) => {
+			if ("playlistEditEndpoint" in x) return this.sm.E_PlaylistEdit(x);
+			if ("deletePlaylistEndpoint" in x) return this.sm.E_PlaylistDelete(x);
+			this.sm.codegen_typedef("EF_PlaylistHeader", x, false);
 		});
 		this.sm.R_Menu(moreActionsMenu);
 		this.sm.G_Text(title);
 		this.sm.G_Text(numVideosText);
-		this.sm.t(descriptionTapText,this.sm.G_Text);
+		this.sm.t(descriptionTapText, this.sm.G_Text);
 		this.g(descriptionText);
 		this.xr.A_FancyDismissibleDialog(onDescriptionTap);
 		this.sm.D_CanShare(shareData);
-		this.sm.z(stats,this.sm.G_Text);
-		this.sm.z(briefStats,this.sm.G_Text);
-		this.sm.z(byline,this.sm.R_PlaylistByline);
+		this.sm.z(stats, this.sm.G_Text);
+		this.sm.z(briefStats, this.sm.G_Text);
+		this.sm.z(byline, this.sm.R_PlaylistByline);
 		this.sm.G_Text(ownerText);
 		this.sm.G_Text(viewCountText);
 		this.sm.R_CinematicContainer(cinematicContainer);
-		const {shareButton,titleForm,descriptionForm,privacyForm,...y1}=y; this.g(y1);
-		this.xm.t(shareButton,this.xm.R_Button);
-		this.t(titleForm,this.R_InlineForm);
-		this.t(descriptionForm,this.R_InlineForm);
-		this.t(privacyForm,this.R_DropdownFormField);
+		const { shareButton, titleForm, descriptionForm, privacyForm, ...y1 } = y;
+		this.g(y1);
+		this.xm.t(shareButton, this.xm.R_Button);
+		this.t(titleForm, this.R_InlineForm);
+		this.t(descriptionForm, this.R_InlineForm);
+		this.t(privacyForm, this.R_DropdownFormField);
 	}
 	/** @public @arg {import("../yt_json_types/d/group_D.ts").R_InlineForm} x */
-	R_InlineForm(x) {this.H_("inlineFormRenderer",x,this.D_InlineForm);}
+	R_InlineForm(x) {
+		this.H_("inlineFormRenderer", x, this.D_InlineForm);
+	}
 	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_InlineForm} x */
-	D_InlineForm(x)
-	{
-		const cf="D_InlineForm";
-		const {formField,editButton,saveButton,cancelButton,textDisplayed,style,placeholder,...y}=this.s(cf,x); this.g(y);
+	D_InlineForm(x) {
+		const cf = "D_InlineForm";
+		const {
+			formField,
+			editButton,
+			saveButton,
+			cancelButton,
+			textDisplayed,
+			style,
+			placeholder,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
 		this.R_TextInputFormField(formField);
 		this.xm.R_Button(editButton);
 		this.xm.R_Button(saveButton);
 		this.xm.R_Button(cancelButton);
-		this.sm.t(textDisplayed,this.sm.G_Text);
-		this.save_enum(cf,"INLINE_FORM_STYLE",style);
-		this.sm.t(placeholder,this.sm.G_Text);
+		this.sm.t(textDisplayed, this.sm.G_Text);
+		this.save_enum(cf, "INLINE_FORM_STYLE", style);
+		this.sm.t(placeholder, this.sm.G_Text);
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_TextInputFormField} x */
-	R_TextInputFormField(x) {this.H_("textInputFormFieldRenderer",x,this.D_TextInputFormField);}
+	R_TextInputFormField(x) {
+		this.H_("textInputFormFieldRenderer", x, this.D_TextInputFormField);
+	}
 	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_TextInputFormField} x */
-	D_TextInputFormField(x)
-	{
-		const cf="D_TextInputFormField";
-		const {label,value,maxCharacterLimit,key,onChange,placeholderText,validValueRegexp,invalidValueErrorMessage,isMultiline,required,...y}=this.s(cf,x); this.g(y);
+	D_TextInputFormField(x) {
+		const cf = "D_TextInputFormField";
+		const {
+			label,
+			value,
+			maxCharacterLimit,
+			key,
+			onChange,
+			placeholderText,
+			validValueRegexp,
+			invalidValueErrorMessage,
+			isMultiline,
+			required,
+			...y
+		} = this.s(cf, x);
+		this.g(y);
 		this.sm.G_Text(label);
-		this.t(value,x => this.sm.a_primitive_str(x));
-		this.save_primitive(`${cf}.maxCharacterLimit`,maxCharacterLimit);
-		this.t(key,x => this.save_primitive(`${cf}.key`,x));
-		this.sm.t(onChange,this.sm.E_PlaylistEdit);
-		this.t(placeholderText,x => this.sm.a_primitive_str(x));
-		this.sm.cq(validValueRegexp,"[^<>]*");
+		this.t(value, (x) => this.sm.a_primitive_str(x));
+		this.save_primitive(`${cf}.maxCharacterLimit`, maxCharacterLimit);
+		this.t(key, (x) => this.save_primitive(`${cf}.key`, x));
+		this.sm.t(onChange, this.sm.E_PlaylistEdit);
+		this.t(placeholderText, (x) => this.sm.a_primitive_str(x));
+		this.sm.cq(validValueRegexp, "[^<>]*");
 		this.sm.G_Text(invalidValueErrorMessage);
-		this.t(isMultiline,x => this.sm.cq(x,true));
-		this.t(required,x => this.sm.cq(x,true));
+		this.t(isMultiline, (x) => this.sm.cq(x, true));
+		this.t(required, (x) => this.sm.cq(x, true));
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_DropdownFormField} x */
-	R_DropdownFormField(x) {this.H_("dropdownFormFieldRenderer",x,this.D_DropdownFormField);}
+	R_DropdownFormField(x) {
+		this.H_("dropdownFormFieldRenderer", x, this.D_DropdownFormField);
+	}
 	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_DropdownFormField} x */
-	D_DropdownFormField(x)
-	{
-		const cf="D_DropdownFormField";
-		const {dropdown,key,onChange,...y}=this.s(cf,x); this.g(y);
+	D_DropdownFormField(x) {
+		const cf = "D_DropdownFormField";
+		const { dropdown, key, onChange, ...y } = this.s(cf, x);
+		this.g(y);
 		this.xr.R_Dropdown(dropdown);
-		this.sm.cq(key,"playlistEditEndpoint.actions.0.playlistPrivacy");
-		let kp=split_string(key,".");
-		this.sm.cq(kp[0],"playlistEditEndpoint");
+		this.sm.cq(key, "playlistEditEndpoint.actions.0.playlistPrivacy");
+		let kp = split_string(key, ".");
+		this.sm.cq(kp[0], "playlistEditEndpoint");
 		this.sm.E_PlaylistEdit(onChange);
 	}
 	/** @public @arg {import("../yt_json_types/ghi/group_G.ts").G_PlaylistSidebarItem} x */
-	G_PlaylistSidebarItem(x)
-	{
-		if("playlistSidebarPrimaryInfoRenderer" in x) return this.R_PlaylistSidebarPrimaryInfo(x);
-		if("playlistSidebarSecondaryInfoRenderer" in x) return this.R_PlaylistSidebarSecondaryInfo(x);
+	G_PlaylistSidebarItem(x) {
+		if ("playlistSidebarPrimaryInfoRenderer" in x) {
+			return this.R_PlaylistSidebarPrimaryInfo(x);
+		}
+		if ("playlistSidebarSecondaryInfoRenderer" in x) {
+			return this.R_PlaylistSidebarSecondaryInfo(x);
+		}
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_PlaylistSidebarSecondaryInfo} x */
-	R_PlaylistSidebarSecondaryInfo(x) {this.H_("playlistSidebarSecondaryInfoRenderer",x,this.D_PlaylistSidebarSecondaryInfo);}
+	R_PlaylistSidebarSecondaryInfo(x) {
+		this.H_(
+			"playlistSidebarSecondaryInfoRenderer",
+			x,
+			this.D_PlaylistSidebarSecondaryInfo,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_PlaylistSidebarSecondaryInfo} x */
-	D_PlaylistSidebarSecondaryInfo(x) {this.sm.H_("videoOwner",x,this.sm.R_VideoOwner);}
+	D_PlaylistSidebarSecondaryInfo(x) {
+		this.sm.H_("videoOwner", x, this.sm.R_VideoOwner);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_PlaylistSidebarPrimaryInfo} x */
-	R_PlaylistSidebarPrimaryInfo(x) {this.H_("playlistSidebarPrimaryInfoRenderer",x,this.D_PlaylistSidebarPrimaryInfo);}
+	R_PlaylistSidebarPrimaryInfo(x) {
+		this.H_(
+			"playlistSidebarPrimaryInfoRenderer",
+			x,
+			this.D_PlaylistSidebarPrimaryInfo,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").D_PlaylistSidebarPrimaryInfo} x */
-	D_PlaylistSidebarPrimaryInfo(x)
-	{
-		const cf="D_PlaylistSidebarPrimaryInfo";
-		const {thumbnailRenderer,title,stats,menu,navigationEndpoint,badges,description,showMoreText,titleForm,descriptionForm,privacyForm,...y}=this.xm.D_Omit_ThumbnailOverlay(cf,x); this.g(y);
+	D_PlaylistSidebarPrimaryInfo(x) {
+		const cf = "D_PlaylistSidebarPrimaryInfo";
+		const {
+			thumbnailRenderer,
+			title,
+			stats,
+			menu,
+			navigationEndpoint,
+			badges,
+			description,
+			showMoreText,
+			titleForm,
+			descriptionForm,
+			privacyForm,
+			...y
+		} = this.xm.D_Omit_ThumbnailOverlay(cf, x);
+		this.g(y);
 		this.R_PlaylistVideoThumbnail(thumbnailRenderer);
-		this.sm.t(title,this.sm.G_Text);
-		this.sm.z(stats,this.sm.G_Text);
+		this.sm.t(title, this.sm.G_Text);
+		this.sm.z(stats, this.sm.G_Text);
 		this.sm.R_Menu(menu);
 		this.sm.E_Watch(navigationEndpoint);
-		this.sm.tz(badges,this.sm.RMD_Badge);
+		this.sm.tz(badges, this.sm.RMD_Badge);
 		this.tg_base(description);
 		this.sm.G_Text(showMoreText);
-		this.t(titleForm,this.R_InlineForm);
-		this.t(descriptionForm,this.R_InlineForm);
-		this.t(privacyForm,this.R_DropdownFormField);
+		this.t(titleForm, this.R_InlineForm);
+		this.t(descriptionForm, this.R_InlineForm);
+		this.t(privacyForm, this.R_DropdownFormField);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_PlaylistVideoThumbnail} x */
-	R_PlaylistVideoThumbnail(x) {this.H_("playlistVideoThumbnailRenderer",x,this.D_PlaylistVideoThumbnail);}
+	R_PlaylistVideoThumbnail(x) {
+		this.H_("playlistVideoThumbnailRenderer", x, this.D_PlaylistVideoThumbnail);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_PlaylistVideoThumbnail} x */
-	D_PlaylistVideoThumbnail(x)
-	{
-		const cf="D_PlaylistVideoThumbnail";
-		const {thumbnail,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_PlaylistVideoThumbnail(x) {
+		const cf = "D_PlaylistVideoThumbnail";
+		const { thumbnail, trackingParams, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.D_Thumbnail(thumbnail);
 	}
 	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_Label} x */
-	D_Label(x) {this.sm.H_s("label",x,this.sm.a_primitive_str);}
+	D_Label(x) {
+		this.sm.H_s("label", x, this.sm.a_primitive_str);
+	}
 	/** @public @arg {import("../yt_json_types/ghi/group_G.ts").GC_Button} x */
-	GC_Button(x)
-	{
-		const cf="GC_Button";
-		if("changeEngagementPanelVisibilityAction" in x) return this.sm.A_ChangeEngagementPanelVisibility(x);
-		if("continuationCommand" in x) return this.xr.C_Continuation(x);
-		if("openPopupAction" in x) return this.xm.TA_OpenPopup("TA_OpenPopup_Empty",x);
-		if("signalServiceEndpoint" in x) return this.sm.T_SE_Signal(`${cf}.SE_Signal`,x);
-		if("urlEndpoint" in x) return this.xm.E_Url(x);
-		if("commandExecutorCommand" in x) return this.sm.C_CommandExecutor(x);
-		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x);
-		if("getSurveyCommand" in x) return this.sm.C_GetSurvey(x);
-		if("addToPlaylistServiceEndpoint" in x) return this.sm.E_AddToPlaylistService(x);
-		if("showReelsCommentsOverlayCommand" in x) return this.C_ShowReelsCommentsOverlay(x);
-		if("shareEntityServiceEndpoint" in x) return this.sm.E_ShareEntityService(x);
-		if("feedbackEndpoint" in x) return this.sm.E_Feedback(x);
-		x===""; this.codegen_typedef(cf,x);
+	GC_Button(x) {
+		const cf = "GC_Button";
+		if ("changeEngagementPanelVisibilityAction" in x) {
+			return this.sm.A_ChangeEngagementPanelVisibility(x);
+		}
+		if ("continuationCommand" in x) return this.xr.C_Continuation(x);
+		if ("openPopupAction" in x) {
+			return this.xm.TA_OpenPopup("TA_OpenPopup_Empty", x);
+		}
+		if ("signalServiceEndpoint" in x) {
+			return this.sm.T_SE_Signal(`${cf}.SE_Signal`, x);
+		}
+		if ("urlEndpoint" in x) return this.xm.E_Url(x);
+		if ("commandExecutorCommand" in x) return this.sm.C_CommandExecutor(x);
+		if ("createBackstagePostEndpoint" in x) {
+			return this.E_CreateBackstagePost(x);
+		}
+		if ("getSurveyCommand" in x) return this.sm.C_GetSurvey(x);
+		if ("addToPlaylistServiceEndpoint" in x) {
+			return this.sm.E_AddToPlaylistService(x);
+		}
+		if ("showReelsCommentsOverlayCommand" in x) {
+			return this.C_ShowReelsCommentsOverlay(x);
+		}
+		if ("shareEntityServiceEndpoint" in x) {
+			return this.sm.E_ShareEntityService(x);
+		}
+		if ("feedbackEndpoint" in x) return this.sm.E_Feedback(x);
+		x === "";
+		this.codegen_typedef(cf, x);
 	}
 	/** @private @arg {import("../yt_json_types/e/E.ts").E_CreateBackstagePost} x */
-	E_CreateBackstagePost(x) {const [a,b,y]=this.sm.TE_Endpoint_3("E_CreateBackstagePost","createBackstagePostEndpoint",x); this.g(y); this.M_CreateBackstagePost(a); this.DE_CreateBackstagePost(b);}
+	E_CreateBackstagePost(x) {
+		const [a, b, y] = this.sm.TE_Endpoint_3(
+			"E_CreateBackstagePost",
+			"createBackstagePostEndpoint",
+			x,
+		);
+		this.g(y);
+		this.M_CreateBackstagePost(a);
+		this.DE_CreateBackstagePost(b);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_DE.ts").DE_CreateBackstagePost} x */
-	DE_CreateBackstagePost(x) {const {createBackstagePostParams,...y}=this.s("DE_CreateBackstagePost",x); this.g(y);}
+	DE_CreateBackstagePost(x) {
+		const { createBackstagePostParams, ...y } = this.s(
+			"DE_CreateBackstagePost",
+			x,
+		);
+		this.g(y);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").C_ShowReelsCommentsOverlay} x */
-	C_ShowReelsCommentsOverlay(x) {let [a,y]=this.sm.TE_Endpoint_2("C_ShowReelsCommentsOverlay","showReelsCommentsOverlayCommand",x); this.g(y); this.DC_ShowReelsCommentsOverlay(a);}
+	C_ShowReelsCommentsOverlay(x) {
+		let [a, y] = this.sm.TE_Endpoint_2(
+			"C_ShowReelsCommentsOverlay",
+			"showReelsCommentsOverlayCommand",
+			x,
+		);
+		this.g(y);
+		this.DC_ShowReelsCommentsOverlay(a);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").DC_ShowReelsCommentsOverlay} x */
-	DC_ShowReelsCommentsOverlay(x) {this.y("DC_ShowReelsCommentsOverlay","engagementPanel",x,x => this.xm.R_EngagementPanelSectionList(x));}
+	DC_ShowReelsCommentsOverlay(x) {
+		this.y(
+			"DC_ShowReelsCommentsOverlay",
+			"engagementPanel",
+			x,
+			(x) => this.xm.R_EngagementPanelSectionList(x),
+		);
+	}
 	/** @private @arg {import("../yt_json_types/m/M.ts").M_CreateBackstagePost} x */
-	M_CreateBackstagePost(x) {this.T_WCM("M_CreateBackstagePost",x,this.GM_CreateBackstagePost);}
+	M_CreateBackstagePost(x) {
+		this.T_WCM("M_CreateBackstagePost", x, this.GM_CreateBackstagePost);
+	}
 	/** @private @arg {import("../yt_json_types/ghi/group_G.ts").GM_CreateBackstagePost} x */
-	GM_CreateBackstagePost(x) {this.T_GM("GM_CreateBackstagePost",x,x => this.sm.cq(x,"/youtubei/v1/backstage/create_post"));}
+	GM_CreateBackstagePost(x) {
+		this.T_GM(
+			"GM_CreateBackstagePost",
+			x,
+			(x) => this.sm.cq(x, "/youtubei/v1/backstage/create_post"),
+		);
+	}
 	/** @type {string[]} */
-	logged_strings=[];
-	group_sub_noti_toggle_btn=false;
+	logged_strings = [];
+	group_sub_noti_toggle_btn = false;
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_SubscriptionNotificationToggleButton} x */
-	R_SubscriptionNotificationToggleButton(x) {this.H_s("subscriptionNotificationToggleButtonRenderer",x,this.D_SubscriptionNotificationToggleButton);}
+	R_SubscriptionNotificationToggleButton(x) {
+		this.H_s(
+			"subscriptionNotificationToggleButtonRenderer",
+			x,
+			this.D_SubscriptionNotificationToggleButton,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_SubscriptionNotificationToggleButton} x */
-	D_SubscriptionNotificationToggleButton(x)
-	{
-		const cf="D_SubscriptionNotificationToggleButton";
-		const {states,currentStateId,trackingParams,command,targetId,secondaryIcon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(this.group_sub_noti_toggle_btn) console.group(`--- [${cf}] ---`);
-		let ids=this.exact_arr(states[0].stateId,states[1].stateId,states[2].stateId);
-		const n2=2,n3=3,n0=0;
+	D_SubscriptionNotificationToggleButton(x) {
+		const cf = "D_SubscriptionNotificationToggleButton";
+		const {
+			states,
+			currentStateId,
+			trackingParams,
+			command,
+			targetId,
+			secondaryIcon,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		if (this.group_sub_noti_toggle_btn) console.group(`--- [${cf}] ---`);
+		let ids = this.exact_arr(
+			states[0].stateId,
+			states[1].stateId,
+			states[2].stateId,
+		);
+		const n2 = 2, n3 = 3, n0 = 0;
 		/** @type {[n2,n3,n0]} */
-		const ids_e=[n2,n3,n0];
-		let log_states=false;
-		if(!this.eq_keys(ids,ids_e)) log_states=true;
-		this.z(states,(x,i) =>
-		{
-			const {nextStateId,stateId,state,...y}=this.s("ToggleButton.state",x); this.g(y);
-			if(nextStateId!==stateId) debugger;
-			if(log_states) console.log("[button.state_id.%s]",i,stateId);
+		const ids_e = [n2, n3, n0];
+		let log_states = false;
+		if (!this.eq_keys(ids, ids_e)) log_states = true;
+		this.z(states, (x, i) => {
+			const { nextStateId, stateId, state, ...y } = this.s(
+				"ToggleButton.state",
+				x,
+			);
+			this.g(y);
+			if (nextStateId !== stateId) debugger;
+			if (log_states) console.log("[button.state_id.%s]", i, stateId);
 			this.xm.R_Button(state);
 			return stateId;
 		});
-		if(this.group_sub_noti_toggle_btn) console.groupEnd();
-		switch(currentStateId)
-		{
-			default: debugger; break;
-			case 0: case 2: case 3:
+		if (this.group_sub_noti_toggle_btn) console.groupEnd();
+		switch (currentStateId) {
+			default:
+				debugger;
+				break;
+			case 0:
+			case 2:
+			case 3:
 		}
 		this.sm.C_CommandExecutor(command);
-		switch(targetId)
-		{
-			default: if(!this.logged_strings.includes(`${cf}:${targetId}`))
-			{
-				this.logged_strings.push(`${cf}:${targetId}`);
-				console.log("[D_SubscriptionNotificationToggleButton.targetId]",targetId);
-			} break;
-			case "notification-bell": break;
+		switch (targetId) {
+			default:
+				if (!this.logged_strings.includes(`${cf}:${targetId}`)) {
+					this.logged_strings.push(`${cf}:${targetId}`);
+					console.log(
+						"[D_SubscriptionNotificationToggleButton.targetId]",
+						targetId,
+					);
+				}
+				break;
+			case "notification-bell":
+				break;
 		}
-		if(secondaryIcon.iconType!=="EXPAND_MORE") debugger;
+		if (secondaryIcon.iconType !== "EXPAND_MORE") debugger;
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_TwoColumnSearchResults} x */
-	R_TwoColumnSearchResults(x) {this.H_("twoColumnSearchResultsRenderer",x,this.D_TwoColumnSearchResults);}
+	R_TwoColumnSearchResults(x) {
+		this.H_("twoColumnSearchResultsRenderer", x, this.D_TwoColumnSearchResults);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_TwoColumnSearchResults} x */
-	D_TwoColumnSearchResults(x) {this.H_("primaryContents",x,this.R_SectionList);}
+	D_TwoColumnSearchResults(x) {
+		this.H_("primaryContents", x, this.R_SectionList);
+	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_SimpleMenuHeader} x */
-	R_SimpleMenuHeader(x) {this.H_("simpleMenuHeaderRenderer",x,this.D_SimpleMenuHeader);}
+	R_SimpleMenuHeader(x) {
+		this.H_("simpleMenuHeaderRenderer", x, this.D_SimpleMenuHeader);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_SimpleMenuHeader} x */
-	D_SimpleMenuHeader(x)
-	{
-		const cf="D_SimpleMenuHeader";
-		const {title,buttons,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	D_SimpleMenuHeader(x) {
+		const cf = "D_SimpleMenuHeader";
+		const { title, buttons, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
 		this.sm.G_Text(title);
-		this.z(buttons,this.R_Button);
+		this.z(buttons, this.R_Button);
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_MultiPageMenuNotificationSection} x */
-	R_MP_MenuNotificationSection(x) {this.H_("multiPageMenuNotificationSectionRenderer",x,this.D_MP_MenuNotificationSection);}
+	R_MP_MenuNotificationSection(x) {
+		this.H_(
+			"multiPageMenuNotificationSectionRenderer",
+			x,
+			this.D_MP_MenuNotificationSection,
+		);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_MultiPageMenuNotificationSection} x */
-	D_MP_MenuNotificationSection(x)
-	{
-		const cf="D_MP_MenuNotificationSection";
-		const {trackingParams,items,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(items,this.GR_MP_MenuNotificationSection_Item);
+	D_MP_MenuNotificationSection(x) {
+		const cf = "D_MP_MenuNotificationSection";
+		const { trackingParams, items, ...y } = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.z(items, this.GR_MP_MenuNotificationSection_Item);
 	}
 	/** @private @arg {import("../yt_json_types/ghi/group_G.ts").GR_MP_MenuNotificationSection_Item} x */
-	GR_MP_MenuNotificationSection_Item(x)
-	{
-		if("notificationRenderer" in x) return this.R_Notification(x);
-		if("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
+	GR_MP_MenuNotificationSection_Item(x) {
+		if ("notificationRenderer" in x) return this.R_Notification(x);
+		if ("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_Notification} x */
-	R_Notification(x) {this.H_("notificationRenderer",x,this.D_Notification);}
+	R_Notification(x) {
+		this.H_("notificationRenderer", x, this.D_Notification);
+	}
 	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_Notification} x */
-	D_Notification(x)
-	{
-		const cf="D_Notification";
-		const {trackingParams,thumbnail,videoThumbnail,shortMessage,sentTimeText,navigationEndpoint,read,recordClickEndpoint,contextualMenu,notificationId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.z([thumbnail,videoThumbnail],this.sm.D_Thumbnail);
-		this.sm.z([shortMessage,sentTimeText],this.sm.G_Text);
-		if(navigationEndpoint.watchEndpoint) {this.sm.E_Watch(navigationEndpoint);} else {debugger;}
-		this._primitive_of(read,"boolean");
-		if(recordClickEndpoint.recordNotificationInteractionsEndpoint) {this.sm.E_RecordNotificationInteractions(recordClickEndpoint);}
+	D_Notification(x) {
+		const cf = "D_Notification";
+		const {
+			trackingParams,
+			thumbnail,
+			videoThumbnail,
+			shortMessage,
+			sentTimeText,
+			navigationEndpoint,
+			read,
+			recordClickEndpoint,
+			contextualMenu,
+			notificationId,
+			...y
+		} = this.s(cf, x);
+		this.g(y); /*#destructure_done*/
+		this.sm.z([thumbnail, videoThumbnail], this.sm.D_Thumbnail);
+		this.sm.z([shortMessage, sentTimeText], this.sm.G_Text);
+		if (navigationEndpoint.watchEndpoint) this.sm.E_Watch(navigationEndpoint);
+		else debugger;
+		this._primitive_of(read, "boolean");
+		if (recordClickEndpoint.recordNotificationInteractionsEndpoint) {
+			this.sm.E_RecordNotificationInteractions(recordClickEndpoint);
+		}
 		this.sm.R_Menu(contextualMenu);
 		this.sm.parse_number_template(notificationId);
 	}
 }
-export_(exports => {exports.ForService_XMethods=ForService_XMethods;});
-class ForService_CommonMethods extends BaseService
-{
-
+export_((exports) => {
+	exports.ForService_XMethods = ForService_XMethods;
+});
+class ForService_CommonMethods extends BaseService {
 }
-export_(exports => {exports.ForService_CommonMethods=ForService_CommonMethods;});
-export_(exports => exports.__module_loaded__=true);
-if(delete_require)
-{
+export_((exports) => {
+	exports.ForService_CommonMethods = ForService_CommonMethods;
+});
+export_((exports) => exports.__module_loaded__ = true);
+if (delete_require) {
 	delete window.require;
-} else if(reset_require)
-{
-	require=page_require;
+} else if (reset_require) {
+	require = page_require;
 }
