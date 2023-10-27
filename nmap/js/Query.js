@@ -18,7 +18,6 @@ export class Query {
 		}
 		return ["DNS"];
 	}
-	/** @type {import("./types/mod.js").DNS_IN_A} */
 	static A(arg0, arg1, query_class, query_type, arg4) {
 		/** @type {(v:any)=>v is ['IP', string]} */
 		function get_ip_type(v) {
@@ -29,7 +28,6 @@ export class Query {
 		}
 		return ["DNS", ['hostname', arg0], arg1, query_class, query_type, arg4];
 	}
-	/** @arg {import("./types/mod.js").DNS_IN_A_Type} value */
 	static stringify(value, short = false) {
 		switch(value[this.A_ValueEnum.RecordType]){
 			case DNSTypeEnum.A:{
@@ -44,7 +42,6 @@ export class Query {
 			}
 		}
 	}
-	/** @type {import("./types/mod.js").DNS_IN_PTR} */
 	static PTR(arg0, arg1, query_class, query_type, arg4) {
 		return ["DNS", ['hostname', arg0], arg1, query_class, query_type, arg4];
 	}
