@@ -53,10 +53,9 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @arg {import("../yt_json_types/d/group_D.ts").D_ReelPlayerOverlay["reelPlayerNavigationModel"]} t_input_0 */
 	test_wg(t_input_0) {
-		// @ts-expect-error(2345)
 		{
 			const x2 = t_input_0;
-			this.t(x2, this.wg(x2, "xREEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED"));
+			this.t(x2, this.wg(x2, "REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED"));
 		}
 	}
 	/** @private @arg {string} x */
