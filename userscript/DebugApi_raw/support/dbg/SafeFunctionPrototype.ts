@@ -1,6 +1,6 @@
 // SafeFunctionPrototype
 export type SafeFunctionPrototype={
-	apply: (this: () => void,thisArg: unknown,argArray?: unknown) => unknown;
-	bind: (this: () => void,thisArg: unknown,...argArray: unknown[]) => unknown;
-	call: (this: () => void,thisArg: unknown,...argArray: unknown[]) => unknown;
+	apply: (this: (...a: unknown[]) => void,thisArg: unknown,argArray?: unknown) => unknown;
+	bind: (this: (...a: unknown[]) => void,thisArg: unknown,...argArray: unknown[]) => unknown;
+	call: (this: (...a: unknown[]) => void,thisArg: unknown,...argArray: unknown[]) => unknown;
 };

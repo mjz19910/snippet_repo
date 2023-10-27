@@ -6,9 +6,7 @@
 			"ESNext",
 			"DOM",
 		],
-		"types": [
-			"moment",
-		],
+		"types": [],
 		"module": "NodeNext",
 		"moduleResolution": "NodeNext",
 		"outDir": "./dist",
@@ -31,6 +29,7 @@
 		"useUnknownInCatchVariables": true,
 		"resolveJsonModule": true,
 		"allowSyntheticDefaultImports": true,
+		"allowImportingTsExtensions": true,
 	},
 	"ts-node": {
 		"esm": true,
