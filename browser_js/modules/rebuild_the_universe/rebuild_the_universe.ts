@@ -1491,14 +1491,15 @@ class NamedIdGenerator {
 		return state_item;
 	}
 }
-class EventHandlerDispatch {
-	target_obj: {[x: string]: any;};
-	target_name: string;
-	constructor(target_obj: {[x: string]: any;},target_name: string) {
-		this.target_obj=target_obj;
-		this.target_name=target_name;
+class EventHandlerDispatch<T extends string> {
+	constructor(
+		public target_obj: {
+			[U in T]: (event: Event) => void;
+		},
+		public target_name: T
+	) {
 	}
-	handleEvent(event: any) {
+	handleEvent(event: Event) {
 		this.target_obj[this.target_name](event);
 	}
 }
@@ -1529,7 +1530,7 @@ class CompressionStatsCalculator {
 		this.map_keys().length=0;
 		this.map_values().length=0;
 	}
-	calc_compression_stats(arr: any[],win_size: number) {
+	calc_compression_stats(arr: unknown[],win_size: number) {
 		this.reset();
 		for(let i=0;i<arr.length;i++) {
 			if(i+win_size<arr.length) {
@@ -1538,18 +1539,18 @@ class CompressionStatsCalculator {
 		}
 		return to_tuple_arr(this.map_keys(),this.map_values()).filter((e) => e[1]!==void 0);
 	}
-	calc_for_stats_window_size(stats_arr: any[],arr: any[],win_size: number) {
+	calc_for_stats_window_size(stats_arr: unknown[],arr: unknown[],win_size: number) {
 		stats_arr[win_size-1]=this.calc_compression_stats(arr,win_size);
 	}
-	calc_for_stats_index(stats_arr: any[],arr: any[],index: number) {
+	calc_for_stats_index(stats_arr: unknown[],arr: unknown[],index: number) {
 		stats_arr[index]=this.calc_compression_stats(arr,index+1);
 	}
 }
 class BaseCompression {
-	compress_result_state_dual(arg0: CompressDual): {} {
+	compress_result_state_dual(arg0: CompressDual): [true,AnyOrRepeat2<string,number>[]]|[false,AltPair<string,number>[]] {
 		return this.compress_result_dual(arg0.arr,arg0.ret);
 	}
-	compress_result_dual(src: AltPair<string,number>[],dst: AnyOrRepeat2<string,number>[]): {} {
+	compress_result_dual(src: AltPair<string,number>[],dst: AnyOrRepeat2<string,number>[]): [true,AnyOrRepeat2<string,number>[]]|[false,AltPair<string,number>[]] {
 		if(this.did_compress(src,dst)) return [true,dst];
 		return [false,src];
 	}
@@ -1646,7 +1647,7 @@ class MulCompression extends BaseCompression {
 }
 
 declare global {
-	interface Window {
+	export interface Window {
 		MulCompression: typeof MulCompression;
 	}
 }
@@ -1654,7 +1655,7 @@ declare global {
 window.MulCompression=MulCompression;
 abstract class AbstractFire {
 	abstract fire(): void;
-};
+}
 class TimeoutTarget<T> implements AbstractFire {
 	m_once: boolean;
 	m_obj: T;
@@ -1682,10 +1683,10 @@ class IntervalTarget<T> implements AbstractFire {
 	}
 }
 class PromiseTimeoutTarget {
-	m_promise_accept: ((value: any) => void)|null;
-	m_promise_reject: ((reason?: any) => void)|null;
-	m_promise: Promise<any>|null;
-	m_callback: ((value?: any) => void)|null;
+	m_promise_accept: ((value: unknown) => void)|null;
+	m_promise_reject: ((reason?: unknown) => void)|null;
+	m_promise: Promise<unknown>|null;
+	m_callback: ((value?: unknown) => void)|null;
 	m_active: boolean;
 	constructor() {
 		this.m_promise_accept=null;
@@ -1700,12 +1701,12 @@ class PromiseTimeoutTarget {
 		this.m_active=true;
 		return this.m_promise;
 	}
-	promise_executor(accept: (value: any) => void,reject: (reason?: any) => void) {
+	promise_executor(accept: (value: unknown) => void,reject: (reason?: unknown) => void) {
 		this.m_promise_accept=accept;
 		this.m_promise_reject=reject;
 		this.m_callback=this.on_result.bind(this);
 	}
-	on_result(value: any=void 0) {
+	on_result(value: unknown=void 0) {
 		if(!this.m_promise_accept) throw new Error("Missing promise accept handler");
 		this.m_promise_accept(value);
 		this.reset();
@@ -1790,9 +1791,9 @@ class IntervalIdNode extends BaseNode {
 	}
 }
 class IntervalTargetFn {
-	m_callback: any;
+	m_callback: CallableFunction;
 	timeout: number;
-	constructor(callback: any,timeout: number) {
+	constructor(callback: CallableFunction,timeout: number) {
 		this.m_callback=callback;
 		this.timeout=timeout;
 	}
@@ -1861,7 +1862,7 @@ class IntervalNode extends BaseNode {
 }
 
 interface AsyncFire {
-	wait(): Promise<any>;
+	wait(): Promise<unknown>;
 	fire(): void;
 	destroy(): void;
 }
@@ -1879,7 +1880,7 @@ class AsyncTimeoutNode extends BaseNode {
 	timeout() {
 		return this.m_timeout;
 	}
-	set_target(target: any) {
+	set_target(target: AsyncFire|null) {
 		this.m_target=target;
 	}
 	start(target: AsyncFire|null) {
@@ -1945,7 +1946,7 @@ class AsyncNodeRoot extends BaseNode {
 		}
 	}
 }
-class RatioOptions {
+class _RatioOptions {
 	size: number;
 	history_size: number;
 	time_start: number;
@@ -1970,7 +1971,7 @@ class AverageRatio {
 	gen_count: number;
 	history_size: number;
 	// @AverageRatio
-	constructor(type: string,options: RatioOptions) {
+	constructor(type: string,options: _RatioOptions) {
 		this.type=type;
 		this.history=[];
 		this.count=0;
@@ -2077,12 +2078,12 @@ declare global {
 		timeplayed: number;
 		secondinterval?: ReturnType<typeof window.setInterval>|undefined;
 		doc: Document;
-		rounding(v: number,x: any,y: any): string;
+		rounding(v: number,x: unknown,y: unknown): string;
 		totalAtome: number;
 		atomsaccu: number;
 		calcPres(): number;
 		lightreset(): void;
-		specialclick(that: any): void;
+		specialclick(that: unknown): void;
 		__testing__: false;
 		bonusAll(): void;
 		allspec: SpecType[];
@@ -2398,7 +2399,7 @@ class DataLoader {
 class AsyncAutoBuy {
 	parent: AutoBuy;
 	unit_upgradeable_trigger: number;
-	main_running: any;
+	main_running: unknown;
 	fast_unit_running: boolean;
 	constructor(parent: AutoBuy) {
 		this.parent=parent;
@@ -2519,7 +2520,7 @@ class AsyncAutoBuy {
 }
 
 declare global {
-	interface Window {
+	export interface Window {
 		mute(): void;
 	}
 }
@@ -2535,7 +2536,7 @@ declare global {
 }
 
 class AutoBuy {
-	debug_arr: any;
+	debug_arr: string[];
 	root_node: AsyncNodeRoot;
 	with_async: AsyncAutoBuy;
 	iter_count: number;
@@ -2546,13 +2547,13 @@ class AutoBuy {
 	has_real_time: boolean;
 	local_data_loader: DataLoader;
 	state: AutoBuyState;
-	debug: any;
+	debug: unknown;
 	compressor: MulCompression;
 	epoch_start_time: number;
-	original_map: Map<any,any>;
-	dom_map: Map<any,any>;
+	original_map: Map<unknown,unknown>;
+	dom_map: Map<unknown,unknown>;
 	flags: Set<unknown>;
-	timeout_arr: any;
+	timeout_arr: unknown;
 	state_history_arr_max_len: number;
 	last_value: number;
 	pre_total: number;
@@ -2604,19 +2605,19 @@ class AutoBuy {
 		}
 		log_if(log_level,format_str,...args);
 	}
-	iterate_symbols(sym_indexed_this: {[x: string]: any;},val: {sym: any;}) {
-		if(!sym_indexed_this[val.sym]) return;
-		const obj=sym_indexed_this[val.sym];
-		if(!obj.split) return;
-		const str=sym_indexed_this[val.sym];
-		const arr=str.split(",");
+	iterate_symbols(val: {sym: symbol;}) {
+		const v=this as unknown as {[x: symbol]: string|Record<"_",never>;};
+		if(!v[val.sym]) return;
+		const obj=v[val.sym];
+		if(typeof obj!="string") return;
+		const arr=obj.split(",");
 		const trimmed=arr.map((e: string) => e.trim());
 		this.debug_arr.push(...trimmed);
 	}
 	check_for_symbols() {
 		for(let i=0;i<debug_id_syms.length;i++) {
 			const val=debug_id_syms[i].deref();
-			if(val) this.iterate_symbols(this,val);
+			if(val) this.iterate_symbols(val);
 		}
 	}
 	pre_init() {

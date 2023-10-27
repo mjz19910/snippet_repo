@@ -2400,7 +2400,7 @@ class AutoBuyImplR {
 		log_if_impl_r(log_level, format_str, ...args);
 	}
 	/** @arg {{ sym: any; }} val */
-	symbols_iter(val) {
+	iterate_symbols(val) {
 		if (!this[val.sym]) return;
 		const obj = this[val.sym];
 		if (!obj.split) return;
@@ -2412,7 +2412,7 @@ class AutoBuyImplR {
 	check_for_symbols() {
 		for (let i = 0; i < debug_id_syms.length; i++) {
 			const val = debug_id_syms[i].deref();
-			if (val) this.symbols_iter(val);
+			if (val) this.iterate_symbols(val);
 		}
 	}
 	pre_init() {
