@@ -23,7 +23,7 @@ function _dfw_s(a, b) {
 const a = _dfw_s;
 
 function my() {
-	/** @arg {(arg0: any, arg1: any) => string} x * @arg {any} a * @arg {any} b @arg {number} c */
+	/** @arg {(arg0: unknown, arg1: unknown) => string} x * @arg {unknown} a * @arg {unknown} b @arg {number} c */
 	function zy(x, a, b, c) {
 		const z = make_1e100(x(a, b), c);
 		console.log(z);

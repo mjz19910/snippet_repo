@@ -1067,7 +1067,7 @@ export type RS_VE37414_Shorts={
 export type R_SponsorCommentBadge={sponsorCommentBadgeRenderer: D_SponsorCommentBadge;};
 export type R_BasicColorPaletteData={basicColorPaletteData: D_BasicColorPaletteData;};
 export type R_AuthorCommentBadge={authorCommentBadgeRenderer: D_AuthorCommentBadge;};
-export type Ret_w_dss=[any,any];
+export type Ret_w_dss=[unknown,unknown];
 
 export type RSB_EditPlaylist={
 	responseContext: RC_ResponseContext;

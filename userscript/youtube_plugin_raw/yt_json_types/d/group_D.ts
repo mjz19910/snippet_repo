@@ -2625,7 +2625,7 @@ export type D_ThumbnailOverlayResumePlayback={percentDurationWatched: Percent;};
 export type Percent=[
 	10|100,
 ][number];
-export type tz<T extends (any[]|undefined)>=NonNullable<T>[number];
+export type tz<T extends (unknown[]|undefined)>=NonNullable<T>[number];
 export type D_ThumbnailOverlaySidePanel_iconTypes=[
 	"PLAY_ALL",
 	"PLAYLISTS",
@@ -2962,12 +2962,12 @@ export type D_Button_DoOmit<T_Btn extends D_Button,U extends T_DistributedKeyof<
 export type D_Button_Ex_1_Omit_Size=D_Button_DoOmit<D_Button,"size"|"style"|"isDisabled"|"trackingParams"|"command"|"text">;
 //#endregion
 //#region Extract & Exclude from data
-export type D_GuideEntry_WithEntryData=Extract<D_GuideEntry,{entryData: any;}>;
-export type D_GuideEntry_WithNavEP=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithEntryData>,{navigationEndpoint: any;}>;
-export type D_GuideEntry_WithPrimary=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithNavEP>,{isPrimary: any;}>;
-export type D_GuideEntry_With_ServiceEndpoint=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithPrimary>,{serviceEndpoint: any;}>;
+export type D_GuideEntry_WithEntryData=Extract<D_GuideEntry,{entryData: unknown;}>;
+export type D_GuideEntry_WithNavEP=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithEntryData>,{navigationEndpoint: unknown;}>;
+export type D_GuideEntry_WithPrimary=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithNavEP>,{isPrimary: unknown;}>;
+export type D_GuideEntry_With_ServiceEndpoint=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithPrimary>,{serviceEndpoint: unknown;}>;
 export type D_GuideEntry_IconType_Obj={
-	WithNavEP: Extract<D_GuideEntry_WithNavEP,{icon: any;}>['icon']['iconType'][];
+	WithNavEP: Extract<D_GuideEntry_WithNavEP,{icon: unknown;}>['icon']['iconType'][];
 	WithIcon: T_ExtractIconType<D_GuideEntry_With_ServiceEndpoint>[];
 };
 //#endregion
@@ -3926,14 +3926,14 @@ export type D_Button_style=
 export type W_Some_r=Some_A<W_Some_s>;
 export type W_Some_f=T_Str_Some<W_Some_s>;
 export type W_Some_e="https://www.youtube.com/channel/UC";
-export type Some_t1<S extends string>=[T_Split<S,""> extends [any,...infer L]? L["length"]:0];
+export type Some_t1<S extends string>=[T_Split<S,""> extends [unknown,...infer L]? L["length"]:0];
 export type Some_t<T extends string>=T extends `${infer S}${infer X}`? [
-	T_Split<S,""> extends [any,...infer L]? L["length"]:0,
+	T_Split<S,""> extends [unknown,...infer L]? L["length"]:0,
 	X,
 ]:never;
-export type Some_A<T extends string,A extends any[]=[]>=
+export type Some_A<T extends string,A extends unknown[]=[]>=
 	T extends `${infer S}${infer E}`?
-	Some_t<T> extends infer V extends [any,any]?
+	Some_t<T> extends infer V extends [unknown,unknown]?
 	Some_A<E,[...A,[S,V[0]]]>
 	:A
 	:A;
@@ -4740,7 +4740,7 @@ export type DU_UrlType=NonNullable<Ret_ParserService_GetUrlType>;
 //#region TargetId
 export type DU_TargetId_ShoppingPanel_EntryPoint=`shopping_panel_for_entry_point_${"5"|"22"}`;
 export type DU_TargetId=
-	|Extract<D_Menu,{targetId: any;}>["targetId"]
+	|Extract<D_Menu,{targetId: unknown;}>["targetId"]
 	|A_WatchNextContinuation['targetId']
 	|AD_AppendContinuationItems['targetId']
 	|AD_UpdateEngagementPanel['targetId']

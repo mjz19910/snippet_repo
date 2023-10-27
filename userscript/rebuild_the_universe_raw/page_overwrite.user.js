@@ -26,7 +26,7 @@ function use_jquery_overwrite(value) {
 	if(typeof value!="function") return;
 	let res=value("head");
 	let r_proto=Object.getPrototypeOf(res);
-	r_proto.lazyload=function(/** @type {any[]} */ ..._a) {};
+	r_proto.lazyload=function(/** @type {unknown[]} */ ..._a) {};
 }
 
 function set_jq_proxy_overwrite() {

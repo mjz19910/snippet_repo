@@ -40,7 +40,7 @@
 	/** @typedef {_TimerTagSingle|_TimerTagRepeating} TimerTagValues */
 	/** @typedef {TimerTagValues["value"]} TimerTag */
 	class TimerState {
-		/** @arg {TimerTag} tag @arg {number} id @arg {boolean} is_repeating @arg {TimerHandler} target_fn @arg {any} target_args @arg {number} timeout */
+		/** @arg {TimerTag} tag @arg {number} id @arg {boolean} is_repeating @arg {TimerHandler} target_fn @arg {unknown} target_args @arg {number} timeout */
 		constructor(id, tag, is_repeating, target_fn, target_args, timeout) {
 			this.id = id;
 			this.active = true;
@@ -56,7 +56,7 @@
 		}
 	}
 	class ActiveTimerState {
-		/** @arg {TimerTag} type @arg {number} id @arg {boolean} is_repeating @arg {Function} target_fn @arg {any} target_args @arg {number} timeout */
+		/** @arg {TimerTag} type @arg {number} id @arg {boolean} is_repeating @arg {Function} target_fn @arg {unknown} target_args @arg {number} timeout */
 		constructor(id, type, is_repeating, target_fn, target_args, timeout) {
 			this.id = id;
 			this.active = true;
@@ -73,20 +73,20 @@
 	}
 	function timer_nop() {}
 	class PromiseExecutorHandle {
-		/** @arg {any} accept @arg {any} reject */
+		/** @arg {unknown} accept @arg {unknown} reject */
 		constructor(accept, reject) {
 			this.m_closed = false;
 			this.m_accept = accept;
 			this.m_reject = reject;
 		}
-		/** @arg {any} value */
+		/** @arg {unknown} value */
 		accept(value) {
 			if (this.m_closed) throw new Error("accept called on closed handle");
 			const accept = this.m_accept;
 			accept(value);
 			this.close();
 		}
-		/** @arg {any} error */
+		/** @arg {unknown} error */
 		reject(error) {
 			if (this.m_closed) throw new Error("accept called on closed handle");
 			const reject = this.m_reject;
@@ -136,7 +136,7 @@
 		/** @type {import("./constant_types.ts").ReplyClearRepeatingT} */
 		repeating = ReplyClearRepeating;
 		/** @type {import("./constant_types.ts").ReplyClearAnyT} */
-		any = ReplyClearAny;
+		unknown = ReplyClearAny;
 	}
 	class ReplySetTypes {
 		/** @type {import("./constant_types.ts").ReplySetSingleT} */
@@ -182,7 +182,7 @@
 		/** @type {import("./constant_types.ts").TimeoutClearRepeatingT} */
 		repeating = TimeoutClearRepeating;
 		/** @type {import("./constant_types.ts").TimeoutClearAnyT} */
-		any = TimeoutClearAny;
+		unknown = TimeoutClearAny;
 	}
 	class WorkerReplyTimerFireTypes {
 		/** @type {import("./constant_types.ts").TimeoutSingleReplyT} */
@@ -360,7 +360,7 @@
 			if (!value) throw new Error("Invalid");
 			return value;
 		}
-		/** @arg {1|2} tag @arg {any} target_fn @arg {number} timeout @arg {any} target_args */
+		/** @arg {1|2} tag @arg {unknown} target_fn @arg {number} timeout @arg {unknown} target_args */
 		set(tag, target_fn, timeout, target_args) {
 			const remote_id = this.id_generator.next();
 			let is_repeating = false;
@@ -634,7 +634,7 @@
 		type = ReplyFromWorker;
 		/** @readonly @type {typeof TimeoutMessageReady|typeof TimeoutSetSingle|typeof TimeoutSetRepeating|typeof TimeoutClearSingle|typeof TimeoutClearRepeating|typeof TimeoutSetTypes} */
 		source_type = TimeoutSetTypes;
-		/** @type {[-1]|[typeof TimeoutMessageReady]|[typeof TimeoutSetSingle,number|undefined,number,number]|[typeof TimeoutSetRepeating,number|undefined,number,number]|[typeof TimeoutClearSingle,number,any]|[typeof TimeoutClearRepeating,number,any]|[typeof TimeoutSetTypes]} */
+		/** @type {[-1]|[typeof TimeoutMessageReady]|[typeof TimeoutSetSingle,number|undefined,number,number]|[typeof TimeoutSetRepeating,number|undefined,number,number]|[typeof TimeoutClearSingle,number,unknown]|[typeof TimeoutClearRepeating,number,unknown]|[typeof TimeoutSetTypes]} */
 		args = [-1];
 	}
 	class ReplyToWorkerMsg {
@@ -659,7 +659,7 @@
 		for_worker_state = true;
 		worker_types = new RemoteWorkerTypes();
 	}
-	/** @template T @template {abstract new (...args: any)=>any} U @arg {T} _obj @arg {U} _fn @returns {asserts _obj is InstanceType<U>} */
+	/** @template T @template {abstract new (...args: unknown)=>unknown} U @arg {T} _obj @arg {U} _fn @returns {asserts _obj is InstanceType<U>} */
 	function assert_as_instance(_obj, _fn) {}
 	/** @extends {EmptyStateMessage} */
 	class WorkerStateMessage {
@@ -825,7 +825,7 @@
 					break;
 			}
 		}
-		/** @arg {any} handle */
+		/** @arg {unknown} handle */
 		set_executor_handle(handle) {
 			this.executor_handle = handle;
 		}
@@ -971,19 +971,19 @@
 		}
 		/** @returns {WorkerState} */
 		static get_global_state() {
-			/** @type {any} */
+			/** @type {unknown} */
 			const any_window = window;
 			return any_window[this.global_state_key];
 		}
 		/** @arg {WorkerState} worker_state_value */
 		static set_global_state(worker_state_value) {
-			/** @type {any} */
+			/** @type {unknown} */
 			const any_window = window;
 			this.maybe_delete_old_global_state_value(worker_state_value);
 			any_window[this.global_state_key] = worker_state_value;
 		}
 		static delete_global_state() {
-			/** @type {any} */
+			/** @type {unknown} */
 			const any_window = window;
 			delete any_window[this.global_state_key];
 		}
@@ -1017,7 +1017,7 @@
 		executor_reject,
 	) {
 		let failed = false;
-		/** @type {any} */
+		/** @type {unknown} */
 		const any_global = globalThis;
 		if (any_global.remote_worker_state) {
 			typedPostMessage({ type: WorkerDestroyType });
@@ -1071,7 +1071,7 @@
 		);
 		worker_state.init();
 		const setTimeout_global = setTimeout;
-		/** @arg {TimerHandler} handler @arg {number|undefined} timeout @arg {any[]} target_args */
+		/** @arg {TimerHandler} handler @arg {number|undefined} timeout @arg {unknown[]} target_args */
 		function remoteSetTimeout(handler, timeout, ...target_args) {
 			if (!worker_state) {
 				self.setTimeout = setTimeout_global;
@@ -1097,7 +1097,7 @@
 			if (id) worker_state.timer.clear(TIMER_SINGLE, id);
 		}
 		const setInterval_global = setInterval;
-		/** @arg {TimerHandler} handler @arg {any[]} target_args */
+		/** @arg {TimerHandler} handler @arg {unknown[]} target_args */
 		function remoteSetInterval(handler, timeout = 0, ...target_args) {
 			if (!worker_state) {
 				self.setInterval = setInterval_global;
@@ -1128,9 +1128,9 @@
 			clearTimeout,
 			clearInterval,
 		};
-		/** @arg {{setTimeout: any,setInterval: any,clearTimeout: any,clearInterval: any}} obj */
+		/** @arg {{setTimeout: unknown,setInterval: unknown,clearTimeout: unknown,clearInterval: unknown}} obj */
 		function connect_local_to_remote_timer_api(obj) {
-			/** @type {any} */
+			/** @type {unknown} */
 			const any_window = window;
 			/** @type {keyof typeof obj} */
 			let key;
@@ -1173,7 +1173,7 @@
 				TimeoutSetTypes: TimeoutSetTypes,
 			});
 		}
-		/** @type {any[]} */
+		/** @type {unknown[]} */
 		const cached_messages = [];
 		/** @template T @arg {T} value @returns {asserts value is NonNullable<T>} */
 		function assert_non_nullable_object(value) {
@@ -1418,14 +1418,14 @@
 				);
 				return obj.local_id;
 			}
-			// Please verify your type tag is valid before changing any state, or you might end up in an invalid state
+			// Please verify your type tag is valid before changing unknown state, or you might end up in an invalid state
 			/** @arg {1|2} tag */
 			verify_tag(tag) {
 				if (!this.validate_tag(tag)) {
 					throw new Error("tag verification failed in RemoteTimer");
 				}
 			}
-			/** @arg {_RemoteTimerState} state @arg {any} remote_id */
+			/** @arg {_RemoteTimerState} state @arg {unknown} remote_id */
 			verify_state(state, remote_id) {
 				if (!this.validate_state(state)) {
 					console.info("Removed invalid local_state");
@@ -1456,7 +1456,7 @@
 			validate_state(state) {
 				return this.validate_tag(state.type);
 			}
-			/** @arg {any} remote_id */
+			/** @arg {unknown} remote_id */
 			clear(remote_id) {
 				if (!this.m_remote_id_to_state_map.has(remote_id)) return null;
 				const state = this.m_remote_id_to_state_map.get(remote_id);
@@ -1509,7 +1509,7 @@
 			}
 		}
 		const remote_worker_state = new RemoteWorkerState();
-		/** @type {any} */
+		/** @type {unknown} */
 		const any_global = globalThis;
 		any_global.remote_worker_state = remote_worker_state;
 		remote_worker_state.set_timer(new RemoteTimer());

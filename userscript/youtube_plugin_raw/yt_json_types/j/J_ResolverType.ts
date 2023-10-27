@@ -9,12 +9,12 @@ export type J_ResolverType_Ready={
 	state: "ready";
 	promise: Promise<void>;
 	resolve(value: void|PromiseLike<void>): void;
-	reject(reason?: any): void;
+	reject(reason?: unknown): void;
 };
 export type J_ResolverType_Init={
 	state: "init";
 	promise: Promise<void>|null;
 	resolve: ((value: void|PromiseLike<void>) => void)|null;
-	reject: ((reason?: any) => void)|null;
+	reject: ((reason?: unknown) => void)|null;
 	get as_ready(): J_ResolverType_Ready;
 };

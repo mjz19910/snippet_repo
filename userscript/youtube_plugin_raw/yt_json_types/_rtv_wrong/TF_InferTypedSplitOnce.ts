@@ -6,10 +6,10 @@ import {T_SplitOnce_NB_1} from "./T_SplitOnce_NB_1.ts";
 export function TF_InferTypedSplitOnce<
 	WA extends string,S extends string,D extends string
 >(WA: WA,S: S,_D: D) {
-	function chk(_a: any,_b: string) {
+	function chk(_a: unknown,_b: string) {
 		return true;
 	}
-	function chk_w(_a: any,_b: WA|"") {
+	function chk_w(_a: unknown,_b: WA|"") {
 		return true;
 	}
 	function get_parts_0<D extends string,I extends S extends `${infer Begin}${D}${string}`? Begin:never>(_a: S,d:D):I {

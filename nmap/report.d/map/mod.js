@@ -1181,7 +1181,7 @@ export const rev_dig_arr = [
 			21310,
 			DNSClassEnum.IN,
 			DNSTypeEnum.PTR,
-			DNS("any-in-2501.1e100.net."),
+			DNS("unknown-in-2501.1e100.net."),
 		),
 	],
 ];

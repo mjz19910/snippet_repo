@@ -1,23 +1,23 @@
 // deno-lint-ignore-file
-/** @type {any} */
+/** @type {unknown} */
 let t_=new EventTarget;
 t_;
 /** @type {Window&typeof globalThis} */
 let window=t_;
-/** @type {any} */
+/** @type {unknown} */
 let na={};
 navigator=na;
 {
 	class Storage {
 		map=new Map;
-		/** @type {{ [x: string]: any; }} */
+		/** @type {{ [x: string]: unknown; }} */
 		index_arr=[];
 		/** @arg {string} str */
 		getItem(str) {return this.map.get(str);}
 		get length() {return this.map.size;}
-		/** @arg {any} key @arg {any} value */
+		/** @arg {unknown} key @arg {unknown} value */
 		setItem(key,value) {this.map.set(key,value);}
-		/** @arg {any} key */
+		/** @arg {unknown} key */
 		removeItem(key) {this.map.delete(key);}
 		/** @arg {string|number} index */
 		key(index) {	return this.index_arr[index];};
@@ -26,7 +26,7 @@ navigator=na;
 	window.localStorage=new Storage;
 }
 {
-	/** @type {{[U in keyof any]:any}} */
+	/** @type {{[U in keyof unknown]:unknown}} */
 	let window=t_;
 	class HTMLElement {}
 	window.HTMLElement=HTMLElement;
@@ -45,9 +45,9 @@ navigator=na;
 		get style() {return {};}
 		/** @arg {string} tn */
 		_setup(tn) {this.tagName=tn;}
-		/** @type {any[]} */
+		/** @type {unknown[]} */
 		children=[];
-		/** @arg {any} other_ele */
+		/** @arg {unknown} other_ele */
 		append(other_ele) {this.children.push(other_ele);}
 	}
 	window.document=new Document;
@@ -77,7 +77,7 @@ navigator=na;
 }
 let r_window=window; r_window;
 {
-	/** @type {{[U in keyof any]:any}} */
+	/** @type {{[U in keyof unknown]:unknown}} */
 	let window=t_;
 	class AudioNode {
 		/** @type {[AudioNode,number?,number?][]} */

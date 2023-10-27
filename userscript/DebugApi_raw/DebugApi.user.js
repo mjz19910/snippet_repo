@@ -81,7 +81,7 @@ function add_object_with_name(name, object) {
 export_((exports) => {
 	exports.add_object_with_name = add_object_with_name;
 });
-/** @template {{}} U @template {new (...args: any) => U} T @arg {T} constructor_ @arg {U} object */
+/** @template {{}} U @template {new (...args: unknown) => U} T @arg {T} constructor_ @arg {U} object */
 function add_object(constructor_, object) {
 	const name = constructor_.name;
 	/** @type {import("./support/dbg/MetaTagForConstructor.ts").MetaTagForConstructor} */
@@ -2199,10 +2199,10 @@ class ApiProxyManager {
 	constructor(event_handler) {
 		this.event_handler = event_handler;
 	}
-	/** @template {(...x:any[])=>any} T @arg {string} message_to_send @arg {T} function_value @returns {T} */
+	/** @template {(...x:unknown[])=>unknown} T @arg {string} message_to_send @arg {T} function_value @returns {T} */
 	create_proxy_for_function(message_to_send, function_value) {
 		const t = this.event_handler;
-		/** @arg {[target: T, thisArg: any, argArray: any[]]} post_message_proxy_spread */
+		/** @arg {[target: T, thisArg: unknown, argArray: unknown[]]} post_message_proxy_spread */
 		function do_apply(...post_message_proxy_spread) {
 			t.dispatchEvent({
 				type: message_to_send,
@@ -2552,7 +2552,7 @@ class AddEventListenerExtension {
 	target_prototype = EventTarget.prototype;
 	/** @private @type {Window[]} */
 	window_list = [window];
-	/** @private @type {null|{v:any}} */
+	/** @private @type {null|{v:unknown}} */
 	failed_obj = null;
 	/** @private @type {WeakRef<{}>[]} */
 	object_ids = [];
@@ -2698,7 +2698,7 @@ class AddEventListenerExtension {
 	args_iter_on_function(real_value, key, val) {
 		this.convert_to_id_key(real_value, key, val, "function");
 	}
-	/** @private @arg {[any, any, any[]]} list */
+	/** @private @arg {[unknown, unknown, unknown[]]} list */
 	add_to_call_list(list) {
 		if (!api_debug_enabled) return;
 		if (this.failed_obj) return;
@@ -2729,7 +2729,7 @@ class AddEventListenerExtension {
 		const t = this;
 		switch (target) {
 			case "addEventListener":
-				/** @arg {[string,EventListenerOrEventListenerObject,any?]} args */
+				/** @arg {[string,EventListenerOrEventListenerObject,unknown?]} args */
 				t.target_prototype[target] = function (...args) {
 					if (api_debug_enabled) t.add_to_call_list([target, this, args]);
 					const original_function = args[1];
@@ -2758,7 +2758,7 @@ class AddEventListenerExtension {
 				throw new Error("1");
 		}
 	}
-	/** @typedef {EventListenerOrEventListenerObject} InterceptFuncType @typedef {[string, InterceptFuncType, any?]} InterceptThis @arg {InterceptThis[1]} arg_function @arg {InterceptThis} arg_this @arg {[evt: Event]} args @private */
+	/** @typedef {EventListenerOrEventListenerObject} InterceptFuncType @typedef {[string, InterceptFuncType, unknown?]} InterceptThis @arg {InterceptThis[1]} arg_function @arg {InterceptThis} arg_this @arg {[evt: Event]} args @private */
 	eventFireInterceptor(arg_function, arg_this, args) {
 		if (args[0] instanceof MessageEvent) {
 			/** @type {MessageEvent<unknown>} */
@@ -2812,7 +2812,7 @@ class IterExtensions {
 			exports.IterExtensions = this;
 		});
 	}
-	/** @template T @arg {T} x @returns {T extends import("./support/dbg/IteratorPrototype.js").IteratorPrototype? Object:T extends import("./support/dbg/IterableIteratorPrototype.ts").IterableIteratorPrototype? import("./support/dbg/IteratorPrototype.js").IteratorPrototype:T extends IterableIterator<any>? import("./support/dbg/IterableIteratorPrototype.ts").IterableIteratorPrototype:Object} */
+	/** @template T @arg {T} x @returns {T extends import("./support/dbg/IteratorPrototype.js").IteratorPrototype? Object:T extends import("./support/dbg/IterableIteratorPrototype.ts").IterableIteratorPrototype? import("./support/dbg/IteratorPrototype.js").IteratorPrototype:T extends IterableIterator<unknown>? import("./support/dbg/IterableIteratorPrototype.ts").IterableIteratorPrototype:Object} */
 	static get_prototype(x) {
 		return Object.getPrototypeOf(x);
 	}
@@ -2821,9 +2821,9 @@ class IterExtensions {
 		const iterable_map_iterator_values = iterable_map_value.values();
 		this.init_tree(iterable_map_iterator_values);
 	}
-	/** @arg {IterableIterator<any>} iterable_map_iterator_values */
+	/** @arg {IterableIterator<unknown>} iterable_map_iterator_values */
 	static init_tree(iterable_map_iterator_values) {
-		console.log("[is] [IterableIterator<any>]", iterable_map_iterator_values);
+		console.log("[is] [IterableIterator<unknown>]", iterable_map_iterator_values);
 		const iterable_map_iterator_prototype = this.get_prototype(
 			iterable_map_iterator_values,
 		);
@@ -2989,7 +2989,7 @@ class CompressRepeated {
 		if (this.did_decompress(src, dst)) return [true, dst];
 		return [false, dst];
 	}
-	/** @arg {string|any[]} arr */
+	/** @arg {string|unknown[]} arr */
 	static can_compress_items(arr) {
 		for (let i = 0; i < arr.length; i++) {
 			const item = arr[i];
@@ -3076,7 +3076,7 @@ export_((exports) => {
 	exports.to_tuple_arr = to_tuple_arr;
 });
 
-/** @arg {any[]} arr @arg {number} index @arg {number} value */
+/** @arg {unknown[]} arr @arg {number} index @arg {number} value */
 function range_matches(arr, value, index) {
 	for (let i = index; i < arr.length; i++) if (arr[i] !== value) return false;
 	return true;
@@ -3156,7 +3156,7 @@ class CompressState extends CompressStateBase {
 class MulCompression extends BaseCompression {
 	constructor() {
 		super();
-		/** @type {any[]} */
+		/** @type {unknown[]} */
 		this.compression_stats = [];
 	}
 	/** @arg {{i:number,arr:string[],ret:string[]}} state @arg {string} item */
@@ -3254,7 +3254,7 @@ class DisabledMulCompression extends MulCompression {
 		state.i += off - 1;
 		return true;
 	}
-	/** @template {InstanceType<U>} T @template {new (...args: any) => any} U @arg {U} _ @arg {T[]} arr @arg {import("./support/dbg/AnyOrRepeat_0.ts").AnyOrRepeat_0<T>[]} ret @returns {[true, import("./support/dbg/AnyOrRepeat_0.ts").AnyOrRepeat_0<T>[]]|[false,T[]]} */
+	/** @template {InstanceType<U>} T @template {new (...args: unknown) => unknown} U @arg {U} _ @arg {T[]} arr @arg {import("./support/dbg/AnyOrRepeat_0.ts").AnyOrRepeat_0<T>[]} ret @returns {[true, import("./support/dbg/AnyOrRepeat_0.ts").AnyOrRepeat_0<T>[]]|[false,T[]]} */
 	compress_result_T(_, arr, ret) {
 		if (this.did_compress(arr, ret)) return [true, ret];
 		return [false, arr];
@@ -3323,7 +3323,7 @@ function not_null(value) {
 }
 add_function(not_null);
 
-/** @template {any[]} T @template U */
+/** @template {unknown[]} T @template U */
 class VoidCallback {
 	/** @arg {(...arg0:T)=>U} callback @arg {T} params */
 	constructor(callback, params) {
@@ -3492,33 +3492,33 @@ function run_modules_plugin() {
 	const function_prototype_apply = function_prototype.apply;
 	const function_prototype_bind = function_prototype.bind;
 
-	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	/** @type {(thisArg:Function, applyArgs:[thisArg:unknown, ...callArgs:unknown[]])=>unknown} */
 	const bound_call_call = function_prototype_call.bind(function_prototype_call);
-	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	/** @type {(thisArg:Function, applyArgs:[thisArg:unknown, ...callArgs:unknown[]])=>unknown} */
 	const bound_call_apply = function_prototype_call.bind(
 		function_prototype_apply,
 	);
-	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	/** @type {(thisArg:Function, applyArgs:[thisArg:unknown, ...callArgs:unknown[]])=>unknown} */
 	const bound_call_bind = function_prototype_call.bind(function_prototype_bind);
 
-	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	/** @type {(thisArg:Function, applyArgs:[thisArg:unknown, ...callArgs:unknown[]])=>unknown} */
 	const bound_bind_call = function_prototype_bind.bind(function_prototype_call);
-	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	/** @type {(thisArg:Function, applyArgs:[thisArg:unknown, ...callArgs:unknown[]])=>unknown} */
 	const bound_bind_apply = function_prototype_bind.bind(
 		function_prototype_apply,
 	);
-	/** @type {(thisArg:Function, bindThisArg:any, ...argArray:[thisArg:any, ...callArgs:any[]])=>any} */
+	/** @type {(thisArg:Function, bindThisArg:unknown, ...argArray:[thisArg:unknown, ...callArgs:unknown[]])=>unknown} */
 	const bound_bind_bind = function_prototype_bind.bind(function_prototype_bind);
 
-	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	/** @type {(thisArg:Function, applyArgs:[thisArg:unknown, ...callArgs:unknown[]])=>unknown} */
 	const bound_apply_call = function_prototype_apply.bind(
 		function_prototype_call,
 	);
-	/** @type {(thisArg:Function, applyArgs:[thisArg:any, argArray?:any])=>any} */
+	/** @type {(thisArg:Function, applyArgs:[thisArg:unknown, argArray?:unknown])=>unknown} */
 	const bound_apply_apply = function_prototype_apply.bind(
 		function_prototype_apply,
 	);
-	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...bindArgs:any[]])=>(...args:any[])=>any}*/
+	/** @type {(thisArg:Function, applyArgs:[thisArg:unknown, ...bindArgs:unknown[]])=>(...args:unknown[])=>unknown}*/
 	const bound_apply_bind = function_prototype_apply.bind(
 		function_prototype_bind,
 	);
@@ -3546,7 +3546,7 @@ function run_modules_plugin() {
 	];
 	console.log(bound_function_prototype_vec);
 	Function.prototype.call = function_prototype_call_inject;
-	/** @this {Function} @arg {any} thisArg @arg {any[]} argArray */
+	/** @this {Function} @arg {unknown} thisArg @arg {unknown[]} argArray */
 	function function_prototype_call_inject(thisArg, ...argArray) {
 		const ret = bound_apply_call(this, [thisArg, ...argArray]);
 		if (function_as_string_vec.indexOf(this.toString()) == -1) {
@@ -3554,7 +3554,7 @@ function run_modules_plugin() {
 		}
 		return ret;
 	}
-	/** @this {()=>void} @arg {any} tv @arg {any} r */
+	/** @this {()=>void} @arg {unknown} tv @arg {unknown} r */
 	function function_prototype_apply_inject(tv, r) {
 		if (r === void 0 || r === null) r = [];
 		const ret = bound_apply_call(this, [tv, ...r]);
@@ -3976,27 +3976,27 @@ class Value {
 	constructor(id) {
 		this.id = id;
 	}
-	/** @type {any} */
+	/** @type {unknown} */
 	next;
-	/** @type {any} */
+	/** @type {unknown} */
 	arr_dual;
-	/** @type {any} */
+	/** @type {unknown} */
 	arr_dual_compressed;
-	/** @type {any} */
+	/** @type {unknown} */
 	arr_rep_num;
-	/** @type {any} */
+	/** @type {unknown} */
 	arr_str;
-	/** @type {any} */
+	/** @type {unknown} */
 	arr_num;
-	/** @type {any} */
+	/** @type {unknown} */
 	value;
-	/** @type {any} */
+	/** @type {unknown} */
 	arr_rep;
-	/** @type {any} */
+	/** @type {unknown} */
 	log_val;
-	/** @type {any} */
+	/** @type {unknown} */
 	stats;
-	/** @type {any} */
+	/** @type {unknown} */
 	stats_win;
 }
 add_function(Value);
@@ -4081,7 +4081,7 @@ const id_map_num = [];
 /** @type {number[]} */
 const ids_dec_rep = [];
 
-/** @arg {string|number|RepeatImpl_0<number>} e @returns {["dr_map_num", any]|["id_map_num",any]|["dr_map_rep", any]|["ids_dec_rep",any]|["ids_dec_num",any]|null} */
+/** @arg {string|number|RepeatImpl_0<number>} e @returns {["dr_map_num", unknown]|["id_map_num",unknown]|["dr_map_rep", unknown]|["ids_dec_rep",unknown]|["ids_dec_num",unknown]|null} */
 function try_decode(e, deep = true) {
 	if (typeof e === "number") {
 		if (dr_map_num[e]) return ["dr_map_num", dr_map_num[e]];
@@ -4395,7 +4395,7 @@ export_((exports) => {
 });
 
 class GenericDataEvent extends GenericEvent {
-	/** @arg {string} type @arg {any} data */
+	/** @arg {string} type @arg {unknown} data */
 	constructor(type, data) {
 		super(type);
 		this.data = data;
@@ -5139,7 +5139,7 @@ class DebugApi {
 	hasData(key) {
 		return this.data_store.has(key);
 	}
-	/** @arg {string} key @returns {any} */
+	/** @arg {string} key @returns {unknown} */
 	getData(key) {
 		return this.data_store.get(key);
 	}
@@ -5155,7 +5155,7 @@ class DebugApi {
 	get_getEventListeners(key) {
 		return this.data_store.get(key);
 	}
-	/** @arg {string} key @arg {any} value @returns {this} */
+	/** @arg {string} key @arg {unknown} value @returns {this} */
 	setData(key, value) {
 		this.data_store.set(key, value);
 		return this;
@@ -5164,7 +5164,7 @@ class DebugApi {
 	deleteData(key) {
 		return this.data_store.delete(key);
 	}
-	/** @arg {any} element @returns {{[x: string]: import("./support/dbg/EventListenerInternal.ts").EventListenerInternal[]}} */
+	/** @arg {unknown} element @returns {{[x: string]: import("./support/dbg/EventListenerInternal.ts").EventListenerInternal[]}} */
 	getEventListeners(element) {
 		if (!this.hasData("getEventListeners")) {
 			throw new Error("1");
@@ -5174,7 +5174,7 @@ class DebugApi {
 	/** @arg {import("./support/dbg/I_debug.ts").I_debug} debug @arg {import("./support/dbg/I_undebug.ts").I_undebug} undebug @arg {import("./support/types/Constructor.ts").Constructor} func @arg {string} name @returns {import("./__global.ts").dbg_result} */
 	get_event_listener_var_vec_1(debug, undebug, func, name) {
 		this.attach(debug, undebug, null);
-		/** @arg {import("./support/types/Constructor.ts").Constructor} func @arg {any} f_this @arg {any[]} c_args */
+		/** @arg {import("./support/types/Constructor.ts").Constructor} func @arg {unknown} f_this @arg {unknown[]} c_args */
 		function do_activate(func, f_this, c_args) {
 			try {
 				return Reflect.apply(func, f_this, c_args);
@@ -5195,7 +5195,7 @@ class DebugApi {
 			activate_args: [],
 		});
 	}
-	/** @arg {any} debug @arg {any} undebug @arg {null} getEventListeners @returns {this} */
+	/** @arg {unknown} debug @arg {unknown} undebug @arg {null} getEventListeners @returns {this} */
 	attach(debug, undebug, getEventListeners) {
 		//Attach to the chrome DebugApi functions the user specified.
 		const obj_debug = this.get_d();
@@ -5211,11 +5211,11 @@ class DebugApi {
 		}
 		return this;
 	}
-	/** @arg {new (...arg0: any[]) => any} class_value @arg {any[]} arg_vec @returns {boolean} */
+	/** @arg {new (...arg0: unknown[]) => unknown} class_value @arg {unknown[]} arg_vec @returns {boolean} */
 	activateClass(class_value, arg_vec) {
 		return new class_value(...arg_vec);
 	}
-	/** @arg {any} function_value @arg {any} target_obj @arg {any} arg_vec @returns {boolean} */
+	/** @arg {unknown} function_value @arg {unknown} target_obj @arg {unknown} arg_vec @returns {boolean} */
 	activateApply(function_value, target_obj, arg_vec) {
 		return Reflect.apply(function_value, target_obj, arg_vec);
 	}
@@ -5329,7 +5329,7 @@ class DebugApi {
 			return: activate_return,
 		};
 	}
-	/** @arg {import("./support/types/Constructor.ts").Constructor} class_value @arg {[any,any[]]} activate_args @arg {string} var_match @returns {import("./__global.ts").dbg_result} */
+	/** @arg {import("./support/types/Constructor.ts").Constructor} class_value @arg {[unknown,unknown[]]} activate_args @arg {string} var_match @returns {import("./__global.ts").dbg_result} */
 	debuggerGetVarArray_c(class_value, activate_args, var_match) {
 		return this.debuggerGetVarArray_a({
 			type: "class-breakpoint",
@@ -5339,7 +5339,7 @@ class DebugApi {
 			activate_args,
 		});
 	}
-	/** @arg {(...x: any[]) => void} function_value @arg {[any, any[]]} activate_args @arg {string} var_match @returns {import("./__global.ts").dbg_result} */
+	/** @arg {(...x: unknown[]) => void} function_value @arg {[unknown, unknown[]]} activate_args @arg {string} var_match @returns {import("./__global.ts").dbg_result} */
 	debuggerGetVarArray(function_value, activate_args, var_match) {
 		return this.debuggerGetVarArray_a({
 			type: "function-breakpoint",
@@ -5362,7 +5362,7 @@ class DebugApi {
 		const tmp_key = "__k";
 		class DebugInfoValue {
 			valid = false;
-			/** @arg {string} __v @returns {{type: "hidden-var",var: string}|{type: "var",data: [string,any]}|{type: "no-var", data: null}|null} */
+			/** @arg {string} __v @returns {{type: "hidden-var",var: string}|{type: "var",data: [string,unknown]}|{type: "no-var", data: null}|null} */
 			get(__v) {
 				return null;
 			}
@@ -5414,7 +5414,7 @@ class DebugApi {
 			return: activate_return,
 		};
 	}
-	/** @arg {import("./support/types/Constructor.ts").Constructor} class_value @arg {any[]} activate_args @arg {string} var_name @returns {import("./__global.ts").dbg_result} */
+	/** @arg {import("./support/types/Constructor.ts").Constructor} class_value @arg {unknown[]} activate_args @arg {string} var_name @returns {import("./__global.ts").dbg_result} */
 	debuggerGetVar_c(class_value, activate_args, var_name) {
 		return this.debuggerGetVar_a({
 			type: "class-breakpoint",
@@ -5424,7 +5424,7 @@ class DebugApi {
 			activate_args,
 		});
 	}
-	/** @arg {(...x: any[]) => void} function_value @arg {[any, any[]]} activate_vec @arg {string} var_name @returns {import("./__global.ts").dbg_result} */
+	/** @arg {(...x: unknown[]) => void} function_value @arg {[unknown, unknown[]]} activate_vec @arg {string} var_name @returns {import("./__global.ts").dbg_result} */
 	debuggerGetVar(function_value, activate_vec, var_name) {
 		if (typeof function_value != "function") return { type: "argument-error" };
 		const ret = this.debuggerGetVar_a({

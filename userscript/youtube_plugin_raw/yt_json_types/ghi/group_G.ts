@@ -313,16 +313,16 @@ export type G_UrlInfoSrc=
 	|{b: "playlist_id"; id: DU_Playlist_Id;}
 	|{b: "browse_id"; id: string;};
 export type G_Boxed_StrArr=[
-	Join<Extract<G_Boxed_StrExtract,[any,any]>,":">,
+	Join<Extract<G_Boxed_StrExtract,[unknown,unknown]>,":">,
 	// 3
-	Join<Extract<G_Boxed_StrExtract,[any,any,any]>,":">,
+	Join<Extract<G_Boxed_StrExtract,[unknown,unknown,unknown]>,":">,
 	// 4
-	Join<Exclude<Extract<G_Boxed_StrExtract,[any,any,any,any]>,[any,any,"FE",any]>,":">,
-	Join<Extract<Extract<G_Boxed_StrExtract,[any,any,any,any]>,[any,any,"FE",any]>,":">,
+	Join<Exclude<Extract<G_Boxed_StrExtract,[unknown,unknown,unknown,unknown]>,[unknown,unknown,"FE",unknown]>,":">,
+	Join<Extract<Extract<G_Boxed_StrExtract,[unknown,unknown,unknown,unknown]>,[unknown,unknown,"FE",unknown]>,":">,
 	// 5
-	Join<Extract<G_Boxed_StrExtract,[any,any,any,any,any]>,":">,
+	Join<Extract<G_Boxed_StrExtract,[unknown,unknown,unknown,unknown,unknown]>,":">,
 	// 6
-	Join<Extract<G_Boxed_StrExtract,[any,any,any,any,any,any]>,":">
+	Join<Extract<G_Boxed_StrExtract,[unknown,unknown,unknown,unknown,unknown,unknown]>,":">
 ];
 export type G_Boxed_StrExtract=G_BoxedDatabaseData['key'] extends infer I?
 	I extends `${infer f0}:${infer f1}:${infer f2}:${infer f3}:${infer f4}:${infer f5}`? [f0,f1,f2,f3,f4,f5]:
@@ -333,19 +333,19 @@ export type G_Boxed_StrExtract=G_BoxedDatabaseData['key'] extends infer I?
 //#region G_BoxedDatabaseData
 export type D_ManyValue={
 	l: "many";
-	z: [any[][]];
+	z: [unknown[][]];
 };
 export type D_ArrValue={
 	l: "arr";
-	z: [any[]];
+	z: [unknown[]];
 };
 export type D_ExactValue={
 	l: "one";
-	z: [any];
+	z: [unknown];
 };
 export type DST_Group={
 	key: `boxed_id:${string}:${string}`;
-	z: [make_item_group<any>];
+	z: [make_item_group<unknown>];
 	_z: [string,string];
 };
 export type DST_SaveId={
@@ -360,7 +360,7 @@ export type DST_LoadId={
 };
 export type G_BoxedDatabaseData=DST_SaveId|DST_LoadId|DST_Group;
 //#endregion
-export type G_BoxedInner=[1,any];
+export type G_BoxedInner=[1,unknown];
 ;
 ;
 export type Ret_w_dst=
@@ -380,8 +380,8 @@ export type Ret_w_dst=
 		],
 		[{}]
 	]
-	|[false,4,[x1: ""],[any,any]]
-	|[false,5,[],[any,any]]
+	|[false,4,[x1: ""],[unknown,unknown]]
+	|[false,5,[],[unknown,unknown]]
 	|[false,6,[],[]];
 export type U1=Ret_w_dst[2];
 //#endregion g.mod
@@ -588,14 +588,14 @@ export type D_VideoPlaybackShape_S_Params={
 // gen_2_raw
 export type GV_gen_g2_t1<T>=["gen_2",["raw",T]];
 // gen_3_arr
-export type GV_gen_g3_t2<U,T extends any[]>=["gen_3",U,["arr",T]];
+export type GV_gen_g3_t2<U,T extends unknown[]>=["gen_3",U,["arr",T]];
 // gen_3_arr
 export type GV_gen_g3_raw<T,U>=["gen_3",T,["raw",U]];
 export type GV_gen_a2_t2<T,U extends [string,string]>=[["seq",T,U[0]],["seq",T,U[1]]];
 export type GV_gen_a3_t2<T extends [string,string],U,V extends [string,string]>=[["seq",T[0],U,V[0]],["seq",T[1],U,V[1]]];
 //#endregion
 //#region unused
-export type GV_gen_g3_t2t1<T,U extends any[]>=GV_gen_g3_t2<T,GV_gen_g3_t2<"n",U>>;
+export type GV_gen_g3_t2t1<T,U extends unknown[]>=GV_gen_g3_t2<T,GV_gen_g3_t2<"n",U>>;
 export type GV_gen_g3_or<T,U>=["gen_3",T,["or",U]];
 export type GV_gen_g3_a3<T,U,V>=["gen_3",T,["gen2",U,V]];
 export type GV_seq_t3<T,U,V>=["seq",T,U,V];
@@ -941,8 +941,8 @@ export type GB_A1_J_Shape=
 	|"guide_entry_id:LL"
 	|"guide_entry_id:VL:LL";
 export type GB_A1_Keys=G_BoxedDatabaseData extends infer V? V extends infer I? T_DistributedKeyof<Omit<I,"key"|"a"|"b"|"j"|"w"|"z">>:[]:[];
-export type GB_A1_KS1=Extract<G_BoxedDatabaseData,{w: any;}>;
-export type GB_A1_KS2=Extract<G_BoxedDatabaseData,{k: any;}>;
+export type GB_A1_KS1=Extract<G_BoxedDatabaseData,{w: unknown;}>;
+export type GB_A1_KS2=Extract<G_BoxedDatabaseData,{k: unknown;}>;
 export type GB_A1=G_BoxedDatabaseData["z"][0];
 export type GM_AddUpcomingEventReminder={
 	sendPost: true;

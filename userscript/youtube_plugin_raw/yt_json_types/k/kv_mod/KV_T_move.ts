@@ -6,4 +6,4 @@ export type KV_T_AKLZ<T>={z: [T];};
 
 export type DB_T_AKLZ<S extends string,V>={key: S; z: [V];};
 
-export type Ret_w_diz=[any,any,any];
+export type Ret_w_diz=[unknown,unknown,unknown];

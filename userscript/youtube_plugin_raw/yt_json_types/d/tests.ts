@@ -6,8 +6,8 @@ export function cache_item_decompose_info_0_info_0(x: G_BoxedDatabaseData) {
 }
 export type A1=ReturnType<typeof cache_item_decompose_info_0_info_0>;
 export type A2=Extract<A1,object>;
-export type A3=Extract<A2,{type: any;}>;
-export type E1=Extract<A3,{info_arr: any;}>["z"][0];
+export type A3=Extract<A2,{type: unknown;}>;
+export type E1=Extract<A3,{info_arr: unknown;}>["z"][0];
 class ChainWalker {
 	/** @arg {RetValue} parent */
 	constructor(parent: RetValue) {
@@ -27,7 +27,7 @@ class ChainWalker {
 }
 class RetValue {
 	v: [
-		|{t: "c"; u: Extract<E1,{type: any;}>;}
+		|{t: "c"; u: Extract<E1,{type: unknown;}>;}
 		|{t: "d"; u: string;}
 		|null
 	]=[null];

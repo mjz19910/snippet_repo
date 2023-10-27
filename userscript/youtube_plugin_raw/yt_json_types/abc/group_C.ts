@@ -72,7 +72,7 @@ export type DC_ScrollToEngagementPanel={targetId: SI_VE76278_EngagementPanel["ta
 export type DC_SectionList_BrowseFeed_Subscriptions=T_DC_Content_2<"browse-feedFEsubscriptions",TR_SectionListItem_3_Empty>;
 export type DC_SectionList_SearchFeed=T_DC_Content_2<"search-feed",TR_SectionListItem_3_Empty>;
 export type DC_SectionList_T=T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3_Empty>;
-export type DC_SectionList_TargetId=Extract<GD_RC_SectionList,{targetId: any;}>["targetId"];
+export type DC_SectionList_TargetId=Extract<GD_RC_SectionList,{targetId: unknown;}>["targetId"];
 export type DC_SectionListBase=T_DC_Content<TR_ItemSection_3<R_ContinuationItem,"comment-item-section",SI_VE76278_EngagementPanel["targetId"]>>;
 export type DC_ShowReloadUi={targetId: D_UiTargetId;};
 export type DC_Timed={continuation: string; timeoutMs: D_TimeoutMs;};
@@ -80,7 +80,7 @@ export type DC_UpdateToggleButtonState={buttonId: "TOGGLE_BUTTON_ID_TYPE_STRUCTU
 //#endregion DC (Command Data)
 export type DR_DC_EntityBatchUpdate={mutations: G_DE_MutationItem[]; timestamp?: D_TimestampWithNanos;};
 export type CP_Tracking={clickTrackingParams: string;};
-export type CR_ContinuationItemsFor<T,U,V extends {continuationItems: any;}>={
+export type CR_ContinuationItemsFor<T,U,V extends {continuationItems: unknown;}>={
 	slot: U;
 	targetId: T;
 	continuationItems: V["continuationItems"];

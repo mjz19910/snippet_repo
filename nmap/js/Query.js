@@ -4,7 +4,7 @@ import {DNSTypeEnum} from "./DNSTypeEnum.js";
 import {IP_base} from "./IP_base.js";
 
 export class Query {
-	constructor(/** @type {any} */ query_class, /** @type {any} */ query_type) {
+	constructor(/** @type {unknown} */ query_class, /** @type {unknown} */ query_type) {
 		switch(query_class) {
 			case DNSClassEnum.IN: break;
 			default: throw new Error("Bad");
@@ -19,7 +19,7 @@ export class Query {
 		return ["DNS"];
 	}
 	static A(arg0, arg1, query_class, query_type, arg4) {
-		/** @type {(v:any)=>v is ['IP', string]} */
+		/** @type {(v:unknown)=>v is ['IP', string]} */
 		function get_ip_type(v) {
 			return v[0] === 'IP';
 		}

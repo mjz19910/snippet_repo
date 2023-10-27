@@ -7,8 +7,8 @@ export namespace NS_DP_Parse {
 	type GA_ParseUrlStr_1=[T_SplitOnce<Exclude<D_UrlFormat,"/">,"/">[1]];
 	export type GA_ParseUrlStr_2=[
 		...GA_ParseUrlStr_1,
-		Extract<T_SplitOnce<GA_ParseUrlStr_1[0],"/">,["youtubei",...any]>,
-		Extract<T_SplitOnce<GA_ParseUrlStr_1[0],"/">,[any,any]>,
+		Extract<T_SplitOnce<GA_ParseUrlStr_1[0],"/">,["youtubei",...unknown]>,
+		Extract<T_SplitOnce<GA_ParseUrlStr_1[0],"/">,[unknown,unknown]>,
 	];
 	export type GA_ParseUrlStr=[
 		...GA_ParseUrlStr_2,
@@ -20,7 +20,7 @@ export namespace NS_DP_Parse {
 	export type ParseUrlStr_2=GA_ParseUrlStr[2];
 	export type ParseUrlStr_3=GA_ParseUrlStr[3];
 	export type ParseUrlStr_4=GA_ParseUrlStr[4];
-	export type ParseApiUrlStr=T_SplitOnce<Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["api",...any]>[1],"/">[1];
+	export type ParseApiUrlStr=T_SplitOnce<Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["api",...unknown]>[1],"/">[1];
 }
 export namespace NS_DD_CompactVideoTest {
 	type SM1="videoId,thumbnail,title,longBylineText,publishedTimeText,viewCountText,lengthText,navigationEndpoint,shortBylineText";
@@ -28,17 +28,17 @@ export namespace NS_DD_CompactVideoTest {
 	type ED1="trackingParams,shortViewCountText,menu,thumbnailOverlays,accessibility,richThumbnail";
 	type BaseKeysStr=/*!*/`${SM1},${CT},${ED1}`;
 	type U2=T_Split<BaseKeysStr>[number];
-	export type T2=Extract<D_CompactVideo,{lengthText: any;}>[U2];
+	export type T2=Extract<D_CompactVideo,{lengthText: unknown;}>[U2];
 	type S3=/*!*/`${SM1},badges,${CT},${ED1}`;
-	export type T3=Extract<D_CompactVideo,{lengthText: any; badges: any;}>[T_Split<S3>[number]];
+	export type T3=Extract<D_CompactVideo,{lengthText: unknown; badges: unknown;}>[T_Split<S3>[number]];
 }
 export namespace NS_NumRange {
-	export type NextMakeNum_3<U extends any[],T>=T extends 0? 1:[any,...U]['length'] extends T? [any,any,...U]['length']:NextMakeNum_3<[any,...U],T>;
+	export type NextMakeNum_3<U extends unknown[],T>=T extends 0? 1:[unknown,...U]['length'] extends T? [unknown,unknown,...U]['length']:NextMakeNum_3<[unknown,...U],T>;
 	type NumRange_1<T,E>=T extends E? T:NextMakeNum_3<[],T> extends E? E:T|NextMakeNum_3<[],T>|NumRange_1<NextMakeNum_3<[],T>,E>;
 	export type NumRange<T,E>=T extends E? T:T|NextMakeNum_3<[],T>|NumRange_1<NextMakeNum_3<[],T>,E>;
 	type NextMakeNum_2<T>=T extends `${infer C extends number}`? `-${NS_NumRange.NextMakeNum_3<[],C>}` extends `${infer V extends number}`? V:never:never;
-	type NextMakeNum_1<U extends any[],T>=[any,...U]['length'] extends T? [U,T][0]['length']:NextMakeNum_1<[any,...U],T>;
-	type NextMakeNum<T extends number>=[any]["length"] extends T? 0:NextMakeNum_1<[any],T>;
+	type NextMakeNum_1<U extends unknown[],T>=[unknown,...U]['length'] extends T? [U,T][0]['length']:NextMakeNum_1<[unknown,...U],T>;
+	type NextMakeNum<T extends number>=[unknown]["length"] extends T? 0:NextMakeNum_1<[unknown],T>;
 	type MakeNumRange<T extends number>=`${T}` extends `-${infer NotNeg}`? NextMakeNum_2<NotNeg>:[]["length"] extends T? -1:NextMakeNum<T>;
 	export type MakeNumRes=MakeNumRange<1>;
 	export type MakeNum2=NextMakeNum_2<`5`>;
@@ -54,7 +54,7 @@ export namespace NS_NumRange {
 	];
 }
 export namespace NS_UnionToPartial {
-	type ExtractValueFromUnion<T,U extends keyof T>=Extract<T,Record<U,any>>[U];
+	type ExtractValueFromUnion<T,U extends keyof T>=Extract<T,Record<U,unknown>>[U];
 	type ExtractUnionCommon<T>={[U in T_DistributedKeyof<T>]: ExtractValueFromUnion<T,U>;};
 	type UnionGetPartialPart<T>=Partial<Omit<ExtractUnionCommon<T>,keyof T>>;
 	export type UnionToPartial<T>=Decay<Pick<T,keyof T extends string? keyof T:never>&UnionGetPartialPart<T>>;

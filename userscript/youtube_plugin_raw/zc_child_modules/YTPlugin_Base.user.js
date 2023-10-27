@@ -37,7 +37,7 @@ export_(exports => {exports.__is_module_flag__=true;});
 if(window.__log_module_loading_enabled__) console.log("Load PluginBase");
 //#endregion
 //#region basic
-/** @private @template U @template T @arg {U} e @arg {any} [x] @returns {T} */
+/** @private @template U @template T @arg {U} e @arg {unknown} [x] @returns {T} */
 function as_any(e,x=e) {return x;}
 export_(exports => {exports.as_any=as_any;});
 //#endregion
@@ -50,7 +50,7 @@ function split_string_once(s,d=as(","))
 	{
 		/** @private @type {[]} */
 		let r=[];
-		/** @private @type {any} */
+		/** @private @type {unknown} */
 		let q=r;
 		return as(q);
 	}
@@ -59,7 +59,7 @@ function split_string_once(s,d=as(","))
 	{
 		/** @private @type {[S]} */
 		let r=[s];
-		/** @private @type {any} */
+		/** @private @type {unknown} */
 		let q=r;
 		return as(q);
 	}
@@ -67,7 +67,7 @@ function split_string_once(s,d=as(","))
 	let b=s.slice(i+d.length);
 	/** @private @type {[string,string]} */
 	let r=[a,b];
-	/** @private @type {any} */
+	/** @private @type {unknown} */
 	let q=r;
 	return as(q);
 }
@@ -91,7 +91,7 @@ let active_blob_set=new Set;
 //#endregion
 /**
  * @template T
- * @template {abstract new (...args: any) => any} U
+ * @template {abstract new (...args: unknown) => unknown} U
  * @template {InstanceType<U>} X
  * @param {T|X} x
  * @param {U} c_ty
@@ -100,7 +100,7 @@ let active_blob_set=new Set;
 function assume_assert_is_instanceof(x,c_ty) {x; c_ty;}
 /**
  * @template T
- * @template {abstract new (...args: any) => any} U
+ * @template {abstract new (...args: unknown) => unknown} U
  * @template {InstanceType<U>} X
  * @param {T|X} x
  * @param {U} c_ty
@@ -694,16 +694,16 @@ class PropertyHandler
 	static instances=[];
 	/** @private @type {Map<{}, {}>} */
 	proxy_map=new Map;
-	/** @private @type {{value: any}} */
+	/** @private @type {{value: unknown}} */
 	override_value={value: void 0};
-	/** @constructor @public @arg {(args: [any, any, any]) => any} on_target_apply_callback */
+	/** @constructor @public @arg {(args: [unknown, unknown, unknown]) => unknown} on_target_apply_callback */
 	constructor(on_target_apply_callback)
 	{
 		this.on_target_apply_callback=on_target_apply_callback;
 		PropertyHandler.instances.push(this);
 	}
 	get() {return this.override_value.value;}
-	/** @api @public @arg {any} value */
+	/** @api @public @arg {unknown} value */
 	set(value)
 	{
 		if(value===void 0||value===null)
@@ -733,7 +733,7 @@ function override_prop(object,property,property_handler)
 		set(value) {return property_handler.set(value);}
 	});
 }
-override_prop(window,"getInitialCommand",new PropertyHandler((/** @private @type {[any,any,any]} */args) => Reflect.apply(...args)));
+override_prop(window,"getInitialCommand",new PropertyHandler((/** @private @type {[unknown,unknown,unknown]} */args) => Reflect.apply(...args)));
 class ObjectInfo
 {
 	constructor()
@@ -1309,15 +1309,15 @@ class MyReader
 }
 const base64_dec=new Base64Binary("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",/[^A-Za-z0-9\+\/\=]/g);
 const base64_url_dec=new Base64Binary("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_=",/[^A-Za-z0-9\-\_\=]/g);
-/** @private @type {any[]} */
+/** @private @type {unknown[]} */
 let blob_create_args_arr=[];
-/** @private @type {any[]} */
+/** @private @type {unknown[]} */
 let mk_tree_arr=[];
-function act_found_create_yt_player(/** @private @type {{ data: { type: string; data: [any, any, any]; }; }} */ event)
+function act_found_create_yt_player(/** @private @type {{ data: { type: string; data: [unknown, unknown, unknown]; }; }} */ event)
 {
 	function plr_raw_replace_embed() {return;}
 	let plr_raw_replace_debug=true;
-	function plr_raw_replace(/** @private @type {{ args: { raw_player_response: any; }; }} */ player_config)
+	function plr_raw_replace(/** @private @type {{ args: { raw_player_response: unknown; }; }} */ player_config)
 	{
 		let raw_plr_rsp=player_config.args.raw_player_response;
 		if(raw_plr_rsp===void 0)
@@ -1348,10 +1348,10 @@ class OnWindowProperty
 {
 	constructor()
 	{
-		/** @private @type {{[str:string]:any}} */
+		/** @private @type {{[str:string]:unknown}} */
 		this._events={};
 	}
-	/** @api @public @arg {{ type: any; data?: { type: any; data: any[]; }; }} ev */
+	/** @api @public @arg {{ type: unknown; data?: { type: unknown; data: unknown[]; }; }} ev */
 	dispatchEvent(ev)
 	{
 		let evt=this._events[ev.type].slice();
@@ -1364,7 +1364,7 @@ class OnWindowProperty
 			handler(ev);
 		}
 	}
-	/** @api @public @arg {string|number} ev_name @arg {any} fn */
+	/** @api @public @arg {string|number} ev_name @arg {unknown} fn */
 	removeEventListener(ev_name,fn)
 	{
 		let evt=this._events[ev_name];
@@ -1379,10 +1379,10 @@ class OnWindowProperty
 			}
 		}
 	}
-	/** @api @public @arg {string} ev_name @arg {(event: { data: { type: any; data: [any, any, any]; }; }) => void} fn */
+	/** @api @public @arg {string} ev_name @arg {(event: { data: { type: unknown; data: [unknown, unknown, unknown]; }; }) => void} fn */
 	addEventListener(ev_name,fn) {(this._events[ev_name]??=[]).push({disposed: false,handler: fn});}
 }
-/** @private @arg {{ value?: any; value_tr?: any; value_of?: any; noisy_flag?: any; }} cc @arg {string} ms @arg {{}} obj @arg {string} [mc] */
+/** @private @arg {{ value?: unknown; value_tr?: unknown; value_of?: unknown; noisy_flag?: unknown; }} cc @arg {string} ms @arg {{}} obj @arg {string} [mc] */
 function walk_key_path(cc,ms,obj,mc)
 {
 	let fs;
@@ -1401,8 +1401,8 @@ function walk_key_path(cc,ms,obj,mc)
 	throw new Error();
 }
 let win_watch=new OnWindowProperty;
-/** @private @arg {any} val @arg {MKState} cc */
-function new_pv_fn(val,cc, /** @private @type {any[]} */ ...args)
+/** @private @arg {unknown} val @arg {MKState} cc */
+function new_pv_fn(val,cc, /** @private @type {unknown[]} */ ...args)
 {
 	let ret;
 	let act_cb_obj={fired: false,ret: ret};
@@ -1414,7 +1414,7 @@ function new_pv_fn(val,cc, /** @private @type {any[]} */ ...args)
 function on_mk_function_property(cc)
 {
 	/** @this {{}} */
-	function with_this(/** @private @type {any} */ ...args) {new_pv_fn(this,cc,...args);}
+	function with_this(/** @private @type {unknown} */ ...args) {new_pv_fn(this,cc,...args);}
 	cc.value=with_this;
 	ud_func.add(cc.value);
 }
@@ -1536,7 +1536,7 @@ function on_ytd_player(element)
 	const element_id="ytd-player";
 	if(is_yt_debug_enabled) console.log(`on ${element_id}`);
 	element_map.set(element_id,element);
-	/** @private @type {any} */
+	/** @private @type {unknown} */
 	let element_any=element;
 	/** @private @type {import("../support_2/YtdPlayerElement.ts").YtdPlayerElement} */
 	let element_type=element_any;
@@ -1564,7 +1564,7 @@ class YTNavigateFinishEvent
 	/** @api @public @arg {Event} value @return {YTNavigateFinishEvent} */
 	static cast(value)
 	{
-		/** @private @type {any} */
+		/** @private @type {unknown} */
 		let ret=value;
 		return ret;
 	}
@@ -1878,7 +1878,7 @@ if(!title_save)
 export_(exports => {exports.no_storage_access=no_storage_access;});
 let title_text_overlay_enabled=true;
 let title_on=JSON.parse(title_save).value;
-/** @private @type {(detail:any)=>detail is {actionName:"yt-fullscreen-change-action", args:[boolean]}} */
+/** @private @type {(detail:unknown)=>detail is {actionName:"yt-fullscreen-change-action", args:[boolean]}} */
 function is_yt_fullscreen_change_action(detail) {return detail.actionName==="yt-fullscreen-change-action";}
 function update_ui_plugin() {if(is_yt_debug_enabled) console.log("update_ui_plugin");}
 let volume_plugin_style_source=`
@@ -2012,9 +2012,9 @@ class AudioGainController
 /** @private @type {AudioGainController|null} */
 let audio_gain_controller=new AudioGainController;
 /** @private @template {string} T @template {{}} U @template {import("../yt_json_types/stu/group_T.ts").T_Split<T,",">} C @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}} @type {import("../support_1/make/__ia_excludeKeysS.ts").__ia_excludeKeysS2['fn']} */
-Object.__ia_excludeKeysS=function(/** @private @type {{ [s: string]: any; }|ArrayLike<any>} */ target,/** @private @type {string} */ ex_keys_str)
+Object.__ia_excludeKeysS=function(/** @private @type {{ [s: string]: unknown; }|ArrayLike<unknown>} */ target,/** @private @type {string} */ ex_keys_str)
 {
-	/** @private @type {any} */
+	/** @private @type {unknown} */
 	let ex_keys_any=ex_keys_str.split(",");
 	/** @private @type {C} */
 	let ex_keys=ex_keys_any;
@@ -2034,7 +2034,7 @@ Object.__ia_excludeKeysS=function(/** @private @type {{ [s: string]: any; }|Arra
 		};
 		obj=rest;
 	}
-	/** @private @type {any} */
+	/** @private @type {unknown} */
 	let res_any=obj;
 	/** @private @type {{[I in Exclude<keyof U,C[number]>]:U[I]}} */
 	let res=res_any;
@@ -2182,7 +2182,7 @@ function split_string_once_ex(s,d=as(","),_wa)
 	{
 		/** @private @type {[]} */
 		let r=[];
-		/** @private @type {any} */
+		/** @private @type {unknown} */
 		let q=r;
 		return as(q);
 	}
@@ -2191,7 +2191,7 @@ function split_string_once_ex(s,d=as(","),_wa)
 	{
 		/** @private @type {[S]} */
 		let r=[s];
-		/** @private @type {any} */
+		/** @private @type {unknown} */
 		let q=r;
 		return as(q);
 	}
@@ -2199,7 +2199,7 @@ function split_string_once_ex(s,d=as(","),_wa)
 	let b=s.slice(i+d.length);
 	/** @private @type {[string,string]} */
 	let r=[a,b];
-	/** @private @type {any} */
+	/** @private @type {unknown} */
 	let q=r;
 	return as(q);
 }
@@ -2210,7 +2210,7 @@ function split_string_once_ex2(s,d=as(","),_a1,_a2)
 	{
 		/** @private @type {[]} */
 		let r=[];
-		/** @private @type {any} */
+		/** @private @type {unknown} */
 		let q=r;
 		return as(q);
 	}
@@ -2219,7 +2219,7 @@ function split_string_once_ex2(s,d=as(","),_a1,_a2)
 	{
 		/** @private @type {[S]} */
 		let r=[s];
-		/** @private @type {any} */
+		/** @private @type {unknown} */
 		let q=r;
 		return as(q);
 	}
@@ -2227,7 +2227,7 @@ function split_string_once_ex2(s,d=as(","),_a1,_a2)
 	let b=s.slice(i+d.length);
 	/** @private @type {[string,string]} */
 	let r=[a,b];
-	/** @private @type {any} */
+	/** @private @type {unknown} */
 	let q=r;
 	return as(q);
 }
@@ -2239,7 +2239,7 @@ function split_string_once_last(s,d,_wx)
 	{
 		/** @private @type {[]} */
 		let r=[];
-		/** @private @type {any} */
+		/** @private @type {unknown} */
 		let q=r;
 		return as(q);
 	}
@@ -2248,7 +2248,7 @@ function split_string_once_last(s,d,_wx)
 	{
 		/** @private @type {[S]} */
 		let r=[s];
-		/** @private @type {any} */
+		/** @private @type {unknown} */
 		let q=r;
 		return as(q);
 	}
@@ -2256,7 +2256,7 @@ function split_string_once_last(s,d,_wx)
 	let b=s.slice(i+d.length);
 	/** @private @type {[string,string]} */
 	let r=[a,b];
-	/** @private @type {any} */
+	/** @private @type {unknown} */
 	let q=r;
 	return as(q);
 }
@@ -2294,7 +2294,7 @@ class ApiBase2
 			if(pn!=v) return v;
 			return pn;
 		});
-		/** @private @type {any} */
+		/** @private @type {unknown} */
 		let ra=rq;
 		return ra;
 	}
@@ -2303,7 +2303,7 @@ class ApiBase2
 	{
 		if(!obj) {debugger;}
 		let rq=Object.keys(obj);
-		/** @private @type {any} */
+		/** @private @type {unknown} */
 		let ra=rq;
 		return ra;
 	}
@@ -2322,7 +2322,7 @@ class ApiBase2
 export_(exports => {exports.ApiBase2=ApiBase2;});
 class ApiBase extends ApiBase2
 {
-	/** @protected @template {any[]} T @arg {T} a */
+	/** @protected @template {unknown[]} T @arg {T} a */
 	exact_arr(...a) {return a;}
 	xa=this.exact_arr;
 	/** @protected @template {string} S @arg {S} x @returns {Capitalize<S>} */
@@ -2383,7 +2383,7 @@ class ApiBase extends ApiBase2
 	parse_url_search_params(t)
 	{
 		let sp=new URLSearchParams(t);
-		/** @private @type {any} */
+		/** @private @type {unknown} */
 		let as_any=Object.fromEntries(sp.entries());
 		return as_any;
 	}
@@ -2393,7 +2393,7 @@ class ApiBase extends ApiBase2
 		let tmp=this.parse_url_search_params(t);
 		let ret=[];
 		for(let k in tmp) {ret.push(k);}
-		/** @type {any} */
+		/** @type {unknown} */
 		let as_any=ret;
 		/** @type {import("../yt_json_types/stu/group_T.ts").TP_KeyofSearchParams<T>} */
 		let ret_val=as_any;
@@ -2479,7 +2479,7 @@ class BaseService extends ServiceWithMembers
 
 		x: if(!(tm instanceof ServiceData))
 		{
-			/** @type {(...args:any[])=>void} */
+			/** @type {(...args:unknown[])=>void} */
 			let a_fn=f;
 			if(a_fn===this.xm.D_Label) break x;
 			if(a_fn!==void 0) break x;
@@ -2504,7 +2504,7 @@ class BaseService extends ServiceWithMembers
 	/** @public @template {import("../yt_json_types/abc/group_C.ts").CF_M_y} T_CF  @arg {T_CF} cf @template U @arg {K} k @template {import("../yt_json_types/stu/group_T.ts").T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K],cf:`${T_CF}.${K}`)=>U} f */
 	y(cf,k,x,f) {return f.call(this,this.sm.w(cf,k,x),`${cf}.${k}`);}
 	/**
-	 * @protected @template {import("../yt_json_types/abc/group_C.ts").CF_T_WCM} T_CF @arg {T_CF} cf @template {{webCommandMetadata:any;}} T @template U @arg {T|undefined} x @arg {(this:this,x:T["webCommandMetadata"],cf:`G${T_CF}`)=>U} f
+	 * @protected @template {import("../yt_json_types/abc/group_C.ts").CF_T_WCM} T_CF @arg {T_CF} cf @template {{webCommandMetadata:unknown;}} T @template U @arg {T|undefined} x @arg {(this:this,x:T["webCommandMetadata"],cf:`G${T_CF}`)=>U} f
 	 * @returns {[U,Omit<T,"webCommandMetadata">]|null}
 	 */
 	T_WCM(cf,x,f)
@@ -2516,7 +2516,7 @@ class BaseService extends ServiceWithMembers
 	}
 	/**
 	 * @protected @template R_D,R_M
-	 * @template {Extract<keyof T_Endpoint,import("../zb_plugin_types/KA_EndpointKey.ts").KA_EndpointKey>} T_Key @template {import("../yt_json_types/stu/group_T.ts").TE_Endpoint_3<any,any,any>} T_Endpoint @arg {T_Endpoint} x
+	 * @template {Extract<keyof T_Endpoint,import("../zb_plugin_types/KA_EndpointKey.ts").KA_EndpointKey>} T_Key @template {import("../yt_json_types/stu/group_T.ts").TE_Endpoint_3<unknown,unknown,unknown>} T_Endpoint @arg {T_Endpoint} x
 	 * @param {T_Key} k
 	 * @param {(this:this,x:T_Endpoint["commandMetadata"])=>R_M} f1 @arg {(this:this,x:T_Endpoint[T_Key])=>R_D} f2
 	 * @returns {[typeof y,R_M,R_D]}
@@ -2661,7 +2661,7 @@ class BaseService extends ServiceWithMembers
 	_convert_url_to_obj(str)
 	{
 		let s=new URL(str);
-		/** @private @type {any} */
+		/** @private @type {unknown} */
 		let a=s;
 		/** @private @type {import("../support_1/url_parse/UrlParse.ts").UrlParse<T>} */
 		let ret=a;
@@ -2748,9 +2748,9 @@ class BaseService extends ServiceWithMembers
 	z(x,f)
 	{
 		if(x===void 0||!x.entries) {debugger; return [[],[]];}
-		/** @private @type {any[]} */
+		/** @private @type {unknown[]} */
 		let c=[];
-		/** @private @type {any[]} */
+		/** @private @type {unknown[]} */
 		let v=[];
 		for(let it of x.entries())
 		{
@@ -2851,7 +2851,7 @@ class BaseService extends ServiceWithMembers
 		assume_ret(mr);
 		return mr;
 	}
-	/** @arg {(this:this,x:Extract<A,import("../yt_json_types/stu/group_T.ts").Some<any>>["v"])=>U} y @template {{}} T @template {import("../yt_json_types/stu/group_T.ts").None|import("../yt_json_types/stu/group_T.ts").Some<T>} A @arg {A} x @template {{}|undefined|void} U @returns {A extends import("../yt_json_types/stu/group_T.ts").None?import("../yt_json_types/stu/group_T.ts").None:U extends void|undefined?import("../yt_json_types/stu/group_T.ts").None:import("../yt_json_types/stu/group_T.ts").Some<U>} */
+	/** @arg {(this:this,x:Extract<A,import("../yt_json_types/stu/group_T.ts").Some<unknown>>["v"])=>U} y @template {{}} T @template {import("../yt_json_types/stu/group_T.ts").None|import("../yt_json_types/stu/group_T.ts").Some<T>} A @arg {A} x @template {{}|undefined|void} U @returns {A extends import("../yt_json_types/stu/group_T.ts").None?import("../yt_json_types/stu/group_T.ts").None:U extends void|undefined?import("../yt_json_types/stu/group_T.ts").None:import("../yt_json_types/stu/group_T.ts").Some<U>} */
 	m_nu_t(x,y)
 	{
 		/** @arg {import("../yt_json_types/stu/group_T.ts").Some<U>|import("../yt_json_types/stu/group_T.ts").None} x @returns {asserts x is A extends import("../yt_json_types/stu/group_T.ts").None?import("../yt_json_types/stu/group_T.ts").None:U extends void|undefined?import("../yt_json_types/stu/group_T.ts").None:import("../yt_json_types/stu/group_T.ts").Some<U>} */
@@ -2973,7 +2973,7 @@ class IterateApiResultBase extends BaseService
 		}
 		for(let key in data)
 		{
-			/** @private @type {{[x: string]: any}} */
+			/** @private @type {{[x: string]: unknown}} */
 			let wk=data;
 			let value=wk[key];
 			let rk=this.keys_map.get(key);
@@ -3209,7 +3209,7 @@ class HandleRendererContentItemArray extends BaseService
 		// debugger;
 		return true;
 	}
-	/** @api @public @template {(import("../yt_json_types/ghi/group_G.ts").G_RendererContentItem|Extract<(import("../yt_json_types/d/group_DC.ts").DC_ReloadContinuationItems|import("../yt_json_types/abc/AD.ts").AD_AppendContinuationItems),{continuationItems:any}>["continuationItems"][number])[]} T @arg {T} arr @returns {T} */
+	/** @api @public @template {(import("../yt_json_types/ghi/group_G.ts").G_RendererContentItem|Extract<(import("../yt_json_types/d/group_DC.ts").DC_ReloadContinuationItems|import("../yt_json_types/abc/AD.ts").AD_AppendContinuationItems),{continuationItems:unknown}>["continuationItems"][number])[]} T @arg {T} arr @returns {T} */
 	replace_array(arr)
 	{
 		return as(arr.filter((/** @private @type {typeof arr[number]} */content_item) =>
@@ -3484,7 +3484,7 @@ class ModifyEnv extends BaseService
 	modify_global_env()
 	{
 		let handle_types=this.x.get("handle_types");
-		/** @private @arg {import("../support_2/FetchInjectInputArgs.ts").FetchInjectInputArgs} input @arg {((arg0: any) => any)|undefined|null} onfulfilled @arg {((arg0: any) => void)|undefined|null} on_rejected @arg {string} response_text */
+		/** @private @arg {import("../support_2/FetchInjectInputArgs.ts").FetchInjectInputArgs} input @arg {((arg0: unknown) => unknown)|undefined|null} onfulfilled @arg {((arg0: unknown) => void)|undefined|null} on_rejected @arg {string} response_text */
 		function handle_json_parse({request,options},onfulfilled,on_rejected,response_text)
 		{
 			if(is_yt_debug_enabled) console.log("handle_json_parse",request,options);
@@ -3498,20 +3498,20 @@ class ModifyEnv extends BaseService
 			}
 			return ret;
 		}
-		/** @private @arg {import("../support_2/FetchInjectInputArgs.ts").FetchInjectInputArgs} input @arg {((value: any) => any|PromiseLike<any>)|undefined|null} onfulfilled @arg {((reason: any) => any|PromiseLike<any>)|undefined|null} onrejected */
+		/** @private @arg {import("../support_2/FetchInjectInputArgs.ts").FetchInjectInputArgs} input @arg {((value: unknown) => unknown|PromiseLike<unknown>)|undefined|null} onfulfilled @arg {((reason: unknown) => unknown|PromiseLike<unknown>)|undefined|null} onrejected */
 		function bind_promise_handler(input,onfulfilled,onrejected)
 		{
 			if(is_yt_debug_enabled) console.log("handle_json_parse.bind()");
 			let ret=handle_json_parse.bind(null,input,onfulfilled,onrejected);
 			return ret;
 		}
-		/** @private @arg {{input: import("../support_2/FetchInjectInputArgs.ts").FetchInjectInputArgs}} input_args @arg {{result:Promise<any>}} result @return {Promise<any>} */
+		/** @private @arg {{input: import("../support_2/FetchInjectInputArgs.ts").FetchInjectInputArgs}} input_args @arg {{result:Promise<unknown>}} result @return {Promise<unknown>} */
 		function handle_fetch_response_2({input},result)
 		{
 			return {
-				/** @private @type {<T, TResult2 = never>(onfulfilled?: ((value: T) => T|PromiseLike<T>)|undefined|null, onrejected?: ((reason: any) => TResult2|PromiseLike<TResult2>)|undefined|null)=>Promise<T|TResult2>} */
+				/** @private @type {<T, TResult2 = never>(onfulfilled?: ((value: T) => T|PromiseLike<T>)|undefined|null, onrejected?: ((reason: unknown) => TResult2|PromiseLike<TResult2>)|undefined|null)=>Promise<T|TResult2>} */
 				then(onfulfilled,onrejected) {return result.result.then(bind_promise_handler(input,onfulfilled,onrejected));},
-				/** @private @type {<TResult = never>(onrejected?: ((reason: any) => TResult|PromiseLike<TResult>)|null|undefined) => Promise<any>} */
+				/** @private @type {<TResult = never>(onrejected?: ((reason: unknown) => TResult|PromiseLike<TResult>)|null|undefined) => Promise<unknown>} */
 				catch(onrejected) {return result.result.catch(onrejected);},
 				finally(onfinally) {return result.result.finally(onfinally);},
 				[Symbol.toStringTag]: "Promise",

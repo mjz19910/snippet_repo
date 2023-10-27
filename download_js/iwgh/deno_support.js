@@ -22,7 +22,7 @@ export async function read_entire_file(file) {
 	} while (true);
 	return new TextDecoder().decode(buf);
 }
-/** @arg {Deno.FsFile} file @arg {any} obj */
+/** @arg {Deno.FsFile} file @arg {unknown} obj */
 export async function write_entire_file(file, obj) {
 	const data = JSON.stringify(obj, void 0, "\t");
 	await file.seek(0, 0);

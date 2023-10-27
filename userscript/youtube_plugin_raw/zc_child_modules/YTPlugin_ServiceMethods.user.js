@@ -875,7 +875,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {import("../yt_json_types/d/group_DE.ts").DE_VE3832_Watch} u */
 	DE_VE3832_Watch(u) {
 		const cf = "DE_VE3832_Watch";
-		/** @type {Partial<Extract<typeof u extends infer J?J extends infer I?Required<Partial<I>>:never:never,{playlistId:any}>>&Required<{videoId:any}>} */
+		/** @type {Partial<Extract<typeof u extends infer J?J extends infer I?Required<Partial<I>>:never:never,{playlistId:unknown}>>&Required<{videoId:unknown}>} */
 		let x = u;
 		const {
 			videoId,
@@ -2393,14 +2393,14 @@ class ServiceMethods extends ServiceData {
 			if (this.str_starts_with_rx(pf, c1)) {
 				let u1x = split_string_once(c1, pf);
 				if (u1x.length !== 2) continue;
-				/** @private @type {any} */
+				/** @private @type {unknown} */
 				let ac = u1x[1][0].toLowerCase() + u1x[1].slice(1);
 				/** @private @type {keyof import("../yt_json_types/stu/group_T.ts").T_RemovePrefix<U,VV>} */
 				let u1 = ac;
 				un_prefix[u1] = cc[1];
 				continue;
 			}
-			/** @private @type {any} */
+			/** @private @type {unknown} */
 			let ac = c1;
 			/** @private @type {keyof Omit<U,`${VV}${string}`>} */
 			let u1 = ac;
@@ -2596,7 +2596,7 @@ class ServiceMethods extends ServiceData {
 		if (popupType !== "DIALOG") debugger;
 		this.t(beReused, (x) => this.cq(x, true));
 	}
-	/** @public @arg {import("../yt_json_types/abc/group_C.ts").CF_T_SE_Signal} cf @template {{webCommandMetadata:any}} T @template U @arg {import("../yt_json_types/stu/group_T.ts").T_SE_Signal<T,U>} x @returns {[T,U]} */
+	/** @public @arg {import("../yt_json_types/abc/group_C.ts").CF_T_SE_Signal} cf @template {{webCommandMetadata:unknown}} T @template U @arg {import("../yt_json_types/stu/group_T.ts").T_SE_Signal<T,U>} x @returns {[T,U]} */
 	T_SE_Signal(cf, x) {
 		const {
 			clickTrackingParams,
@@ -2843,7 +2843,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/**
 	 * @protected @template R_D
-	 * @template {Extract<keyof T_Endpoint,import("../zb_plugin_types/KA_EndpointKey.ts").KA_EndpointKey>} T_Key @template {import("../yt_json_types/stu/group_T.ts").TE_Endpoint_2<any,any>} T_Endpoint @arg {T_Endpoint} x
+	 * @template {Extract<keyof T_Endpoint,import("../zb_plugin_types/KA_EndpointKey.ts").KA_EndpointKey>} T_Key @template {import("../yt_json_types/stu/group_T.ts").TE_Endpoint_2<unknown,unknown>} T_Endpoint @arg {T_Endpoint} x
 	 * @param {T_Key} k
 	 * @param {(this:this,x:T_Endpoint[T_Key])=>R_D} f1
 	 * @returns {[typeof y,R_D]}
@@ -2870,7 +2870,7 @@ class ServiceMethods extends ServiceData {
 		const { trackingParams, [k]: endpoint, ...y } = this.s(cf, x);
 		return [endpoint, y];
 	}
-	/** @public @arg {import("../yt_json_types/abc/group_C.ts").CF_TE_Endpoint_Opt_3} cf @template {import("../zb_plugin_types/KA_EndpointKey.ts").KA_EndpointKey} T_Key @template {import("../yt_json_types/stu/group_T.ts").TE_Endpoint_Opt_3<T_Key,any,any>} T_EP @arg {T_Key} k @arg {T_EP} x @returns {[T_EP["commandMetadata"],T_EP[T_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|T_Key>]} */
+	/** @public @arg {import("../yt_json_types/abc/group_C.ts").CF_TE_Endpoint_Opt_3} cf @template {import("../zb_plugin_types/KA_EndpointKey.ts").KA_EndpointKey} T_Key @template {import("../yt_json_types/stu/group_T.ts").TE_Endpoint_Opt_3<T_Key,unknown,unknown>} T_EP @arg {T_Key} k @arg {T_EP} x @returns {[T_EP["commandMetadata"],T_EP[T_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|T_Key>]} */
 	TE_Endpoint_Opt_3(cf, k, x) {
 		const { clickTrackingParams, commandMetadata, [k]: endpoint, ...y } = this
 			.s(cf, x);
@@ -3116,7 +3116,7 @@ class ServiceMethods extends ServiceData {
 	D_CommonConfig(x) {
 		this.H_s("url", x, (x) => this.ps.parse_url("D_CommonConfig.url", x));
 	}
-	/** @private @arg {Extract<import("../yt_json_types/d/group_DE.ts").DE_VE5754,{canonicalBaseUrl:any}>["browseId"]} x */
+	/** @private @arg {Extract<import("../yt_json_types/d/group_DE.ts").DE_VE5754,{canonicalBaseUrl:unknown}>["browseId"]} x */
 	DU_VE5754_BrowseId_2(x) {
 		this.browseId(x);
 	}
@@ -3651,9 +3651,9 @@ class ServiceMethods extends ServiceData {
 	visit_number_template(x) {
 		this.a_primitive_num(this.parse_number_template(x));
 	}
-	/** @type {any[]} */
+	/** @type {unknown[]} */
 	log_list = [];
-	/** @arg {string} path @arg {string} cf2 @arg {number} key_index @arg {any} entry */
+	/** @arg {string} path @arg {string} cf2 @arg {number} key_index @arg {unknown} entry */
 	add_log_entry(path, cf2, key_index, entry) {
 		this.log_list.push([
 			() =>
@@ -3818,7 +3818,7 @@ class ServiceMethods extends ServiceData {
 		let num = as(this.parse_number(x));
 		return num;
 	}
-	/** @template T @arg {any} x @arg {()=>T} _ty @returns {asserts x is T} */
+	/** @template T @arg {unknown} x @arg {()=>T} _ty @returns {asserts x is T} */
 	assert_assume_is_type(x, _ty) {
 		x;
 	}
@@ -3898,7 +3898,7 @@ class ServiceMethods extends ServiceData {
 			data: x,
 		};
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["like",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["like",unknown]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_like(target, x) {
 		switch (target[1]) {
 			default:
@@ -3955,7 +3955,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return result;
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,[any]>} target @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,[unknown]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_length_1(target, x) {
 		switch (target[0]) {
 			default:
@@ -4030,7 +4030,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["reel",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["reel",unknown]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_reel(target, x) {
 		switch (target[1]) {
 			default:
@@ -4050,7 +4050,7 @@ class ServiceMethods extends ServiceData {
 				};
 		}
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["notification",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["notification",unknown]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_notification(target, x) {
 		switch (target[1]) {
 			default:
@@ -4082,7 +4082,7 @@ class ServiceMethods extends ServiceData {
 				};
 		}
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["live_chat",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["live_chat",unknown]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_live_chat(target, x) {
 		switch (target[1]) {
 			default:
@@ -4103,7 +4103,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["att",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["att",unknown]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_res_att(target, x) {
 		switch (target[1]) {
 			default:
@@ -4124,7 +4124,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["account",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["account",unknown]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_account(target, x) {
 		switch (target[1]) {
 			default:
@@ -4151,7 +4151,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["pdg",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["pdg",...unknown]>} t @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_pdg(t, x) {
 		switch (t[1]) {
 			case "get_pdg_buy_flow":
@@ -4165,7 +4165,7 @@ class ServiceMethods extends ServiceData {
 				return null;
 		}
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["music",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["music",...unknown]>} t @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_music(t, x) {
 		switch (t[1]) {
 			case "get_search_suggestions":
@@ -4179,7 +4179,7 @@ class ServiceMethods extends ServiceData {
 				return null;
 		}
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["share",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["share",...unknown]>} t @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_share(t, x) {
 		switch (t[1]) {
 			case "get_share_panel":
@@ -4193,7 +4193,7 @@ class ServiceMethods extends ServiceData {
 				return null;
 		}
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["playlist",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["playlist",...unknown]>} t @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_playlist(t, x) {
 		switch (t[1]) {
 			case "get_add_to_playlist":
@@ -4207,7 +4207,7 @@ class ServiceMethods extends ServiceData {
 				return null;
 		}
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["subscription",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["subscription",...unknown]>} t @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_subscription(t, x) {
 		switch (t[1]) {
 			case "subscribe":
@@ -4227,7 +4227,7 @@ class ServiceMethods extends ServiceData {
 				return null;
 		}
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["browse",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_Split<import("../yt_json_types/d/group_D.ts").DU_UrlType,".">,["browse",...unknown]>} t @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_browse(t, x) {
 		switch (t.length) {
 			case 2:
@@ -4352,7 +4352,7 @@ class ServiceMethods extends ServiceData {
 		this.service_menu_icons.push(x);
 		this.cg.codegen_all_service_menu_icons(this.service_menu_icons, cf);
 	}
-	/** @private @arg {Extract<import("../yt_json_types/r/group_R.ts").RD_MenuServiceItem,{icon:any}>["icon"]} x */
+	/** @private @arg {Extract<import("../yt_json_types/r/group_R.ts").RD_MenuServiceItem,{icon:unknown}>["icon"]} x */
 	RD_MenuServiceItem_Icon(x) {
 		let u = x;
 		switch (x.iconType) {
@@ -5426,7 +5426,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/**
 	 * @private
-	 * @arg {Extract<Exclude<import("../yt_json_types/ghi/group_G.ts").GD_RC_SectionList,{targetId:any}>,{contents:any}>["contents"][number]["itemSectionRenderer"]} x
+	 * @arg {Extract<Exclude<import("../yt_json_types/ghi/group_G.ts").GD_RC_SectionList,{targetId:unknown}>,{contents:unknown}>["contents"][number]["itemSectionRenderer"]} x
 	 * @arg {[import("../yt_json_types/r/group_R.ts").R_ContinuationItem[],"comment-item-section","engagement-panel-comments-section"][]} u1
 	 * @arg {import("../yt_json_types/r/group_R.ts").R_Message[]} u2
 	 */
@@ -5440,7 +5440,7 @@ class ServiceMethods extends ServiceData {
 			u1.push(r);
 			return;
 		}
-		let r = this.TD_ItemSection(`TD_ItemSection_1<any>`, x);
+		let r = this.TD_ItemSection(`TD_ItemSection_1<unknown>`, x);
 		if (r === null) return;
 		let [v, ...z] = r;
 		if (z.length !== 0) debugger;
@@ -5448,7 +5448,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/**
 	 * @private
-	 * @arg {Extract<Exclude<import("../yt_json_types/ghi/group_G.ts").GD_RC_SectionList,{targetId:any}>,{contents:any}>["contents"][number]} x
+	 * @arg {Extract<Exclude<import("../yt_json_types/ghi/group_G.ts").GD_RC_SectionList,{targetId:unknown}>,{contents:unknown}>["contents"][number]} x
 	 * @arg {[import("../yt_json_types/r/group_R.ts").R_ContinuationItem[],"comment-item-section","engagement-panel-comments-section"][]} u1
 	 * @arg {import("../yt_json_types/r/group_R.ts").R_Message[]} u2
 	 */
@@ -5470,7 +5470,7 @@ class ServiceMethods extends ServiceData {
 		}
 		this.z(u, this.R_ContinuationItem);
 	}
-	/** @public @arg {Extract<Exclude<import("../yt_json_types/ghi/group_G.ts").GD_RC_SectionList,{targetId:any}>,{contents:any}>} x */
+	/** @public @arg {Extract<Exclude<import("../yt_json_types/ghi/group_G.ts").GD_RC_SectionList,{targetId:unknown}>,{contents:unknown}>} x */
 	GD_RC_SectionList_p2(x) {
 		const cf = "GD_RC_SectionList_p2";
 		const { contents: arr, trackingParams, ...y } = this.s(cf, x);
@@ -6344,7 +6344,7 @@ class ServiceMethods extends ServiceData {
 		if (visibility !== "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 		this.D_LoggingDirectives(loggingDirectives);
 	}
-	/** @private @arg {Extract<import("../yt_json_types/ghi/group_G.ts").G_Watch_ContentsItem,{itemSectionRenderer:any}>} x */
+	/** @private @arg {Extract<import("../yt_json_types/ghi/group_G.ts").G_Watch_ContentsItem,{itemSectionRenderer:unknown}>} x */
 	G_WatchResultItem_ItemSectionGroup(x) {
 		if (this.is_ItemSectionRendererTemplate(x)) {
 			return this.G_WatchResultItem_ItemSection_3(x);
@@ -6681,13 +6681,13 @@ class ServiceMethods extends ServiceData {
 		x === "";
 		this.codegen_typedef(cf, x);
 	}
-	/** @private @arg {"D_ChipCloudChip_WithNav"} cf @arg {Extract<import("../yt_json_types/d/group_D.ts").D_ChipCloudChip,{navigationEndpoint:any}>} x */
+	/** @private @arg {"D_ChipCloudChip_WithNav"} cf @arg {Extract<import("../yt_json_types/d/group_D.ts").D_ChipCloudChip,{navigationEndpoint:unknown}>} x */
 	D_ChipCloudChip_OmitNav(cf, x) {
 		const { navigationEndpoint: a, ...y } = this.s(cf, x);
 		this.D_ChipCloudChip_navigationEndpoint(a);
 		return y;
 	}
-	/** @private @arg {Extract<import("../yt_json_types/d/group_D.ts").D_ChipCloudChip,{navigationEndpoint:any}>} x */
+	/** @private @arg {Extract<import("../yt_json_types/d/group_D.ts").D_ChipCloudChip,{navigationEndpoint:unknown}>} x */
 	D_ChipCloudChip_WithNav(x) {
 		const cf = "D_ChipCloudChip_WithNav";
 		let { text, trackingParams, ...u } = this.D_ChipCloudChip_OmitNav(cf, x);
@@ -6730,7 +6730,7 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(b);
 		return y;
 	}
-	/** @private @arg {string} cf @arg {Extract<import("../yt_json_types/d/group_D.ts").D_ChipCloudChip,{style:any}>["style"]} x */
+	/** @private @arg {string} cf @arg {Extract<import("../yt_json_types/d/group_D.ts").D_ChipCloudChip,{style:unknown}>["style"]} x */
 	D_ChipCloudChip_Style(cf, x) {
 		let ia = this.xm.get_strings_map_item(cf);
 		ia.push(["style.styleType", [x.styleType]]);
@@ -6743,7 +6743,7 @@ class ServiceMethods extends ServiceData {
 			case "STYLE_REFRESH_TO_NOVEL_CHIP":
 		}
 	}
-	/** @private @arg {Extract<Exclude<import("../yt_json_types/d/group_D.ts").D_ChipCloudChip,{navigationEndpoint:any}>,{isSelected:any}>} x */
+	/** @private @arg {Extract<Exclude<import("../yt_json_types/d/group_D.ts").D_ChipCloudChip,{navigationEndpoint:unknown}>,{isSelected:unknown}>} x */
 	D_ChipCloudChip_WithSelection(x) {
 		const cf = "D_ChipCloudChip_WithSelection";
 		let d = this.D_ChipCloudChip_Omit(cf, x);
@@ -6778,7 +6778,7 @@ class ServiceMethods extends ServiceData {
 		if (horizontalScrollable !== false) debugger;
 		this.xm.z([nextButton, previousButton], this.xm.R_Button);
 	}
-	/** @private @arg {Extract<import("../yt_json_types/ghi/group_G.ts").G_Watch_ContentsItem,import("../yt_json_types/stu/group_T.ts").TR_ItemSection_2<any,"comments-entry-point">>['itemSectionRenderer']['contents'][number]} x */
+	/** @private @arg {Extract<import("../yt_json_types/ghi/group_G.ts").G_Watch_ContentsItem,import("../yt_json_types/stu/group_T.ts").TR_ItemSection_2<unknown,"comments-entry-point">>['itemSectionRenderer']['contents'][number]} x */
 	R_CommentItemSection_EntryPoint(x) {
 		const cf = "R_CommentItemSection_EntryPoint";
 		if ("commentsEntryPointHeaderRenderer" in x) {
@@ -7025,7 +7025,7 @@ class ServiceMethods extends ServiceData {
 				break;
 		}
 	}
-	/** @private @arg {import("../yt_json_types/stu/group_T.ts").TR_ItemSection_2<any,any>} x @returns {x is import("../yt_json_types/stu/group_T.ts").TR_ItemSection_3<any,any,any>} */
+	/** @private @arg {import("../yt_json_types/stu/group_T.ts").TR_ItemSection_2<unknown,unknown>} x @returns {x is import("../yt_json_types/stu/group_T.ts").TR_ItemSection_3<unknown,unknown,unknown>} */
 	is_ItemSectionRendererTemplate(x) {
 		return ("sectionIdentifier" in x.itemSectionRenderer) &&
 			("targetId" in x.itemSectionRenderer);
@@ -7466,7 +7466,7 @@ class ServiceMethods extends ServiceData {
 		x === "";
 		this.codegen_typedef(cf, x);
 	}
-	/** @private @arg {Extract<import("../yt_json_types/ghi/group_G.ts").G_Watch_ContentsItem,import("../yt_json_types/stu/group_T.ts").TR_ItemSection_3<any,any,any>>} x */
+	/** @private @arg {Extract<import("../yt_json_types/ghi/group_G.ts").G_Watch_ContentsItem,import("../yt_json_types/stu/group_T.ts").TR_ItemSection_3<unknown,unknown,unknown>>} x */
 	G_WatchResultItem_ItemSection_3(x) {
 		const cf = "G_WatchResultItem_ItemSection";
 		this.k(`${cf}.section`, x.itemSectionRenderer);
@@ -8440,7 +8440,7 @@ class ServiceMethods extends ServiceData {
 		this.t(serviceEndpoint, (x) => this.xr.C_Continuation(x));
 		this.t(accessibility, this.D_Accessibility);
 	}
-	/** @private @arg {Extract<import("../yt_json_types/d/group_D.ts").D_SortFilterSubMenu,{targetId:any}>} x */
+	/** @private @arg {Extract<import("../yt_json_types/d/group_D.ts").D_SortFilterSubMenu,{targetId:unknown}>} x */
 	D_SortFilterSubMenu_WithTargetId(x) {
 		const cf = "D_SortFilterSubMenu_WithTargetId";
 		switch (x.targetId) {
@@ -9100,7 +9100,7 @@ class ServiceMethods extends ServiceData {
 		x;
 		debugger;
 	}
-	/** @public @arg {Extract<import("../yt_json_types/d/group_D.ts").D_TextRun,{navigationEndpoint:any;loggingDirectives:any}>["navigationEndpoint"]} x */
+	/** @public @arg {Extract<import("../yt_json_types/d/group_D.ts").D_TextRun,{navigationEndpoint:unknown;loggingDirectives:unknown}>["navigationEndpoint"]} x */
 	D_TextRun_NavEP_2(x) {
 		const cf = "D_TextRun_NavEP_2";
 		this.k(cf, x);

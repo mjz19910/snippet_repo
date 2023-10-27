@@ -32,7 +32,7 @@ function split_string_once(s,d=as(",")) {
 	if(s==="") {
 		/** @type {[]} */
 		let r=[];
-		/** @type {any} */
+		/** @type {unknown} */
 		let q=r;
 		return as(q);
 	}
@@ -40,7 +40,7 @@ function split_string_once(s,d=as(",")) {
 	if(i===-1) {
 		/** @type {[S]} */
 		let r=[s];
-		/** @type {any} */
+		/** @type {unknown} */
 		let q=r;
 		return as(q);
 	}
@@ -48,12 +48,12 @@ function split_string_once(s,d=as(",")) {
 	let b=s.slice(i+d.length);
 	/** @type {[string,string]} */
 	let r=[a,b];
-	/** @type {any} */
+	/** @type {unknown} */
 	let q=r;
 	return as(q);
 }
 export class Snippet_0_tmp {
-	/** @protected @template {any[]} T @arg {T} x @returns {T extends [...infer R,infer L]?[R,L]:never} */
+	/** @protected @template {unknown[]} T @arg {T} x @returns {T extends [...infer R,infer L]?[R,L]:never} */
 	drop_last(x) {
 		return as([x.slice(0,-1),x.slice(-1)[0]]);
 	}
@@ -85,7 +85,7 @@ export class Snippet_0_tmp {
 	}
 	/** @public @arg {unknown} x @arg {string|null} r */
 	generate_renderer(x,r) {throw new AggregateError(["this.#generate_renderer(x,r);",x,r]);}
-	/** @public @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
+	/** @public @template U @template {U} T @arg {U} e @arg {unknown} [x] @returns {T} */
 	as(e,x=e) {return x;}
 	/** @private @template {{}} T @arg {import("./yt_json_types/stu/group_T.ts").T_AnyObjectOrEmpty<T>} x @returns {x is T} */
 	maybe_has_value(x) {return Object.keys(x).length>0;}
@@ -98,9 +98,9 @@ export class Snippet_0_tmp {
 	z(x,f) {
 		if(x===void 0) {debugger; return [[],[]];}
 		if(!x.entries) {debugger; return [[],[]];}
-		/** @type {any[]} */
+		/** @type {unknown[]} */
 		let c=[];
-		/** @type {any[]} */
+		/** @type {unknown[]} */
 		let v=[];
 		for(let it of x.entries()) {
 			const [i,a]=it;
@@ -206,7 +206,7 @@ class ND extends Snippet_0_tmp {
 			let c1=cc[0];
 			if(this.str_starts_with("toggled",c1)) {
 				let u1x=split_string_once(c1,"toggled");
-				/** @type {any} */
+				/** @type {unknown} */
 				let ac=u1x[1][0].toLowerCase()+u1x[1].slice(1);
 				/** @type {keyof RemoveToggled<U>} */
 				let u1=ac;
@@ -215,14 +215,14 @@ class ND extends Snippet_0_tmp {
 			}
 			if(this.str_starts_with("untoggled",c1)) {
 				let u1x=split_string_once(c1,"untoggled");
-				/** @type {any} */
+				/** @type {unknown} */
 				let ac=u1x[1][0].toLowerCase()+u1x[1].slice(1);
 				/** @type {keyof RemoveUnToggled<U>} */
 				let u1=ac;
 				untoggled[u1]=cc[1];
 				continue;
 			}
-			/** @type {any} */
+			/** @type {unknown} */
 			let ac=c1;
 			/** @type {keyof Omit<U,`toggled${string}`|`untoggled${string}`>} */
 			let u1=ac;

@@ -7,8 +7,8 @@ import {M_VE12924} from "../r/group_R.ts";
 import {TM_Gen,TE_Endpoint_3} from "../stu/group_T.ts";
 
 export type TM_VE<T extends number>=TM_Gen<{rootVe: T;}>;
-export type TE_VE<T extends number>=TE_Endpoint_3<"browseEndpoint",any,TM_VE<T>>;
-export type TE_VE_In=TE_Endpoint_3<"browseEndpoint",any,TM_VE<number>>;
+export type TE_VE<T extends number>=TE_Endpoint_3<"browseEndpoint",unknown,TM_VE<T>>;
+export type TE_VE_In=TE_Endpoint_3<"browseEndpoint",unknown,TM_VE<number>>;
 //#region E_VE
 export type E_VE3611=TE_Endpoint_3<"browseEndpoint",DE_VE3611,M_VE3611>;
 export type E_VE3854=TE_Endpoint_3<"browseEndpoint",DE_VE3854,M_VE3854>;

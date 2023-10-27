@@ -35,7 +35,7 @@ export type ServiceMethods=InstanceType<RequireModuleCache["mod$ServiceMethods"]
 export type ParserService=InstanceType<RequireModuleCache["mod$ParserService"]["ParserService"]>;
 export type HandleTypes=InstanceType<RequireModuleCache["mod$HandleTypes"]["HandleTypes"]>;
 
-export type Y_PutBoxedArgs=[store_type: string,store_args: [string,make_item_group<any>]|[null,number]];
+export type Y_PutBoxedArgs=[store_type: string,store_args: [string,make_item_group<unknown>]|[null,number]];
 
 export type CustomEventType={
 	type: keyof NonNullable<import("../yt_json_types/j/J_CustomEventTargetEvents.ts").J_CustomEventTargetEvents>;

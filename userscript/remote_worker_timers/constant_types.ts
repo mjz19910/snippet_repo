@@ -61,7 +61,7 @@ export type TimeoutClearAnyT=typeof TimeoutClearAny;
 export type TimeoutClearInfoT={
 	single: TimeoutClearSingleT;
 	repeating: TimeoutClearRepeatingT;
-	any: TimeoutClearAnyT;
+	unknown: TimeoutClearAnyT;
 };
 export type TimeoutFireSingleT=typeof TimeoutFireSingle;
 export type TimeoutFireRepeatingT=typeof TimeoutFireRepeating;
@@ -88,7 +88,7 @@ export type ReplyClearAnyT=typeof ReplyClearAny;
 export type ReplyClearTypesT={
 	single: ReplyClearSingleT;
 	repeating: ReplyClearRepeatingT;
-	any: ReplyClearAnyT;
+	unknown: ReplyClearAnyT;
 };
 export type ReplyTypesT={
 	reply_to_local: ReplyToWorkerStateT;

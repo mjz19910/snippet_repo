@@ -10,7 +10,7 @@ export function verify_service_g_feedback_valid() {
 	type TVM=PNum<TV[0]>;
 	type TR=T_NumArrStr<TS>;
 	type FmtCon<T extends string,J extends string>=J extends ""? `${T}`:`${T},${J}`;
-	type Fmt<T>=T extends any[]? T extends [infer U1 extends number,infer U2 extends number,infer U3 extends number,...infer J]? FmtCon<`${U1},${U2},${U3}`,Fmt<J>>:T extends [infer U1 extends number,infer U2 extends number,...infer J]? FmtCon<`${U1},${U2}`,Fmt<J>>:T extends [infer U extends number]? `${U}`:"":"";
+	type Fmt<T>=T extends unknown[]? T extends [infer U1 extends number,infer U2 extends number,infer U3 extends number,...infer J]? FmtCon<`${U1},${U2},${U3}`,Fmt<J>>:T extends [infer U1 extends number,infer U2 extends number,...infer J]? FmtCon<`${U1},${U2}`,Fmt<J>>:T extends [infer U extends number]? `${U}`:"":"";
 	/** @template {string} T @returns {T extends `${infer Z extends number}` ? Z : never} */
 	function to_number<U extends string,T extends U extends `${infer Z extends number}`? Z:never>(x: U): T {return Number(x) as T;}
 	const vq=ss.split(",") as TV;

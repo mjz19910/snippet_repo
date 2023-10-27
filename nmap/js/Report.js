@@ -1,7 +1,7 @@
 export class Report {
-	/** @type {any[]} */
+	/** @type {unknown[]} */
 	report_contents = [];
-	/** @arg {any[]} value */
+	/** @arg {unknown[]} value */
 	add(value) {
 		this.report_contents.push(value);
 	}

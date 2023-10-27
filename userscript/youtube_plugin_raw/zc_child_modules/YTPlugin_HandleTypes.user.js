@@ -81,7 +81,7 @@ class HandleTypes extends BaseService {
 	}
 	//#endregion
 	//#region  Service Methods import
-	/** @template T @arg {any} x @arg {()=>T} _ty @returns {asserts x is T} */
+	/** @template T @arg {unknown} x @arg {()=>T} _ty @returns {asserts x is T} */
 	assert_assume_is_type(x, _ty) {
 		x;
 	}
@@ -483,7 +483,7 @@ class HandleTypes extends BaseService {
 	cg_mismatch_set = new Set();
 	/** @type {[string,string][]} */
 	cg_mismatch_list = [];
-	/** @template A1,A2,A3,A4 @template {[(a1:A1,a2:A2,a3:A3,a4:A4,...n:any[])=>void]} T @arg {[T,A1,A2,A3,A4]} arg0 */
+	/** @template A1,A2,A3,A4 @template {[(a1:A1,a2:A2,a3:A3,a4:A4,...n:unknown[])=>void]} T @arg {[T,A1,A2,A3,A4]} arg0 */
 	make_bind([func, a1, a2, a3, a4]) {
 		return [func, a1, a2, a3, a4];
 	}
@@ -504,7 +504,7 @@ class HandleTypes extends BaseService {
 	T_FD32(x) {
 		return this.T_RawChild(x)[1];
 	}
-	/** @protected @template T @arg {["v_param_arr", [[any,any,T,any]]]} x */
+	/** @protected @template T @arg {["v_param_arr", [[unknown,unknown,T,unknown]]]} x */
 	T_VW(x) {
 		return this.T_RawChild(x)[2];
 	}
@@ -512,7 +512,7 @@ class HandleTypes extends BaseService {
 	T_VW_Bigint(x) {
 		return this.T_RawChild(x)[2];
 	}
-	/** @private @template {string} T @arg {["v_param_arr", [[any,any,any,["string",T]]]]} x */
+	/** @private @template {string} T @arg {["v_param_arr", [[unknown,unknown,unknown,["string",T]]]]} x */
 	TV_Str(x) {
 		if (!x) debugger;
 		return this.T_RawChild(x)[3][1];
@@ -550,7 +550,7 @@ class HandleTypes extends BaseService {
 	is_T_D32(x) {
 		return x[1][0][0] === "v_data32";
 	}
-	/** @arg {import("../yt_json_types/stu/group_T.ts").T_VW<any>|import("../yt_json_types/_rtv_wrong/T_Data.ts").TV_Str<string>} x @returns {x is T_VW<any>} */
+	/** @arg {import("../yt_json_types/stu/group_T.ts").T_VW<unknown>|import("../yt_json_types/_rtv_wrong/T_Data.ts").TV_Str<string>} x @returns {x is T_VW<unknown>} */
 	is_T_VW(x) {
 		return x[1][0][0] === "v_child";
 	}
@@ -2468,7 +2468,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @type {string[]} */
 	_continuation_logged_str = [];
-	/** @public @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_0,"/">,["shorts",any]>} x */
+	/** @public @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_0,"/">,["shorts",unknown]>} x */
 	parse_shorts_url(x) {
 		const [sec, raw_id] = x;
 		if (sec !== "shorts") debugger;
@@ -2478,7 +2478,7 @@ class HandleTypes extends BaseService {
 	cache_playlist_index = [];
 	log_start_radio = false;
 	log_playlist_index = false;
-	/** @public @arg {import("../yt_json_types/abc/group_C.ts").CF_L_TP_Params} root @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../support_2/ParseUrlWithSearchIn.ts").ParseUrlWithSearchIn,"?">,["watch",...any]>[1]} x */
+	/** @public @arg {import("../yt_json_types/abc/group_C.ts").CF_L_TP_Params} root @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../support_2/ParseUrlWithSearchIn.ts").ParseUrlWithSearchIn,"?">,["watch",...unknown]>[1]} x */
 	parse_watch_page_url_url_arr(root, x) {
 		root;
 		let { ...x2 } = this.parse_url_search_params(x);
@@ -2879,7 +2879,7 @@ class HandleTypes extends BaseService {
 		let idx = kk_x.indexOf(target_src_key);
 		kk_x.splice(idx, 1);
 		let kk_sparams = this.split_str(params_list);
-		/** @type {any} */
+		/** @type {unknown} */
 		let xa = x;
 		/** @type {typeof obj_sparams} */
 		let xt = xa;
@@ -3359,12 +3359,12 @@ class HandleTypes extends BaseService {
 	w_db_data(x) {
 		return [1, x];
 	}
-	/** @arg {any} x @returns {import("../yt_json_types/k/kv_mod/KV_T_move.ts").Ret_w_diz} */
+	/** @arg {unknown} x @returns {import("../yt_json_types/k/kv_mod/KV_T_move.ts").Ret_w_diz} */
 	w_diz(x) {
 		const a = x.z[0], w = this.w_di(a);
 		return [w, a, x];
 	}
-	/** @arg {any} x @returns {[any,any]} */
+	/** @arg {unknown} x @returns {[unknown,unknown]} */
 	w_di(x) {
 		return [x.z[0], x];
 	}

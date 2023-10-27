@@ -590,13 +590,13 @@ class CodegenService extends ServiceWithAccessors
 				{
 					if(!o(x.navigationEndpoint)?.browseEndpoint)
 					{
-						/** @type {import("../yt_json_types/stu/group_T.ts").TD_GuideEntry_EntryData<any>} */
+						/** @type {import("../yt_json_types/stu/group_T.ts").TD_GuideEntry_EntryData<unknown>} */
 						console.log("[Generate.TD_GuideEntry_EntryData.wrong_endpoint]",this.get_keys_of(x));
 						break x;
 					}
 					return `TYPE::TD_GuideEntry_EntryData<"${ru.iconType}">`;
 				}
-				/** @type {import("../yt_json_types/stu/group_T.ts").TD_GuideEntry_Simple<any>} */
+				/** @type {import("../yt_json_types/stu/group_T.ts").TD_GuideEntry_Simple<unknown>} */
 				if(!this.eq_keys(kk,["navigationEndpoint","icon","trackingParams","formattedTitle","accessibility"]))
 				{
 					console.log("[Generate.TD_GuideEntry_Simple.keys.overflow]",this.get_keys_of(x));
@@ -960,7 +960,7 @@ class CodegenService extends ServiceWithAccessors
 		{
 			default: debugger; break;
 			case "DIALOG":
-				let jy=Object.keys(x).filter(e => e!=="popupType").join(":any;");
+				let jy=Object.keys(x).filter(e => e!=="popupType").join(":unknown;");
 				console.log("jy",jy);
 				return `TYPE::Extract<PopupTypeMap["${x.popupType}"][number],{${jy}}>`;
 		}

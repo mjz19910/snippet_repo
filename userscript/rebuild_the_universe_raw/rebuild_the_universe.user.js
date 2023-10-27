@@ -87,7 +87,7 @@ const LOG_LEVEL_TRACE_IMPL = 7;
 let local_logging_level = 3;
 let LogErrorAsConsoleError = false;
 let logger_updated = false;
-/** @arg {number} level @arg {string} format_str @arg {any[]} args */
+/** @arg {number} level @arg {string} format_str @arg {unknown[]} args */
 function append_console_message(level, format_str, ...args) {
 	if (!logger_updated) update_logger_vars();
 	const level_str = human_log_level(level);
@@ -126,7 +126,7 @@ function human_log_level(level) {
 			return "unknown";
 	}
 }
-/** @arg {number} level @arg {string} format_str @arg {any[]} args */
+/** @arg {number} level @arg {string} format_str @arg {unknown[]} args */
 function log_if_impl_r(level, format_str, ...args) {
 	update_logger_vars();
 	if (level > local_logging_level) return;
@@ -320,11 +320,11 @@ class InstructionImplBase {}
 class PromiseBoxImpl {
 	/** @readonly */
 	type = "promise_box";
-	/** @type {any} */
+	/** @type {unknown} */
 	inner_type;
-	/** @type {any} */
+	/** @type {unknown} */
 	await_type;
-	/** @arg {any} _to_match */
+	/** @arg {unknown} _to_match */
 	as_type(_to_match) {
 		return this;
 	}
@@ -617,7 +617,7 @@ class InstructionModifyOpImpl extends InstructionImplBase {
 			throw new Error("RangeError: Destination is out of instructions range");
 		}
 		const instruction_1 = vm.instructions[target];
-		/** @type {[string, ...any[]]} */
+		/** @type {[string, ...unknown[]]} */
 		const instruction_modify = instruction_1;
 		let value = null;
 		if (vm instanceof StackVMImpl) value = vm.stack.pop();
@@ -984,7 +984,7 @@ const instruction_descriptor_arr = [
 ];
 
 class StackVmBaseImpl {
-	/** @arg {number} offset @arg {import("./ns.ts").Box} value @arg {[string,...any[]]} lex_instruction */
+	/** @arg {number} offset @arg {import("./ns.ts").Box} value @arg {[string,...unknown[]]} lex_instruction */
 	update_instruction(offset, value, lex_instruction) {
 		if (offset == 0) {
 			if (value.type === "string") lex_instruction[offset] = value.value;
@@ -1168,7 +1168,7 @@ class StackVMImpl {
 	}
 }
 class EventHandlerVMDispatchImplR extends StackVMImpl {
-	/** @arg {InstructionType_CJS[]} instructions @arg {any} target_obj */
+	/** @arg {InstructionType_CJS[]} instructions @arg {unknown} target_obj */
 	constructor(instructions, target_obj) {
 		super(instructions);
 		this.target_obj = target_obj;
@@ -1215,7 +1215,7 @@ class StackVMParserImplR {
 			}
 		}
 	}
-	/** @arg {string|string[]} str @arg {any[]} format_list */
+	/** @arg {string|string[]} str @arg {unknown[]} format_list */
 	static parse_string_with_format_ident(str, format_list) {
 		const format_index = str.indexOf("%");
 		const format_type = str[format_index + 1];
@@ -1230,7 +1230,7 @@ class StackVMParserImplR {
 				);
 		}
 	}
-	/** @arg {any[]} cur @arg {any[]} format_list */
+	/** @arg {unknown[]} cur @arg {unknown[]} format_list */
 	static parse_current_instruction(cur, format_list) {
 		let arg_loc = 1;
 		let arg = cur[arg_loc];
@@ -1286,7 +1286,7 @@ class StackVMParserImplR {
 		}
 		return arr;
 	}
-	/** @arg {string} string @arg {any[]} format_list */
+	/** @arg {string} string @arg {unknown[]} format_list */
 	static parse_instruction_stream_from_string(string, format_list) {
 		const raw_instructions = this.parse_string_into_raw_instruction_stream(
 			string,
@@ -1381,7 +1381,7 @@ class StackVMParserImplR {
 }
 
 class DocumentWriteListImpl {
-	/** @type {any[]} */
+	/** @type {unknown[]} */
 	list;
 	constructor() {
 		this.list = [];
@@ -1434,7 +1434,7 @@ class DocumentWriteListImpl {
 			const doc_1 = this.attached_document;
 			if (doc_1 && this.document_write) {
 				const doc_var = this.document_write;
-				/** @type {any} */
+				/** @type {unknown} */
 				const any_var = doc_var;
 				/** @type {Document["write"]} */
 				const vv = any_var;
@@ -1489,12 +1489,12 @@ class NamedIdGenerator {
 	}
 }
 class EventHandlerDispatch {
-	/** @arg {{[x:string]:any}} target_obj @arg {string} target_name */
+	/** @arg {{[x:string]:unknown}} target_obj @arg {string} target_name */
 	constructor(target_obj, target_name) {
 		this.target_obj = target_obj;
 		this.target_name = target_name;
 	}
-	/** @arg {any} event */
+	/** @arg {unknown} event */
 	handleEvent(event) {
 		this.target_obj[this.target_name](event);
 	}
@@ -1511,7 +1511,7 @@ class TimeoutTarget {
 	}
 }
 class IntervalTarget {
-	/** @arg {any} obj @arg {any} callback */
+	/** @arg {unknown} obj @arg {unknown} callback */
 	constructor(obj, callback) {
 		this.m_once = false;
 		this.m_obj = obj;
@@ -1535,13 +1535,13 @@ class PromiseTimeoutTarget {
 		this.m_active = true;
 		return this.m_promise;
 	}
-	/** @arg {any} accept @arg {any} reject */
+	/** @arg {unknown} accept @arg {unknown} reject */
 	promise_executor(accept, reject) {
 		this.m_promise_accept = accept;
 		this.m_promise_reject = reject;
 		this.m_callback = this.on_result.bind(this);
 	}
-	/** @arg {any} value */
+	/** @arg {unknown} value */
 	on_result(value = void 0) {
 		if (!this.m_promise_accept) {
 			throw new Error("Missing promise accept handler");
@@ -1581,7 +1581,7 @@ class BaseNodeImpl {
 	constructor() {
 		this.m_parent = null;
 	}
-	/** @arg {any} parent */
+	/** @arg {unknown} parent */
 	set_parent(parent) {
 		this.m_parent = parent;
 	}
@@ -1618,7 +1618,7 @@ class IntervalIdNode extends BaseNodeImpl {
 	}
 }
 class IntervalTargetFn {
-	/** @arg {any} callback @arg {number} timeout */
+	/** @arg {unknown} callback @arg {number} timeout */
 	constructor(callback, timeout) {
 		this.m_callback = callback;
 		this.timeout = timeout;
@@ -1637,7 +1637,7 @@ class TimeoutNode extends BaseNodeImpl {
 	timeout() {
 		return this.m_timeout;
 	}
-	/** @arg {any} target */
+	/** @arg {unknown} target */
 	set_target(target) {
 		this.m_target = target;
 	}
@@ -1684,7 +1684,7 @@ class IntervalNode extends BaseNodeImpl {
 	}
 }
 class AsyncTimeoutNode extends TimeoutNode {
-	/** @arg {{wait():Promise<any>;destroy():void}} target */
+	/** @arg {{wait():Promise<unknown>;destroy():void}} target */
 	async start_async(target) {
 		if (!target) {
 			throw new Error("unable to start_async without anything to wait for");
@@ -2362,7 +2362,7 @@ class AutoBuyImplR {
 		else args.unshift("test");
 		log_if_impl_r(log_level, format_str, ...args);
 	}
-	/** @arg {{ sym: any; }} val */
+	/** @arg {{ sym: unknown; }} val */
 	iterate_symbols(val) {
 		/** @type {unknown} */
 		const v1 = cast_as(this);
@@ -2488,7 +2488,7 @@ class AutoBuyImplR {
 						// LOG_LEVEL_INFO
 						log_if_impl_r(LOG_LEVEL_ERROR_IMPL, "play success");
 					},
-					/** @arg {any} err */
+					/** @arg {unknown} err */
 					function (err) {
 						log_if_impl_r(LOG_LEVEL_ERROR_IMPL, err);
 					},
@@ -2577,7 +2577,7 @@ class AutoBuyImplR {
 			font-size:22px;
 			color:lightgray;
 		}`;
-		/** @arg {any} obj @arg {HTMLElement} parent @arg {string} tag_name @arg {string} id @arg {string|undefined} [content] */
+		/** @arg {unknown} obj @arg {HTMLElement} parent @arg {string} tag_name @arg {string} id @arg {string|undefined} [content] */
 		function create_element(obj, parent, tag_name, id, content) {
 			const ele = document.createElement(tag_name);
 			ele.id = id;
@@ -2897,7 +2897,7 @@ class AutoBuyImplR {
 				'&& a != encrypt("pace") ' +
 				'&& a != "constel2"',
 		);
-		/** @type {any} */
+		/** @type {unknown} */
 		const temp_function = new Function(
 			temp.substring(
 				temp.indexOf("{") + 1,
@@ -3361,7 +3361,7 @@ function array_sample_end(arr, rem_target_len) {
 	}
 	return arr;
 }
-/** @arg {any[]} arr */
+/** @arg {unknown[]} arr */
 function char_len_of(arr) {
 	return arr.reduce((a, b) => a + b.length, 0) + arr.length;
 }
@@ -3462,19 +3462,15 @@ function got_jquery(value) {
 }
 /** @template U @template {U} T @arg {U} e @returns {T} */
 function cast_as(e) {
-	/** @type {any} */
-	const x = e;
-	return x;
+	return e;
 }
 function use_jquery() {
-	/** @type {typeof window&{$:any}} */
-	const win_jquery = cast_as(window);
-	const jq = win_jquery.$;
+	const jq = window.$;
 	if (!jq) return;
 	if (typeof jq != "function") return;
 	const res = jq("head");
 	const r_proto = Object.getPrototypeOf(res);
-	r_proto.lazyload = function (/** @type {any} */ ..._a) {};
+	r_proto.lazyload = function (/** @type {unknown} */ ..._a) {};
 	return jq;
 }
 function proxy_jquery() {
@@ -3566,7 +3562,7 @@ function enable_jquery_proxy_if_needed() {
 	if (enable_proxy) proxy_jquery();
 }
 
-/** @arg {(value: any) => void} promise_accept */
+/** @arg {(value: unknown) => void} promise_accept */
 function do_load_fire_promise(promise_accept) {
 	if (document.firstChild) document.firstChild.remove();
 	promise_accept(null);
@@ -3689,11 +3685,11 @@ function main() {
 	}
 	const real_st = setTimeout;
 	const real_si = setInterval;
-	/** @type {any} */
+	/** @type {unknown} */
 	const any_nop = nop_timeout;
 	self.setTimeout = any_nop;
 	self.setInterval = any_nop;
-	/** @arg {any[]} v */
+	/** @arg {unknown[]} v */
 	function no_aev(...v) {
 		console.log("aev", v);
 	}
@@ -3738,13 +3734,13 @@ function main() {
 			if (!la) throw new Error("mut_observers underflow");
 			la.disconnect();
 		}
-		/** @type {typeof window&{$:any}} */
+		/** @type {typeof window&{$:unknown}} */
 		const win_jquery = cast_as(window);
 		const jq = win_jquery.$;
 		set_jq_proxy(jq);
-		/** @type {any[]} */
+		/** @type {unknown[]} */
 		const arr = [];
-		/** @type {any} */
+		/** @type {unknown} */
 		const any_cur = arr;
 		window.adsbygoogle = any_cur;
 		window.adsbygoogle.op = window.adsbygoogle.push;

@@ -8,17 +8,17 @@ export class Runner {
 			value: this,
 		};
 	}
-	/** @type {(any[])|null} */
+	/** @type {(unknown[])|null} */
 	argv = null;
 	/** @type {string|CustomInputMatcher|null} */
 	_ln = null;
 	value = null;
-	/** @type {((...x:any[])=>any)[]} */
+	/** @type {((...x:unknown[])=>unknown)[]} */
 	funcs = [];
 	/** @type {string[]} */
 	names = [];
 	self_sym = Symbol();
-	/** @arg {any[]} e */
+	/** @arg {unknown[]} e */
 	do_cur(...e) {
 		let i;
 		this.argv = e;
@@ -90,7 +90,7 @@ export class Runner {
 			//
 		}
 	}
-	/** @arg {string|CustomInputMatcher} name @arg {((...x: any[]) => any)} func */
+	/** @arg {string|CustomInputMatcher} name @arg {((...x: unknown[]) => unknown)} func */
 	add_func(name, func) {
 		/** @template T @arg {T} _obj @returns {asserts _obj is {user_run_name?: string}}  */
 		function assume_has_run_name(_obj) {}
@@ -108,7 +108,7 @@ export class Runner {
 		console.log("handle add_func for", name);
 		throw new Error("Unexpected type");
 	}
-	/** @type {((...x:any[])=>any)} */
+	/** @type {((...x:unknown[])=>unknown)} */
 	get f() {
 		if (!this._f) throw new Error("no function to get");
 		return this._f;

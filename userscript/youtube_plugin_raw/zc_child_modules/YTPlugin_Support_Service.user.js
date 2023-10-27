@@ -54,7 +54,7 @@ function split_string_once_ex_v2(s, d = as(","), _wa) {
 	if (s === "") {
 		/** @private @type {[]} */
 		let r = [];
-		/** @private @type {any} */
+		/** @private @type {unknown} */
 		let q = r;
 		return as(q);
 	}
@@ -62,7 +62,7 @@ function split_string_once_ex_v2(s, d = as(","), _wa) {
 	if (i === -1) {
 		/** @private @type {[S]} */
 		let r = [s];
-		/** @private @type {any} */
+		/** @private @type {unknown} */
 		let q = r;
 		return as(q);
 	}
@@ -70,7 +70,7 @@ function split_string_once_ex_v2(s, d = as(","), _wa) {
 	let b = s.slice(i + d.length);
 	/** @private @type {[string,string]} */
 	let r = [a, b];
-	/** @private @type {any} */
+	/** @private @type {unknown} */
 	let q = r;
 	return as(q);
 }
@@ -2501,7 +2501,7 @@ class Support_EventInput extends BaseService {
 		u1;
 	}
 	/**
-	 * @template {import("../yt_json_types/abc/group_C.ts").CF_RS_Page_Type1} T_CF @arg {T_CF} cf @template {{page:string,endpoint:any,response:any,url:string,expirationTime?:number}} T @arg {T} x
+	 * @template {import("../yt_json_types/abc/group_C.ts").CF_RS_Page_Type1} T_CF @arg {T_CF} cf @template {{page:string,endpoint:unknown,response:unknown,url:string,expirationTime?:number}} T @arg {T} x
 	 * @param {import("../yt_json_types/T_MakeHandlers.ts").T_MakeHandlers<T>} handlers
 	 * @returns {import("../yt_json_types/stu/group_T.ts").T_OmitKey<T,import("../yt_json_types/stu/group_T.ts").T_Split<"page,endpoint,response,url,expirationTime">[number]>}
 	 */
@@ -3080,7 +3080,7 @@ class Support_Renderer extends BaseService {
 	}
 	/**
 	 * @protected @template R_D
-	 * @template {Extract<keyof T_Endpoint,import("../zb_plugin_types/KA_EndpointKey.ts").KA_EndpointKey>} T_Key @template {import("../yt_json_types/stu/group_T.ts").TE_Endpoint_2_Opt<any,any>} T_Endpoint @arg {T_Endpoint} x
+	 * @template {Extract<keyof T_Endpoint,import("../zb_plugin_types/KA_EndpointKey.ts").KA_EndpointKey>} T_Key @template {import("../yt_json_types/stu/group_T.ts").TE_Endpoint_2_Opt<unknown,unknown>} T_Endpoint @arg {T_Endpoint} x
 	 * @param {T_Key} k
 	 * @param {(this:this,x:T_Endpoint[T_Key])=>R_D} f1
 	 * @returns {[typeof y,R_D]}
@@ -3592,7 +3592,7 @@ class Support_Renderer extends BaseService {
 			"FEEDBACK",
 		],
 	};
-	/** @type {Extract<import("../yt_json_types/d/group_D.ts").D_GuideEntry,{icon:any}>['icon']['iconType'][]} */
+	/** @type {Extract<import("../yt_json_types/d/group_D.ts").D_GuideEntry,{icon:unknown}>['icon']['iconType'][]} */
 	D_GuideEntry_MissingIconType = [];
 	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_GuideEntry} x */
 	R_GuideEntry(x) {
@@ -3653,7 +3653,7 @@ class Support_Renderer extends BaseService {
 			return;
 		}
 	}
-	/** @private @arg {"D_GuideEntry"} cf @arg {Extract<import("../yt_json_types/d/group_D.ts").D_GuideEntry,{targetId:any;}>|import("../yt_json_types/d/group_D.ts").D_GuideEntry_OfflineDownloadEntry|import("../yt_json_types/d/group_D.ts").D_GuideEntry_VideoLibrary} x */
+	/** @private @arg {"D_GuideEntry"} cf @arg {Extract<import("../yt_json_types/d/group_D.ts").D_GuideEntry,{targetId:unknown;}>|import("../yt_json_types/d/group_D.ts").D_GuideEntry_OfflineDownloadEntry|import("../yt_json_types/d/group_D.ts").D_GuideEntry_VideoLibrary} x */
 	D_GuideEntry_WithTargetId(cf, x) {
 		const { navigationEndpoint, icon, targetId, isPrimary, ...y } = this
 			.D_GuideEntry_Omit(cf, x);
@@ -3765,7 +3765,7 @@ class Support_Renderer extends BaseService {
 		}
 		this.sm.codegen_typedef(cf1, x);
 	}
-	/** @private @template {Extract<import("../yt_json_types/d/group_D.ts").D_GuideEntry,{accessibility:any}>} T @arg {import("../yt_json_types/abc/group_C.ts").CF_D_GuideEntry} cf @arg {T} x */
+	/** @private @template {Extract<import("../yt_json_types/d/group_D.ts").D_GuideEntry,{accessibility:unknown}>} T @arg {import("../yt_json_types/abc/group_C.ts").CF_D_GuideEntry} cf @arg {T} x */
 	D_GuideEntry_Omit(cf, x) {
 		const { accessibility, formattedTitle, trackingParams, ...y } = this.s(
 			cf,
@@ -3775,7 +3775,7 @@ class Support_Renderer extends BaseService {
 		this.sm.G_Text(formattedTitle);
 		return y;
 	}
-	/** @arg {Extract<import("../yt_json_types/d/group_D.ts").D_GuideEntry,{targetId:any;}>["targetId"]} x */
+	/** @arg {Extract<import("../yt_json_types/d/group_D.ts").D_GuideEntry,{targetId:unknown;}>["targetId"]} x */
 	D_GuideEntry_TargetId(x) {
 		const cf = "D_GuideEntry_TargetId";
 		switch (x) {
@@ -5494,7 +5494,7 @@ class ForService_XMethods extends BaseService {
 		this.g(y); /*#destructure_done*/
 		this.S_Client_OpenPopupAction(openPopupAction);
 	}
-	/** @private @arg {Extract<import("../yt_json_types/ghi/group_G.ts").G_ClientSignal_Item,import("../yt_json_types/nop_q/Popup.ts").TA_OpenPopup<any>>['openPopupAction']} x */
+	/** @private @arg {Extract<import("../yt_json_types/ghi/group_G.ts").G_ClientSignal_Item,import("../yt_json_types/nop_q/Popup.ts").TA_OpenPopup<unknown>>['openPopupAction']} x */
 	S_Client_OpenPopupAction(x) {
 		const cf = "S_VoiceSearchPopup_Dialog";
 		switch (x.popupType) {

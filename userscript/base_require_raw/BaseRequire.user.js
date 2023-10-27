@@ -63,7 +63,7 @@ const path_map = {
     "ParserService",
   ],
 };
-/** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
+/** @private @template U @template {U} T @arg {U} e @arg {unknown} [x] @returns {T} */
 function as(e, x = e) {
   return x;
 }
@@ -208,7 +208,7 @@ function require(arg, ...r_args) {
     }
     throw new Error("Unable to resolve path: " + arg);
   }
-  /** @arg {any} x @returns {asserts x is import("./ProcessImport.ts").ProcessImport<T>} */
+  /** @arg {unknown} x @returns {asserts x is import("./ProcessImport.ts").ProcessImport<T>} */
   function correct_return_type(x) {
     x;
   }
@@ -230,7 +230,7 @@ export_((exports) => {
   exports.__path_map__ = path_map;
 });
 require.__system_require = false;
-/** @type {({__system_require:boolean;system_require?:any;<T extends import("../youtube_plugin_raw/zb_plugin_types/AllImportPaths.ts").AllImportPaths>(x:T):import("./ProcessImport.ts").ProcessImport<T>})} */
+/** @type {({__system_require:boolean;system_require?:unknown;<T extends import("../youtube_plugin_raw/zb_plugin_types/AllImportPaths.ts").AllImportPaths>(x:T):import("./ProcessImport.ts").ProcessImport<T>})} */
 let cur_require = require;
 
 // global exports

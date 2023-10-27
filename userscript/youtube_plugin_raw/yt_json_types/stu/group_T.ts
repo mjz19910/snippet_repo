@@ -26,7 +26,7 @@ export type T_MakeNumFieldFmt<T,U extends keyof T=keyof T,V extends number=Extra
 export type T_ObjGetNumKey_1<T extends {},KM>={[U in keyof T as T_GetKeyMap<T,U,KM>]: U;};
 export type T_ObjGetNumKey<T extends {},KM={}>=`${Extract<keyof T_ObjGetNumKey_1<T,KM>,string>}`;
 //#endregion
-export type MonadFn<U,A extends any[]>=(...s: A) => U;
+export type MonadFn<U,A extends unknown[]>=(...s: A) => U;
 export type M_Optional<T>=Some<T>|None;
 export type Some<T>={
 	type: "s";
@@ -60,8 +60,8 @@ export type T_Command_TP<T>={
 export type T_DistributedKeyof<T>=T extends infer A? keyof A:never;
 export type T_DistributedKeyof_2<T>=T extends infer A? Union2Tuple<keyof A>:[];
 // oh boy don't do this
-export type UnionToIntersection<U>=(U extends any? (k: U) => void:never) extends ((k: infer I) => void)? I:never;
-export type LastOf<T>=UnionToIntersection<T extends any? () => T:never> extends () => (infer R)? R:never;
+export type UnionToIntersection<U>=(U extends unknown? (k: U) => void:never) extends ((k: infer I) => void)? I:never;
+export type LastOf<T>=UnionToIntersection<T extends unknown? () => T:never> extends () => (infer R)? R:never;
 // TS4.1+
 export type Union2Tuple<T,L=LastOf<T>,N=[T] extends [never]? true:false>=true extends N? []:[...Union2Tuple<Exclude<T,L>>,L];
 export type T_DistributedKeysOf_2<T extends {}>=T_DistributedKeyof_2<T> extends []? []:T_DistributedKeyof_2<T>;
@@ -74,7 +74,7 @@ export type T_DistributedKeysOf<T extends {}>=T_DistributedKeyof<T> extends neve
 export type T_ElementId<T extends string,U extends string>=`${T}-${U}`;
 export type T_EnsureHex<T extends `0x${string}`>=T extends `0x${infer G}`? T_Split<G,"">[number] extends T_Split<"0123456789abcdef","">[number]? T:never:never;
 export type T_EnumStr<T extends string,U extends string>=`${T}_${U}`;
-export type T_ExtractKeyValue<T,U extends string>=T extends {[C in U]: any;}? T:never;
+export type T_ExtractKeyValue<T,U extends string>=T extends {[C in U]: unknown;}? T:never;
 export type T_GetTypeof<T>=
 	T extends undefined? "undefined":
 	T extends number? "number":
@@ -223,8 +223,8 @@ export type T_NumArrStrVerify<T extends string,C extends string="">=C extends ''
 export type T_NumRange<T,U>=NS_NumRange.NumRange<T,U>;
 //#endregion
 //#region Check if the passed in type meets certain conditions
-export type TCmp_Is_Endpoint_3<T extends TE_Endpoint_3<any,any,any>>=T;
-export type TCmp_Is_Endpoint_2<T extends TE_Endpoint_2<any,any>>=T;
+export type TCmp_Is_Endpoint_3<T extends TE_Endpoint_3<unknown,unknown,unknown>>=T;
+export type TCmp_Is_Endpoint_2<T extends TE_Endpoint_2<unknown,unknown>>=T;
 //#endregion
 //#region TR_
 export type TR_SectionListItem_3_Empty=TR_ItemSection_3<{},{},{}>;
@@ -356,12 +356,12 @@ export type T_StringTrim<T extends string>=T_StringTrimEnd<T_StringTrimStart<T>>
 export type T_VW<T>=T_PArr_1<[T_Param_Child<T,["string",string]>]>;
 export type T_VW2<T,S extends string>=T_PArr_1<[T_Param_Child<T,["string",S]>]>;
 export type T_Param_Child<T,U extends V_RawValue=["string",string]>=[type: "v_child",binary_arr: Uint8Array,obj: T,raw_value: U];
-export type T_PArr_1<T extends [any]>=["v_param_arr",T];
-export type T_PArr_R<T extends any[]>=["v_param_arr",T];
+export type T_PArr_1<T extends [unknown]>=["v_param_arr",T];
+export type T_PArr_R<T extends unknown[]>=["v_param_arr",T];
 export type T_Dialog<T>={dialog: T;};
 export type T_AO_Z1<T extends {z: [{}];}>=T["z"][0];
 export type T_BoxStore_adz<K,A,L,T>={key: K; a: A; b: "boxed_id"; l: L; z: [T];};
-export type T_DI_AKLZ<Z extends any[]>={z: Z;};
+export type T_DI_AKLZ<Z extends unknown[]>={z: Z;};
 export type T_GetPrimitiveTag<T>=
 	T extends bigint? |"bigint":
 	T extends boolean? |"boolean":
