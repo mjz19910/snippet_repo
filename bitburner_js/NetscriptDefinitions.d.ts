@@ -23,7 +23,7 @@ interface Skills {
  * Coding contract data will differ depending on coding contract.
  * @public
  */
-type CodingContractData=any;
+type CodingContractData=unknown;
 
 /** @public */
 type PortData=string|number;
@@ -3211,7 +3211,7 @@ interface CodingContract {
    *   provided.
    * @returns A reward description string on success, or an empty string on failure.
    */
-  attempt(answer: string|number|any[],filename: string,host?: string): string;
+  attempt(answer: string|number|unknown[],filename: string,host?: string): string;
 
   /**
    * Get the type of a coding contract.
@@ -4860,7 +4860,7 @@ interface NS {
    * ```ts
    * // NS1:
    * // This will count from 1 to 10 in your terminal, with one number every 5 seconds
-   * for (var i=0; i<10; i++) {
+   * for (let i=0; i<10; i++) {
    *   tprint(i + 1);
    *   sleep(5000);
    * }
@@ -4869,7 +4869,7 @@ interface NS {
    * ```ts
    * // NS2:
    * // This will count from 1 to 10 in your terminal, with one number every 5 seconds
-   * for (var i=0; i<10; i++) {
+   * for (let i=0; i<10; i++) {
    *   ns.tprint(i + 1);
    *   await ns.sleep(5000);
    * }
@@ -4961,7 +4961,7 @@ interface NS {
    *
    * @param args - Value(s) to be printed.
    */
-  print(...args: any[]): void;
+  print(...args: unknown[]): void;
 
   /**
    * Prints a formatted string to the script’s logs.
@@ -5002,7 +5002,7 @@ interface NS {
    * @param format - Format of the message.
    * @param args - Value(s) to be printed.
    */
-  printf(format: string,...args: any[]): void;
+  printf(format: string,...args: unknown[]): void;
 
   /**
    * Prints one or more values or variables to the Terminal.
@@ -5013,7 +5013,7 @@ interface NS {
    *
    * @param args - Value(s) to be printed.
    */
-  tprint(...args: any[]): void;
+  tprint(...args: unknown[]): void;
 
   /**
    * Prints a raw value or a variable to the Terminal.
@@ -5029,7 +5029,7 @@ interface NS {
    * @param format - Format of the message.
    * @param values - Value(s) to be printed.
    */
-  tprintf(format: string,...values: any[]): void;
+  tprintf(format: string,...values: unknown[]): void;
 
   /**
    * Clears the script’s logs.
@@ -6412,7 +6412,7 @@ interface NS {
    * @param args - Formatting arguments.
    * @returns Formatted text.
    */
-  sprintf(format: string,...args: any[]): string;
+  sprintf(format: string,...args: unknown[]): string;
 
   /**
    * Format a string with an array of arguments.
@@ -6424,7 +6424,7 @@ interface NS {
    * @param args - Formatting arguments.
    * @returns Formatted text.
    */
-  vsprintf(format: string,args: any[]): string;
+  vsprintf(format: string,args: unknown[]): string;
 
   /**
    * Format a number.

@@ -107,16 +107,16 @@ export class AutoBuy implements AutoBuyInterface {
 		this.original_map=new Map;
 		this.dom_map=new Map;
 		this.timeout_arr=this.local_data_loader.load_int_arr('auto_buy_timeout_str',() => {
-			let src=[300];
+			const src=[300];
 			src.length=16;
-			let data_len=1;
+			const data_len=1;
 			while(src.at(-1)!=src[0]) {
 				src.copyWithin(data_len,0);
 				data_len*=2;
 			}
 			return src;
 		});
-		let enable_debug_flags=false;
+		const enable_debug_flags=false;
 		if(enable_debug_flags) {
 			this.debug_flags.set("build_dom_from_desc",true);
 			this.debug_flags.set("parse_dom_desc",true);
@@ -124,7 +124,7 @@ export class AutoBuy implements AutoBuyInterface {
 		}
 	}
 	do_zero_pad(value: string|number,pad_char: string,char_num: number) {
-		let string;
+		const string;
 		if(typeof value==='number') {
 			string=value.toString();
 		} else {
@@ -137,27 +137,28 @@ export class AutoBuy implements AutoBuyInterface {
 	}
 	get_millis_as_pretty_str(timeout_milli: number,milli_acc: number) {
 		const number_stringify_debug=false;
-		let time_arr=[];
-		let float_milliseconds=timeout_milli%1000;
-		let milli_len=4+milli_acc;
+		const time_arr=[];
+		const float_milliseconds=timeout_milli%1000;
+		const milli_len=4+milli_acc;
 		if(milli_acc===0) {
 			milli_len=3+milli_acc;
 		}
 		if(number_stringify_debug) {
+			// deno-lint-ignore no-debugger
 			debugger;
 		}
 		time_arr[3]=this.do_zero_pad(float_milliseconds.toFixed(milli_acc),'0',milli_len);
 		timeout_milli-=float_milliseconds;
 		timeout_milli/=1000;
-		let int_seconds=timeout_milli%60;
+		const int_seconds=timeout_milli%60;
 		time_arr[2]=this.do_zero_pad(int_seconds,'0',2);
 		timeout_milli-=int_seconds;
 		timeout_milli/=60;
-		let int_minutes=timeout_milli%60;
+		const int_minutes=timeout_milli%60;
 		time_arr[1]=this.do_zero_pad(int_minutes,'0',2);
 		timeout_milli-=int_minutes;
 		timeout_milli/=60;
-		let int_hours=timeout_milli;
+		const int_hours=timeout_milli;
 		time_arr[0]=this.do_zero_pad(int_hours,'0',2);
 		int_hours===0&&(time_arr.shift(),int_minutes===0&&(time_arr.shift(),int_seconds===0&&time_arr.shift()));
 		switch(time_arr.length) {
@@ -174,9 +175,9 @@ export class AutoBuy implements AutoBuyInterface {
 	}
 	update_timeout_element() {
 		if(this.timeout_ms) {
-			let element=this.dom_map.get('timeout_element');
+			const element=this.dom_map.get('timeout_element');
 			if(element instanceof HTMLElement) {
-				let acc=2;// 0;
+				const acc=2;// 0;
 				element.innerText=this.get_millis_as_pretty_str(this.timeout_ms,acc);
 			}
 		}
@@ -211,7 +212,7 @@ export class AutoBuy implements AutoBuyInterface {
 			is_in_ignored_from_src_fn.flag=true;
 			console.log("failed to play `#background_audio`, page was loaded without a user interaction(reload from devtools or F5 too)");
 		}
-		let instructions=SimpleStackVMParser.parse_instruction_stream(`
+		const instructions=SimpleStackVMParser.parse_instruction_stream(`
 			this;push,target_obj;get;push,background_audio;get;push,play
 				call,int(2)
 					push,then
@@ -224,10 +225,10 @@ export class AutoBuy implements AutoBuyInterface {
 				call,int(2)
 			drop
 			`,[
-				FunctionBox.wrap(function() {console.log('play success');}),
-				FunctionBox.wrap_1(function(err: Box) {console.log(err);})
-			]);
-		let handler=new EventHandlerVMDispatch(instructions,this);
+			FunctionBox.wrap(function() {console.log('play success');}),
+			FunctionBox.wrap_1(function(err: Box) {console.log(err);})
+		]);
+		const handler=new EventHandlerVMDispatch(instructions,this);
 		globalThis.addEventListener('click',handler);
 		is_in_ignored_from_src_fn.flag=false;
 	}
@@ -242,8 +243,8 @@ export class AutoBuy implements AutoBuyInterface {
 		return this.timeout_arr.join(",");
 	}
 	save_timeout_arr() {
-		let forced_action,action_count;
-		let action_data=localStorage["auto_buy_forced_action"];
+		const forced_action,action_count;
+		const action_data=localStorage["auto_buy_forced_action"];
 		if(action_data)
 			[forced_action,action_count]=action_data.split(",");
 		localStorage["auto_buy_timeout_str"]=this.get_timeout_arr_data(forced_action);
@@ -299,8 +300,8 @@ export class AutoBuy implements AutoBuyInterface {
 		document.body.append(this.state_log_element);
 		// attach display_style_sheet
 		this.adopt_styles(this.display_style_sheet);
-		let call_arg_arr: []=[];
-		let raw_dom_arr: DomInstructionType[]=[
+		const call_arg_arr: []=[];
+		const raw_dom_arr: DomInstructionType[]=[
 			[0,'dom_get','body'],
 			[1,'dom_create_element_with_props','div','state_log',{id: 'state_log'}],
 			[1,'append'],
@@ -329,7 +330,7 @@ export class AutoBuy implements AutoBuyInterface {
 					if(args.length!==2) {
 						throw new Error("Failed");
 					}
-					let [obj,str]=args;
+					const [obj,str]=args;
 					if(obj.type==='CSSStyleSheetBox'&&str.type==='string') {
 						return new CSSStyleSheetBox(await obj.value.replace(str.value));
 					}
@@ -348,7 +349,7 @@ export class AutoBuy implements AutoBuyInterface {
 		}
 	}
 	adopt_styles(...styles: CSSStyleSheet[]) {
-		let dom_styles=document.adoptedStyleSheets;
+		const dom_styles=document.adoptedStyleSheets;
 		document.adoptedStyleSheets=[...dom_styles,...styles];
 	}
 	decode_query_arg(query: string) {
@@ -358,14 +359,14 @@ export class AutoBuy implements AutoBuyInterface {
 		}
 	}
 	build_dom_from_desc(raw_arr: DomInstructionType[],trg_map: Map<string,Element>=new Map,dry_run=false) {
-		let stack: DomInstructionType[]=[];
+		const stack: DomInstructionType[]=[];
 		this.m_dry_run=dry_run;
-		for(let i=0;i<raw_arr.length;i++) {
-			let cur_item=raw_arr[i];
-			let [depth]=cur_item;
+		for(const i=0;i<raw_arr.length;i++) {
+			const cur_item=raw_arr[i];
+			const [depth]=cur_item;
 			switch(cur_item[1]) {
 				case 'dom_get': {
-					let [,,query_arg]=cur_item;
+					const [,,query_arg]=cur_item;
 					const cur_element=this.decode_query_arg(query_arg);
 					if(!cur_element) throw new Error("Unable to find query element");
 					stack.push([depth,"push",new DomElementBox(cur_element)]);
@@ -376,21 +377,21 @@ export class AutoBuy implements AutoBuyInterface {
 					stack.push([depth,"push",callback]);
 					stack.push([depth,"push",new CSSStyleSheetConstructorBox(class_)]);
 					stack.push([depth,"construct",1+construct_arg_arr.length]);
-					for(let i=0;i<arg_arr.length;i++) {
+					for(const i=0;i<arg_arr.length;i++) {
 						stack.push([depth,"push",new StringBox(arg_arr[i])]);
 					}
 					stack.push([depth,"call",3+arg_arr.length]);
 				} break;
 				case 'dom_create_element': {
 					const [,,element_type,name,content]=cur_item;
-					let cur_element=document.createElement(element_type);
+					const cur_element=document.createElement(element_type);
 					cur_element.innerText=content;
 					trg_map.set(name,cur_element);
 					stack.push([depth,"push",new DomElementBox(cur_element)]);
 				} break;
 				case 'dom_create_element_with_props': {
 					const [,,element_type,name,content]=cur_item;
-					let cur_element=document.createElement(element_type);
+					const cur_element=document.createElement(element_type);
 					cur_element.id=content.id;
 					trg_map.set(name,cur_element);
 					stack.push([depth,"push",new DomElementBox(cur_element)]);
@@ -413,26 +414,26 @@ export class AutoBuy implements AutoBuyInterface {
 			if(this.debug_flags.get("build_dom_from_desc"))
 				console.log('es',stack.at(-1));
 		}
-		let instruction_tree=this.stack_to_instruction_tree(stack);
-		let functions_map: Map<number,InstructionType[]>=new Map;
-		let cur_function_id=0;
+		const instruction_tree=this.stack_to_instruction_tree(stack);
+		const functions_map: Map<number,InstructionType[]>=new Map;
+		const cur_function_id=0;
 		this.cur_function_id=cur_function_id;
-		let state=new InstructionAstState(instruction_tree,functions_map);
-		let dom_vm_instructions=this.instruction_tree_to_instructions(state);
+		const state=new InstructionAstState(instruction_tree,functions_map);
+		const dom_vm_instructions=this.instruction_tree_to_instructions(state);
 		functions_map.set(cur_function_id,dom_vm_instructions);
-		let builder_vm=new BaseStackVM(functions_map);
+		const builder_vm=new BaseStackVM(functions_map);
 		builder_vm.run();
 	}
 	stack_to_instruction_tree(input_stack: DomInstructionType[]): TreeItem[] {
-		let tree: TreeItem[]=[];
-		let stack: TreeItem[][]=[];
-		for(let iter_depth=0,i=0;i<input_stack.length;i++) {
-			let cur_stack=input_stack[i];
+		const tree: TreeItem[]=[];
+		const stack: TreeItem[][]=[];
+		for(const iter_depth=0,i=0;i<input_stack.length;i++) {
+			const cur_stack=input_stack[i];
 			if(cur_stack[1]==='marker') continue;
 			// TODO:
 			if(cur_stack[1]==='dom_filter') continue;
 			if(cur_stack[1]==='vm_call_at') continue;
-			let [cur_depth,...item]=cur_stack;
+			const [cur_depth,...item]=cur_stack;
 			if(this.debug_flags.get("parse_dom_desc"))
 				console.log(item);
 			while(cur_depth>iter_depth) {
@@ -441,8 +442,8 @@ export class AutoBuy implements AutoBuyInterface {
 				iter_depth++;
 			}
 			while(cur_depth<iter_depth) {
-				let prev=tree;
-				let stack_item=stack.pop();
+				const prev=tree;
+				const stack_item=stack.pop();
 				if(!stack_item) throw new Error("Stack underflow");
 				tree=stack_item;
 				tree.push([iter_depth,'group',prev]);
@@ -451,7 +452,7 @@ export class AutoBuy implements AutoBuyInterface {
 			tree.push([cur_depth,'op',item]);
 		}
 		while(stack.length>0) {
-			let stack_item=stack.pop();
+			const stack_item=stack.pop();
 			if(!stack_item) throw new Error("Stack underflow");
 			tree=stack_item;
 		}
@@ -470,10 +471,10 @@ export class AutoBuy implements AutoBuyInterface {
 	}
 	cur_function_id=-1;
 	instruction_tree_to_instructions(state: InstructionAstState): InstructionType[] {
-		let cur_function_id=this.cur_function_id;
+		const cur_function_id=this.cur_function_id;
 		this.cur_function_id++;
-		for(let i=0;i<state.tree.length;i++) {
-			let cur=state.tree[i];
+		for(const i=0;i<state.tree.length;i++) {
+			const cur=state.tree[i];
 			switch(cur[1]) {
 				case 'group': {
 					this.log_if('apply_dom_desc','rdc stk');
@@ -492,13 +493,13 @@ export class AutoBuy implements AutoBuyInterface {
 		if(state.stack.length===0)
 			return state.items;
 		while(state.stack.length>0) {
-			let stack_item=state.stack.pop();
+			const stack_item=state.stack.pop();
 			if(!stack_item) break;
 			const [tag,items_index,[data_depth,rec_tree]]=stack_item;
-			let log_level=this.get_logging_level('apply_dom_desc');
+			const log_level=this.get_logging_level('apply_dom_desc');
 			log_if(log_level,tag,items_index,data_depth,rec_tree);
-			let rec_state=new InstructionAstState(rec_tree,state.functions_map,[],state.cur_depth+1);;
-			let deep_res=this.instruction_tree_to_instructions(rec_state);
+			const rec_state=new InstructionAstState(rec_tree,state.functions_map,[],state.cur_depth+1);;
+			const deep_res=this.instruction_tree_to_instructions(rec_state);
 			state.functions_map.set(cur_function_id,deep_res);
 			state.items.push(['dom_exec',cur_function_id]);
 			this.log_if('apply_dom_desc',deep_res);
@@ -533,7 +534,7 @@ export class AutoBuy implements AutoBuyInterface {
 		});
 	}
 	global_init() {
-		let cur_this: AutoBuyInterface=this;
+		const cur_this: AutoBuyInterface=this;
 		if(window.g_auto_buy&&window.g_auto_buy!==cur_this) {
 			window.g_auto_buy.destroy();
 		}
@@ -541,8 +542,8 @@ export class AutoBuy implements AutoBuyInterface {
 	}
 	destroy() {
 		this.root_node.destroy();
-		for(let i=0;i<this.cint_arr.length;i+=2) {
-			let cint_item=this.cint_arr[i];
+		for(const i=0;i<this.cint_arr.length;i+=2) {
+			const cint_item=this.cint_arr[i];
 			switch(cint_item[0]) {
 				case 1: {
 					clearTimeout(cint_item[1]);
@@ -569,12 +570,12 @@ export class AutoBuy implements AutoBuyInterface {
 			return;
 		// spell:words timeplayed
 		this.hours_played_element.innerText=((window.timeplayed/30)/60).toFixed(7)+" hours";
-		let last_ratio=this.state.ratio*100;
+		const last_ratio=this.state.ratio*100;
 		this.state.update();
-		let cur_ratio=this.state.ratio*100;
+		const cur_ratio=this.state.ratio*100;
 		this.percent_ratio_element.innerText=cur_ratio.toFixed(2)+"%";
-		let ratio_diff=cur_ratio-last_ratio;
-		let extra_diff_char="+";
+		const ratio_diff=cur_ratio-last_ratio;
+		const extra_diff_char="+";
 		if(ratio_diff<0)
 			extra_diff_char='';
 		this.percent_ratio_change_element.innerText=extra_diff_char+ratio_diff.toExponential(3);
@@ -592,21 +593,21 @@ export class AutoBuy implements AutoBuyInterface {
 		if(window.secondinterval!==void 0) {
 			clearInterval(window.secondinterval);
 		}
-		let rate=66/(2110-110);
+		const rate=66/(2110-110);
 		console.error("todo",rate);
-		let time_base=performance.now();
+		const time_base=performance.now();
 		window.secondinterval=setInterval(function() {
-			let real_time=performance.now();
-			let time_diff=real_time-time_base;
+			const real_time=performance.now();
+			const time_diff=real_time-time_base;
 			time_base=real_time;
-			let real_rate=time_diff/(2300-300);
+			const real_rate=time_diff/(2300-300);
 			window.timeplayed+=real_rate;
 		},66);
 		this.root_node.create_timer(function() {
 			window.doc.title=window.rounding(window.totalAtome,false,1).toString()+" atoms";
-			let atomsaccu=window.doc.getElementById('atomsaccu');
-			let timeplayed_e=window.doc.getElementById('timeplayed');
-			let presnbr_e=window.doc.getElementById('timeplayed');
+			const atomsaccu=window.doc.getElementById('atomsaccu');
+			const timeplayed_e=window.doc.getElementById('timeplayed');
+			const presnbr_e=window.doc.getElementById('timeplayed');
 			if(!atomsaccu) return;
 			if(!timeplayed_e) return;
 			if(!presnbr_e) return;
@@ -638,7 +639,7 @@ export class AutoBuy implements AutoBuyInterface {
 		this.epoch_len++;
 		if(silent)
 			return;
-		let last=this.state_history_arr.at(-1);
+		const last=this.state_history_arr.at(-1);
 		this.state_history_arr.push(value);
 		if(this.state.debug)
 			console.log('history append',last,value);
@@ -652,7 +653,7 @@ export class AutoBuy implements AutoBuyInterface {
 		this.reset();
 	}
 	reset() {
-		let timeout=3000;
+		const timeout=3000;
 		if(this.extra<timeout)
 			timeout=this.extra;
 		this.next_timeout(this.main,timeout,'@');
@@ -660,16 +661,16 @@ export class AutoBuy implements AutoBuyInterface {
 	calc_timeout_extra() {
 		while(this.timeout_arr.length>60)
 			this.timeout_arr.shift();
-		let max=0;
-		let total=0;
-		for(var i=0;i<this.timeout_arr.length;i++) {
+		const max=0;
+		const total=0;
+		for(const i=0;i<this.timeout_arr.length;i++) {
 			total+=this.timeout_arr[i];
 			max=Math.max(this.timeout_arr[i],max);
 		}
 		const val=total/this.timeout_arr.length;
-		let num=max/val;
+		const num=max/val;
 		this.last_value??=num;
-		let diff=this.last_value-num;
+		const diff=this.last_value-num;
 		if(diff>.1||diff<-.1) {
 			this.last_value=num;
 			console.log('timeout_arr num',num,'differing from last by',diff);
@@ -677,14 +678,14 @@ export class AutoBuy implements AutoBuyInterface {
 		return this.round(val);
 	}
 	is_epoch_over() {
-		let epoch_diff=Date.now()-this.epoch_start_time;
+		const epoch_diff=Date.now()-this.epoch_start_time;
 		return epoch_diff>60*5*1000;
 	}
 	main() {
 		function r(v: number) {
 			return ~~v;
 		}
-		let loss_rate=this.unit_promote_start();
+		const loss_rate=this.unit_promote_start();
 		if(loss_rate>0||loss_rate<0) {
 			console.log('loss',r(loss_rate*100*10)/10);
 		}
@@ -698,7 +699,7 @@ export class AutoBuy implements AutoBuyInterface {
 		this.faster_timeout();
 	}
 	async maybe_async_reset(): Promise<[boolean,number]> {
-		let loss_rate=this.unit_promote_start();
+		const loss_rate=this.unit_promote_start();
 		if(this.maybe_run_reset())
 			return [true,loss_rate];
 		return [false,loss_rate];
@@ -709,7 +710,7 @@ export class AutoBuy implements AutoBuyInterface {
 				await this.normal_decrease_async();
 			else
 				await this.large_decrease_async();
-			let [quit,loss_rate]=await this.maybe_async_reset();
+			const [quit,loss_rate]=await this.maybe_async_reset();
 			if(quit)
 				return;
 			if(loss_rate>0.08)
@@ -735,12 +736,12 @@ export class AutoBuy implements AutoBuyInterface {
 			return this.normal_decrease();
 	}
 	async fast_unit() {
-		let running=true;
+		const running=true;
 		while(running) {
 			this.unit_promote_start();
 			if(this.pre_total==window.totalAtome)
 				break;
-			let promise=this.async_timeout_step();
+			const promise=this.async_timeout_step();
 			await promise;
 		}
 		this.async_timeout_step_finish();
@@ -752,12 +753,12 @@ export class AutoBuy implements AutoBuyInterface {
 		this.extra=this.calc_timeout_extra();
 		this.pre_total=window.totalAtome;
 		this.do_unit_promote();
-		let money_diff=this.pre_total-window.totalAtome;
-		let loss_rate=money_diff/this.pre_total;
+		const money_diff=this.pre_total-window.totalAtome;
+		const loss_rate=money_diff/this.pre_total;
 		if(this.pre_total!=window.totalAtome&&this.debug) {
-			let log_args=[];
-			let percent_change=(loss_rate*100).toFixed(5);
-			let money_str=window.totalAtome.toExponential(3);
+			const log_args=[];
+			const percent_change=(loss_rate*100).toFixed(5);
+			const money_str=window.totalAtome.toExponential(3);
 			log_args.push(this.iter_count);
 			log_args.push(percent_change);
 			log_args.push(money_str);
@@ -795,22 +796,22 @@ export class AutoBuy implements AutoBuyInterface {
 		this.next_timeout(this.main,this.extra,'+');
 	}
 	get_timeout_change(pow_base: number,pow_num: number,div: number) {
-		let pow_res=Math.pow(pow_base,pow_num);
-		let res=this.extra*pow_res;
+		const pow_res=Math.pow(pow_base,pow_num);
+		const res=this.extra*pow_res;
 		return res/div;
 	}
 	update_timeout_inc(change: number) {
 		if(window.__testing__) {
 			return;
 		}
-		let value=this.round(this.extra+change);
+		const value=this.round(this.extra+change);
 		this.timeout_arr.push(value);
 	}
 	update_timeout_dec(change: number) {
 		if(window.__testing__) {
 			return;
 		}
-		let value=this.round(this.extra-change);
+		const value=this.round(this.extra-change);
 		if(value<25)
 			value=25;
 		this.timeout_arr.push(value);
@@ -819,26 +820,26 @@ export class AutoBuy implements AutoBuyInterface {
 		return ~~value;
 	}
 	do_timeout_dec(pow_terms: any[],div: number) {
-		let change=this.get_timeout_change(pow_terms[0],Math.log(window.totalAtome),div);
+		const change=this.get_timeout_change(pow_terms[0],Math.log(window.totalAtome),div);
 		this.update_timeout_dec(change);
 	}
 	do_timeout_inc(pow_terms: any[],div: number) {
-		let iter_term=Math.pow(pow_terms[1],this.iter_count);
-		let change=this.get_timeout_change(pow_terms[0],Math.log(window.totalAtome),div);
+		const iter_term=Math.pow(pow_terms[1],this.iter_count);
+		const change=this.get_timeout_change(pow_terms[0],Math.log(window.totalAtome),div);
 		this.update_timeout_inc(change*iter_term);
 	}
 	async next_timeout_async(timeout: number,char: string,silent=false) {
 		if(!silent&&this.timeout_element)
 			this.timeout_element.innerText=timeout.toString();
 		this.state_history_append(char,silent);
-		let node=new AsyncTimeoutNode(timeout);
+		const node=new AsyncTimeoutNode(timeout);
 		this.root_node.append_child(node);
-		let att=new AsyncTimeoutFireNode(char);
-		let promise=node.start_async(att);
+		const att=new AsyncTimeoutFireNode(char);
+		const promise=node.start_async(att);
 		await promise;
 	}
 	next_timeout(trg_fn: () => void,timeout: number,char: string,silent=false) {
-		let node=new AsyncTimeoutNode(timeout);
+		const node=new AsyncTimeoutNode(timeout);
 		this.root_node.append_child(node);
 		node.start(new TimeoutTargetFireDataNode(this,trg_fn,char));
 		if(!silent&&this.timeout_element)
@@ -868,8 +869,8 @@ export class AutoBuy implements AutoBuyInterface {
 		return window.allspec.findIndex(this.is_special_done);
 	}
 	do_special() {
-		let ret=false;
-		for(let index=this.next_special();;index=this.next_special()) {
+		const ret=false;
+		for(const index=this.next_special();;index=this.next_special()) {
 			if(index>-1) {
 				window.specialclick(index);
 				ret=true;
@@ -888,7 +889,7 @@ export class AutoBuy implements AutoBuyInterface {
 		this.next_timeout(this.special,this.extra,'>');
 	}
 	maybe_run_reset() {
-		let count=0;
+		const count=0;
 		count+=(this.extra>15*1000) as unknown as number;
 		count+=this.state.ratio>1 as unknown as number;
 		count+=this.is_epoch_over() as unknown as number;

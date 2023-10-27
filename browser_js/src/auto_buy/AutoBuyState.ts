@@ -1,12 +1,12 @@
 import {AverageRatioRoot} from "./AverageRatioRoot.ts";
 import {AsyncTimeoutNode} from "../timer_node/AsyncTimeoutNode.ts";
-import {TimeoutTargetFireDataNode} from "../timer_node/TimeoutTargetFireDataNode";
+import {TimeoutTargetFireDataNode} from "../timer_node/TimeoutTargetFireDataNode.ts";
 import {AverageRatio} from "./AverageRatio.ts";
 import {BaseNode} from "../timer_node/BaseNode.ts";
 
 // AutoBuyState
 declare global {
-	interface Window {
+	export interface Window {
 		atomepersecond: number;
 		prestige: number;
 	}
@@ -45,13 +45,13 @@ export class AutoBuyState {
 	prev_atomepersecond: number;
 	init() {
 		if(window.atomepersecond===0) {
-			let node=new AsyncTimeoutNode(0);
+			const node=new AsyncTimeoutNode(0);
 			this.root_node.append_child(node);
 			node.start(new TimeoutTargetFireDataNode(this,this.init,'not ready AutoBuyState.update'));
 			return;
 		}
 		this.val=window.totalAtome/window.atomepersecond;
-		let initial_arr=[this.val/(100*4*window.prestige)];
+		const initial_arr=[this.val/(100*4*window.prestige)];
 		if(Number.isFinite(initial_arr[0])) {
 			for(let i=0;i<8;i++) {
 				this.arr.push(initial_arr[0]*.75);
@@ -59,12 +59,12 @@ export class AutoBuyState {
 		} else {
 			initial_arr[0]=0.75;
 		}
-		let ratio_names=['10sec','1min','5min','30min','3hour'];
-		let ratio_counts=[80,6,5,6,6];
-		let ratio_mul=[0,.65,.15,.15,.05];
-		let ratio_human=["10 seconds","1 minute","5 minutes","30 minutes","3 hours"];
+		const ratio_names=['10sec','1min','5min','30min','3hour'];
+		const ratio_counts=[80,6,5,6,6];
+		const ratio_mul=[0,.65,.15,.15,.05];
+		const ratio_human=["10 seconds","1 minute","5 minutes","30 minutes","3 hours"];
 		function mul_3(arr: number[],i: any) {
-			let [a,b=1,c=10]=arr.slice(i);
+			const [a,b=1,c=10]=arr.slice(i);
 			return a*b*c;
 		}
 		//@AverageRatio
@@ -72,7 +72,7 @@ export class AutoBuyState {
 			return new AverageRatio(initial_arr,ratio_counts[i],mul_3(ratio_counts,i),ratio_mul[i],ratio_human[i]);
 		}
 		for(let i=0;i<5;i++) {
-			let obj=create_ratio(i);
+			const obj=create_ratio(i);
 			this.avg.push_ratio([ratio_names[i],obj]);
 		}
 		this.prev_atomepersecond=window.atomepersecond;
@@ -98,7 +98,7 @@ export class AutoBuyState {
 		while(this.arr.length>this.arr_max_len) {
 			this.arr.pop();
 		}
-		let new_ratio=this.calc_ratio();
+		const new_ratio=this.calc_ratio();
 		if(!Number.isFinite(new_ratio)) {
 			console.assert(false,'ratio result is not finite');
 		}
@@ -168,13 +168,13 @@ export class AutoBuyState {
 		return [log_val,log_mul_count];
 	}
 	cycle_log() {
-		let [num,exponent]=this.get_near_val();
+		const [num,exponent]=this.get_near_val();
 		console.log('ratio cycle lock %se%o %s%o %s%o',(~~(num*1000))/1000,exponent,'mode=',this.ratio_mode,'cc=',this.locked_cycles);
 	}
 	update() {
 		if(typeof window.prestige=='undefined') {
 			console.log('fail',this.div,window.atomepersecond,window.totalAtome);
-			let node=new AsyncTimeoutNode(80);
+			const node=new AsyncTimeoutNode(80);
 			this.root_node.append_child(node);
 			node.start(new TimeoutTargetFireDataNode(this,this.update,'not ready AutoBuyState.update'));
 			return;
@@ -185,7 +185,7 @@ export class AutoBuyState {
 		if(!Number.isFinite(this.val)) {
 			this.val=1;
 			console.log('fail',this.div,window.atomepersecond,window.totalAtome);
-			let node=new AsyncTimeoutNode(80);
+			const node=new AsyncTimeoutNode(80);
 			this.root_node.append_child(node);
 			node.start(new TimeoutTargetFireDataNode(this,this.update,'not ready AutoBuyState.update'));
 			return;
@@ -202,7 +202,7 @@ export class AutoBuyState {
 	}
 	reset() {
 		this.ratio*=0.75;
-		for(var i=0;i<this.arr.length;i++) {
+		for(let i=0;i<this.arr.length;i++) {
 			this.arr[i]*=0.75;
 		}
 	}

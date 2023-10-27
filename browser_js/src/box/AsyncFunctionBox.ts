@@ -7,7 +7,7 @@ export class AsyncFunctionBox extends BoxTemplate<"function_box",(...a: Box[]) =
 	readonly return_type="Promise<Box>";
 	readonly await_type="Box";
 	wrap_call(target_this: Box,...args: Box[]): Box {
-		let ret=this.value.apply(target_this,args);
+		const ret=this.value.apply(target_this,args);
 		return new PromiseBox(ret);
 	}
 }

@@ -1,5 +1,5 @@
 // deno-disable-lint-file
-import {
+/*import {
 	default as protobufjs,
 	type Reader,
 	type Root,
@@ -10,6 +10,7 @@ import {get_token_data} from "./get_token_data.ts";
 import {get_token_data_from_file} from "./get_token_data_from_file.ts";
 import {r,__dirname} from "./r.ts";
 type Long=import("long");
+*/
 
 function run() {
 	parse_types();
@@ -80,14 +81,14 @@ export class MyReader extends protobufjs.Reader {
 	}
 	decode_any(l?: number) {
 		let r=this;
-		var c=l===undefined?r.len:r.pos+l;
-		while(r.pos<c){
-		var t=r.uint32()
-		switch(t>>>3){
-		default:
-		r.skipTypeEx(t>>>3,t&7);
-		break
-		}
+		var c=l===undefined? r.len:r.pos+l;
+		while(r.pos<c) {
+			var t=r.uint32();
+			switch(t>>>3) {
+				default:
+					r.skipTypeEx(t>>>3,t&7);
+					break;
+			}
 		}
 	}
 	last_pos: number;
@@ -106,8 +107,8 @@ export class MyReader extends protobufjs.Reader {
 		return ret;
 	}
 	public override uint32(): number {
-		if(this.pos >20&&this.pos<36)
-		my_console.pad_log("[uint32] pos=%o",this.pos);
+		if(this.pos>20&&this.pos<36)
+			my_console.pad_log("[uint32] pos=%o",this.pos);
 		this.last_pos=this.pos;
 		let ret=super.uint32();
 		let diff=this.pos-this.last_pos;
@@ -241,7 +242,7 @@ class MyUnkType extends protobufjs.Type {
 	_fieldsArray!: protobufjs.Field[];
 	override setup() {
 		let types: (protobufjs.Type|protobufjs.Enum|null)[]=[];
-		for(var i=0;i< /* initializes */ this.fieldsArray.length;++i)
+		for(let i=0;i< /* initializes */ this.fieldsArray.length;++i)
 			types.push(this._fieldsArray[i].resolve().resolvedType);
 		this.decode=protobufjs.decoder(this)({
 			Reader: MyReader,

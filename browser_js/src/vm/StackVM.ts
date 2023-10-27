@@ -44,7 +44,7 @@ export class StackVM {
 		this.stack.push(value);
 	}
 	pop() {
-		let last=this.stack.pop();
+		const last=this.stack.pop();
 		if(!last) throw new Error("Stack underflow");
 		return last;
 	}
@@ -52,9 +52,9 @@ export class StackVM {
 		return this.stack.at(-1-distance);
 	}
 	pop_arg_count(operand_number_of_arguments: number) {
-		let arg_count=operand_number_of_arguments;
-		let arguments_arr: Box[]=new Array(arg_count);
-		for(let i=arg_count-1;i>=0;i--) {
+		const arg_count=operand_number_of_arguments;
+		const arguments_arr: Box[]=new Array(arg_count);
+		for(const i=arg_count-1;i>=0;i--) {
 			arguments_arr[arg_count-i]=this.pop();
 		}
 		return arguments_arr;
@@ -74,7 +74,7 @@ export class StackVM {
 	execute_instruction(instruction: InstructionType) {
 		switch(instruction[0]) {
 			case 'je': {
-				let [,target]=instruction;
+				const [,target]=instruction;
 				if(typeof target!='number')
 					throw new Error("Invalid");
 				if(this.is_in_instructions(target)) {
@@ -85,7 +85,7 @@ export class StackVM {
 				}
 			} break;
 			case 'jmp': {
-				let [,target]=instruction;
+				const [,target]=instruction;
 				if(typeof target!='number')
 					throw new Error("Invalid");
 				if(this.is_in_instructions(target)) {
@@ -94,7 +94,7 @@ export class StackVM {
 				this.instruction_pointer=target;
 			} break;
 			case 'modify_operand': {
-				let [,target,offset]=instruction;
+				const [,target,offset]=instruction;
 				if(typeof target!='number')
 					throw new Error("Invalid");
 				if(typeof offset!='number')
@@ -102,8 +102,8 @@ export class StackVM {
 				if(this.is_in_instructions(target)) {
 					throw new Error("RangeError: Destination is out of instructions range");
 				}
-				let lex_instruction: [string,...any[]]=this.instructions[target];
-				let value=this.pop();
+				const lex_instruction: [string,...any[]]=this.instructions[target];
+				const value=this.pop();
 				this.m_base.update_instruction(offset,value,lex_instruction);
 				this.instructions[target]=SimpleStackVMParser.typecheck_instruction(lex_instruction);
 			} break;
@@ -114,23 +114,23 @@ export class StackVM {
 				this.running=false;
 			} break;
 			case 'push': {
-				let [,...rest]=instruction;
-				for(let i=0;i<rest.length;i++) {
-					let item=rest[i];
+				const [,...rest]=instruction;
+				for(const i=0;i<rest.length;i++) {
+					const item=rest[i];
 					this.push(item);
 				}
 			} break;
 			case 'drop': this.pop(); break;
 			case 'dup': {
-				let top=this.peek_at(0);
+				const top=this.peek_at(0);
 				if(!top)
 					throw new Error("Stack underflow when executing dup instruction");
 				this.push(top);
 			} break;
 			case 'cast': throw new Error("TODO");
 			case 'get': {
-				let target_name=this.pop();
-				let target_obj=this.pop();
+				const target_name=this.pop();
+				const target_obj=this.pop();
 				if(!target_obj)
 					throw new Error("Invalid");
 				if(typeof target_name!='string')
@@ -142,7 +142,7 @@ export class StackVM {
 			case 'call': throw new Error("No call impl");
 			case 'construct': throw new Error("No construct impl");
 			case 'return': {
-				let top=this.pop();
+				const top=this.pop();
 				if(!top) throw new Error("Stack underflow");
 				this.return_value=top;
 			} break;

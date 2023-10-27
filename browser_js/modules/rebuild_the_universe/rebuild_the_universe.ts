@@ -1260,30 +1260,34 @@ class EventHandlerVMDispatch extends StackVMImpl {
 }
 class StackVMParser {
 	static match_regex=/(.+?)(;|$)/gm;
-	static parse_int_arg(cur: string[]|number[],arg_loc: number) {
+	static parse_int_arg(cur: unknown[],arg_loc: number) {
 		const cur_item=cur[arg_loc];
-		if(typeof cur_item=="string") {
-			const arg=cur_item;
-			if(arg[3]==='()'[0]&&arg.at(-1)==="()"[1]) {
-				const str_int=arg.slice(4,-1);
-				cur[arg_loc]=parseInt(str_int,10);
-			}
+		if(typeof cur_item!="string") throw new Error("Invalid state");
+		if(cur_item[3]==='()'[0]&&cur_item.at(-1)==="()"[1]) {
+			const str_int=cur_item.slice(4,-1);
+			cur[arg_loc]=parseInt(str_int,10);
 		}
 	}
-	static parse_string_with_format_ident(str: string|string[],format_list: any[]) {
+	static parse_string_with_format_ident(str: string|string[],format_list: unknown[]) {
 		const format_index=str.indexOf('%');
 		const format_type=str[format_index+1];
 		switch(format_type) {
-			case "o":
-				return format_list.shift();
+			case "o": {
+				if(format_list.length==0) throw new Error("Invalid state");
+				const item=format_list[0];
+				format_list.shift();
+				return item;
+			}
 			default:
 				console.assert(false,"Assertion failed: %s",'unsupported format spec %'+format_type);
+				throw new Error("Invalid state");
 		}
 	}
-	static parse_current_instruction(cur: any[],format_list: any[]) {
+	static parse_current_instruction(cur: unknown[],format_list: unknown[]) {
 		let arg_loc=1;
 		let arg=cur[arg_loc];
 		while(arg) {
+			if(typeof arg!=="string") throw new Error("Invalid state");
 			if(arg.slice(0,3)==="int") this.parse_int_arg(cur,arg_loc);
 			if(arg.includes('%')) {
 				const res=this.parse_string_with_format_ident(arg,format_list);
@@ -1577,16 +1581,16 @@ class BaseCompression {
 }
 class MulCompression extends BaseCompression {
 	stats_calculator: CompressionStatsCalculator;
-	compression_stats: any[];
+	compression_stats: unknown[][];
 	constructor() {
 		super();
 		this.stats_calculator=new CompressionStatsCalculator;
 		this.compression_stats=[];
 	}
 	try_compress(arr: string[]) {
-		let ret: string[]=[];
+		const ret: string[]=[];
 		for(let i=0;i<arr.length;i++) {
-			let item=arr[i];
+			const item=arr[i];
 			if(i+1<arr.length) {
 				if(item===arr[i+1]) {
 					let off=1;
@@ -1609,12 +1613,12 @@ class MulCompression extends BaseCompression {
 		return this.compress_result(arr,ret);
 	}
 	try_decompress(arr: string[]) {
-		let ret: string[]=[];
+		const ret: string[]=[];
 		for(let i=0;i<arr.length;i++) {
-			let item=arr[i];
+			const item=arr[i];
 			if(!item) continue;
-			let [item_type,num_data]=[item[0],item.slice(1)];
-			let parsed=parseInt(num_data);
+			const [item_type,num_data]=[item[0],item.slice(1)];
+			const parsed=parseInt(num_data);
 			if(!Number.isNaN(parsed)) {
 				for(let j=0;j<parsed;j++)ret.push(item_type);
 				continue;
@@ -1629,7 +1633,7 @@ class MulCompression extends BaseCompression {
 		if(success) arr=res;
 		for(let i=0;i<4;i++) {
 			this.stats_calculator.calc_for_stats_index(this.compression_stats,arr,i);
-			let ls=this.compression_stats[i];
+			const ls=this.compression_stats[i];
 			if(ls.length>0) {
 				continue;
 			}
@@ -1746,7 +1750,7 @@ class BaseNode {
 		this.m_children.push(record);
 	}
 	remove_child(record: BaseNode) {
-		let index=this.m_children.indexOf(record);
+		const index=this.m_children.indexOf(record);
 		if(index>-1) {
 			this.m_children.splice(index,1);
 			record.set_parent(null);
@@ -1888,7 +1892,7 @@ class AsyncTimeoutNode extends BaseNode {
 		log_if(LOG_LEVEL_INFO,"start_async");
 		this.m_target=target;
 		this.set();
-		let promise=this.m_target.wait();
+		const promise=this.m_target.wait();
 		log_if(LOG_LEVEL_INFO,"p",promise);
 		await promise;
 	}
@@ -1990,7 +1994,7 @@ class AverageRatio {
 			this.gen_count++;
 			this.history.unshift(this.value);
 			if(this.history.length>this.history_size) this.history.pop();
-			let next=avg.next(this);
+			const next=avg.next(this);
 			if(next) next.do_history_update(avg,time_now);
 		}
 	}
@@ -2020,7 +2024,7 @@ class AverageRatioRoot {
 		this.values=[];
 	}
 	get_average(key: string) {
-		let ratio_calc=this.map.get(key);
+		const ratio_calc=this.map.get(key);
 		if(!ratio_calc) throw new Error("Ratio not found: "+key);
 		return ratio_calc.get_average();
 	}
@@ -2030,7 +2034,7 @@ class AverageRatioRoot {
 		this.map.set(key,value);
 	}
 	next(value_obj: AverageRatio) {
-		let idx=this.values.indexOf(value_obj);
+		const idx=this.values.indexOf(value_obj);
 		if(idx<this.values.length) {
 			return this.values[idx+1];
 		}
@@ -2040,11 +2044,11 @@ class AverageRatioRoot {
 		let cur=this.map.get(this.keys[0]);
 		if(!cur) throw new Error("Invalid");
 		let cur_size=cur.size;
-		let time_now=performance.now();
+		const time_now=performance.now();
 		cur.do_history_update(this,time_now);
 		cur.add_to_ratio(value);
 		for(let i=1;i<this.keys.length;i++) {
-			let key=this.keys[i];
+			const key=this.keys[i];
 			cur=this.map.get(key);
 			if(!cur) throw new Error("Invalid");
 			cur_size*=cur.size;
@@ -2055,7 +2059,7 @@ class AverageRatioRoot {
 
 // AutoBuyState
 declare global {
-	interface Window {
+	export interface Window {
 		atomepersecond: number;
 		prestige: number;
 	}
@@ -2069,7 +2073,7 @@ interface SpecType {
 }
 
 declare global {
-	interface Window {
+	export interface Window {
 		timeplayed: number;
 		secondinterval?: ReturnType<typeof window.setInterval>|undefined;
 		doc: Document;
@@ -2120,7 +2124,7 @@ class AutoBuyState {
 	}
 	init() {
 		if(window.atomepersecond===0) {
-			let node=new TimeoutNode(0);
+			const node=new TimeoutNode(0);
 			this.root_node.append_child(node);
 			node.start(new TimeoutTarget(this,this.init));
 			return;
@@ -2134,16 +2138,16 @@ class AutoBuyState {
 		} else {
 			rep_val=0.75;
 		}
-		let ratio_types=["10sec","1min","5min","30min","3hour"];
-		let ratio_duration=[10*1000,60*1000,5*60*1000,30*60*1000,3*60*60*1000];
-		let ratio_counts=[80,6,5,6,6];
+		const ratio_types=["10sec","1min","5min","30min","3hour"];
+		const ratio_duration=[10*1000,60*1000,5*60*1000,30*60*1000,3*60*60*1000];
+		const ratio_counts=[80,6,5,6,6];
 		function mul_3(arr: number[],i: number) {
-			let [a,b=1,c=10]=arr.slice(i);
+			const [a,b=1,c=10]=arr.slice(i);
 			return a*b*c*4;
 		}
 		//@AverageRatio
 		function create_ratio(target_obj: AverageRatioRoot,i: number,now_start: number) {
-			let obj=new AverageRatio(ratio_types[i],{
+			const obj=new AverageRatio(ratio_types[i],{
 				size: ratio_counts[i],
 				history_size: mul_3(ratio_counts,i),
 				time_start: now_start,
@@ -2152,7 +2156,7 @@ class AutoBuyState {
 			if(ratio_types[i]==="1min") obj.set_history_size(7200);
 			target_obj.set_ratio(ratio_types[i],obj);
 		}
-		let now_start=performance.now();
+		const now_start=performance.now();
 		for(let i=0;i<5;i++) {
 			create_ratio(this.avg,i,now_start);
 		}
@@ -2171,7 +2175,7 @@ class AutoBuyState {
 		while(this.arr.length>this.arr_max_len) {
 			this.arr.pop();
 		}
-		let new_ratio=this.calc_ratio();
+		const new_ratio=this.calc_ratio();
 		if(!Number.isFinite(new_ratio)) {
 			console.assert(false,'ratio result is not finite');
 		}
@@ -2193,7 +2197,7 @@ class AutoBuyState {
 		this.total_mul=1;
 		this.total_cycle_count_change=0;
 		let did_update=this.rep_update_ratio_mode(true);
-		let should_notify=did_update;
+		const should_notify=did_update;
 		while(did_update) {
 			did_update=this.rep_update_ratio_mode(false);
 		}
@@ -2203,8 +2207,8 @@ class AutoBuyState {
 		}
 	}
 	rep_update_ratio_mode(do_lock: boolean) {
-		let mode_ratio_up=this.ratio_mode*.1+.1;
-		let mode_ratio_down=this.ratio_mode*.1-.4;
+		const mode_ratio_up=this.ratio_mode*.1+.1;
+		const mode_ratio_down=this.ratio_mode*.1-.4;
 		if(this.ratio>(mode_ratio_up+.4)) return this.on_increase_ratio(do_lock,2);
 		if(this.ratio<mode_ratio_down) return this.on_decrease_ratio(do_lock);
 		if(this.ratio>mode_ratio_up) return this.on_increase_ratio(do_lock);
@@ -2232,7 +2236,7 @@ class AutoBuyState {
 		this.total_cycle_count_change+=lock_for;
 	}
 	finalize_locked_cycle_count() {
-		let rem_val=this.locked_cycle_count%100;
+		const rem_val=this.locked_cycle_count%100;
 		this.locked_cycle_count-=rem_val;
 	}
 	do_ratio_lock(_do_lock: boolean,mode_change_direction: number,num_of_cycles: number) {
@@ -2263,8 +2267,8 @@ class AutoBuyState {
 	log_on_update_ratio_mode_notify() {
 		log_if(LOG_LEVEL_INFO,'update_ratio_mode_tag mode=%o total_mul=%o cycle_change=%o',this.ratio_mode,this.total_mul,this.total_cycle_count_change);
 		const near_avg="30min";
-		let real_val=this.avg.get_average(near_avg);
-		let [num,exponent]=this.calc_near_val(real_val);
+		const real_val=this.avg.get_average(near_avg);
+		const [num,exponent]=this.calc_near_val(real_val);
 		if(real_val>0.1&&real_val<0.9) return;
 		if(exponent<2&&exponent>-3) {
 			log_if(LOG_LEVEL_ERROR,'update_ratio_mode_tag -exp avg:%s=%o lcc=%o',near_avg,(~~(real_val*100000))/100000,this.locked_cycle_count);
@@ -2273,7 +2277,7 @@ class AutoBuyState {
 		}
 	}
 	update_not_ready() {
-		let node=new TimeoutNode(80);
+		const node=new TimeoutNode(80);
 		this.root_node.append_child(node);
 		node.start(new TimeoutTarget(this,this.update));
 	}
@@ -2301,18 +2305,18 @@ class AutoBuyState {
 		this.update_ratio_mode();
 	}
 	on_game_reset_finish(time_played_str: string) {
-		let history_arr_1=this.avg.values[0].history.slice().reverse();
+		const history_arr_1=this.avg.values[0].history.slice().reverse();
 		let history_item=history_arr_1[0];
-		let history_div_num=6*5*6;
-		let history_arr_2=history_arr_1.map(value => {
+		const history_div_num=6*5*6;
+		const history_arr_2=history_arr_1.map(value => {
 			history_item*=history_div_num-1;
 			history_item+=value;
 			history_item/=history_div_num;
 			return (history_item*100).toFixed(1);
 		});
-		let json_hist=JSON.stringify(history_arr_2);
-		let json_tag="JSON_HIST";
-		let prev_hist=sessionStorage["history"];
+		const json_hist=JSON.stringify(history_arr_2);
+		const json_tag="JSON_HIST";
+		const prev_hist=sessionStorage["history"];
 		let data_arr: string[];
 		if(prev_hist&&prev_hist.startsWith(json_tag)) {
 			let hist_data=prev_hist.slice(json_tag.length);
@@ -2325,10 +2329,10 @@ class AutoBuyState {
 			data_arr=[json_hist];
 		}
 		sessionStorage["history"]=`${json_tag}@${data_arr.join("|")}`;
-		let time_played_data=sessionStorage["time_played_hist"];
+		const time_played_data=sessionStorage["time_played_hist"];
 		let time_played_arr: (null|string)[]=data_arr.map(() => null);
 		if(time_played_data) {
-			let stored_arr=JSON.parse(time_played_data);
+			const stored_arr=JSON.parse(time_played_data);
 			for(let i=0;i<stored_arr.length;i++) {
 				time_played_arr[i]=stored_arr[i];
 			}
@@ -2340,7 +2344,7 @@ class AutoBuyState {
 	}
 	reset() {
 		this.ratio*=0.75;
-		for(var i=0;i<this.arr.length;i++) {
+		for(let i=0;i<this.arr.length;i++) {
 			this.arr[i]*=0.75;
 		}
 	}
@@ -2368,7 +2372,7 @@ class DataLoader {
 	load_str_arr(key: string,def_value: string[]) {
 		if(!this.store)
 			return def_value;
-		let data=this.store.getItem(key);
+		const data=this.store.getItem(key);
 		if(data===null)
 			return def_value;
 		return data.split(",");
@@ -2402,6 +2406,7 @@ class AsyncAutoBuy {
 		this.fast_unit_running=false;
 	}
 	get timeout_ms() {
+		// deno-lint-ignore no-debugger
 		debugger;
 		return this.parent.timeout_ms;
 	}
@@ -2409,8 +2414,8 @@ class AsyncAutoBuy {
 		if(!no_wait) await this.next_timeout_async(this.parent.timeout_ms,"A");
 		await this.main_async();
 	}
-	async maybe_async_reset(): Promise<[true,number]|[false,number]> {
-		let loss_rate=this.parent.unit_promote_start();
+	maybe_async_reset(): [true,number]|[false,number] {
+		const loss_rate=this.parent.unit_promote_start();
 		if(this.parent.maybe_run_reset()) return [true,loss_rate];
 		return [false,loss_rate];
 	}
@@ -2453,7 +2458,8 @@ class AsyncAutoBuy {
 		this.main_running=true;
 		try {
 			run_loop: while(this.main_running) {
-				for(this.parent.iter_count=0;;) {
+				this.parent.iter_count=0;
+				for(let running=true;running;) {
 					this.unit_upgradeable_trigger=30;
 					if(this.parent.timeout_ms&&this.parent.timeout_ms>3*60*1000) {
 						this.unit_upgradeable_trigger=8;
@@ -2464,10 +2470,12 @@ class AsyncAutoBuy {
 					}
 					if(this.parent.iter_count<6) await this.normal_decrease_async();
 					else await this.large_decrease_async();
-					let [quit,loss_rate]=await this.maybe_async_reset();
+					const [quit,loss_rate]=this.maybe_async_reset();
 					if(quit) break run_loop;
 					if(loss_rate>0.08) continue;
-					if(this.parent.pre_total==window.totalAtome) break;
+					if(this.parent.pre_total==window.totalAtome) {
+						running=false;
+					}
 				}
 				await this.faster_timeout_async();
 			}
@@ -2499,7 +2507,7 @@ class AsyncAutoBuy {
 		await this.next_timeout_async(this.parent.timeout_ms,'$');
 	}
 	async next_timeout_async(timeout: number,char: string,silent=false) {
-		let node=new AsyncTimeoutNode(timeout);
+		const node=new AsyncTimeoutNode(timeout);
 		this.parent.root_node.append_child(node);
 		if(!silent) {
 			this.parent.timeout_ms=timeout;
@@ -2574,7 +2582,7 @@ class AutoBuy {
 			console.log(e);
 		}
 		this.timeout_arr=this.local_data_loader.load_int_arr_cb("auto_buy_timeout_str",() => {
-			let src=[300];
+			const src=[300];
 			src.length=16;
 			let data_len=1;
 			while(data_len<src.length) {
@@ -2598,11 +2606,11 @@ class AutoBuy {
 	}
 	iterate_symbols(sym_indexed_this: {[x: string]: any;},val: {sym: any;}) {
 		if(!sym_indexed_this[val.sym]) return;
-		let obj=sym_indexed_this[val.sym];
+		const obj=sym_indexed_this[val.sym];
 		if(!obj.split) return;
-		let str=sym_indexed_this[val.sym];
-		let arr=str.split(",");
-		let trimmed=arr.map((e: string) => e.trim());
+		const str=sym_indexed_this[val.sym];
+		const arr=str.split(",");
+		const trimmed=arr.map((e: string) => e.trim());
 		this.debug_arr.push(...trimmed);
 	}
 	check_for_symbols() {
@@ -2633,7 +2641,7 @@ class AutoBuy {
 		} catch(e) {
 			log_if(LOG_LEVEL_INFO,"failed to play `#background_audio`, page was loaded without a user interaction(reload from devtools or F5 too)");
 		}
-		let raw_instructions=`
+		const raw_instructions=`
 			// [none]
 			vm_push_self;
 			// vm_self
@@ -2706,35 +2714,35 @@ class AutoBuy {
 			// [none]
 			vm_return;
 			`;
-		let instructions=StackVMParser.parse_instruction_stream_from_string(raw_instructions,[
+		const instructions=StackVMParser.parse_instruction_stream_from_string(raw_instructions,[
 			function() {
 				log_if(LOG_LEVEL_ERROR,'play success');
 			},
-			function(err: any) {
+			function(err: unknown) {
 				log_if(LOG_LEVEL_ERROR,err);
 			}
 		]);
 		try {
-			let t=this;
-			let event_handler={
+			const event_handler={
+				base: this,
 				handleEvent() {
 					this.run().then(() => {
 						log_if(LOG_LEVEL_INFO,'play success');
 					},function(err) {
 						log_if(LOG_LEVEL_ERROR,err);
 					});
-					window.removeEventListener("click",this);
+					self.removeEventListener("click",this);
 				},
 				async run() {
-					if(!t.background_audio) throw new Error("Bad");
-					await t.background_audio.play();
+					if(!this.base.background_audio) throw new Error("Bad");
+					await this.base.background_audio.play();
 				}
 			};
 			if(!this.use_event_vm) {
-				window.addEventListener("click",event_handler);
+				self.addEventListener("click",event_handler);
 			} else {
-				let handler=new EventHandlerVMDispatch(instructions,this);
-				window.addEventListener("click",handler);
+				const handler=new EventHandlerVMDispatch(instructions,this);
+				self.addEventListener("click",handler);
 			}
 		} catch(e) {
 			console.log('error when setting up EventHandlerVMDispatch',e);
@@ -2750,7 +2758,7 @@ class AutoBuy {
 	}
 	save_timeout_arr() {
 		let forced_action,action_count;
-		let action_data=localStorage["auto_buy_forced_action"];
+		const action_data=localStorage["auto_buy_forced_action"];
 		if(action_data) [forced_action,action_count]=action_data.split(",");
 		localStorage["auto_buy_timeout_str"]=this.get_timeout_arr_data(forced_action);
 		if(action_count!==void 0) {
@@ -2778,45 +2786,45 @@ class AutoBuy {
 			font-size:22px;
 			color:lightgray;
 		}`;
-		let displaySheet=new CSSStyleSheet;
+		const displaySheet=new CSSStyleSheet;
 		displaySheet.replaceSync(css_display_style);
 		document.adoptedStyleSheets=[...document.adoptedStyleSheets,displaySheet];
-		let state_log=document.createElement("state_log");
+		const state_log=document.createElement("state_log");
 		document.body.append(state_log);
-		let history=document.createElement("div");
+		const history=document.createElement("div");
 		history.textContent="?3";
 		state_log.append(history);
 		this.dom_map.set("history",history);
-		let timeout_element=document.createElement("div");
+		const timeout_element=document.createElement("div");
 		timeout_element.textContent="0";
 		state_log.append(timeout_element);
 		this.dom_map.set("timeout_element",timeout_element);
-		let hours_played=document.createElement("div");
+		const hours_played=document.createElement("div");
 		hours_played.textContent="0.000 hours";
 		state_log.append(hours_played);
 		this.dom_map.set("hours_played",hours_played);
-		let ratio=document.createElement("div");
+		const ratio=document.createElement("div");
 		ratio.textContent="0.00%";
 		state_log.append(ratio);
 		this.dom_map.set("ratio",ratio);
-		let ratio_change=document.createElement("div");
+		const ratio_change=document.createElement("div");
 		ratio_change.textContent='0.000e+0';
 		state_log.append(ratio_change);
 		this.dom_map.set("ratio_change",ratio_change);
 	}
 	init_dom() {
 		const font_size_px=22;
-		let t=this;
+		const t=this;
 		this.state_history_arr_max_len=Math.floor(document.body.getClientRects()[0].width/(font_size_px*0.55)/2.1);
-		let history=this.dom_map.get("history");
+		const history=this.dom_map.get("history");
 		if(history&&typeof history=="object") history.addEventListener("click",new EventHandlerDispatch(this,"history_element_click_handler"));
-		let ratio=this.dom_map.get("ratio");
+		const ratio=this.dom_map.get("ratio");
 		if(ratio&&typeof ratio=="object") {
 			ratio.addEventListener("click",function() {
 				t.state.reset();
 			});
 		}
-		let state_log=this.dom_map.get("state_log");
+		const state_log=this.dom_map.get("state_log");
 		if(state_log instanceof HTMLElement) state_log.style.fontSize=font_size_px+"px";
 		window.addEventListener("unload",function() {
 			t.save_state_history_arr();
@@ -2834,7 +2842,7 @@ class AutoBuy {
 	}
 	update_timeout_element() {
 		if(this.timeout_ms) {
-			let element=this.dom_map.get("timeout_element");
+			const element=this.dom_map.get("timeout_element");
 			if(element instanceof HTMLElement) {
 				element.innerText=this.get_millis_as_pretty_str(this.round(this.timeout_ms),0);
 			}
@@ -2853,8 +2861,8 @@ class AutoBuy {
 		return string;
 	}
 	get_millis_as_pretty_str(timeout_milli: number,milli_acc: number|undefined) {
-		let time_arr=[];
-		let float_milliseconds=timeout_milli%1000;
+		const time_arr=[];
+		const float_milliseconds=timeout_milli%1000;
 		let milli_len=6;
 		if(milli_acc===0) {
 			milli_len=3;
@@ -2862,15 +2870,15 @@ class AutoBuy {
 		time_arr[3]=this.do_zero_pad(float_milliseconds.toFixed(milli_acc),"0",milli_len);
 		timeout_milli-=float_milliseconds;
 		timeout_milli/=1000;
-		let int_seconds=timeout_milli%60;
+		const int_seconds=timeout_milli%60;
 		time_arr[2]=this.do_zero_pad(int_seconds,"0",2);
 		timeout_milli-=int_seconds;
 		timeout_milli/=60;
-		let int_minutes=timeout_milli%60;
+		const int_minutes=timeout_milli%60;
 		time_arr[1]=this.do_zero_pad(int_minutes,"0",2);
 		timeout_milli-=int_minutes;
 		timeout_milli/=60;
-		let int_hours=timeout_milli;
+		const int_hours=timeout_milli;
 		time_arr[0]=this.do_zero_pad(int_hours,"0",2);
 		int_hours===0&&(time_arr.shift(),int_minutes===0&&(time_arr.shift(),int_seconds===0&&time_arr.shift()));
 		switch(time_arr.length) {
@@ -2887,16 +2895,16 @@ class AutoBuy {
 	}
 	get_hours_num_as_pretty_str(hours_num: number) {
 		let int_hours=~~hours_num;
-		let time_arr=[];
+		const time_arr=[];
 		time_arr[0]=this.do_zero_pad(int_hours,"0",2);
-		let float_minutes=(hours_num-int_hours)*60;
+		const float_minutes=(hours_num-int_hours)*60;
 		let int_minutes=~~float_minutes;
 		time_arr[1]=this.do_zero_pad(int_minutes,"0",2);
-		let float_seconds=(float_minutes-int_minutes)*60;
+		const float_seconds=(float_minutes-int_minutes)*60;
 		let int_seconds=~~float_seconds;
 		time_arr[2]=this.do_zero_pad(int_seconds,"0",2);
-		let float_milliseconds=(float_seconds-int_seconds)*1000;
-		let float_milli_from_prev=float_milliseconds-1000;
+		const float_milliseconds=(float_seconds-int_seconds)*1000;
+		const float_milli_from_prev=float_milliseconds-1000;
 		if(float_milliseconds>100&&float_milliseconds<900) {
 			this.has_real_time=true;
 		}
@@ -2965,11 +2973,11 @@ class AutoBuy {
 		if(ratio_change&&ratio_change instanceof HTMLElement) ratio_change.innerText=char_value+ratio_diff.toExponential(3);
 	}
 	update_history_element() {
-		let history=this.dom_map.get("history");
+		const history=this.dom_map.get("history");
 		if(history&&history instanceof HTMLElement) {
-			let sample_len=this.state_history_arr_max_len;
+			const sample_len=this.state_history_arr_max_len;
 			if(!sample_len) return;
-			let end_sample=array_sample_end(this.state_history_arr,sample_len).join(" ");
+			const end_sample=array_sample_end(this.state_history_arr,sample_len).join(" ");
 			history.innerText=end_sample;
 		}
 	}
@@ -3030,11 +3038,11 @@ class AutoBuy {
 			const calcPres=window.calcPres;
 			doc.title=rounding(totalAtome,false,1).toString()+" atoms";
 			//spell:words atomsaccu presnbr
-			let atomsaccu_e=doc.getElementById("atomsaccu");
+			const atomsaccu_e=doc.getElementById("atomsaccu");
 			if(atomsaccu_e) atomsaccu_e.innerHTML=rounding(window.atomsaccu,false,0);
-			let timeplayed_e=doc.getElementById("timeplayed");
+			const timeplayed_e=doc.getElementById("timeplayed");
 			if(timeplayed_e) timeplayed_e.innerHTML=(Math.round(timeplayed/30)/60).toFixed(2)+" hours";
-			let presnbr_e=doc.getElementById("presnbr");
+			const presnbr_e=doc.getElementById("presnbr");
 			if(presnbr_e) presnbr_e.innerHTML="<br>"+(calcPres()*100).toFixed(0)+" % APS boost";
 		},2000),false);
 	}
@@ -3045,8 +3053,8 @@ class AutoBuy {
 	edit_fns() {
 		// lightreset()
 		// spell:words constel2
-		let temp=window.lightreset.toString().replace("&& a != encrypt('Py')","&& a != encrypt('Py') && a != 'constel2'");
-		let function_replace=new Function(temp.substring(temp.indexOf('{')+1,temp.lastIndexOf('}')));
+		const temp=window.lightreset.toString().replace("&& a != encrypt('Py')","&& a != encrypt('Py') && a != 'constel2'");
+		const function_replace=new Function(temp.substring(temp.indexOf('{')+1,temp.lastIndexOf('}')));
 		window.lightreset=function_replace as () => void;
 	}
 	init_impl() {
@@ -3070,7 +3078,7 @@ class AutoBuy {
 		this.epoch_len++;
 		if(silent) return;
 		if(!value) throw new Error("Invalid state append requested");
-		let last=this.state_history_arr.at(-1);
+		const last=this.state_history_arr.at(-1);
 		this.state_history_arr.push(value);
 		this.state_history_arr=this.compressor.compress_array(this.state_history_arr);
 		this.update_history_element();
@@ -3094,12 +3102,12 @@ class AutoBuy {
 		this.start_main_async(true);
 	}
 	timeout_avg() {
-		let first=this.timeout_arr[0];
+		const first=this.timeout_arr[0];
 		let min=first;
 		let max=first;
 		let total=0;
-		for(var i=0;i<this.timeout_arr.length;i++) {
-			let cur=this.timeout_arr[i];
+		for(let i=0;i<this.timeout_arr.length;i++) {
+			const cur=this.timeout_arr[i];
 			total+=cur;
 			if(cur>max) {
 				max=cur;
@@ -3116,17 +3124,17 @@ class AutoBuy {
 		while(this.timeout_arr.length>60) this.timeout_arr.shift();
 		let max=0;
 		let total=0;
-		for(var i=0;i<this.timeout_arr.length;i++) {
+		for(let i=0;i<this.timeout_arr.length;i++) {
 			total+=this.timeout_arr[i];
 			max=Math.max(this.timeout_arr[i],max);
 		}
 		const val=total/this.timeout_arr.length;
-		let num=val;
+		const num=val;
 		this.last_value??=num;
-		let diff=this.last_value-num;
+		const diff=this.last_value-num;
 		this.last_value=num;
 		this.large_diff.push(num);
-		let sorted_diff_arr=this.large_diff.map(e => e-num).sort((a,b) => a-b);
+		const sorted_diff_arr=this.large_diff.map(e => e-num).sort((a,b) => a-b);
 		let diff_want_mul=1;
 		let diff_cur=diff;
 		while(diff_cur>-1&&diff_cur<1&&diff_want_mul<1e18) {
@@ -3134,14 +3142,14 @@ class AutoBuy {
 			diff_want_mul*=10;
 		}
 		diff_want_mul*=1000;
-		let zero_idx=sorted_diff_arr.indexOf(0);
+		const zero_idx=sorted_diff_arr.indexOf(0);
 		let zs=zero_idx-8;
 		let z_loss=0;
 		if(zs<0) {
 			z_loss=zs*-1;
 			zs=0;
 		}
-		let ez_log=sorted_diff_arr.map(e => {
+		const ez_log=sorted_diff_arr.map(e => {
 			if(e===0) return e;
 			return this.round(e*diff_want_mul);
 		});
@@ -3150,7 +3158,7 @@ class AutoBuy {
 		return this.round(val);
 	}
 	is_epoch_over() {
-		let epoch_diff=Date.now()-this.epoch_start_time;
+		const epoch_diff=Date.now()-this.epoch_start_time;
 		return epoch_diff>60*5*1000;
 	}
 	start_main_async(no_wait=false) {
@@ -3178,15 +3186,15 @@ class AutoBuy {
 		this.timeout_ms=this.calc_timeout_ms();
 		this.pre_total=window.totalAtome;
 		this.do_unit_promote();
-		let money_diff=this.pre_total-window.totalAtome;
-		let loss_rate=money_diff/this.pre_total;
+		const money_diff=this.pre_total-window.totalAtome;
+		const loss_rate=money_diff/this.pre_total;
 		if(this.pre_total!=window.totalAtome) {
 			this.unit_upgradable_count++;
 		}
 		if(this.pre_total!=window.totalAtome&&this.debug) {
-			let log_args=[];
-			let percent_change=(loss_rate*100).toFixed(5);
-			let money_str=window.totalAtome.toExponential(3);
+			const log_args=[];
+			const percent_change=(loss_rate*100).toFixed(5);
+			const money_str=window.totalAtome.toExponential(3);
 			log_args.push(this.iter_count);
 			log_args.push(percent_change);
 			log_args.push(money_str);
@@ -3203,7 +3211,7 @@ class AutoBuy {
 	}
 	get_timeout_change(pow_base: number,pow_num: number,div: number) {
 		if(!this.timeout_ms) throw new Error("Invalid");
-		let pow_res=Math.pow(pow_base,pow_num);
+		const pow_res=Math.pow(pow_base,pow_num);
 		const res=this.timeout_ms*pow_res;
 		return res/div;
 	}
@@ -3212,7 +3220,7 @@ class AutoBuy {
 			return;
 		}
 		if(!this.timeout_ms) throw new Error("Invalid");
-		let value=this.round(this.timeout_ms+change);
+		const value=this.round(this.timeout_ms+change);
 		log_if(LOG_LEVEL_INFO,"inc",this.timeout_ms,value-this.timeout_ms);
 		this.timeout_arr.push(value);
 	}
@@ -3230,16 +3238,16 @@ class AutoBuy {
 		return ~~value;
 	}
 	do_timeout_dec(pow_terms: number[],div: number) {
-		let change=this.get_timeout_change(pow_terms[0],Math.log(window.totalAtome),div);
+		const change=this.get_timeout_change(pow_terms[0],Math.log(window.totalAtome),div);
 		this.update_timeout_dec(change);
 	}
 	do_timeout_inc(pow_terms: number[],div: number) {
-		let iter_term=Math.pow(pow_terms[1],this.iter_count);
-		let change=this.get_timeout_change(pow_terms[0],Math.log(window.totalAtome),div);
+		const iter_term=Math.pow(pow_terms[1],this.iter_count);
+		const change=this.get_timeout_change(pow_terms[0],Math.log(window.totalAtome),div);
 		this.update_timeout_inc(change*iter_term);
 	}
 	next_timeout_async_err_log(msg: string,err: Error) {
-		let stack_trace: {stack: string;}={stack: "Error\n    at <anonymous>"};
+		const stack_trace: {stack: string;}={stack: "Error\n    at <anonymous>"};
 		if(err.stack===void 0) captureStackTrace(stack_trace);
 		let err_stack_tmp=null;
 		if(err.stack) err_stack_tmp=err.stack;
@@ -3271,12 +3279,12 @@ class AutoBuy {
 	}
 	[labeled_sym("next_timeout_async")](timeout: number,char: string) {
 		console.log("next_timeout_async",char,timeout);
-		let err=new Error;
+		const err=new Error;
 		this.next_timeout_async_err_log('next_timeout_async stk',err);
 	}
 	timeout_ms=50;
 	next_timeout(trg_fn: () => void,timeout: number,char: string,silent=false) {
-		let node=new TimeoutNode(timeout);
+		const node=new TimeoutNode(timeout);
 		this.root_node.append_child(node);
 		node.start(new TimeoutTarget(this,trg_fn));
 		if(!silent) {
@@ -3352,7 +3360,7 @@ class AutoBuy {
 	}
 	game_reset_finish() {
 		this.update_hours_played();
-		let str=this.dom_map.get("time_played_str");
+		const str=this.dom_map.get("time_played_str");
 		if(typeof str=="string") {
 			this.dispatch_on_game_reset_finish(str);
 		} else {
@@ -3365,10 +3373,10 @@ class AutoBuy {
 	}
 	on_game_reset_finish(time_played: string) {
 		console.info('fire lightreset at %s',time_played);
-		let prestige_acc=10000;
-		let real_val=window.calcPres()*100;
-		let [,num,exponent]=this.state.calc_near_val(real_val);
-		let near_val=(~~(num*prestige_acc))/prestige_acc;
+		const prestige_acc=10000;
+		const real_val=window.calcPres()*100;
+		const [,num,exponent]=this.state.calc_near_val(real_val);
+		const near_val=(~~(num*prestige_acc))/prestige_acc;
 		if(exponent<=-2||exponent>=2) {
 			console.info('p_calc_1:expected prestige (%o,%o)%%',near_val,exponent);
 		} else {
@@ -3454,11 +3462,11 @@ function do_auto_unit_promote() {
 }
 const auto_buy_obj=new AutoBuy;
 function to_tuple_arr<T,U>(keys: T[],values: U[]): [T,U][] {
-	let ret: [T,U][]=[];
+	const ret: [T,U][]=[];
 	for(let i=0;i<keys.length;i++) {
-		let k=keys[i];
-		let v=values[i];
-		let item: [T,U]=[k,v];
+		const k=keys[i];
+		const v=values[i];
+		const item: [T,U]=[k,v];
 		ret.push(item);
 	}
 	return ret;
@@ -3468,7 +3476,7 @@ function array_sample_end(arr: string[],rem_target_len: number) {
 	let rem_len=char_len_of(arr);
 	while(rem_len>rem_target_len) {
 		if(!arr.length) break;
-		let val=arr.shift();
+		const val=arr.shift();
 		if(val===void 0) continue;
 		rem_len-=val.length+1;
 	}
@@ -3485,7 +3493,7 @@ function lightreset_inject() {
 		localStorage["auto_buy_timeout_str"]="300,300,300,300";
 		localStorage["long_wait"]=12000;
 	});
-	let original=window.g_auto_buy.original_map.get("lightreset");
+	const original=window.g_auto_buy.original_map.get("lightreset");
 	if(!original) {
 		alert('unable to light reset game');
 		throw new Error("Missing original lightreset");
@@ -3512,8 +3520,8 @@ function specialclick_inject(that: number) {
 	if(window.allspec[that].done==undefined)
 		window.allspec[that].done=false;
 	if(window.allspec[that].cost<=window.totalAtome&&window.allspec[that].done==false) {
-		let specialsbought_e=window.doc.getElementById("specialsbought");
-		let atomsinvest_e=window.doc.getElementById("atomsinvest");
+		const specialsbought_e=window.doc.getElementById("specialsbought");
+		const atomsinvest_e=window.doc.getElementById("atomsinvest");
 		if(!specialsbought_e||!atomsinvest_e)
 			throw new Error("Invalid");
 		specialsbought_e.innerText=window.rounding(++window.specialsbought,false,0);
@@ -3554,16 +3562,16 @@ function got_jquery(value: typeof $) {
 }
 function use_jquery() {
 	// @ts-ignore
-	let jq: typeof $|undefined=window.$;
+	const jq: typeof $|undefined=window.$;
 	if(!jq) return;
 	if(typeof jq!="function") return;
 	const res=jq("head");
-	let r_proto=Object.getPrototypeOf(res);
+	const r_proto=Object.getPrototypeOf(res);
 	r_proto.lazyload=function(..._a: any[]) {};
 	return jq;
 }
 function proxy_jquery() {
-	let val=use_jquery();
+	const val=use_jquery();
 	set_jq_proxy(val);
 }
 // @ts-ignore
@@ -3581,7 +3589,7 @@ function set_jq_proxy(value: typeof $|undefined) {
 		enumerable: true,
 		configurable: true
 	});
-} let seen_elements=new WeakSet;
+} const seen_elements=new WeakSet;
 function remove_html_nodes(node: HTMLScriptElement) {
 	if(seen_elements.has(node)) return;
 	seen_elements.add(node);
@@ -3650,7 +3658,7 @@ function dom_add_elm_filter(elm: HTMLScriptElement) {
 	return true;
 }
 function enable_jquery_proxy_if_needed() {
-	let enable_proxy=true;
+	const enable_proxy=true;
 	if(enable_proxy) {
 		proxy_jquery();
 	}
@@ -3667,7 +3675,7 @@ function page_url_no_protocol() {
 function popstate_event_handler(e: PopStateEvent) {
 	console.log("popstate",e.state,location.href);
 	if(e.state===null) {
-		let non_proto_url=page_url_no_protocol();
+		const non_proto_url=page_url_no_protocol();
 		if(non_proto_url=="//rebuildtheuniverse.com/mjz_version") {
 			history.go(-1);
 		} else if(non_proto_url=="//rebuildtheuniverse.com/?type=mjz_version") {
@@ -3694,8 +3702,8 @@ class BaseMutationObserver {
 class DetachedMutationObserver extends BaseMutationObserver {
 	constructor(target: Node) {
 		super();
-		let mutationObserver=new MutationObserver(this.callback);
-		let options={
+		const mutationObserver=new MutationObserver(this.callback);
+		const options={
 			subtree: true,
 			childList: true,
 			attributes: true,
@@ -3715,8 +3723,8 @@ class LoadMutationObserver extends BaseMutationObserver {
 	constructor(target: Node,callback: (mut_vec: MutationRecord[],mut_observer: MutationObserver) => void) {
 		super();
 		this.m_callback=callback;
-		let mutationObserver=new MutationObserver(this.callback.bind(this));
-		let options={
+		const mutationObserver=new MutationObserver(this.callback.bind(this));
+		const options={
 			childList: true,
 			subtree: true
 		};
@@ -3728,7 +3736,7 @@ class LoadMutationObserver extends BaseMutationObserver {
 		observer.disconnect();
 	}
 }
-let mut_observers: BaseMutationObserver[]=[];
+const mut_observers: BaseMutationObserver[]=[];
 declare global {
 	interface Window {
 		g_mut_observers: any[];
@@ -3737,11 +3745,11 @@ declare global {
 window.g_mut_observers=mut_observers;
 function insert_before_enabled(node: Node,child: Node|null): boolean {
 	if(node instanceof HTMLScriptElement) {
-		let should_insert_1=dom_add_elm_filter(node);
+		const should_insert_1=dom_add_elm_filter(node);
 		if(!should_insert_1) return false;
 	}
 	if(child instanceof HTMLScriptElement) {
-		let should_insert_2=dom_add_elm_filter(child);
+		const should_insert_2=dom_add_elm_filter(child);
 		if(!should_insert_2) return false;
 	}
 	return true;
@@ -3782,7 +3790,7 @@ function create_load_with_fetch_page() {
 	});
 }
 function pop_mut_observer() {
-	let la=mut_observers.pop();
+	const la=mut_observers.pop();
 	if(!la) throw new Error("mut_observers underflow");
 	la.disconnect();
 }
@@ -3790,16 +3798,17 @@ function pop_mut_observer() {
 let loaded_scripts_count: number;
 let script_num: number;
 function mutation_observe(mut_vec: string|any[],mut_observer: {disconnect: () => void;}) {
-	let log_data_vec=[];
+	const log_data_vec=[];
 	log_data_vec.push(mut_vec.length,document.body!=null);
-	let added_scripts: HTMLScriptElement[]=[];
-	let removed_scripts: HTMLScriptElement[]=[];
+	const added_scripts: HTMLScriptElement[]=[];
+	const removed_scripts: HTMLScriptElement[]=[];
 	for(let i=0;i<mut_vec.length;i++) {
-		let mut_rec=mut_vec[i];
-		let add_node_list=mut_rec.addedNodes;
+		const mut_rec=mut_vec[i];
+		const add_node_list=mut_rec.addedNodes;
 		for(let j=0;j<add_node_list.length;j++) {
-			let cur_node=add_node_list[j];
+			const cur_node=add_node_list[j];
 			if(!cur_node) {
+				// deno-lint-ignore no-debugger
 				debugger;
 				continue;
 			}
@@ -3807,9 +3816,9 @@ function mutation_observe(mut_vec: string|any[],mut_observer: {disconnect: () =>
 				added_scripts.push(cur_node);
 			}
 		}
-		let remove_node_list=mut_rec.removedNodes;
+		const remove_node_list=mut_rec.removedNodes;
 		for(let j=0;j<remove_node_list.length;j++) {
-			let cur_node=remove_node_list[j];
+			const cur_node=remove_node_list[j];
 			if(cur_node instanceof HTMLScriptElement) {
 				removed_scripts.push(cur_node);
 			}
@@ -3848,17 +3857,17 @@ async function do_fetch_load() {
 	EventTarget.prototype.addEventListener=orig_aev;
 	await new Promise(make_load_promise);
 	reset_global_event_handlers();
-	let orig_url=location.href;
-	let loc_url=location.origin+location.pathname;
-	let prev_state=history.state;
+	const orig_url=location.href;
+	const loc_url=location.origin+location.pathname;
+	const prev_state=history.state;
 	let next_gen=0;
 	if(prev_state&&prev_state.gen) {
 		next_gen=prev_state.gen+1;
 	}
-	let hist_state={
+	const hist_state={
 		gen: next_gen
 	};
-	let do_create_fetch_page=false;
+	const do_create_fetch_page=false;
 	if(do_create_fetch_page)
 		await create_load_with_fetch_page();
 	reset_global_event_handlers();
@@ -3866,27 +3875,27 @@ async function do_fetch_load() {
 	const rb_html=await (await fetch(loc_url)).text();
 	pop_mut_observer();
 	set_jq_proxy(window.$);
-	let arr: any[]=[];
-	let any_cur: any=arr;
+	const arr: any[]=[];
+	const any_cur: any=arr;
 	window.adsbygoogle=any_cur;
 	window.adsbygoogle.op=window.adsbygoogle.push;
 	window.adsbygoogle.push=function(e) {
-		let current_script_element=document.currentScript;
+		const current_script_element=document.currentScript;
 		let next_prev_sibling: Element|null=null;
 		let next_sibling: Element|null=null;
 		if(!current_script_element) return;
 		window.g_current_script_list??=[];
 		window.g_current_script_list.push(current_script_element);
-		let prev_sibling=current_script_element.previousElementSibling;
+		const prev_sibling=current_script_element.previousElementSibling;
 		if(prev_sibling&&prev_sibling instanceof HTMLElement&&prev_sibling.dataset["adSlot"]) {
-			let ad_slot_sibling=current_script_element.previousElementSibling;
+			const ad_slot_sibling=current_script_element.previousElementSibling;
 			if(prev_sibling.previousElementSibling) next_prev_sibling=prev_sibling.previousElementSibling;
 			if(current_script_element.nextElementSibling) next_sibling=current_script_element.nextElementSibling;
 			console.log('cs nextElementSibling',next_sibling);
 			if(ad_slot_sibling) ad_slot_sibling.remove();
 			current_script_element.remove();
 			while(next_prev_sibling&&next_prev_sibling instanceof HTMLScriptElement&&next_prev_sibling.src&&next_prev_sibling.src.includes("adsbygoogle")) {
-				let ls_tmp=next_prev_sibling.previousElementSibling;
+				const ls_tmp=next_prev_sibling.previousElementSibling;
 				next_prev_sibling.remove();
 				next_prev_sibling=ls_tmp;
 			}
@@ -3905,8 +3914,8 @@ async function do_fetch_load() {
 		return "";
 	}
 	//spell:disable-next-line
-	let json_rep_1=`"\x3Cscript>\\n  (function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){\\n  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\\n  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\\n  })(window,document,"script",'//www.google-analytics.com/analytics.js',"ga");\\n\\n  ga("create", 'UA-63134422-1', "auto");\\n  ga("send", "pageview");\\n\\n\x3C/script>"`;
-	let rem_str_1=JSON.parse(json_rep_1);
+	const json_rep_1=`"\x3Cscript>\\n  (function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){\\n  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\\n  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\\n  })(window,document,"script",'//www.google-analytics.com/analytics.js',"ga");\\n\\n  ga("create", 'UA-63134422-1', "auto");\\n  ga("send", "pageview");\\n\\n\x3C/script>"`;
+	const rem_str_1=JSON.parse(json_rep_1);
 	while(did_rep) {
 		did_rep=false;
 		//spell:disable-next-line
@@ -4014,9 +4023,9 @@ function main() {
 	window.setInterval=nop_timer;
 	orig_aev=EventTarget.prototype.addEventListener;
 	EventTarget.prototype.addEventListener=no_aev;
-	let page_url=location.href;
-	let non_proto_url=page_url_no_protocol();
-	let document_write_list=create_document_write_list();
+	const page_url=location.href;
+	const non_proto_url=page_url_no_protocol();
+	const document_write_list=create_document_write_list();
 	fire_url_handler({
 		page_url,
 		non_proto_url,

@@ -51,12 +51,12 @@ export class WorkerApi {
 		this.worker=null;
 		this.worker_url=null;
 		this.flags.set('connected',false);
-		let weak_worker_state: WeakRef<WorkerApi>=new WeakRef(this);
+		const weak_worker_state: WeakRef<WorkerApi>=new WeakRef(this);
 		this.worker_url=URL.createObjectURL(this.worker_code);
 		this.worker=new Worker(this.worker_url);
 		this.worker.onmessage=function onmessage(e: MessageEvent<WorkerReplyTypes>) {
-			var msg=e.data;
-			let worker_state=weak_worker_state.deref();
+			let msg=e.data;
+			const worker_state=weak_worker_state.deref();
 			if(!worker_state) {
 				console.log('lost worker state');
 				this.terminate();
@@ -146,26 +146,26 @@ export class WorkerApi {
 	static equals_global_state(worker_state_value: WorkerApi) {
 		return this.get_global_state()===worker_state_value;
 	}
-	static maybe_delete_old_global_state_value(worker_state_value: WorkerApi) {
+	static maybe_deconste_old_global_state_value(worker_state_value: WorkerApi) {
 		if(this.has_old_global_state_value(worker_state_value)) {
-			this.delete_old_global_state();
+			this.deconste_old_global_state();
 		}
 	}
-	static maybe_delete_old_global_state() {
+	static maybe_deconste_old_global_state() {
 		if(this.has_global_state()) {
-			this.delete_old_global_state();
+			this.deconste_old_global_state();
 			return true;
 		}
 		return false;
 	}
-	static delete_old_global_state() {
+	static deconste_old_global_state() {
 		const old_worker_state=this.get_global_state();
 		if(old_worker_state) {
-			const before_destroy_call_name='delete_global_state';
+			const before_destroy_call_name='deconste_global_state';
 			this.destroy_old_worker_state(old_worker_state,before_destroy_call_name);
 		}
 	}
-	static destroy_old_worker_state(worker_state_value: {destroy: () => void;},before_destroy_call_name: 'delete_global_state') {
+	static destroy_old_worker_state(worker_state_value: {destroy: () => void;},before_destroy_call_name: 'deconste_global_state') {
 		this[before_destroy_call_name]();
 		worker_state_value.destroy();
 	}
@@ -176,11 +176,11 @@ export class WorkerApi {
 		return window[GlobalWorkerApiKey];
 	}
 	static set_global_state(worker_state_value: WorkerApi) {
-		this.maybe_delete_old_global_state_value(worker_state_value);
+		this.maybe_deconste_old_global_state_value(worker_state_value);
 		window[GlobalWorkerApiKey]=worker_state_value;
 	}
-	static delete_global_state() {
-		delete window[GlobalWorkerApiKey];
+	static deconste_global_state() {
+		deconste window[GlobalWorkerApiKey];
 	}
 	destroy() {
 		if(this.worker) {
