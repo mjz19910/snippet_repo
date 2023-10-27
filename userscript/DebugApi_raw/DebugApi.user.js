@@ -4482,13 +4482,13 @@ function cast_to_record_with_string_type_msg(x) {
 }
 
 /** @template {import("./support/dbg/CM.ts").CM<MessageEvent<{type:string;}>>|null} T @arg {T} x */
-function cast_to_record_with_string_type_msg_data(x) {
+function cast_to_wrapped_message(x) {
 	if (x === null) return null;
 	if (!is_record_with_T_msg_m(x, "data")) return null;
-	return cast_to_wrapped_message(x);
+	return cast_to_wrapped_message_impl(x);
 }
 /** @arg {import("./support/dbg/CM.ts").CM<MessageEvent<import("./support/dbg/WrappedMessage.ts").WrappedMessage<unknown>>>|null} x */
-function cast_to_wrapped_message(x) {
+function cast_to_wrapped_message_impl(x) {
 	return x;
 }
 /** @template {string} U @template {{}} T @arg {import("./support/dbg/CM.ts").CM<T>|null} x @arg {U} k @returns {import("./support/dbg/CM.ts").CM<T&{[P in U]:string}>|null} */
@@ -5007,7 +5007,7 @@ class CrossOriginConnection extends ConsoleAccess {
 		console.log(event_0.data);
 		const e_monad = new_cast_monad(event_0);
 		const e_monad_1 = cast_to_record_with_string_type_msg(e_monad);
-		const e_monad_2 = cast_to_record_with_string_type_msg_data(e_monad_1);
+		const e_monad_2 = cast_to_wrapped_message(e_monad_1);
 		if (!e_monad_2) return;
 		const wrapped_msg = e_monad_2.data.data;
 		if (wrapped_msg.type !== post_message_connect_message_type) return;
