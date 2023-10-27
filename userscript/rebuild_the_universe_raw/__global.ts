@@ -107,7 +107,7 @@ declare global {
 		atomsinvest: number;
 		calcDiff(v: number): number;
 		noti: boolean;
-		gritter: unknown;
+		gritter(a: string,b: string,c: null,d: string,e: string): void;
 		toTitleCase(v: string): string;
 		plurials(v: string): string;
 		arrayNames: string[];
