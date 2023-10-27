@@ -10,5 +10,4 @@ export type AllImportPaths=
 	|"./YTPlugin_Parser_Service.user.js"
 	|"./YTPlugin_ServiceLoader_Plugin.user.js"
 	|"./YTPlugin_ServiceMethods.user.js"
-	|"./YTPlugin_Support_Service.user.js"
-	|"moment";
+	|"./YTPlugin_Support_Service.user.js";
