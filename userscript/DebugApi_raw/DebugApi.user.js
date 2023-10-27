@@ -4635,7 +4635,7 @@ class Socket {
     if (this.m_debug) console.log("post request ConnectOverPostMessage");
     if (testing_tcp) {
       console.groupCollapsed(
-        "-tx-C-> Socket<" + data.seq + "," + data.ack + ">",
+        "-tx-S_-> Socket<" + data.seq + "," + data.ack + ">",
       );
       console.log("Socket ->");
       console.log("top.onmessage.handleEvent ->");
