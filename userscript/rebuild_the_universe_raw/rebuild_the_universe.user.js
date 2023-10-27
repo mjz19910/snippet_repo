@@ -1588,13 +1588,9 @@ class AsyncTimeoutTarget extends PromiseTimeoutTarget {
 	}
 }
 class ParentOfNode {
-	/** @arg {ParentOfNode} record */
+	/** @arg {BaseNodeImpl} record */
 	remove_child(record) {
 		record.set_parent(null);
-	}
-	/** @arg {ParentOfNode|null} parent */
-	set_parent(parent) {
-		this.m_parent = parent;
 	}
 }
 class BaseNodeImpl {
@@ -1612,7 +1608,7 @@ class BaseNodeImpl {
 	remove() {
 		if (this.m_parent) this.m_parent.remove_child(this);
 	}
-	/** @arg {ParentOfNode} record */
+	/** @arg {BaseNodeImpl} record */
 	remove_child(record) {
 		const index = this.m_children.indexOf(record);
 		if (index > -1) {
@@ -1714,7 +1710,13 @@ class IntervalNode extends BaseNodeImpl {
 		if (this.id !== null) clearInterval(this.id);
 	}
 }
-class AsyncTimeoutNode {
+class AsyncTimeoutNode extends BaseNodeImpl {
+	constructor(timeout = 0) {
+		super();
+		this.m_timeout = timeout;
+		this.m_id = null;
+		this.m_target = null;
+	}
 	/** @arg {AsyncTimeoutTarget} target */
 	async start_async(target) {
 		if (!target) {
@@ -1729,13 +1731,18 @@ class AsyncTimeoutNode {
 	}
 	set() {
 		TimeoutNode.prototype.set.call(this);
+		super.set();
 	}
+	/** @override */
 	run() {
 		TimeoutNode.prototype.run.call(this);
+		super.run();
 	}
+	/** @override */
 	destroy() {
 		if (this.m_target) this.m_target.destroy();
 		TimeoutNode.prototype.destroy.call(this);
+		super.destroy();
 	}
 }
 class IntervalIdNodeRef extends IntervalIdNode {
