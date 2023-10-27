@@ -1320,55 +1320,55 @@ class StackVMParserImplR {
 					ret = [instruction[0], push_operand];
 				}
 				break;
-				case "call" /*1 argument*/:
-					{
-						if (
-							typeof instruction[1] === "number" &&
-							Number.isFinite(instruction[1])
-						) {
+			case "call" /*1 argument*/:
+				{
+					if (
+						typeof instruction[1] === "number" &&
+						Number.isFinite(instruction[1])
+					) {
+						num_to_parse -= 2;
+						ret = [instruction[0], instruction[1]];
+					} else {
+						console.info("Operand is", instruction[1]);
+						throw new Error("Invalid operand");
+					}
+				}
+				break;
+			case "cast":
+				{
+					const m_arg = instruction[1];
+					switch (m_arg) {
+						case "object_index":
+						case "vm_function":
 							num_to_parse -= 2;
-							ret = [instruction[0], instruction[1]];
-						} else {
-							console.info("Operand is", instruction[1]);
-							throw new Error("Invalid operand");
-						}
+							ret = [instruction[0], m_arg];
 					}
-					break;
-				case "cast":
-					{
-						const m_arg = instruction[1];
-						switch (m_arg) {
-							case "object_index":
-							case "vm_function":
-								num_to_parse -= 2;
-								ret = [instruction[0], m_arg];
-						}
-						if (num_to_parse > 0) {
-							throw new Error(
-								"Assertion failed: cast operand `" + m_arg + "` is invalid",
-							);
-						}
+					if (num_to_parse > 0) {
+						throw new Error(
+							"Assertion failed: cast operand `" + m_arg + "` is invalid",
+						);
 					}
-					break;
-				case "drop":/*opcode parse */
-				case "dup":
-				case "get":
-				case "return":
-				case "halt":
-				case "vm_push_args":
-				case "vm_push_self":
-				case "push_window_object":
-				case "breakpoint":
-				case "vm_return":
-					{
-						num_to_parse--;
-						ret = [instruction[0]];
-					}
-					break;
-				default:
-					throw new Error(
-						"Verify: Unexpected opcode, opcode was `" + instruction[0] + "`",
-					);
+				}
+				break;
+			case "drop":/*opcode parse */
+			case "dup":
+			case "get":
+			case "return":
+			case "halt":
+			case "vm_push_args":
+			case "vm_push_self":
+			case "push_window_object":
+			case "breakpoint":
+			case "vm_return":
+				{
+					num_to_parse--;
+					ret = [instruction[0]];
+				}
+				break;
+			default:
+				throw new Error(
+					"Verify: Unexpected opcode, opcode was `" + instruction[0] + "`",
+				);
 		}
 		if (num_to_parse > 0) {
 			throw new Error(
@@ -1498,7 +1498,7 @@ class NamedIdGenerator {
 	}
 }
 class EventHandlerDispatch {
-	/** @arg {{[x:string]:unknown}} target_obj @arg {string} target_name */
+	/** @arg {{[x:string]: (x:unknown)=>void}} target_obj @arg {string} target_name */
 	constructor(target_obj, target_name) {
 		this.target_obj = target_obj;
 		this.target_name = target_name;
@@ -1520,7 +1520,8 @@ class TimeoutTarget {
 	}
 }
 class IntervalTarget {
-	/** @arg {unknown} obj @arg {unknown} callback */
+	m_callback;
+	/** @arg {unknown} obj @arg {()=>void} callback */
 	constructor(obj, callback) {
 		this.m_once = false;
 		this.m_obj = obj;
