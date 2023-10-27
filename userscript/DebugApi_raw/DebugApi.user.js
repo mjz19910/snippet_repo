@@ -4740,7 +4740,6 @@ class Socket extends ConsoleAccess {
 		}
 		if (!tcp_message.data) return;
 		const tcp_data = tcp_message.data;
-		if (testing_tcp) console.log("Socket.handle_tcp_data(message.data())");
 		switch (tcp_data.type) {
 			case "connected":
 				{
