@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 function main() {
     /** @type {any[]} */
     let out=[]

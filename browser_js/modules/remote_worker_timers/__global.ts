@@ -1,7 +1,7 @@
 declare global {
-	interface Window {
-		old_local: {};
-		g_remote_timer_api: {};
+	export interface Window {
+		old_local: {_0: 0;};
+		g_remote_timer_api: {_0: 0;};
 	}
 }
 

@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 //@ts-nocheck
 // cspell:words mlay mlayjson tetr
 function bulkPrestige() {

@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {LOGGING_LEVEL} from "./vars.ts"
 
 export function log_if_level(logging_level: number,logger_format: string,...logger_args: any[]) {

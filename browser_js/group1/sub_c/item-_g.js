@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 //@ts-nocheck
 // this makes a index.html${i++} file every save... :${"()"[0]}
 {

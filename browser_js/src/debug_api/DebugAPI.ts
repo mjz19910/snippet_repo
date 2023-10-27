@@ -11,7 +11,7 @@ import {DebugInfoValue} from "./DebugInfoValue.ts";
 import {GenericDataEvent} from "./GenericDataEvent.ts";
 
 declare global {
-	interface Window {
+	export interface Window {
 		DebugApi: DebugApi;
 		GenericDataEvent: typeof GenericDataEvent;
 	}
@@ -28,7 +28,7 @@ export class DebugApi {
 		return this.the_instance;
 	}
 	next_remote_id=0;
-	data_store: Map<string,any>=new Map;
+	data_store: Map<string,CallableFunction|DebugInfoValue|null>=new Map;
 	event_handler=DebugApi.static_event_target;
 	root: DebugApi|null=null;
 	constructor(root: DebugApi|null=null) {
@@ -45,14 +45,14 @@ export class DebugApi {
 	getData(a: 'u'): ChromeDevToolsUnDebug|null;
 	getData(a: 'getEventListeners'): ChromeDevToolsGetEventListeners|null;
 	getData(a: '__k'): DebugInfoValue|null;
-	getData(a: string): any {
+	getData(a: string): CallableFunction|DebugInfoValue|null|undefined {
 		return this.data_store.get(a);
 	}
 	setData(a: 'd',b: ChromeDevToolsDebug|null): boolean;
 	setData(a: 'u',b: ChromeDevToolsUnDebug|null): boolean;
 	setData(a: 'getEventListeners',b: ChromeDevToolsGetEventListeners|null): boolean;
 	setData(a: '__k',b: DebugInfoValue|null): boolean;
-	setData(a: string,b: any): boolean {
+	setData(a: string,b: CallableFunction|DebugInfoValue|null): boolean {
 		if(!b) return false;
 		switch(a) {
 			case 'd': this.data_store.set(a,b); break;
@@ -67,7 +67,7 @@ export class DebugApi {
 		return this.data_store.delete(key);
 	}
 	get_event_listener_var_vec_1(debug: ChromeDevToolsDebug,undebug: ChromeDevToolsUnDebug,func: DebugFunctionType,name: string) {
-		let __d=this.root;
+		const __d=this.root;
 		if(!__d) {
 			return {
 				type: 'error',
@@ -75,7 +75,7 @@ export class DebugApi {
 			};
 		}
 		__d.attach(debug,undebug,null);
-		let data: DebugFunctionValue={
+		const data: DebugFunctionValue={
 			type: 'function',callback: this.activate_function,function_: func,obj: {},args: [],
 			get_target() {
 				return this.function_;
@@ -85,9 +85,9 @@ export class DebugApi {
 	}
 	attach(debug: ChromeDevToolsDebug,undebug: ChromeDevToolsUnDebug,getEventListeners: ChromeDevToolsGetEventListeners|null) {
 		//Attach to the chrome DebugApi functions the user specified.
-		let obj_debug=this.getData('d');
-		let obj_undebug=this.getData('u');
-		let get_ev_lis=this.getData('getEventListeners');
+		const obj_debug=this.getData('d');
+		const obj_undebug=this.getData('u');
+		const get_ev_lis=this.getData('getEventListeners');
 		if(obj_debug!==debug||obj_undebug!==undebug||get_ev_lis!==getEventListeners) {
 			this.setData('d',debug);
 			this.setData('u',undebug);

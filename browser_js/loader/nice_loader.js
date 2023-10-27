@@ -2,14 +2,14 @@ import {system_modules} from "./system_modules.js";
 
 const debug=false;
 
-class ContextType {
+class _ContextType {
 	/** @type {string[]}*/
 	conditions=[];
 	importAssertions={};
 	parentURL="";
 }
 
-/** @arg {string} specifier @arg {ContextType} context @arg {import("./nice_loader_types.js").ResolveFn} defaultResolve */
+/** @arg {string} specifier @arg {_ContextType} context @arg {import("./nice_loader_types.ts").ResolveFn} defaultResolve */
 export async function resolve(specifier,context,defaultResolve) {
 	if(debug) console.log('spec',specifier);
 	if(debug) console.log('ctx',context);
@@ -26,7 +26,9 @@ export async function resolve(specifier,context,defaultResolve) {
 	}
 	try {
 		return await defaultResolve(specifier+".js",context,defaultResolve);
-	} catch {}
+	} catch {
+		//
+	}
 	if(debug) console.log('Failed to load import specifier: ',specifier);
 	try {
 		return await defaultResolve(specifier,context,defaultResolve);

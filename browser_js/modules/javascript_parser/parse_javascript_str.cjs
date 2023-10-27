@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 /** @template K,V */
 class HashMap {
 	/** @type {Map<K,V>|null} */

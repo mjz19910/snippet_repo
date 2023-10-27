@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {elevate_event_handler} from "./elevate_event_handler";
 import {OriginConnectionSide} from "./OriginConnectionSide";
 import {RemoteOriginMessage} from "./RemoteOriginMessage";

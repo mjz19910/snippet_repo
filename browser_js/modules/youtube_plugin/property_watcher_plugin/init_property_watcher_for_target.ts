@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {PropertyWatcher} from "./PropertyWatcher.ts"
 
 export function init_property_watcher_for_target(target: object,property_key: PropertyKey,property_path: string,noisy: boolean=false) {

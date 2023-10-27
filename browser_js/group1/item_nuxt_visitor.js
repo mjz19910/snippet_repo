@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 /** @type {<T>(v:any)=>T} */
 function any(v) {
 	return v;

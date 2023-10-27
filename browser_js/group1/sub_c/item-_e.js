@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 //@ts-nocheck
 window.async_func=(async function() {
 	var message_channel_class=class message_channel_class {

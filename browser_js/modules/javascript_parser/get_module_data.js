@@ -1,4 +1,4 @@
-// @ts-nocheck
+// @ts-nocheck: <>
 
 export function get_module_data() {
 	return raw_template`[[4],[function(e,t,r) {

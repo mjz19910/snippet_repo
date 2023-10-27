@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {Seen} from "./Seen.ts"
 import {deep_clone_object} from "./deep_clone_object.ts"
 import {log_value} from "./log_value.ts"

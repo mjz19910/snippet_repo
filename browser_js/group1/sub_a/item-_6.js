@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 /* spell:words mustafaq cupcc
 -- version_list item 6 --
 v1 (old): snippet_repo/javascript/final/item6_v1.js

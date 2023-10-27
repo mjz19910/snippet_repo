@@ -1,5 +1,6 @@
-import {debug} from "../debug.js"
-import {ytd_app} from "../player_plugin_activate/elements/ytd_app.js"
+// deno-lint-ignore-file
+import {debug} from "../debug.ts"
+import {ytd_app} from "../player_plugin_activate/elements/ytd_app.ts"
 import {createGainController} from "./createGainController.ts"
 import {gain_controller} from "./gain_controller.ts"
 import {on_gain_controller} from "./on_gain_controller.ts"

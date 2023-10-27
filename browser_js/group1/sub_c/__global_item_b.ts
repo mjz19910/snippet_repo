@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 type Generator={
 	prestigeAmount: number;
 	prestigeGain: boolean;

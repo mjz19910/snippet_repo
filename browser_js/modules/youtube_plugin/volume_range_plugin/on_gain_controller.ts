@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {g_api} from "../g_api.ts";
 import {HTMLMediaElementGainController} from "./HTMLMediaElementGainController.ts";
 

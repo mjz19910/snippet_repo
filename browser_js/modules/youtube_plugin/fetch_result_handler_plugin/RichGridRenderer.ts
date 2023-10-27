@@ -1,7 +1,9 @@
-class RichGridRenderer {
+export class RichGridRenderer {
 	masthead: {
-		videoMastheadAdV3Renderer?: any;
-	}={}
-	contents: RendererContentItem[]=[]
+		videoMastheadAdV3Renderer?: {
+			_0: 0;
+		};
+	}={};
+	contents: RendererContentItem[]=[];
 }
-class RendererContentItem {}
+export class RendererContentItem {}

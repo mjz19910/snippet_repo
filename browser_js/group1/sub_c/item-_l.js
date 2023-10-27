@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 //@ts-nocheck
 //cspell:words tvaf	txin txout
 ib=document.getElementById("a")

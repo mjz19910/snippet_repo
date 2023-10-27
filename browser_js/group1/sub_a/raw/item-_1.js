@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 /* spell:words myhtml_tokenizer deref polymorphed deinit Copypasta
 --- version_list item 1 ---
 v1 (old-o): snippet_repo/javascript/final/myhtml_tokenizer.js

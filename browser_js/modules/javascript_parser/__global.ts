@@ -1,7 +1,7 @@
 export {};
 
 declare global {
-	interface Window {
+	export interface Window {
 		code?: string;
 	}
 }

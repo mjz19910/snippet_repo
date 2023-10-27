@@ -11,6 +11,7 @@
 // @downloadURL  https://github.com/mjz19910/snippet_repo/raw/master/userscript/remote_worker_timers/remote_worker_timers.user.js
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
+// deno-lint-ignore-file
 
 (function() {
 	'use strict';

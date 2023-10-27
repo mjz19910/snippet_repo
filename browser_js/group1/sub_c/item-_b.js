@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 const {get_keys_of}=require("../../group2/item_14/item_14");
 
 let first=1;

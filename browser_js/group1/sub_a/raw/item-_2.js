@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 /* spell:words Copypasta deinit
 --- version_list item 2 ---
 v1 (old-o): snippet_repo/javascript/final/__ret_do_cur_debugApi.js

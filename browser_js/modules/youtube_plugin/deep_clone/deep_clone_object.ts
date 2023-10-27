@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {clone_object} from "./clone_object.ts"
 import {Seen} from "./Seen.ts"
 import {realHTMLElement} from "./realHTMLElement.ts"

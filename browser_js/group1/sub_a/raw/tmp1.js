@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 /*
 https://jacorb90.me/The-Factory-Of-Automation/
 */

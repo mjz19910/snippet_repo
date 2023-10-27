@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 /* spell:words
 -- version_list template --
 v1 (old): snippet_repo/javascript/final/items/item9_v1.js

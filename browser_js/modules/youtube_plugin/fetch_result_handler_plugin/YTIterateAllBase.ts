@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {yt_state_map} from "./yt_state_map.ts";
 
 export class YTIterateAllBase {

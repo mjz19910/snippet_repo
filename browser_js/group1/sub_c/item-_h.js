@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 //@ts-nocheck
 __cur={}
 __cur.f=function() {

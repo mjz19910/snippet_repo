@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 //@ts-nocheck
 function sub_c_item_j_x() {
 	var fmstr=t.toString()
