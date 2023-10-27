@@ -1587,14 +1587,24 @@ class AsyncTimeoutTarget extends PromiseTimeoutTarget {
 		return super.wait();
 	}
 }
+class ParentOfNode {
+	/** @arg {ParentOfNode} record */
+	remove_child(record) {
+		record.set_parent(null);
+	}
+	/** @arg {ParentOfNode|null} parent */
+	set_parent(parent) {
+		this.m_parent = parent;
+	}
+}
 class BaseNodeImpl {
-	/** @type {BaseNodeImpl[]} */
+	/** @type {ParentOfNode[]} */
 	m_children;
 	constructor() {
 		this.m_children = [];
 		this.m_parent = null;
 	}
-	/** @arg {BaseNodeImpl|null} parent */
+	/** @arg {ParentOfNode|null} parent */
 	set_parent(parent) {
 		this.m_parent = parent;
 	}
@@ -1602,7 +1612,7 @@ class BaseNodeImpl {
 	remove() {
 		if (this.m_parent) this.m_parent.remove_child(this);
 	}
-	/** @arg {BaseNodeImpl} record */
+	/** @arg {ParentOfNode} record */
 	remove_child(record) {
 		const index = this.m_children.indexOf(record);
 		if (index > -1) {
@@ -1665,7 +1675,7 @@ class TimeoutNode extends BaseNodeImpl {
 	set() {
 		this.m_id = setTimeout(this.run.bind(this), this.m_timeout);
 	}
-	/** @arg {IntervalTargetFn|null} target */
+	/** @arg {TimeoutTarget|IntervalTargetFn|null} target */
 	start(target) {
 		if (!target) throw new Error("No target");
 		this.m_target = target;
