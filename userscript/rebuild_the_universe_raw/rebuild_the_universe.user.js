@@ -1229,19 +1229,24 @@ class StackVMParserImplR {
 				);
 		}
 	}
-	/** @arg {unknown[]} cur @arg {unknown[]} format_list */
+	/** @arg {string[]} cur @arg {unknown[]} format_list */
 	static parse_current_instruction(cur, format_list) {
 		let arg_loc = 1;
 		let arg = cur[arg_loc];
+		/** @type {[string,...unknown[]]} */
+		const result_instruction = [cur[0]];
 		while (arg) {
 			if (arg.slice(0, 3) === "int") this.parse_int_arg(cur, arg_loc);
-			if (arg.includes("%")) {
+			else if (arg.includes("%")) {
 				const res = this.parse_string_with_format_ident(arg, format_list);
-				cur[arg_loc] = res;
+				result_instruction[arg_loc] = res;
+			} else {
+				result_instruction[arg_loc] = arg;
 			}
 			arg_loc++;
 			arg = cur[arg_loc];
 		}
+		return result_instruction;
 	}
 	/** @arg {string[]} m */
 	static raw_parse_handle_regexp_match(m) {
@@ -1290,11 +1295,16 @@ class StackVMParserImplR {
 		const raw_instructions = this.parse_string_into_raw_instruction_stream(
 			string,
 		);
+		const parsed_instructions = [];
 		for (let i = 0; i < raw_instructions.length; i++) {
 			const raw_instruction = raw_instructions[i];
-			this.parse_current_instruction(raw_instruction, format_list);
+			let parsed_instruction = this.parse_current_instruction(
+				raw_instruction,
+				format_list,
+			);
+			parsed_instructions.push(parsed_instruction);
 		}
-		const instructions = this.verify_raw_instructions(raw_instructions);
+		const instructions = this.verify_raw_instructions(parsed_instructions);
 		return instructions;
 	}
 	/** @arg {[string, ...unknown[]]} instruction @returns {InstructionType_CJS}*/
@@ -1310,77 +1320,55 @@ class StackVMParserImplR {
 					ret = [instruction[0], push_operand];
 				}
 				break;
-		}
-		if (num_to_parse > 0) {
-			throw new Error(
-				"Typechecking failure, data left when processing raw instruction stream",
-			);
-		}
-		if (ret !== null) return ret;
-		throw new Error("Unreachable");
-	}
-	/** @arg {string[]} instruction @returns {InstructionType_CJS}*/
-	static verify_instruction(instruction) {
-		let num_to_parse = instruction.length;
-		/** @type {InstructionType_CJS|null} */
-		let ret = null;
-		switch (instruction[0]) {
-			case "push":
-				{
-					num_to_parse = 0;
-					const [, push_operand] = instruction;
-					ret = [instruction[0], new StringBoxImpl(push_operand)];
-				}
-				break;
-			case "call" /*1 argument*/:
-				{
-					if (
-						typeof instruction[1] === "number" &&
-						Number.isFinite(instruction[1])
-					) {
-						num_to_parse -= 2;
-						ret = [instruction[0], instruction[1]];
-					} else {
-						console.info("Operand is", instruction[1]);
-						throw new Error("Invalid operand");
-					}
-				}
-				break;
-			case "cast":
-				{
-					const m_arg = instruction[1];
-					switch (m_arg) {
-						case "object_index":
-						case "vm_function":
+				case "call" /*1 argument*/:
+					{
+						if (
+							typeof instruction[1] === "number" &&
+							Number.isFinite(instruction[1])
+						) {
 							num_to_parse -= 2;
-							ret = [instruction[0], m_arg];
+							ret = [instruction[0], instruction[1]];
+						} else {
+							console.info("Operand is", instruction[1]);
+							throw new Error("Invalid operand");
+						}
 					}
-					if (num_to_parse > 0) {
-						throw new Error(
-							"Assertion failed: cast operand `" + m_arg + "` is invalid",
-						);
+					break;
+				case "cast":
+					{
+						const m_arg = instruction[1];
+						switch (m_arg) {
+							case "object_index":
+							case "vm_function":
+								num_to_parse -= 2;
+								ret = [instruction[0], m_arg];
+						}
+						if (num_to_parse > 0) {
+							throw new Error(
+								"Assertion failed: cast operand `" + m_arg + "` is invalid",
+							);
+						}
 					}
-				}
-				break;
-			case "drop":/*opcode parse */
-			case "dup":
-			case "get":
-			case "return":
-			case "halt":
-			case "vm_push_args":
-			case "vm_push_self":
-			case "push_window_object":
-			case "breakpoint":
-			case "vm_return":
-				{
-					num_to_parse--;
-					ret = [instruction[0]];
-				}
-				break;
-			default:
-				throw new Error(
-					"Verify: Unexpected opcode, opcode was `" + instruction[0] + "`",
-				);
+					break;
+				case "drop":/*opcode parse */
+				case "dup":
+				case "get":
+				case "return":
+				case "halt":
+				case "vm_push_args":
+				case "vm_push_self":
+				case "push_window_object":
+				case "breakpoint":
+				case "vm_return":
+					{
+						num_to_parse--;
+						ret = [instruction[0]];
+					}
+					break;
+				default:
+					throw new Error(
+						"Verify: Unexpected opcode, opcode was `" + instruction[0] + "`",
+					);
 		}
 		if (num_to_parse > 0) {
 			throw new Error(
@@ -1390,12 +1378,12 @@ class StackVMParserImplR {
 		if (ret !== null) return ret;
 		throw new Error("Unreachable");
 	}
-	/** @arg {string[][]} raw_instructions @return {InstructionType_CJS[]} */
+	/** @arg {[string, ...unknown[]][]} raw_instructions @return {InstructionType_CJS[]} */
 	static verify_raw_instructions(raw_instructions) {
 		/** @type{InstructionType_CJS[]}*/
 		const instructions = [];
 		for (let i = 0; i < raw_instructions.length; i++) {
-			instructions.push(this.verify_instruction(raw_instructions[i]));
+			instructions.push(this.verify_instruction2(raw_instructions[i]));
 		}
 		return instructions;
 	}
