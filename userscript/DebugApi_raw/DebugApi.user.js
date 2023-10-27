@@ -4481,25 +4481,16 @@ function cast_to_record_with_string_type_msg(x) {
 	return cast_result;
 }
 
-/** @template {import("./support/dbg/CM.ts").CM<MessageEvent<any>>} T @arg {T} x @returns {import("./support/dbg/CM.ts").CM<MessageEvent<T["data"]["data"]&{data:unknown}>>|null} */
+/** @template {import("./support/dbg/CM.ts").CM<MessageEvent<{type:string;}>>|null} T @arg {T} x */
 function cast_to_record_with_string_type_msg_data(x) {
+	if (x === null) return null;
 	if (!is_record_with_T_msg_m(x, "data")) return null;
-	/** @type {import("./support/dbg/CM.ts").CM<MessageEvent<T&{data:unknown}>>} */
-	const xr = x;
-	return xr;
+	return cast_to_wrapped_message(x);
 }
-
-/** @arg {import("./support/dbg/CM.ts").CM<MessageEvent<{type:string,data:unknown}>>} x @returns {x is import("./support/dbg/CM.ts").CM<MessageEvent<import("./support/dbg/WrappedMessage.ts").WrappedMessage<unknown>>>} */
-function is_record_with_string_type_msg_data_wrapped(x) {
-	if (x.data.data.type === post_message_connect_message_type) return true;
-	return false;
-}
-
 /** @arg {import("./support/dbg/CM.ts").CM<MessageEvent<import("./support/dbg/WrappedMessage.ts").WrappedMessage<unknown>>>|null} x */
 function cast_to_wrapped_message(x) {
 	return x;
 }
-
 /** @template {string} U @template {{}} T @arg {import("./support/dbg/CM.ts").CM<T>|null} x @arg {U} k @returns {import("./support/dbg/CM.ts").CM<T&{[P in U]:string}>|null} */
 function cast_to_record_with_key_and_string_type(x, k) {
 	if (x === null) return null;
@@ -5016,11 +5007,11 @@ class CrossOriginConnection extends ConsoleAccess {
 		console.log(event_0.data);
 		const e_monad = new_cast_monad(event_0);
 		const e_monad_1 = cast_to_record_with_string_type_msg(e_monad);
-		if (!this.is_with_data_decay(e_monad_1)) return;
 		const e_monad_2 = cast_to_record_with_string_type_msg_data(e_monad_1);
-		const e_monad_3 = cast_to_wrapped_message(e_monad_2);
-		if (!e_monad_3) return;
-		const wrapped_unknown1 = new_cast_monad(e_monad_3.data.data.data);
+		if (!e_monad_2) return;
+		const wrapped_msg = e_monad_2.data.data;
+		if (wrapped_msg.type !== post_message_connect_message_type) return;
+		const wrapped_unknown1 = new_cast_monad(wrapped_msg.data);
 		const wrapped_unknown2 = cast_to_record_with_string_type(wrapped_unknown1);
 		if (!wrapped_unknown2) return;
 		const unwrapped_event = wrapped_unknown2.data;
