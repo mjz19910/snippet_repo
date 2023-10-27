@@ -4447,7 +4447,7 @@ function cast_to_object(x) {
 	return x;
 }
 
-/** @template T @arg {import("./support/dbg/CM.ts").CM<T>|null} x @returns {import("./support/dbg/CM.ts").CM<T&{type:string}>|null} */
+/** @template T @arg {import("./support/dbg/CM.ts").CM<T>} x @returns {import("./support/dbg/CM.ts").CM<T&{type:string}>|null} */
 function cast_to_record_with_string_type(x) {
 	const cast_result = cast_to_object(x);
 	if (!is_record_with_string_type(cast_result, "type")) return null;
@@ -4495,9 +4495,8 @@ function is_record_with_string_type_msg_data_wrapped(x) {
 	return false;
 }
 
-/** @arg {import("./support/dbg/CM.ts").CM<MessageEvent<{type:string,data:unknown}>>} x @returns {import("./support/dbg/CM.ts").CM<MessageEvent<import("./support/dbg/WrappedMessage.ts").WrappedMessage<unknown>>>|null} */
-function cast_to_record_with_string_type_msg_data_wrapped(x) {
-	if (!is_record_with_string_type_msg_data_wrapped(x)) return null;
+/** @arg {import("./support/dbg/CM.ts").CM<MessageEvent<import("./support/dbg/WrappedMessage.ts").WrappedMessage<unknown>>>|null} x */
+function cast_to_wrapped_message(x) {
 	return x;
 }
 
@@ -4583,6 +4582,10 @@ class ConsoleAccess {
 		else ret += "_";
 		return ret;
 	}
+	/**
+	 * @param {string} dir
+	 * @param {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} tcp
+	 */
 	open_group(dir, tcp) {
 		console.log("<?-");
 		const socket_fmt = this.fmt_tag + "<" + tcp.seq + "," + tcp.ack + ">";
@@ -5010,23 +5013,17 @@ class CrossOriginConnection extends ConsoleAccess {
 	}
 	/** @arg {MessageEvent<unknown>} event_0 */
 	on_message_event(event_0) {
-		const e_monad_1 = cast_to_record_with_string_type_msg(
-			new_cast_monad(event_0),
-		);
-		if (!e_monad_1) return;
+		console.log(event_0.data);
+		const e_monad = new_cast_monad(event_0);
+		const e_monad_1 = cast_to_record_with_string_type_msg(e_monad);
 		if (!this.is_with_data_decay(e_monad_1)) return;
-		/** @type {import("./support/dbg/msg_ev_01.ts").msg_ev_01} */
 		const e_monad_2 = cast_to_record_with_string_type_msg_data(e_monad_1);
-		if (!e_monad_2?.data) return;
-		const e_monad_3 = cast_to_record_with_string_type_msg_data_wrapped(
-			e_monad_2,
-		);
+		const e_monad_3 = cast_to_wrapped_message(e_monad_2);
 		if (!e_monad_3) return;
-		const cast_monad_data = cast_to_record_with_string_type(
-			new_cast_monad(e_monad_3.data.data.data),
-		);
-		if (!cast_monad_data) return;
-		const unwrapped_event = cast_monad_data.data;
+		const wrapped_unknown1 = new_cast_monad(e_monad_3.data.data.data);
+		const wrapped_unknown2 = cast_to_record_with_string_type(wrapped_unknown1);
+		if (!wrapped_unknown2) return;
+		const unwrapped_event = wrapped_unknown2.data;
 		switch (unwrapped_event.type) {
 			case "tcp":
 				break;
@@ -5078,8 +5075,9 @@ class CrossOriginConnection extends ConsoleAccess {
 		if (data_record.data.type !== "tcp") return false;
 		return true;
 	}
-	/** @template {import("./support/dbg/CM.ts").CM<{type:string}>} T @arg {T} data @returns {data is T&import("./support/dbg/CM.ts").CM<{type:string,data:unknown}>} */
+	/** @template {import("./support/dbg/CM.ts").CM<{type:string}>} T @arg {T|null} data @returns {data is T&import("./support/dbg/CM.ts").CM<{type:string,data:unknown}>} */
 	is_with_data_decay(data) {
+		if (data === null) return false;
 		if (!is_record_with_T(data.data, "data")) return false;
 		return true;
 	}
@@ -5090,32 +5088,22 @@ class CrossOriginConnection extends ConsoleAccess {
 		}
 		this.m_local_handler.push_tcp_message(message);
 	}
-	/** @arg {Event} event */
+	/** @arg {MessageEvent<unknown>} event */
 	handleEvent(event) {
 		switch (event.type) {
 			case "message":
-				{
-					if (event instanceof MessageEvent) this.on_message_event(event);
-					else {console.log(
-							'Event type is "message" and not an instance of MessageEvent',
-							event,
-						);}
-				}
+				this.on_message_event(event);
 				break;
 			case "beforeunload":
-				{
-					for (const connection of this.m_connections) {
-						connection.will_disconnect(false);
-					}
+				for (const connection of this.m_connections) {
+					connection.will_disconnect(false);
 				}
 				break;
 			case "unload":
-				{
-					for (const connection of this.m_connections) {
-						connection.disconnected();
-					}
-					this.m_connections.length = 0;
+				for (const connection of this.m_connections) {
+					connection.disconnected();
 				}
+				this.m_connections.length = 0;
 				break;
 		}
 	}

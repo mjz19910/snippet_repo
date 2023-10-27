@@ -793,7 +793,7 @@ class CodegenService extends ServiceWithAccessors
 		if(s.object_count<3) return x;
 		return {};
 	}
-	/** @private @arg {JsonReplacerState} s @arg {string} cf @arg {object} x */
+	/** @private @arg {typeof JsonReplacerState} s @arg {string} cf @arg {object} x */
 	codegen_typedef_base(s,cf,x)
 	{
 		let k=this.get_name_from_keys(x);
