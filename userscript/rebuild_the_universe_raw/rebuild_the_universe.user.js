@@ -2394,7 +2394,7 @@ class AutoBuyImplR {
 		else args.unshift("test");
 		log_if_impl_r(log_level, format_str, ...args);
 	}
-	/** @arg {{ sym: unknown; }} val */
+	/** @arg {{ sym: symbol; }} val */
 	iterate_symbols(val) {
 		/** @type {unknown} */
 		const v1 = cast_as(this);
@@ -2522,7 +2522,7 @@ class AutoBuyImplR {
 					},
 					/** @arg {unknown} err */
 					function (err) {
-						log_if_impl_r(LOG_LEVEL_ERROR_IMPL, err);
+						log_if_impl_r(LOG_LEVEL_ERROR_IMPL, "%o", err);
 					},
 				],
 			);
