@@ -1130,42 +1130,6 @@ class StackVMImpl {
 			case "vm_return":
 				instruction_table[instruction[0]].run(this);
 				break;
-			// 2 args 1 opcode
-			case "call":
-				instruction_table[instruction[0]].run(this, instruction[1]);
-				break;
-			case "cast":
-				instruction_table[instruction[0]].run(this, instruction[1]);
-				break;
-			case "construct":
-				instruction_table[instruction[0]].run(this, instruction[1]);
-				break;
-			case "je":
-				instruction_table[instruction[0]].run(this, instruction[1]);
-				break;
-			case "jmp":
-				instruction_table[instruction[0]].run(this, instruction[1]);
-				break;
-			case "peek":
-				instruction_table[instruction[0]].run(this, instruction[1]);
-				break;
-			case "vm_call":
-				instruction_table[instruction[0]].run(this, instruction[1]);
-				break;
-			case "push":
-				{
-					const [infer, ...rest] = instruction;
-					instruction_table[instruction[0]].run(this, infer, ...rest);
-				}
-				break;
-			// 3 args 2 opcode
-			case "modify_operand":
-				instruction_table[instruction[0]].run(
-					this,
-					instruction[1],
-					instruction[2],
-				);
-				break;
 		}
 	}
 	run() {
@@ -2343,7 +2307,10 @@ class AsyncAutoBuy {
 		await node.start_async(new AsyncTimeoutTarget());
 	}
 }
-
+/** @arg {any} v */
+function any(v) {
+	return v;
+}
 class AutoBuyImplR {
 	constructor() {
 		this.root_node = new AsyncNodeRootImplR();
@@ -2401,11 +2368,14 @@ class AutoBuyImplR {
 	}
 	/** @arg {{ sym: any; }} val */
 	iterate_symbols(val) {
-		if (!this[val.sym]) return;
-		const obj = this[val.sym];
-		if (!obj.split) return;
-		const str = this[val.sym];
-		const arr = str.split(",");
+		/** @type {unknown} */
+		const v1 = cast_as(this);
+		/** @type {{[x: symbol]: string|Record<"_",never>;}} */
+		const v = cast_as(v1);
+		if(!v[val.sym]) return;
+		const obj=v[val.sym];
+		if(typeof obj!="string") return;
+		const arr=obj.split(",");
 		const trimmed = arr.map((/** @type {string} */ e) => e.trim());
 		this.debug_arr.push(...trimmed);
 	}

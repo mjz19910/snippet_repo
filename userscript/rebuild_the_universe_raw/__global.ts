@@ -54,12 +54,15 @@ declare global {
 		prestige: number;
 	}
 }
+export type Typeof_arUnit=[unknown,unknown,unknown,number,number,number,unknown,unknown,unknown,unknown,unknown,unknown,unknown,unknown,unknown,unknown,boolean,number[]][];
 // tonext_async
 declare global {
 	export function Find_ToNext(v: number): number;
 	export function mainCalc(v: unknown): void;
 
-	export let arUnit: unknown[];
+	export interface Window {
+		arUnit: Typeof_arUnit;
+	}
 }
 
 // do_auto_unit_promote
