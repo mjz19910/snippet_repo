@@ -2128,7 +2128,7 @@ function parse_javascript_str(code_str) {
 }
 
 
-function ecma_parse_main() {
+export function ecma_parse_main() {
 	let parse_str="function x(){}";
 	parse_javascript_str(parse_str);
 }

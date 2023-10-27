@@ -1,5 +1,7 @@
 // @ts-nocheck: <>
-
+function raw_template(v) {
+	return v.raw[0];
+}
 export function get_module_data() {
 	return raw_template`[[4],[function(e,t,r) {
 		"use strict";
