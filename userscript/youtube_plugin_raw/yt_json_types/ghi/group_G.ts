@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {Join} from "../../support_1/Join.ts";
 import {StoreDescription} from "../../zc_child_modules/YTPlugin_Support_Service.user.js";
 import {Ret_json_auto_replace_1} from "../_rtv_wrong/Ret_json_auto_replace_1.ts";

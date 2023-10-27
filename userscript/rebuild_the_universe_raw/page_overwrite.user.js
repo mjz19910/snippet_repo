@@ -12,6 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/rebuild_the_universe_raw/page_overwrite.user.js
 // ==/UserScript==
 /*eslint-disable no-undef */
+// deno-lint-ignore-file
 
 /** @arg {{}} value */
 function use_jquery_overwrite(value) {

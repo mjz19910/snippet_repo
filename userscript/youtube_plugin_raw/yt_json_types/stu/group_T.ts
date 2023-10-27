@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {Join} from "../../support_1/Join.ts";
 import {YtPageTypeEnum} from "../../support_2/YtPageTypeEnum.ts";
 import {CF_Generated} from "../../zd_gen_CF/export_gen.ts";

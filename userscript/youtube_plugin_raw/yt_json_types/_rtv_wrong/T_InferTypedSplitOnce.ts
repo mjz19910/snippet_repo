@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 // TI_SplitOnce<T,D>
 // @template {string} WA @template {string} S @template {string} D
 export type TI_SplitOnce<WA extends string,S extends string,D extends string>=

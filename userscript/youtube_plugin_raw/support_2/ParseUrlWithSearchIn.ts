@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {D_PlaylistUrlFormat,WatchUrlFormat} from "../yt_json_types/d/group_D.ts";
 import {T_SplitOnce} from "../yt_json_types/stu/group_T.ts";
 

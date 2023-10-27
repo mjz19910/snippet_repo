@@ -1,4 +1,5 @@
-import {as} from "../base_require_raw/BaseRequire.user";
+// deno-lint-ignore-file
+import {as} from "../base_require_raw/BaseRequire.user.js";
 
 export function con_snippet_1() {
 	let x={};

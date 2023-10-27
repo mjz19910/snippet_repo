@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {Decay} from "../../support_1/parse_url/Decay.ts";
 import {D_UrlFormat,D_CompactVideo} from "../d/group_D.ts";
 import {T_DistributedKeyof,T_Split,T_SplitOnce} from "../stu/group_T.ts";

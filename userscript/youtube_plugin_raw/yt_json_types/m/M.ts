@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {D_SerializedAdServingDataEntry} from "../d/group_D.ts";
 import {GM_VE3611,M_ResolveUrlCommand,GM_VE3832,GM_VE3854,GM_Search,GM_VE5754,GM_VE6827,GM_VE11487,GM_VE23462,GM_VE37414,GM_VE42352,GM_Url,GM_VE96368,GM_AccountMenu,GM_AddToPlaylistService,GM_Browse,GM_CreateBackstagePost,GM_CreateComment,GM_CreatePlaylist,GM_EditPlaylist,GM_GetSettingsEditor,GM_Feedback,GM_FlagGetForm,GM_GetNotificationMenu,GM_GetPdgBuyFlow,GM_GetSharePanel,GM_GetSurvey,GM_GetTranscript,GM_GetUnseenNotificationCount,GM_GetWebPlayerSharePanel,GM_Like,GM_Next,GM_NotificationOptOut,GM_RecordInteractions,GM_SendPost,GM_SetSetting,GM_Subscribe,GM_Unsubscribe,GM_UserFeedback,GM_YpcGetCart,GM_YpcGetOffers} from "../ghi/group_G.ts";
 import {TM_Gen} from "../stu/group_T.ts";

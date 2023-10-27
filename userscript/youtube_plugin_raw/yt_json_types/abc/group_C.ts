@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 //#region group_C
 import {Ret_json_auto_replace_1} from "../_rtv_wrong/Ret_json_auto_replace_1.ts";
 import {D_RunAttestation,D_TimestampWithNanos,D_UiTargetId,D_UserIdStr,T_IdTemplate} from "../d/group_D.ts";

@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {DU_Playlist_Id} from "../yt_json_types/d/group_D.js";
 import {T_SplitIntoGroups} from "../yt_json_types/stu/group_T.js";
 

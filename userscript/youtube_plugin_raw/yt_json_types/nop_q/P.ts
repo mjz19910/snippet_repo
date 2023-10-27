@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {TW_Str,TW_Str2} from "../_rtv_wrong/TW_Str.ts";
 import {TW_TagStr} from "../_rtv_wrong/TW_TagStr.ts";
 import {T_D32,T_FD32,T_FD64,TV_Str,T_VW_Bigint,TV_Str_CS,T_D64} from "../_rtv_wrong/T_Data.ts";

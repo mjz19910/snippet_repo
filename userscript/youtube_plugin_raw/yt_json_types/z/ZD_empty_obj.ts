@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 
 // TODO #1
 export type D_ReportFormModal={};

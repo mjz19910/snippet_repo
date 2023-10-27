@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 import {RequireModuleCache} from "../_module_cache/RequireModuleCache.ts";
 
 export {};

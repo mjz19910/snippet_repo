@@ -13,6 +13,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/base_require_raw/BaseRequire.user.js
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
+// deno-lint-ignore-file
 const __module_name__="mod$base_require";
 
 const path_map={
