@@ -1,44 +1,45 @@
 // do_auto_unit_promote
+export type Typeof_arUnit=[unknown,unknown,unknown,number,number,number,unknown,unknown,unknown,unknown,unknown,unknown,unknown,unknown,unknown,unknown,boolean,number[]][];
 declare global {
-	interface Window {
-		arUnit: any[];
-		Get_Unit_Type(v: any): any;
-		getUnitPromoCost(v: any): number;
+	export interface Window {
+		arUnit: Typeof_arUnit;
+		Get_Unit_Type(v: unknown): unknown;
+		getUnitPromoCost(v: unknown): number;
 		Find_ToNext(v: number): number;
-		_targets_achi: any[];
+		_targets_achi: unknown[];
 		totalAchi(): number;
-		_targets: any[];
-		mainCalc(v: any): void;
+		_targets: unknown[];
+		mainCalc(v: unknown): void;
 		tonext(v: number): void;
 	}
 }
 
 export function do_auto_unit_promote() {
-	var out=[],maxed=[];
-	for(var k=0;k<window.arUnit.length;k++) {
-		var afford=false;
+	const out=[],maxed=[];
+	for(let k=0;k<window.arUnit.length;k++) {
+		let afford=false;
 		if(window.arUnit[k][16]==true||k==0) {
-			var type=window.Get_Unit_Type(k);
-			var tmp=window.getUnitPromoCost(k);
-			var cost=tmp;
-			var next=window.Find_ToNext(k);
+			const type=window.Get_Unit_Type(k);
+			let tmp=window.getUnitPromoCost(k);
+			let cost=tmp;
+			const next=window.Find_ToNext(k);
 			if(next<0) {maxed[k]=true;}
-			for(var i=1;i<=100;i++) {
+			for(let i=1;i<=100;i++) {
 				if(window.totalAtome>=cost) {
 					tmp=tmp+(tmp*window.arUnit[k][3])/100;
-					var tar=(window.arUnit[k][4]*1)+i;
-					var a=window._targets.indexOf(tar);
-					var reduction=1;
+					const tar=(window.arUnit[k][4]*1)+i;
+					const a=window._targets.indexOf(tar);
+					let reduction=1;
 					if(a>-1&&tar<=1000) {
-						var b=true;
-						for(var k2 in type[2]) {
-							var v2=type[2][k2];
+						let b=true;
+						for(const k2 in type[2]) {
+							const v2=type[2][k2];
 							if(v2!=k&&window.arUnit[v2][4]<tar) {
 								b=false;
 							}
 						}
 						if(b) {
-							var c=window._targets_achi.indexOf(window.totalAchi()+1);
+							const c=window._targets_achi.indexOf(window.totalAchi()+1);
 							if(c>-1) {
 								reduction*=(1-((c+1)*0.01));
 							}
@@ -61,11 +62,11 @@ export function do_auto_unit_promote() {
 			}
 		}
 	}
-	let res=out.lastIndexOf(true);
+	const res=out.lastIndexOf(true);
 	if(res<0)
 		return;
 	if(maxed[res]) {
-		for(var y=0;y<100;y++) {
+		for(let y=0;y<100;y++) {
 			window.mainCalc(res);
 		}
 	} else {

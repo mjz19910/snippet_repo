@@ -26,6 +26,9 @@ declare global {
 	}
 }
 
+import $ from "npm:jquery";
+
+import {Typeof_arUnit} from "../../src/auto_buy/do_auto_unit_promote.ts";
 import {StringBox} from "../../src/box/StringBox.ts";
 import captureStackTrace from "../../src/capture-stack-trace.ts";
 import {CompressDual} from "../DebugApi/types/CompressDual.ts";
@@ -2553,7 +2556,7 @@ class AutoBuy {
 	original_map: Map<unknown,unknown>;
 	dom_map: Map<unknown,unknown>;
 	flags: Set<unknown>;
-	timeout_arr: unknown;
+	timeout_arr: number[];
 	state_history_arr_max_len: number;
 	last_value: number;
 	pre_total: number;
@@ -2597,7 +2600,7 @@ class AutoBuy {
 		this.pre_total=0;
 		this.use_event_vm=false;
 	}
-	test_log(log_level: number,format_str: string,...args: any[]) {
+	test_log(log_level: number,format_str: string,...args: unknown[]) {
 		if(args.length>0) {
 			args.unshift("test:");
 		} else {
@@ -2640,7 +2643,7 @@ class AutoBuy {
 		try {
 			return await this.background_audio.play();
 		} catch(e) {
-			log_if(LOG_LEVEL_INFO,"failed to play `#background_audio`, page was loaded without a user interaction(reload from devtools or F5 too)");
+			log_if(LOG_LEVEL_INFO,"failed to play `#background_audio`, page was loaded without a user interaction(reload from devtools or F5 too)",e);
 		}
 		const raw_instructions=`
 			// [none]
@@ -2815,21 +2818,20 @@ class AutoBuy {
 	}
 	init_dom() {
 		const font_size_px=22;
-		const t=this;
 		this.state_history_arr_max_len=Math.floor(document.body.getClientRects()[0].width/(font_size_px*0.55)/2.1);
-		const history=this.dom_map.get("history");
+		const history=this.dom_map.get("history") as HTMLDivElement;
 		if(history&&typeof history=="object") history.addEventListener("click",new EventHandlerDispatch(this,"history_element_click_handler"));
-		const ratio=this.dom_map.get("ratio");
+		const ratio=this.dom_map.get("ratio") as HTMLDivElement;
 		if(ratio&&typeof ratio=="object") {
-			ratio.addEventListener("click",function() {
-				t.state.reset();
+			ratio.addEventListener("click",() => {
+				this.state.reset();
 			});
 		}
 		const state_log=this.dom_map.get("state_log");
 		if(state_log instanceof HTMLElement) state_log.style.fontSize=font_size_px+"px";
-		window.addEventListener("unload",function() {
-			t.save_state_history_arr();
-			t.save_timeout_arr();
+		self.addEventListener("unload",() => {
+			this.save_state_history_arr();
+			this.save_timeout_arr();
 		});
 	}
 	global_init() {
@@ -2909,9 +2911,15 @@ class AutoBuy {
 		if(float_milliseconds>100&&float_milliseconds<900) {
 			this.has_real_time=true;
 		}
-		x: if(this.has_real_time) {}
-		else if(float_milliseconds<3e-9&&float_milliseconds>-3e-9) {}
-		else if(float_milli_from_prev<3e-9&&float_milli_from_prev>-3e-9) {}
+		x: if(this.has_real_time) {
+			//
+		}
+		else if(float_milliseconds<3e-9&&float_milliseconds>-3e-9) {
+			//
+		}
+		else if(float_milli_from_prev<3e-9&&float_milli_from_prev>-3e-9) {
+			//
+		}
 		else {
 			break x;
 			// console.log(float_milliseconds, float_milliseconds - 1000)
@@ -3297,7 +3305,7 @@ class AutoBuy {
 	do_unit_promote() {
 		do_auto_unit_promote();
 	}
-	is_special_done(special_buyable: {done: any; cost: number;}) {
+	is_special_done(special_buyable: {done: unknown; cost: number;}) {
 		return !special_buyable.done&&special_buyable.cost<window.totalAtome;
 	}
 	next_special() {
@@ -3390,44 +3398,44 @@ class AutoBuy {
 	}
 }
 declare global {
-	interface Window {
-		arUnit: any[];
-		Get_Unit_Type(v: any): any;
-		getUnitPromoCost(v: any): number;
+	export interface Window {
+		arUnit: Typeof_arUnit;
+		Get_Unit_Type(v: unknown): [unknown,unknown,number[]];
+		getUnitPromoCost(v: unknown): number;
 		Find_ToNext(v: number): number;
-		_targets_achi: any[];
+		_targets_achi: unknown[];
 		totalAchi(): number;
-		_targets: any[];
-		mainCalc(v: any): void;
+		_targets: unknown[];
+		mainCalc(v: unknown): void;
 		tonext(v: number): void;
 	}
 }
 function do_auto_unit_promote() {
-	var out=[],maxed=[];
-	for(var k=0;k<window.arUnit.length;k++) {
-		var afford=false;
+	const out=[],maxed=[];
+	for(let k=0;k<window.arUnit.length;k++) {
+		let afford=false;
 		if(window.arUnit[k][16]==true||k==0) {
-			var type=window.Get_Unit_Type(k);
-			var tmp=window.getUnitPromoCost(k);
-			var cost=tmp;
-			var next=window.Find_ToNext(k);
+			const type=window.Get_Unit_Type(k);
+			let tmp=window.getUnitPromoCost(k);
+			let cost=tmp;
+			const next=window.Find_ToNext(k);
 			if(next<0) {maxed[k]=true;}
-			for(var i=1;i<=100;i++) {
+			for(let i=1;i<=100;i++) {
 				if(window.totalAtome>=cost) {
 					tmp=tmp+(tmp*window.arUnit[k][3])/100;
-					var tar=(window.arUnit[k][4]*1)+i;
-					var a=window._targets.indexOf(tar);
-					var reduction=1;
+					const tar=(window.arUnit[k][4]*1)+i;
+					const a=window._targets.indexOf(tar);
+					let reduction=1;
 					if(a>-1&&tar<=1000) {
-						var b=true;
-						for(var k2 in type[2]) {
-							var v2=type[2][k2];
+						let b=true;
+						for(const k2 in type[2]) {
+							const v2=type[2][k2];
 							if(v2!=k&&window.arUnit[v2][4]<tar) {
 								b=false;
 							}
 						}
 						if(b) {
-							var c=window._targets_achi.indexOf(window.totalAchi()+1);
+							const c=window._targets_achi.indexOf(window.totalAchi()+1);
 							if(c>-1) {
 								reduction*=(1-((c+1)*0.01));
 							}
@@ -3454,7 +3462,7 @@ function do_auto_unit_promote() {
 	if(res<0)
 		return;
 	if(maxed[res]) {
-		for(var y=0;y<100;y++) {
+		for(let y=0;y<100;y++) {
 			window.mainCalc(res);
 		}
 	} else {
@@ -3483,18 +3491,18 @@ function array_sample_end(arr: string[],rem_target_len: number) {
 	}
 	return arr;
 }
-function char_len_of(arr: any[]) {
+function char_len_of(arr: string[]) {
 	return arr.reduce((a,b) => a+b.length,0)+arr.length;
 }
 function lightreset_inject() {
 	window.g_auto_buy.state_history_clear_for_reset();
 	window.g_auto_buy.skip_save=true;
-	window.addEventListener("unload",function() {
+	self.addEventListener("unload",function() {
 		window.g_auto_buy.skip_save=false;
 		localStorage["auto_buy_timeout_str"]="300,300,300,300";
 		localStorage["long_wait"]=12000;
 	});
-	const original=window.g_auto_buy.original_map.get("lightreset");
+	const original=window.g_auto_buy.original_map.get("lightreset") as Window["lightreset"];
 	if(!original) {
 		alert('unable to light reset game');
 		throw new Error("Missing original lightreset");
@@ -3502,17 +3510,17 @@ function lightreset_inject() {
 	original();
 }
 declare global {
-	interface Window {
+	export interface Window {
 		specialsbought: number;
 		atomsinvest: number;
 		calcDiff(v: number): number;
 		noti: boolean;
-		gritter: any;
+		gritter(a: string,b: string,c: null,d: string,e: string): void;
 		toTitleCase(v: string): string;
 		plurials(v: string): string;
 		arrayNames: string[];
-		updateprogress(v: any): void;
-		seeUnit(v: number): any;
+		updateprogress(v: unknown): void;
+		seeUnit(v: number): unknown;
 		checkspec(): void;
 		achiSpec(): void;
 	}
@@ -3530,11 +3538,11 @@ function specialclick_inject(that: number) {
 		atomsinvest_e.innerText=window.rounding(window.atomsinvest,false,0);
 		window.allspec[that].done=true;
 		window.totalAtome-=window.allspec[that].cost;
-		var diff1=window.calcDiff(that);
-		for(var a in window.arUnit[that][17])
+		const diff1=window.calcDiff(that);
+		for(const a in window.arUnit[that][17])
 			window.arUnit[that][17][a]*=100;
 		window.arUnit[that][5]*=100;
-		var spec_aps=0;
+		let spec_aps=0;
 		if(window.arUnit[that][4]>0) {
 			spec_aps=(window.calcDiff(that)-diff1);
 			window.atomepersecond+=spec_aps;
@@ -3542,7 +3550,6 @@ function specialclick_inject(that: number) {
 		if(window.noti)
 			window.gritter('Power-up !',window.toTitleCase(window.plurials(window.arrayNames[that]))+" X100 APS",null,"+"+window.rounding(spec_aps,false,0)+" APS","");
 		window.updateprogress(that);
-		// @ts-ignore
 		$('#spec'+that).remove();
 		if(that<74) window.seeUnit(that+1);
 		else window.seeUnit(that-1);
@@ -3551,7 +3558,6 @@ function specialclick_inject(that: number) {
 		window.achiSpec();
 	}
 }
-// @ts-ignore
 function got_jquery(value: typeof $) {
 	Object.defineProperty(window,'$',{
 		value,
@@ -3562,20 +3568,18 @@ function got_jquery(value: typeof $) {
 	use_jquery();
 }
 function use_jquery() {
-	// @ts-ignore
 	const jq: typeof $|undefined=window.$;
 	if(!jq) return;
 	if(typeof jq!="function") return;
 	const res=jq("head");
 	const r_proto=Object.getPrototypeOf(res);
-	r_proto.lazyload=function(..._a: any[]) {};
+	r_proto.lazyload=function(..._a: unknown[]) {};
 	return jq;
 }
 function proxy_jquery() {
 	const val=use_jquery();
 	set_jq_proxy(val);
 }
-// @ts-ignore
 function set_jq_proxy(value: typeof $|undefined) {
 	let s_value=value;
 	Object.defineProperty(window,'$',{
@@ -3611,7 +3615,7 @@ function remove_bad_dom_script_element() {
 
 // on_game_data_set
 declare global {
-	interface Window {
+	export interface Window {
 		constelOff(): void;
 	}
 }
@@ -3624,7 +3628,7 @@ function on_game_data_set() {
 	window.constelOff();
 }
 declare global {
-	interface Window {
+	export interface Window {
 		_SM_Data: unknown;
 	}
 }
@@ -3664,7 +3668,7 @@ function enable_jquery_proxy_if_needed() {
 		proxy_jquery();
 	}
 }
-function do_load_fire_promise(promise_accept: (value: any) => void) {
+function do_load_fire_promise(promise_accept: (value: unknown) => void) {
 	if(document.firstChild) {
 		document.firstChild.remove();
 	}
@@ -3684,7 +3688,9 @@ function popstate_event_handler(e: PopStateEvent) {
 		}
 	}
 	if(e.state) {
+		//
 	} else {
+		//
 	}
 }
 function reset_global_event_handlers() {
@@ -3739,8 +3745,8 @@ class LoadMutationObserver extends BaseMutationObserver {
 }
 const mut_observers: BaseMutationObserver[]=[];
 declare global {
-	interface Window {
-		g_mut_observers: any[];
+	export interface Window {
+		g_mut_observers: unknown[];
 	}
 }
 window.g_mut_observers=mut_observers;
@@ -3760,23 +3766,23 @@ interface IPageContent {
 	cur: string;
 }
 declare global {
-	interface Window {
-		g_current_script_list?: any[];
+	export interface Window {
+		g_current_script_list?: unknown[];
 		g_page_content: IPageContent;
 	}
 }
 let real_st: typeof setTimeout;
 let real_si: typeof setInterval;
 let orig_aev: EventTarget["addEventListener"];
-function make_load_promise(a: (reason?: any) => void) {
-	window.addEventListener("load",function lis() {
+function make_load_promise(a: (reason?: unknown) => void) {
+	self.addEventListener("load",function lis() {
 		setTimeout(a);
-		window.removeEventListener("load",lis);
+		self.removeEventListener("load",lis);
 	});
 }
 declare global {
-	interface Window {
-		g_do_load: ((promise_accept: (value: any) => void) => void)|undefined;
+	export interface Window {
+		g_do_load: ((promise_accept: (value: unknown) => void) => void)|undefined;
 	}
 }
 function create_load_with_fetch_page() {
@@ -3798,7 +3804,8 @@ function pop_mut_observer() {
 
 let loaded_scripts_count: number;
 let script_num: number;
-function mutation_observe(mut_vec: string|any[],mut_observer: {disconnect: () => void;}) {
+// mut_vec: MutationRecord[], mut_observer: MutationObserver
+function mutation_observe(mut_vec: MutationRecord[],mut_observer: MutationObserver) {
 	const log_data_vec=[];
 	log_data_vec.push(mut_vec.length,document.body!=null);
 	const added_scripts: HTMLScriptElement[]=[];
@@ -3838,13 +3845,13 @@ function mutation_observe(mut_vec: string|any[],mut_observer: {disconnect: () =>
 }
 
 interface GoogleAdList {
-	op: any;
+	op: (v: number) => void;
 	push(v: number): void;
 }
 
 // do_fetch_load
 declare global {
-	interface Window {
+	export interface Window {
 		adsbygoogle: GoogleAdList;
 		cint_arr: number[][];
 		on_on_timers_moved_first: boolean;
@@ -3853,8 +3860,8 @@ declare global {
 
 async function do_fetch_load() {
 	reset_global_event_handlers();
-	window.setTimeout=real_st;
-	window.setInterval=real_si;
+	self.setTimeout=real_st;
+	self.setInterval=real_si;
 	EventTarget.prototype.addEventListener=orig_aev;
 	await new Promise(make_load_promise);
 	reset_global_event_handlers();
@@ -3876,9 +3883,9 @@ async function do_fetch_load() {
 	const rb_html=await (await fetch(loc_url)).text();
 	pop_mut_observer();
 	set_jq_proxy(window.$);
-	const arr: any[]=[];
-	const any_cur: any=arr;
-	window.adsbygoogle=any_cur;
+	const arr: unknown[]=[];
+	const any_cur: unknown=arr;
+	window.adsbygoogle=any_cur as GoogleAdList;
 	window.adsbygoogle.op=window.adsbygoogle.push;
 	window.adsbygoogle.push=function(e) {
 		const current_script_element=document.currentScript;
@@ -3951,8 +3958,8 @@ async function do_fetch_load() {
 	};
 }
 function on_dom_load() {
-	window.setTimeout=real_st;
-	window.setInterval=real_si;
+	self.setTimeout=real_st;
+	self.setInterval=real_si;
 	EventTarget.prototype.addEventListener=orig_aev;
 	document.addEventListener("DOMContentLoaded",function() {
 		setTimeout(action_1,300);
@@ -3967,17 +3974,17 @@ function do_page_replace() {
 	document.close();
 }
 
-function nop_timeout(_handler: TimerHandler,_timeout?: number|undefined,..._args: any[]): number {
+function nop_timeout(_handler: TimerHandler,_timeout?: number|undefined,..._args: unknown[]): number {
 	console.log('nop timeout');
 	return -1;
 }
 
-function nop_timer(_handler: TimerHandler,_timeout?: number|undefined,..._args: any[]): number {
+function nop_timer(_handler: TimerHandler,_timeout?: number|undefined,..._args: unknown[]): number {
 	console.log('nop timeout');
 	return -1;
 }
 
-function no_aev(...v: any[]) {
+function no_aev(...v: unknown[]) {
 	console.log("aev",v);
 }
 declare global {
@@ -4020,8 +4027,8 @@ function main() {
 	document.stop=function() {};
 	real_st=setTimeout;
 	real_si=setInterval;
-	window.setTimeout=nop_timeout;
-	window.setInterval=nop_timer;
+	self.setTimeout=nop_timeout;
+	self.setInterval=nop_timer;
 	orig_aev=EventTarget.prototype.addEventListener;
 	EventTarget.prototype.addEventListener=no_aev;
 	const page_url=location.href;
@@ -4035,7 +4042,7 @@ function main() {
 }
 
 declare global {
-	interface Window {
+	export interface Window {
 		g_log_if: typeof log_if;
 	}
 }
@@ -4046,13 +4053,13 @@ function init() {
 	window.g_log_if=log_if;
 }
 
-class URLHandlerState {
-	non_proto_url: string="";
-	page_url: string="";
+class _URLHandlerState {
+	non_proto_url="";
+	page_url="";
 	document_write_list=new DocumentWriteList;
 }
 
-function fire_url_handler(state: URLHandlerState) {
+function fire_url_handler(state: _URLHandlerState) {
 	if(state.non_proto_url=="//rebuildtheuniverse.com/mjz_version") {
 		do_page_replace();
 	} else if(state.non_proto_url=="//rebuildtheuniverse.com/?type=mjz_version") {
@@ -4068,13 +4075,13 @@ function fire_url_handler(state: URLHandlerState) {
 		on_dom_load();
 		state.document_write_list.destroy();
 	} else if(state.non_proto_url=="//rebuildtheuniverse.com/") {
-		window.setTimeout=real_st;
-		window.setInterval=real_si;
+		self.setTimeout=real_st;
+		self.setInterval=real_si;
 		EventTarget.prototype.addEventListener=orig_aev;
 		state.document_write_list.destroy();
 	} else if(state.page_url==="https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/") {
-		window.setTimeout=real_st;
-		window.setInterval=real_si;
+		self.setTimeout=real_st;
+		self.setInterval=real_si;
 		EventTarget.prototype.addEventListener=orig_aev;
 		state.document_write_list.destroy();
 	} else {

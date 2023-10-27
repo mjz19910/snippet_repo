@@ -1,5 +1,5 @@
-import {CompressDual} from "../../modules/DebugApi/types/CompressDual";
-import {DualR} from "../../modules/DebugApi/types/DualR";
+import {CompressDual} from "../../modules/DebugApi/types/CompressDual.ts";
+import {DualR} from "../../modules/DebugApi/types/DualR.ts";
 
 export class BaseCompression {
 	did_compress(src: string[],dst: string[]) {
