@@ -320,10 +320,10 @@ class InstructionImplBase {}
 class PromiseBoxImpl {
 	/** @readonly */
 	type = "promise_box";
-	/** @type {unknown} */
-	inner_type;
-	/** @type {unknown} */
-	await_type;
+	/** @type {"Promise<Box>"} */
+	inner_type = "Promise<Box>";
+	/** @type {"Box"} */
+	await_type = "Box";
 	/** @arg {unknown} _to_match */
 	as_type(_to_match) {
 		return this;
@@ -627,9 +627,8 @@ class InstructionModifyOpImpl extends InstructionImplBase {
 		}
 		if (instruction_modify === void 0) throw new Error("Invalid");
 		instruction_modify[offset] = value;
-		const valid_instruction = StackVMParserImplR.verify_instruction(
-			instruction_modify,
-		);
+		const p = StackVMParserImplR;
+		const valid_instruction = p.verify_instruction2(instruction_modify);
 		vm.instructions[target] = valid_instruction;
 	}
 }
@@ -1297,6 +1296,28 @@ class StackVMParserImplR {
 		}
 		const instructions = this.verify_raw_instructions(raw_instructions);
 		return instructions;
+	}
+	/** @arg {[string, ...unknown[]]} instruction @returns {InstructionType_CJS}*/
+	static verify_instruction2(instruction) {
+		let num_to_parse = instruction.length;
+		/** @type {InstructionType_CJS|null} */
+		let ret = null;
+		switch (instruction[0]) {
+			case "push":
+				{
+					num_to_parse = 0;
+					const [, push_operand] = instruction;
+					ret = [instruction[0], push_operand];
+				}
+				break;
+		}
+		if (num_to_parse > 0) {
+			throw new Error(
+				"Typechecking failure, data left when processing raw instruction stream",
+			);
+		}
+		if (ret !== null) return ret;
+		throw new Error("Unreachable");
 	}
 	/** @arg {string[]} instruction @returns {InstructionType_CJS}*/
 	static verify_instruction(instruction) {
