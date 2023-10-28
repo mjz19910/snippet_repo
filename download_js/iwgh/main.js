@@ -422,6 +422,7 @@ async function run() {
 			arr.push(fetch_one_dictionary_page().then(inc_request_total));
 		}
 		while (arr.length > 80) {
+			console.log("shift1");
 			await arr.shift();
 		}
 		if (should_break) break;
