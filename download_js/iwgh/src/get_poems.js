@@ -15,7 +15,7 @@ async function scope() {
 				await arr.shift();
 				const end_wait = performance.now();
 				const perf_diff = end_wait - start_wait;
-				if (perf_diff > 218.8) {
+				if (perf_diff > 230) {
 					console.log("perf", +perf_diff.toFixed(1));
 					break;
 				}
