@@ -269,6 +269,8 @@ class ClientSocket extends SocketBase {
 			p.handleEvent(new MessageEvent("message", { data: tcp }));
 		} else this.m_port.postMessage(tcp);
 	}
+	/** @type {(()=>void)|null} */
+	next_ack_listener = null;
 	/** @arg {ConnectionMessage} tcp */
 	client_connect(tcp) {
 		if (testing_tcp) {
@@ -291,18 +293,32 @@ class ClientSocket extends SocketBase {
 		}
 		this.handle_tcp_data(tcp);
 	}
+	seen_syn_packet() {
+		if (!this.next_ack_listener) return;
+		this.next_ack_listener();
+		this.next_ack_listener = null;
+	}
 	/** @arg {ConnectionMessage} tcp */
 	handle_tcp_data(tcp) {
 		const f = new FlagHandler(tcp.flags);
-		if (this.m_local_log) console.log("local", tcp);
+		if (this.m_local_log) console.log("client", tcp);
 		if ((f.is_syn() && f.is_ack()) || f.is_none()) {
 			this.send_ack(tcp);
+		}
+		if (f.is_syn()) {
+			this.seen_syn_packet();
+		}
+		if (f.is_none() && !this.m_connected) {
+			this.next_ack_listener = () => {
+				console.groupEnd();
+			};
 		}
 		if (!tcp.data) return;
 		const tcp_data = tcp.data;
 		switch (tcp_data.type) {
 			case "connected":
 				this.client_connect(tcp);
+				this.m_connected = true;
 				break;
 			case "will_disconnect":
 				this.m_can_reconnect = tcp_data.can_reconnect;
