@@ -8,6 +8,7 @@
 		"DNSKEY",
 		"HINFO",
 		"IPSECKEY",
+		"nmap",
 		"NSEC",
 		"OPENPGPKEY",
 		"RRSIG",

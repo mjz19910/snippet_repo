@@ -4,8 +4,6 @@ import {DNSTypeEnum} from "./js/DNSTypeEnum.js";
 import {Host} from "./js/Host.js";
 import {IP} from "./js/IP.js";
 import {lit_value} from "./js/lit_value.js";
-import {Query} from "./js/Query.js";
-import {range} from "./js/range.js";
 import {Status} from "./js/Status.js";
 
 export {
@@ -15,7 +13,5 @@ export {
 	DNSClassEnum,
 	DNSTypeEnum,
 	IP,
-	range,
 	lit_value,
-	Query,
 };

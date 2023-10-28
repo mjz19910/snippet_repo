@@ -1,9 +1,7 @@
-import util from "util";
-
 export class IP_base {
 	/** @arg {string} str */
 	static parse(str) {
-		return str.split(".").map(e => +e);
+		return str.split(".").map((e) => +e);
 	}
 	/** @arg {["IP", string]} value */
 	static stringify_raw(value) {
@@ -16,8 +14,7 @@ export class IP_base {
 	toString() {
 		return this.addr.join(".");
 	}
-	/** @arg {unknown} _ @arg {unknown} options @arg {(object: string, options: unknown) => unknown} inspect */
-	[util.inspect.custom](_, options, inspect) {
-		return `${options.stylize('IP', 'special')}[${inspect(this.addr.join(".") + ".", options)}]`;
+	inspect() {
+		return `IP [${this.addr.join(".") + "."}]`;
 	}
 }

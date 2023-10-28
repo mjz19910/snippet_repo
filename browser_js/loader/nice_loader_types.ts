@@ -1,7 +1,7 @@
 type ContextType={
 	conditions: string[];
 	importAssertions: {
-		_0: 0;
+		[U in keyof unknown]: unknown
 	};
 	parentURL: string;
 };
