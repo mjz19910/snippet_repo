@@ -233,6 +233,7 @@ export type uForest={
 export type uForestEdge={
 	id: "uForestEdge",
 	links: [uForest],
+	action: H.TakeActionStr<"cowardly dwarf">;
 };
 export type boiler={
 	id: "boiler";

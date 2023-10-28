@@ -29,6 +29,7 @@ const uForest: uForest={
 };
 const uForestEdge: uForestEdge={
 	id: "uForestEdge",
+	action: {fn: "take",item: "cowardly dwarf"},
 	links: [uForest],
 };
 //#endregion
