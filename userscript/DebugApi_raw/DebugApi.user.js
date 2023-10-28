@@ -4803,7 +4803,7 @@ class ListenSocket extends ConsoleAccess {
 	}
 	disconnected() {
 		this.push_tcp_message(
-			TCPMessage.make_message(this.m_client_id, 1, 1, { type: "disconnected" }),
+			TCPMessage.make_message(this.m_client_id, 0, 0, { type: "disconnected" }),
 		);
 	}
 	/** @arg {boolean} can_reconnect */
