@@ -4865,7 +4865,7 @@ class ListenSocket extends ConsoleAccess {
 			// seq=number & ack=null;
 			this.send_ack(tcp_message);
 		}
-		if (f.is_none()) this.send_ack(tcp_message, 0);
+		if (f.is_none()) this.send_ack(tcp_message);
 		if (f.is_ack() && this.m_is_connecting) {
 			this.m_is_connecting = false;
 			this.m_connected = true;
