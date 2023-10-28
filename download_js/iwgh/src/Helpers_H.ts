@@ -58,7 +58,7 @@ type TakeActionShape={
 	fn: "take";
 	item: ItemShape;
 };
-type ActionShape=UseActionShape|TakeActionShape;
+type ActionShape=UseActionShape|TakeActionShape|StoryEvent<{required: ItemShape;}>;
 export type TakeActionR2<ActionProps extends {
 	item: ItemShape;
 	requirements: ItemShape[];

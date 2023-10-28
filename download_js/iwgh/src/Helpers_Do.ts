@@ -5,7 +5,9 @@ type PageMenuItems=[
 	{id: "members";},
 	{id: "faq";},
 ];
+type PageTypeShape={id: string;};
 export type RunTakeAct<T extends H.ItemShape>={take: T;};
+export type ActivateRoom<T extends PageTypeShape>={room: T;};
 export type UseInventory<T extends H.ItemShape>={target: T;};
 export type UseAction<U extends {
 	id: string,

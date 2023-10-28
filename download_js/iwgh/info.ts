@@ -436,7 +436,8 @@ type hypospray={
 	id: "hypospray",
 };
 type sickbay={
-	actions: [
+	id: "sickbay";
+	action: H.ActionArr<[
 		H.StoryEvent<{
 			required: dead_klingon;
 		}>,
@@ -447,7 +448,7 @@ type sickbay={
 			required: dead_romulan;
 			item: hypospray,
 		}>,
-	];
+	]>;
 };
 export type enterprise={
 	links: [
@@ -654,6 +655,7 @@ type after_lockdown={
 	pos: "after lockdown";
 };
 type readyRoom={
+	id: "readyRoom";
 	story: {
 		dead_klingon: {
 			uses: dead_klingon;
@@ -910,10 +912,10 @@ type main={
 		Do.RunTakeAct<gandalf_magic_book>,
 		picQ,
 		Do.RunTakeAct<dead_klingon>,
-		readyRoom,
-		sickbay,
-		readyRoom,
-		v_10forward,
+		Do.ActivateRoom<readyRoom>,
+		Do.ActivateRoom<sickbay>,
+		Do.ActivateRoom<readyRoom>,
+		Do.ActivateRoom<v_10forward>,
 		after_lockdown,
 		uQuarters,
 		Do.RunTakeAct<dead_romulan>,
