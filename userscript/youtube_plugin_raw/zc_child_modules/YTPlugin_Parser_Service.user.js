@@ -514,7 +514,7 @@ class ParserService extends BaseService
 		switch(x[2]) {default: console.log("[new_get_yt_url_type_3] [%o] [%s]",x,x[2]); debugger;}
 		return x[2];
 	}
-	/** @private @arg {Extract<import("../yt_json_types/d/group_D.ts").DG_ApiUrl,["youtubei",...unknown]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/d/group_D.ts").DG_ApiUrl,["youtubei",...unknown[]]>} x */
 	get_yt_url_type(x)
 	{
 		if(x[1]!=="v1") {return this.api_no_handler(x,x[1]);}

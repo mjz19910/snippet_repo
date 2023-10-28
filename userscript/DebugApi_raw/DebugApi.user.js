@@ -3557,7 +3557,7 @@ function run_modules_plugin() {
 		}
 		return ret;
 	}
-	/** @this {()=>void} @arg {unknown} tv @arg {unknown} r */
+	/** @this {()=>void} @arg {unknown} tv @arg {unknown[]} r */
 	function function_prototype_apply_inject(tv, r) {
 		if (r === void 0 || r === null) r = [];
 		const ret = bound_apply_call(this, [tv, ...r]);
@@ -5073,9 +5073,9 @@ class DebugApi {
 	activateClass(class_value, arg_vec) {
 		return new class_value(...arg_vec);
 	}
-	/** @arg {CallableFunction} function_value @arg {unknown} target_obj @arg {unknown[]} arg_vec @returns {boolean} */
-	activateApply(function_value, target_obj, arg_vec) {
-		return Reflect.apply(function_value, target_obj, arg_vec);
+	/** @this {import("./support/dbg/ActivateFunction.ts").ActivateFunction} @arg {CallableFunction} function_value @arg {unknown} target_obj @arg {unknown[]} arg_vec @returns {boolean} */
+	activateApply() {
+		return Reflect.apply(this.target, this.activate_this, this.activate_args);
 	}
 	/** @returns {void} */
 	debuggerBreakpointCode() {

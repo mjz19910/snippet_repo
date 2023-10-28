@@ -1300,7 +1300,7 @@ class StackVMParserImplR {
 		const parsed_instructions = [];
 		for (let i = 0; i < raw_instructions.length; i++) {
 			const raw_instruction = raw_instructions[i];
-			let parsed_instruction = this.parse_current_instruction(
+			const parsed_instruction = this.parse_current_instruction(
 				raw_instruction,
 				format_list,
 			);
@@ -1352,7 +1352,7 @@ class StackVMParserImplR {
 					}
 				}
 				break;
-			case "drop":/*opcode parse */
+			case "drop": /*opcode parse */
 			case "dup":
 			case "get":
 			case "return":
@@ -1590,12 +1590,7 @@ class AsyncTimeoutTarget extends PromiseTimeoutTarget {
 		return super.wait();
 	}
 }
-class ParentOfNode {
-	/** @arg {BaseNodeImpl} record */
-	remove_child(record) {
-		record.set_parent(null);
-	}
-}
+/** @typedef {import("./ParentOfNode.js").ParentOfNode} ParentOfNode */
 class BaseNodeImpl {
 	/** @type {ParentOfNode[]} */
 	m_children;
@@ -2807,7 +2802,7 @@ class AutoBuyImplR {
 		return time_arr.join(":");
 	}
 	update_hours_played() {
-		const float_hours = ((window.timeplayed / 30) / 60);
+		const float_hours = (window.timeplayed / 30) / 60;
 		const time_played_str = this.get_hours_num_as_pretty_str(float_hours);
 		const hours_played_e = this.dom_map.get("hours_played");
 		if (hours_played_e instanceof HTMLElement) {
@@ -3507,7 +3502,6 @@ function cast_as(e, x) {
 	return a1;
 }
 function use_jquery() {
-	// @ts-ignore
 	const jq = window.$;
 	if (!jq) return;
 	if (typeof jq != "function") return;
