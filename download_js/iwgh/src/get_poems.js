@@ -7,7 +7,7 @@ import { fetch_one_page } from "./fetch_one_page.js";
 import { parse_rng_word, random_dictionary_set } from "./parse_rng_word.js";
 
 async function scope() {
-	for (let i = 0; i < 8; i++) {
+	for (let i = 0; i < 40; i++) {
 		await fetch_one_page("poems");
 	}
 }
