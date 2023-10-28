@@ -92,6 +92,7 @@ const elevator: elevator={
 		elev_floorFive: elev_floorFive,
 	}
 };
+// this is a cycle
 floorFive.links[1]=elevator;
 
 const work_queue: WorkQueueItem[]=[];

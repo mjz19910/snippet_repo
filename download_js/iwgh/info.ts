@@ -11,6 +11,7 @@ export type floorFive={
 	id: "floorFive",
 	links: [
 		roof,
+		// this is a cycle
 		elevator|null,
 	],
 };
