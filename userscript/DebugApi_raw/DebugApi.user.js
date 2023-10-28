@@ -4798,7 +4798,6 @@ class ListenSocket extends ConsoleAccess {
 	downstream_handle_event(info) {
 		if (!info.data) return;
 		export_((exports) => {
-			if (!exports.remote_origin) return;
 			exports.remote_origin.push_tcp_message(info);
 		});
 		if (info.data.type === "forward" && this.m_flags.does_proxy_to_opener) {
