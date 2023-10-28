@@ -29,8 +29,10 @@ function on_poems_page_text(v) {
 	const poem_txt = unwrap_html_str("p", poem_txt2);
 	const poem_str = poem_txt.replaceAll("<br>", "\n").split("\n\n")[1];
 	const poem_lines = poem_str.split("\n");
-	for(const poem_line of poem_lines) {
-		console.log(poem_line.split(" "));
+	for (const poem_line of poem_lines) {
+		const poem_words = poem_line.slice(0, -1).split(" ");
+		poem_words.push(poem_line.at(-1));
+		console.log(poem_words.length, poem_words);
 	}
 }
 /** @param {"poems"} target_page */
