@@ -27,7 +27,7 @@ if (typeof require === "undefined" || page_require !== __module_require__) {
 	reset_require = true;
 }
 const { do_export } = require("../base_require_raw/BaseRequire.user.js");
-
+/** @typedef {(import("./support/dbg/ConnectionMessage.ts") .ConnectionMessage)} ConnectionMessage */
 const __module_name__ = "DebugApi";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn, flags = { global: false }) {
@@ -4458,21 +4458,21 @@ const ack_win = 5000;
 class TCPMessage {
 	/** @readonly */
 	type = "tcp";
-	/** @arg {import("./support/dbg/ConnectFlag.ts").ConnectFlag} flags @arg {number} client_id @arg {number} seq @arg {number} ack @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage["data"]} data */
+	/** @arg {import("./support/dbg/ConnectFlag.ts").ConnectFlag} flags @arg {number} client_id @arg {number} seq @arg {number} ack @arg {ConnectionMessage["data"]} data */
 	constructor(flags, client_id, seq, ack, data) {
 		this.flags = flags;
 		this.client_id = client_id;
 		this.seq = seq;
 		this.ack = ack;
-		/** @type {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage["data"]} */
+		/** @type {ConnectionMessage["data"]} */
 		this.data = data;
 	}
-	/** @arg {number} client_id @returns {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} */
+	/** @arg {number} client_id @returns {ConnectionMessage} */
 	static make_syn(client_id) {
 		const seq = (Math.random() * ack_win) % ack_win | 0;
 		return new TCPMessage(tcp_syn, client_id, seq, 0, null);
 	}
-	/** @arg {number} client_id @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage["data"]} data @arg {number} seq @arg {number} ack @returns {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} */
+	/** @arg {number} client_id @arg {ConnectionMessage["data"]} data @arg {number} seq @arg {number} ack @returns {ConnectionMessage} */
 	static make_message(client_id, seq, ack, data) {
 		return new TCPMessage(0, client_id, seq, ack, data);
 	}
@@ -4496,7 +4496,7 @@ class ConsoleAccess {
 	}
 	/**
 	 * @param {string} dir
-	 * @param {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} tcp
+	 * @param {ConnectionMessage} tcp
 	 */
 	open_group(dir, tcp) {
 		console.log("<?-");
@@ -4572,7 +4572,7 @@ class Socket extends ConsoleAccess {
 		this.init_handler();
 		this.send_init_request(TCPMessage.make_syn(this.m_client_id), server_port);
 	}
-	/** @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} data @arg {MessagePort} server_port */
+	/** @arg {ConnectionMessage} data @arg {MessagePort} server_port */
 	send_init_request(data, server_port) {
 		if (this.m_debug) console.log("post request ConnectOverPostMessage");
 		if (testing_tcp) {
@@ -4584,16 +4584,16 @@ class Socket extends ConsoleAccess {
 		}
 		this.post_wrapped(data, server_port);
 	}
-	/** @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} data @arg {MessagePort} server_port */
+	/** @arg {ConnectionMessage} data @arg {MessagePort} server_port */
 	post_wrapped(data, server_port) {
-		/** @type {import("./support/dbg/WrappedMessage.ts").WrappedMessage<import("./support/dbg/ConnectionMessage.ts").ConnectionMessage>} */
+		/** @type {import("./support/dbg/WrappedMessage.ts").WrappedMessage<ConnectionMessage>} */
 		const msg = {
 			type: post_message_connect_message_type,
 			data,
 		};
 		this.m_remote_target.postMessage(msg, "*", [server_port]);
 	}
-	/** @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} data */
+	/** @arg {ConnectionMessage} data */
 	push_tcp_message(data) {
 		if (testing_tcp) {
 			this.open_group("tx", data);
@@ -4608,13 +4608,13 @@ class Socket extends ConsoleAccess {
 			);
 		} else this.m_port.postMessage(data);
 	}
-	/** @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} message */
+	/** @arg {ConnectionMessage} message */
 	client_connect(message) {
 		if (testing_tcp) {
 			console.log("on_client_connect", message);
 		}
 	}
-	/** @arg {MessageEvent<import("./support/dbg/ConnectionMessage.ts").ConnectionMessage>} event */
+	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
 		if (Socket.prototype === this) return;
 		const data = event.data;
@@ -4628,7 +4628,7 @@ class Socket extends ConsoleAccess {
 		}
 		this.handle_tcp_data(data);
 	}
-	/** @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} tcp_message @arg {import("./support/dbg/ConnectFlag.ts").ConnectFlag} flags */
+	/** @arg {ConnectionMessage} tcp_message @arg {import("./support/dbg/ConnectFlag.ts").ConnectFlag} flags */
 	send_ack(tcp_message, flags) {
 		// seq=number & ack=number;
 		let seq = tcp_message.ack;
@@ -4645,7 +4645,7 @@ class Socket extends ConsoleAccess {
 			data: null,
 		});
 	}
-	/** @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} tcp_message */
+	/** @arg {ConnectionMessage} tcp_message */
 	handle_tcp_data(tcp_message) {
 		const f = new FlagHandler(tcp_message.flags);
 		if (this.m_local_log) console.log("local", tcp_message);
@@ -4684,7 +4684,7 @@ class Socket extends ConsoleAccess {
 	client_start_connect() {
 		if (!this.m_port) throw new Error("No remote port to communicate with");
 	}
-	/** @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} message */
+	/** @arg {ConnectionMessage} message */
 	client_disconnect(message) {
 		if (testing_tcp) console.log("on_client_disconnect", message);
 		this.m_connected = false;
@@ -4728,7 +4728,7 @@ class ListenSocket extends ConsoleAccess {
 	static direct_message = false;
 	/** @private @type {import("./support/dbg/ConnectionSide.ts").ConnectionSide} */
 	m_side = "server";
-	/** @private @type {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage[]} */
+	/** @private @type {ConnectionMessage[]} */
 	m_unhandled_events = [];
 	/** @private */
 	m_is_connected = false;
@@ -4764,7 +4764,7 @@ class ListenSocket extends ConsoleAccess {
 	get is_connected() {
 		return this.m_is_connected;
 	}
-	/** @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} data */
+	/** @arg {ConnectionMessage} data */
 	push_tcp_message(data) {
 		if (testing_tcp) {
 			this.open_group("tx", data);
@@ -4777,7 +4777,7 @@ class ListenSocket extends ConsoleAccess {
 			Socket.prototype.handleEvent(new MessageEvent("message", { data }));
 		} else this.m_port.postMessage(data);
 	}
-	/** @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} tcp_message */
+	/** @arg {ConnectionMessage} tcp_message */
 	downstream_connect(tcp_message) {
 		const { seq, ack } = tcp_message;
 		if (!ack) throw new Error("Invalid message");
@@ -4791,7 +4791,7 @@ class ListenSocket extends ConsoleAccess {
 			{ type: "connected" },
 		));
 	}
-	/** @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} info */
+	/** @arg {ConnectionMessage} info */
 	downstream_handle_event(info) {
 		if (!info.data) return;
 		export_((exports) => {
@@ -4806,6 +4806,10 @@ class ListenSocket extends ConsoleAccess {
 			TCPMessage.make_message(this.m_client_id, 0, 0, { type: "disconnected" }),
 		);
 	}
+	/** @arg {ConnectionMessage["data"]} data */
+	make_message(data) {
+		return TCPMessage.make_message(this.m_client_id, 0, 0, data);
+	}
 	/** @arg {boolean} can_reconnect */
 	will_disconnect(can_reconnect) {
 		this.push_tcp_message(TCPMessage.make_message(
@@ -4818,7 +4822,7 @@ class ListenSocket extends ConsoleAccess {
 			},
 		));
 	}
-	/** @arg {MessageEvent<import("./support/dbg/ConnectionMessage.ts").ConnectionMessage>} event */
+	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
 		const { data } = event;
 		if (data.type !== "tcp") {
@@ -4853,11 +4857,10 @@ class ListenSocket extends ConsoleAccess {
 		}
 		this.handle_tcp_data(data);
 	}
-	/** @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} tcp_message @arg {import("./support/dbg/ConnectFlag.ts").ConnectFlag} flags */
+	/** @arg {ConnectionMessage} tcp_message @arg {import("./support/dbg/ConnectFlag.ts").ConnectFlag} flags */
 	send_ack(tcp_message, flags) {
 		let { seq: ack, ack: seq } = tcp_message;
 		seq = (Math.random() * ack_win) % ack_win | 0;
-		if (testing_tcp) seq = 300;
 		ack += 1;
 		this.push_tcp_message({
 			type: "tcp",
@@ -4868,7 +4871,7 @@ class ListenSocket extends ConsoleAccess {
 			data: null,
 		});
 	}
-	/** @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} tcp_message */
+	/** @arg {ConnectionMessage} tcp_message */
 	handle_tcp_data(tcp_message) {
 		const f = new FlagHandler(tcp_message.flags);
 		this.m_current_seq = tcp_message.seq;
@@ -4952,7 +4955,7 @@ class CrossOriginConnection extends ConsoleAccess {
 		if (!data) return false;
 		return data.data.type === post_message_connect_message_type;
 	}
-	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<import("./support/dbg/WrappedMessage.ts").WrappedMessage<import("./support/dbg/ConnectionMessage.ts").ConnectionMessage>>} */
+	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<import("./support/dbg/WrappedMessage.ts").WrappedMessage<ConnectionMessage>>} */
 	is_connection_message(event) {
 		if (!this.is_wrapped_message(event)) return false;
 		const data_record = cast_to_record_with_string_type(
@@ -4968,7 +4971,7 @@ class CrossOriginConnection extends ConsoleAccess {
 		if (!is_record_with_T(data.data, "data")) return false;
 		return true;
 	}
-	/** @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} message */
+	/** @arg {ConnectionMessage} message */
 	push_tcp_message(message) {
 		if (!this.m_local_handler) {
 			throw new Error("send tcp message to non-existent connection");
