@@ -1,3 +1,6 @@
+export type PageTypeShape={
+	id: string;
+};
 export type ItemShape={
 	type: "item";
 	id: string;
@@ -71,6 +74,7 @@ export type ActionArrExt<T>={
 	type: "multi";
 	arr: T;
 };
+export type ActionArrExt2<T>=PageWithActShape<ActionArrExt<T>>;
 export type ActionArr<T extends ActionShape[]>=ActionArrExt<T>;
 export type StoryEvent<ActionProps extends {
 	required: ItemShape;
@@ -82,4 +86,8 @@ export type StoryEvent<ActionProps extends {
 export type Not<T>={
 	type: "not";
 	v: T;
+};
+export type PageWithActShape<T>={
+	id: string;
+	action: T;
 };
