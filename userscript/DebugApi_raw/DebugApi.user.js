@@ -4706,13 +4706,10 @@ class OriginState {
 	m_top = window.top;
 	/** @private @readonly @type {Window|null} */
 	m_opener = window.opener;
-	/** @arg {ConnectionFlags} flags */
-	get_connect_target(flags) {
-		if (this.m_opener) {
-			flags.does_proxy_to_opener = true;
-			return this.m_opener;
-		} else if (this.m_top) return this.m_top;
-		else throw new Error("Invalid state, not top and window.top is null");
+	get_connect_target() {
+		if (this.m_opener) return this.m_opener;
+		if (this.m_top) return this.m_top;
+		throw new Error("unable to get connect target");
 	}
 }
 export_((exports) => {
