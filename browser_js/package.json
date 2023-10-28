@@ -1,5 +1,1 @@
-{
-  "scripts": {
-    "build_webpack": "webpack --config web/webpack.config.js"
-  }
-}
+{}

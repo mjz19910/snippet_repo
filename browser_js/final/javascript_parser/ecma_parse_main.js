@@ -2289,14 +2289,12 @@ export function ecma_parse_main() {
 	let parse_str = "function x(){}";
 	parse_javascript_str(parse_str);
 }
+const { do_export } = require("../base_require_raw/BaseRequire.user.js");
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn, flags = { global: false }) {
 	do_export(fn, flags, exports, __module_name__);
 }
 export_((exports) => {
-	if (typeof exports === "object") {
-		exports.parse_javascript_str = parse_javascript_str;
-		exports.ecma_parse_main = ecma_parse_main;
-	}
+	exports.parse_javascript_str = parse_javascript_str;
+	exports.ecma_parse_main = ecma_parse_main;
 });
-const {} = require("./ecma_lex.js");
