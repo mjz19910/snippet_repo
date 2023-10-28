@@ -77,8 +77,8 @@ export function parse_rng_word(
 			w2 = r2.rest;
 		} while (w2 !== "");
 		if (word_arr.length <= 3) {
-			console.log("W:", word_arr.join(""), "T:", type_arr.join(""));
 			console.log("word.parts", word_arr.length);
+			console.log("W:", word_arr.join(""), "T:", type_arr.join(""));
 		}
 	}
 	random_dictionary_set.add(word);
