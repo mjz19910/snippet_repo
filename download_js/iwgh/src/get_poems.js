@@ -8,7 +8,7 @@ import {
 async function scope() {
 	for (let i = 0; i < 80; i++) {
 		const arr = [];
-		for (let j = 0; j < 75; j++) {
+		for (let j = 0; j < 50; j++) {
 			arr.push(fetch_one_page("poems"));
 			if (arr.length > 4 && j % 2 == 0) {
 				const start_wait = performance.now();
@@ -23,7 +23,7 @@ async function scope() {
 		}
 		await Promise.all(arr);
 		arr.length = 0;
-		if (i % 8 == 7) {
+		if (i % 6 == 5) {
 			reset_words_set();
 		}
 	}
