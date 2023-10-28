@@ -1,7 +1,5 @@
-import {H} from "./Helpers.ts";
+import {RT} from "./Helpers.ts";
 import {WorkQueueItem,boiler,cowardly_dwarf,elev_boiler,elev_floorFive,elev_floorOne,elev_floorThree,elev_floorTwo,elev_uForest,elev_underworld,elevator,floorFive,floorOne,floorThree,floorTwo,redbridge,uForest,uForestEdge,underworld} from "./info.ts";
-function take<T extends H.ItemShape>(x: T): H.TakeAction<T> {return {fn: "take",item: x};}
-
 //#region underworld
 const redbridge: redbridge={id: "redbridge",news: "Red bridge",action: {fn: "use",usingItem: "sword"}};
 const underworld: underworld={id: "underworld",links: [redbridge]};
@@ -35,7 +33,7 @@ const cowardly_dwarf: cowardly_dwarf={
 };
 const uForestEdge: uForestEdge={
 	id: "uForestEdge",
-	action: take(cowardly_dwarf),
+	action: RT.take(cowardly_dwarf),
 	links: [uForest],
 };
 //#endregion
