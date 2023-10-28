@@ -418,8 +418,8 @@ async function run() {
 	const inc_request_total = () => {
 		request_total++;
 	};
-	for (let j = 0; j < (10 * 8 + request_log_interval - 1); j++) {
-		const request_count = 20;
+	for (let j = 0;; j++) {
+		const request_count = 30;
 		for (let i = 0; i < request_count; i++) {
 			arr.push(fetch_one_dictionary_page().then(inc_request_total));
 		}
@@ -427,6 +427,7 @@ async function run() {
 		arr.length = 0;
 		if (j % request_log_interval === (request_log_interval - 1)) {
 			at_loop_end();
+			if (j > (10 * 8)) break;
 		}
 	}
 	const perf_end = performance.now();
