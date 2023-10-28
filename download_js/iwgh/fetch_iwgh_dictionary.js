@@ -5,6 +5,7 @@ import {
 } from "./deno_support.js";
 import {
 	description_cache_set,
+	description_set_state,
 	parse_rng_description,
 } from "./parse_rng_description.js";
 import {
@@ -34,13 +35,7 @@ async function run() {
 	/** @type {string[]} */
 	const description_load_arr = await read_json_array_file(description_file);
 	for (const description_item of description_load_arr) {
-		if (description_item.endsWith("...")) {
-			description_cache_set.add(description_item);
-		} else if (description_item.endsWith(".")) {
-			description_cache_set.add(description_item);
-		} else {
-			description_cache_set.add(description_item + ".");
-		}
+		description_cache_set.add(description_item);
 	}
 	const dictionary_file = await deno_default_open("./random_dictionary.json");
 	/** @type {string[]} */
@@ -53,32 +48,33 @@ async function run() {
 		console.log("dict word num", new_words_set.size);
 		new_words_set.clear();
 	};
-	let request_total = 0;
-	const request_log_interval = 11;
+	let total_request_count = 0;
+	const request_log_interval = 15;
 	const inc_request_total = () => {
-		request_total++;
+		total_request_count++;
 	};
 	const arr = [];
 	for (let j = 0;; j++) {
-		const request_count = 8;
-		for (let i = 0; i < request_count; i++) {
+		const request_parallelism = j + 60;
+		for (let i = 0; i < request_parallelism; i++) {
 			arr.push(fetch_one_dictionary_page().then(inc_request_total));
 		}
 		await Promise.all(arr);
+		console.log("request parallelism", request_parallelism);
 		arr.length = 0;
 		if (j % request_log_interval === (request_log_interval - 1)) {
 			at_loop_end();
-			if (j > 16) break;
+			if (j > 60) break;
 		}
 	}
 	const perf_end = performance.now();
 	const perf_diff = perf_end - perf_start;
 	const total_seconds = Math.floor(perf_diff / 100) / 10;
 	console.log("requests took %s seconds", total_seconds.toFixed(1));
-	console.log("request_total:", request_total);
+	console.log("request_total:", total_request_count);
 	console.log(
 		"requests per second:",
-		+(request_total / total_seconds).toFixed(3),
+		+(total_request_count / total_seconds).toFixed(3),
 	);
 	if (description_set_state.modified) {
 		const description_arr = [...description_cache_set.values()].sort();
