@@ -266,6 +266,9 @@ function word_starts_with_consonant_seq(word) {
 		case "th":
 			return ["consonant", 2];
 	}
+	//cspell:ignore aeiouy
+	//cspell:ignore bcdfkmnptvw
+	/([aeiouy]|[ct]h|[bcdfkmnptvw]){4}/;
 	switch (word[0]) {
 		case "b":
 		case "c":
