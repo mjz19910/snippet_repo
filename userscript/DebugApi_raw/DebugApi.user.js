@@ -4648,16 +4648,16 @@ class Socket extends ConsoleAccess {
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
 		if (Socket.prototype === this) return;
-		const data = event.data;
-		if (data.type !== "tcp") throw new Error();
+		const tcp = event.data;
+		if (tcp.type !== "tcp") throw new Error();
 		if (testing_tcp) {
-			this.open_group("rx", data);
+			this.open_group("rx", tcp);
 			console.log("ListenSocket.handleEvent ->");
 			console.log("s_port.onmessage.handleEvent ->");
-			console.log("-?> Socket", data);
+			console.log("-> Socket", tcp, tcp.data);
 			this.close_group();
 		}
-		this.handle_tcp_data(data);
+		this.handle_tcp_data(tcp);
 	}
 	/** @arg {ConnectionMessage} tcp */
 	handle_tcp_data(tcp) {
