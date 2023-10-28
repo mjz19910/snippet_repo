@@ -110,7 +110,7 @@ Debuggable
 decodedata
 decpart
 decreaseSpawnCooldown
-Delayplay
+delayplay
 deno
 deopt
 deref
