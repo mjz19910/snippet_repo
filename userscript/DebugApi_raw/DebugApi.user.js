@@ -109,6 +109,10 @@ class TCPMessage {
 		const seq = (Math.random() * ack_win) % ack_win | 0;
 		return new TCPMessage(tcp_syn, seq, 0, null);
 	}
+	/** @arg {import("./support/dbg/ConnectFlag.ts").ConnectFlag} flags @arg {ConnectionMessage["data"]} data @arg {number} seq @arg {number} ack @returns {ConnectionMessage} */
+	static make_message2(flags, seq, ack, data) {
+		return new TCPMessage(flags, seq, ack, data);
+	}
 	/** @arg {ConnectionMessage["data"]} data @arg {number} seq @arg {number} ack @returns {ConnectionMessage} */
 	static make_message(seq, ack, data) {
 		return new TCPMessage(0, seq, ack, data);
@@ -156,21 +160,14 @@ class SocketBase {
 			seq = (Math.random() * ack_win) % ack_win | 0;
 		}
 		ack += 1;
-		this.push_tcp_message({
-			type: "tcp",
-			client_id: this.client_id(),
-			ack,
-			seq,
-			flags,
-			data: null,
-		});
+		this.push_tcp_message(TCPMessage.make_message2(flags, seq, ack, null));
 	}
 	/** @arg {ConnectionMessage} _data */
 	push_tcp_message(_data) {
 		throw new Error("Abstract impl");
 	}
 	make_syn() {
-		return TCPMessage.make_syn(this.client_id());
+		return TCPMessage.make_syn();
 	}
 	client_id() {
 		return this.m_client_id;
@@ -178,7 +175,6 @@ class SocketBase {
 	/** @arg {ConnectionMessage["data"]} data @arg {number} seq @arg {number} ack @returns {ConnectionMessage} */
 	make_message(seq, ack, data) {
 		return TCPMessage.make_message(
-			this.client_id(),
 			seq,
 			ack,
 			data,
@@ -427,7 +423,7 @@ class ServerSocket extends SocketBase {
 			exports.socket.push_tcp_message(info);
 		});
 		if (testing_tcp) {
-			console.log("downstream_event", info.data, info.flags, info.client_id);
+			console.log("downstream_event", info.data, info.flags);
 		}
 	}
 	disconnected() {
