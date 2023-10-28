@@ -806,11 +806,6 @@ type pattern={
 type pcnt={
 	id: "pcnt";
 	action: H.TakeAction<v_25_of_shares>;
-	quest_chain: [
-		Do.TakeAction<v_25_of_shares>,
-		Do.UseInventory<v_25_of_shares>,
-		on,off,
-	];
 };
 type flatDisc={
 	links: [glimpse];
