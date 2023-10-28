@@ -17,6 +17,7 @@ async function scope() {
 				const perf_diff = end_wait - start_wait;
 				if (perf_diff > 50) {
 					console.log("perf", end_wait - start_wait);
+					break;
 				}
 			}
 		}
