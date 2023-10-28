@@ -12,4 +12,5 @@ export interface RequireModuleCache {
 	mod$ServiceMethods: typeof import("../youtube_plugin_raw/zc_child_modules/YTPlugin_ServiceMethods.user.js");
 	mod$SupportService: typeof import("../youtube_plugin_raw/zc_child_modules/YTPlugin_Support_Service.user.js");
 	mod$YoutubePluginBase: typeof import("../youtube_plugin_raw/zc_child_modules/YTPlugin_Base.user.js");
+	mod$Template: typeof import("../youtube_plugin_raw/zc_a_other/_template.user.js");
 }

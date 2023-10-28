@@ -7,7 +7,7 @@ export namespace NS_DP_Parse {
 	type GA_ParseUrlStr_1=[T_SplitOnce<Exclude<D_UrlFormat,"/">,"/">[1]];
 	export type GA_ParseUrlStr_2=[
 		...GA_ParseUrlStr_1,
-		Extract<T_SplitOnce<GA_ParseUrlStr_1[0],"/">,["youtubei",...unknown]>,
+		Extract<T_SplitOnce<GA_ParseUrlStr_1[0],"/">,["youtubei",...unknown[]]>,
 		Extract<T_SplitOnce<GA_ParseUrlStr_1[0],"/">,[unknown,unknown]>,
 	];
 	export type GA_ParseUrlStr=[
@@ -20,7 +20,7 @@ export namespace NS_DP_Parse {
 	export type ParseUrlStr_2=GA_ParseUrlStr[2];
 	export type ParseUrlStr_3=GA_ParseUrlStr[3];
 	export type ParseUrlStr_4=GA_ParseUrlStr[4];
-	export type ParseApiUrlStr=T_SplitOnce<Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["api",...unknown]>[1],"/">[1];
+	export type ParseApiUrlStr=T_SplitOnce<Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["api",...unknown[]]>[1],"/">[1];
 }
 export namespace NS_DD_CompactVideoTest {
 	type SM1="videoId,thumbnail,title,longBylineText,publishedTimeText,viewCountText,lengthText,navigationEndpoint,shortBylineText";

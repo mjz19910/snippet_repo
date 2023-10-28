@@ -33,7 +33,7 @@ const {do_export}=require("../../base_require_raw/BaseRequire.user.js");
 	const __module_name__="mod$Template";
 	/** 
 	 * @private @arg {(x:typeof exports)=>void} fn
-	 * TODO: remove expect error when using template*/
+	 * TODO: remove expect error when using template */
 	function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 	export_(exports => {exports.__is_module_flag__=true;});
 	// Your code here...

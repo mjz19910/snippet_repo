@@ -223,8 +223,8 @@ export type T_NumArrStrVerify<T extends string,C extends string="">=C extends ''
 export type T_NumRange<T,U>=NS_NumRange.NumRange<T,U>;
 //#endregion
 //#region Check if the passed in type meets certain conditions
-export type TCmp_Is_Endpoint_3<T extends TE_Endpoint_3<unknown,unknown,unknown>>=T;
-export type TCmp_Is_Endpoint_2<T extends TE_Endpoint_2<unknown,unknown>>=T;
+export type TCmp_Is_Endpoint_3<T extends TE_Endpoint_3<any,unknown,unknown>>=T;
+export type TCmp_Is_Endpoint_2<T extends TE_Endpoint_2<any,unknown>>=T;
 //#endregion
 //#region TR_
 export type TR_SectionListItem_3_Empty=TR_ItemSection_3<{},{},{}>;

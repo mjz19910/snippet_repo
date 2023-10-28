@@ -85,8 +85,6 @@ export class Snippet_0_tmp {
 	}
 	/** @public @arg {unknown} x @arg {string|null} r */
 	generate_renderer(x,r) {throw new AggregateError(["this.#generate_renderer(x,r);",x,r]);}
-	/** @public @template U @template {U} T @arg {U} e @arg {unknown} [x] @returns {T} */
-	as(e,x=e) {return x;}
 	/** @private @template {{}} T @arg {import("./yt_json_types/stu/group_T.ts").T_AnyObjectOrEmpty<T>} x @returns {x is T} */
 	maybe_has_value(x) {return Object.keys(x).length>0;}
 	/** @protected @template {{}} T @arg {import("./yt_json_types/stu/group_T.ts").T_AnyObjectOrEmpty<T>} x @arg {(x:T)=>void} f */

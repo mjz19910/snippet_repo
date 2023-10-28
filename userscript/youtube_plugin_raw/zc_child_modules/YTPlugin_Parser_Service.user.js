@@ -116,29 +116,29 @@ class ParserService extends BaseService
 			default: debugger; break;
 		}
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_0,"/">,["hashtag",...unknown]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_0,"/">,["hashtag",...unknown[]]>} x */
 	parse_hashtag_url(x)
 	{
 		console.log("[parse_hashtag_url]",x);
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_0,"/">,["source",...unknown]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_0,"/">,["source",...unknown[]]>} x */
 	parse_source_url(x)
 	{
 		let a=split_string_once(x[1],"/");
 		console.log("[parse_source_url]",[x[0],...a]);
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_0,"/">,["embed",...unknown]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_0,"/">,["embed",...unknown[]]>} x */
 	parse_embed_url(x)
 	{
 		console.log("[parse_embed_url]",x);
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_0,"/">,["v",...unknown]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_0,"/">,["v",...unknown[]]>} x */
 	parse_video_url(x)
 	{
 		let a=split_string_once(x[1],"?");
 		console.log("[parse_video_url]",[x[0],...a]);
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_0,"/">,["api",...unknown]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_0,"/">,["api",...unknown[]]>} x */
 	parse_api_url(x)
 	{
 		let a=split_string_once(x[1],"/");
@@ -162,7 +162,7 @@ class ParserService extends BaseService
 			default: debugger; break;
 		}
 	}
-	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_0,"/">,["channel",...unknown]>} x */
+	/** @private @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_0,"/">,["channel",...unknown[]]>} x */
 	parse_channel_url(x)
 	{
 		if(this.str_starts_with_at_1(x,"UC")) {return;}
@@ -280,7 +280,7 @@ class ParserService extends BaseService
 			}
 			default:
 		}
-		/** @private @template {import("../support_1/url_parse/UrlParseRes_noSearch.ts").UrlParseRes_noSearch<unknown,string,unknown,unknown>|import("../support_1/url_parse/UrlParseRes.ts").UrlParseRes<unknown,string,unknown,unknown,unknown>} T @template {string} U @arg {T} x @arg {U} v @returns {x is Extract<T,{host:`${U}${string}`}>} */
+		/** @private @template {import("../support_1/url_parse/UrlParseRes_noSearch.ts").UrlParseRes_noSearch<string,string,string,string>|import("../support_1/url_parse/UrlParseRes.ts").UrlParseRes<string,string,string,string,string>} T @template {string} U @arg {T} x @arg {U} v @returns {x is Extract<T,{host:`${U}${string}`}>} */
 		let host_starts_with=(x,v) => {return this.str_starts_with_rx(x.host,v);};
 		if(host_starts_with(r,"yt"))
 		{

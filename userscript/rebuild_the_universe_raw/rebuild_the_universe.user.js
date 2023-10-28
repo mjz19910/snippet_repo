@@ -1590,7 +1590,7 @@ class AsyncTimeoutTarget extends PromiseTimeoutTarget {
 		return super.wait();
 	}
 }
-/** @typedef {import("./ParentOfNode.js").ParentOfNode} ParentOfNode */
+/** @typedef {import("./ParentOfNode.ts").ParentOfNode} ParentOfNode */
 class BaseNodeImpl {
 	/** @type {ParentOfNode[]} */
 	m_children;
