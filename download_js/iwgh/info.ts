@@ -31,14 +31,10 @@ type keep={
 		keepKitchen,
 	],
 };
-type screwdriver={
-	type: "item";
-	id: "screwdriver",
-};
 type unscrew_armor={
 	id: "unscrew_armor";
 	fn: "use";
-	usingItem: screwdriver;
+	usingItem: Items.screwdriver;
 };
 type take_piece_of_paper={
 	required: unscrew_armor;
@@ -60,10 +56,6 @@ type larStairs={
 		armour,
 	],
 };
-type egg={
-	type: "item";
-	id: "egg";
-};
 type larFm={
 	id: "larFm";
 	action: H.TakeActionR2<{
@@ -71,7 +63,7 @@ type larFm={
 			Items.hand_press,
 			Items.fui,
 		];
-		item: egg;
+		item: Items.egg;
 	}>;
 };
 type larLake={
@@ -126,16 +118,12 @@ type picTable={
 	id: "picTable",
 	links: [picCup],
 };
-type dead_klingon={
-	type: "item";
-	id: "dead Klingon";
-};
 type picQ={
 	id: "picQ";
 	links: [picTable],
 	action: H.TakeActionR<{
 		required: keycard;
-		item: dead_klingon;
+		item: Items.dead_klingon;
 	}>;
 };
 type good={
@@ -231,7 +219,7 @@ type someone={
 	id: "someone";
 	action: H.ActionArr<[
 		H.UseAction<Items.something>,
-		H.TakeActionR<{item: glass_orb,required: Items.something;}>,
+		H.TakeActionR<{item: Items.glass_orb,required: Items.something;}>,
 	]>;
 };
 type eternalMaze={
@@ -395,7 +383,7 @@ type faq={
 		missions,
 		y,
 	],
-	action: H.TakeAction<gandalf_magic_book>;
+	action: H.TakeAction<Items.gandalf_magic_book>;
 };
 type wall={
 	id: "wall";
@@ -413,13 +401,13 @@ type sickbay={
 	id: "sickbay";
 	action: H.ActionArr<[
 		H.StoryEvent<{
-			required: dead_klingon;
+			required: Items.dead_klingon;
 		}>,
 		H.StoryEvent<{
-			required: dead_romulan;
+			required: Items.dead_romulan;
 		}>,
 		H.TakeActionR<{
-			required: dead_romulan;
+			required: Items.dead_romulan;
 			item: hypospray,
 		}>,
 	]>;
@@ -441,17 +429,12 @@ export type enterprise={
 type deck8={
 	id: "deck8",
 };
-type dead_romulan={
-	type: "item";
-	id: "dead Romulan";
-};
-
 type uQuarters={
 	news: "Uninhabited quarters";
 	extra: "the Romulan just entered their quarters, there is no one *visible* inside";
 	action: H.TakeActionR<{
 		required: after_lockdown;
-		item: dead_romulan;
+		item: Items.dead_romulan;
 	}>;
 	quest_chain_part: readyRoom["story"]["dead_klingon"];
 };
@@ -467,21 +450,17 @@ type engineering={
 type cDisruptor={
 	news: "Cloak disruptor",
 };
-type fat_worm={
-	type: "item";
-	id: "fat worm";
-};
 type worms={
 	id: "worms";
 	news: "Worms";
-	action: H.TakeAction<fat_worm>;
+	action: H.TakeAction<Items.fat_worm>;
 };
 type hole={
 	links: [worms];
 };
 type ut1={
 	news: "Underground tunnel, section 1.";
-	action: H.TakeAction<screwdriver>;
+	action: H.TakeAction<Items.screwdriver>;
 	links: [hole];
 };
 type ut231={
@@ -530,43 +509,31 @@ type piping={
 type pipe1={
 	news: "Pipe passage 1",
 };
-type philosophical_principles={
-	type: "item";
-	id: "philosophical principles",
-};
 type pipe3={
 	news: "Pipe passage 3",
-	action: H.TakeAction<philosophical_principles>,
+	action: H.TakeAction<Items.philosophical_principles>,
 };
 type pipe5={
 	news: "Pipe passage 5",
 };
-type broken_water_filter={
-	type: "item";
-	id: "broken water filter";
-};
 type pipe6={
 	news: "Pipe passage 6",
-	action: H.TakeAction<broken_water_filter>;
-};
-type fake_orb={
-	type: "item";
-	id: "Fake Orb",
+	action: H.TakeAction<Items.broken_water_filter>;
 };
 type pipe7={
 	news: "Pipe passage 7",
-	action: H.TakeAction<fake_orb>,
+	action: H.TakeAction<Items.fake_orb>,
 };
 type pipe9={
 	news: "Pipe passage 9";
-	required: H.Not<philosophical_principles>;
+	required: H.Not<Items.philosophical_principles>;
 };
 type pipe11={
 	news: "Pipe passage 11",
 };
 type pipe13={
 	news: "Pipe passage 13";
-	required: philosophical_principles;
+	required: Items.philosophical_principles;
 	links: [
 		ut17,
 		ut18,
@@ -593,35 +560,31 @@ type ut18={
 type ut19={
 	news: "Underground tunnel, section 19.",
 };
-type gandalf_magic_book={
-	type: "item";
+type gandalf_magic_book_inv={
 	id: "Gandalf Magic Book",
 	links: [jrrtgandalf];
-};
-type glass_orb={
-	type: "item";
-	id: "Glass Orb";
+	item: Items.gandalf_magic_book;
 };
 type inventory={
 	items: {
-		"Glass Orb": glass_orb,
+		"Glass Orb": Items.glass_orb,
 		"hand press": Items.hand_press,
-		"fat worm": fat_worm,
-		"Gandalf Magic Book": gandalf_magic_book,
+		"fat worm": Items.fat_worm,
+		"Gandalf Magic Book": gandalf_magic_book_inv;
 		"25% of shares": v_25_of_shares,
-		"screwdriver": screwdriver,
+		"screwdriver": Items.screwdriver,
 		"fui": Items.fui,
 		"piece of paper": piece_of_paper_inv,
 		"small green lamp": null,
-		"egg": egg,
+		"egg": Items.egg,
 		"mosquito disinterest": null,
 		"hypospray": hypospray,
-		"broken water filter": broken_water_filter,
-		"Fake Orb": fake_orb,
+		"broken water filter": Items.broken_water_filter,
+		"Fake Orb": Items.fake_orb,
 		"Orb Book": orb_book_inv,
-		"dead Klingon": dead_klingon,
-		"dead Romulan": dead_romulan,
-		"mosquitoZ": mosquitoZ,
+		"dead Klingon": Items.dead_klingon,
+		"dead Romulan": Items.dead_romulan,
+		"mosquitoZ": Items.mosquitoZ,
 	};
 };
 type after_lockdown={
@@ -632,7 +595,7 @@ type readyRoom={
 	id: "readyRoom";
 	story: {
 		dead_klingon: {
-			uses: dead_klingon;
+			uses: Items.dead_klingon;
 		};
 		null: {
 			uses: null,
@@ -856,15 +819,11 @@ type y={
 		y: [missions];
 	};
 };
-type mosquitoZ={
-	type: "item";
-	id: "mosquitoZ";
-};
 type z={
 	news: "This is Z space";
 	action: {
 		fn: "take",
-		item: mosquitoZ,
+		item: Items.mosquitoZ,
 	};
 };
 
@@ -873,19 +832,19 @@ type main={
 	links: [wall];
 	quest_chain: [
 		faq,
-		Do.RunTakeAct<gandalf_magic_book>,
+		Do.RunTakeAct<Items.gandalf_magic_book>,
 		picQ,
-		Do.RunTakeAct<dead_klingon>,
+		Do.RunTakeAct<Items.dead_klingon>,
 		Do.ActivateRoom<readyRoom>,
 		Do.ActivateRoom<sickbay>,
 		Do.ActivateRoom<readyRoom>,
 		Do.ActivateRoom<v_10forward,after_lockdown>,
 		uQuarters,
-		Do.RunTakeAct<dead_romulan>,
+		Do.RunTakeAct<Items.dead_romulan>,
 		oLounge,
 		sickbay,
 		H.TakeActionR<{
-			required: dead_romulan;
+			required: Items.dead_romulan;
 			item: hypospray,
 		}>,
 		Do.RunTakeAct<Items.hand_press>,
@@ -921,6 +880,6 @@ type main={
 		Do.RunTakeAct<Items.something>,
 		Do.ActivateRoom<someone>,
 		Do.UseAction2<someone,0,Items.something>,
-		Do.RunTakeAct2<someone,1,glass_orb>,
+		Do.RunTakeAct2<someone,1,Items.glass_orb>,
 	];
 };
