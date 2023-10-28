@@ -657,22 +657,6 @@ type readyRoom={
 	story: {
 		dead_klingon: {
 			uses: dead_klingon;
-			quest_chain: [
-				Do.RunTakeAct<dead_klingon>,
-				readyRoom,
-				sickbay,
-				readyRoom,
-				v_10forward,
-				after_lockdown,
-				uQuarters,
-				Do.RunTakeAct<dead_romulan>,
-				oLounge,
-				sickbay,
-				H.TakeActionR<{
-					required: dead_romulan;
-					item: hypospray,
-				}>,
-			];
 		};
 		null: {
 			uses: null,
