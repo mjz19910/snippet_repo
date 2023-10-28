@@ -12,8 +12,6 @@
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/DebugApi_raw/DebugApi.meta.js
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/DebugApi_raw/DebugApi.user.js
 // ==/UserScript==
-// @sha1		ce87fbfd
-// @hash_for_version 0.1.2
 
 /* eslint-disable no-undef */
 const page_require = typeof require === "undefined"

@@ -8,6 +8,6 @@
 // @match	https://www.youtube.com/*
 // @grant	none
 // @run-at	document-start
-// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/indexed_db/TypedIndexedDB.user.js
+// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/indexed_db/TypedIndexedDB.meta.js
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/indexed_db/TypedIndexedDB.user.js
 // ==/UserScript==
