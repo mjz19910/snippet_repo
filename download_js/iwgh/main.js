@@ -434,7 +434,7 @@ async function run() {
 		for (let i = 0; i < request_count; i++) {
 			arr.push(fetch_one_dictionary_page().then(inc_request_total));
 		}
-		await arr.pop();
+		await arr.shift();
 		if (j % request_log_interval === (request_log_interval - 1)) {
 			at_loop_end();
 			if (j > (10 * 8)) break;
