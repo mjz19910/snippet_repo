@@ -170,10 +170,16 @@ type members={
 	id: "members",
 	links: [green],
 };
-type redbridge={
-	uses: "sword",
+export type redbridge={
+	id: "redbridge";
+	news: "Red bridge",
+	action: {
+		fn: "use";
+		usingItem: "sword";
+	};
 };
-type underworld={
+export type underworld={
+	id: "underworld",
 	links: [redbridge],
 };
 type hSmell={
@@ -259,35 +265,35 @@ type floorThree={
 	news: "Floor Three",
 	action: H.TakeAction<genie>;
 };
-type elev_floorFive={
-	floor_number: 9;
-	destination: floorFive;
-};
-type elev_underworld={
+export type elev_underworld={
 	floor_number: 3;
 	destination: underworld;
 };
-type elev_uForest={
+export type elev_uForest={
 	floor_number: 4;
 	destination: uForestEdge;
 };
-type elev_boiler={
+export type elev_boiler={
 	floor_number: 5;
 	destination: boiler;
 };
-type elev_floorOne={
+export type elev_floorOne={
 	floor_number: 6;
 	destination: floorOne;
 };
-type elev_floorTwo={
+export type elev_floorTwo={
 	floor_number: 7;
 	destination: floorTwo;
 };
-type elev_floorThree={
+export type elev_floorThree={
 	floor_number: 8;
 	destination: floorThree;
 };
-type elevator={
+export type elev_floorFive={
+	floor_number: 9;
+	destination: floorFive;
+};
+export type elevator={
 	destinations: {
 		"elev_underworld": elev_underworld,
 		"elev_uForest": elev_uForest,
@@ -298,7 +304,6 @@ type elevator={
 		"elev_floorFive": elev_floorFive,
 	},
 };
-const elevator: elevator={} as elevator;
 // cspell:word rozenbom
 type rozenbom={
 	id: "rozenbom",
@@ -880,11 +885,9 @@ type open_dir={
 	],
 };
 export {type all_pages};
-const work_queue: {
+export type WorkQueueItem={
 	destination: uForestEdge;
-}[]=[];
-work_queue.push(elevator.destinations.elev_uForest);
-
+};
 type a={
 	news: "This is the A page.";
 	links: [dot];
