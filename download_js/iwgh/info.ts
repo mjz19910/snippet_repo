@@ -408,8 +408,7 @@ type something_item={
 	id: "something";
 };
 type something={
-	type: "item";
-	id: "something",
+	id: "something";
 	action: H.TakeAction<something_item>;
 };
 type rhino={
