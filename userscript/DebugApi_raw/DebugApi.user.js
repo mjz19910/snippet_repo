@@ -4734,8 +4734,6 @@ class ListenSocket extends ConsoleAccess {
 	/** @private */
 	m_is_connected = false;
 	/** @private */
-	m_log_downstream = false;
-	/** @private */
 	m_is_connecting = true;
 	/** @private @type {ConnectionFlags} */
 	m_flags;
@@ -4800,10 +4798,7 @@ class ListenSocket extends ConsoleAccess {
 		export_((exports) => {
 			exports.remote_origin.push_tcp_message(info);
 		});
-		if (info.data.type === "forward" && this.m_flags.does_proxy_to_opener) {
-			return;
-		}
-		if (this.m_log_downstream) {
+		if (testing_tcp) {
 			console.log("downstream_event", info.data, info.flags, info.client_id);
 		}
 	}
