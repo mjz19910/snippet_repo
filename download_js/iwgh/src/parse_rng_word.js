@@ -45,6 +45,14 @@ export function word_starts_with_consonant_seq2(word) {
 }
 /** @type {Set<string>} */
 export const random_dictionary_set = new Set();
+export function save_dictionary(dictionary_file, dictionary_words_arr) {
+	const dictionary_arr = [...random_dictionary_set.values()].sort();
+	console.log(
+		"diff(dictionary.length,dictionary_words.length)",
+		dictionary_arr.length - dictionary_words_arr.length,
+	);
+	return write_entire_file(dictionary_file, dictionary_arr);
+}
 export const new_words_set = new Set();
 /**
  * @param {string} word

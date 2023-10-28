@@ -1,15 +1,10 @@
-import {
-	deno_default_open,
-	read_json_array_file,
-	write_entire_file,
-} from "./deno_support.js";
+import { deno_default_open, read_json_array_file } from "./deno_support.js";
 import { fetch_one_page } from "./fetch_one_page.js";
 import {
 	parse_rng_word,
-	random_dictionary_set,
 	reset_words_set,
+	save_dictionary,
 } from "./parse_rng_word.js";
-
 async function scope() {
 	for (let i = 0; i < 40; i++) {
 		const arr = [];
@@ -28,12 +23,7 @@ async function main() {
 		parse_rng_word(word, false, false);
 	}
 	await scope();
-	const dictionary_arr = [...random_dictionary_set.values()].sort();
-	console.log(
-		"diff(dictionary.length,dictionary_words.length)",
-		dictionary_arr.length - dictionary_words_arr.length,
-	);
-	await write_entire_file(dictionary_file, dictionary_arr);
+	await save_dictionary(dictionary_file, dictionary_words_arr);
 	dictionary_file.close();
 }
 await main();
