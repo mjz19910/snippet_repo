@@ -430,7 +430,7 @@ async function run() {
 		request_total++;
 	};
 	for (let j = 0;; j++) {
-		const request_count = 100;
+		const request_count = 8;
 		for (let i = 0; i < request_count; i++) {
 			arr.push(fetch_one_dictionary_page().then(inc_request_total));
 		}
