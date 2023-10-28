@@ -4,6 +4,9 @@ all:
 
 typescript_build:
 	make -C userscript typescript_build
+	make -C cmd_js typescript_build
+	make -C nmap typescript_build
+	make -C browser_js typescript_build
 
 youtube_plugin_generate_ts:
 	zsh -c ". ./userscript/youtube_plugin_raw/zd_gen_CF/gen_out_support.sh ;generate_ts-output_v1"

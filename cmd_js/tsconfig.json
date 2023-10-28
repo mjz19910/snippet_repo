@@ -8,7 +8,7 @@
 		],
 		"types": [],
 		"declaration": true,
-		"module": "ESNext",
+		"module": "NodeNext",
 		"moduleResolution": "NodeNext",
 		"sourceMap": true,
 		"outDir": "./dist",
