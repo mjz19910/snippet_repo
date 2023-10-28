@@ -743,7 +743,6 @@ type uFridgeOpen={
 		burrow,larder,larRiver,larBoat,larDark,
 		deathDome,
 		grave,
-		Do.TakeAction<fui>,
 		larDark,larLake,larFm,
 		Do.UseInventory2<[hand_press,fui]>,
 	];
