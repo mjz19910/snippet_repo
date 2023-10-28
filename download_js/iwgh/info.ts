@@ -164,10 +164,7 @@ type members={
 export type redbridge={
 	id: "redbridge";
 	news: "Red bridge",
-	action: {
-		fn: "use";
-		usingItem: "sword";
-	};
+	action: H.UseActionStr<"sword">;
 };
 export type underworld={
 	id: "underworld",
