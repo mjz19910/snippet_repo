@@ -22,10 +22,7 @@ export type UseAction<
 };
 type ExtractItemUseAction<
 	I extends number,T extends H.ItemShape
->={
-	id: string,
-	action: H.ActionArrExt<Record<I,H.UseAction<T>>>;
-};
+>=PageWithActShape<H.ActionArrExt<Record<I,H.UseAction<T>>>>;
 
 export type UseAction2<
 	U extends ExtractItemUseAction<I,T>,
