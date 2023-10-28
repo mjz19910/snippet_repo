@@ -7,7 +7,7 @@ type PageMenuItems=[
 ];
 type PageTypeShape={id: string;};
 export type RunTakeAct<T extends H.ItemShape>={take: T;};
-export type ActivateRoom<T extends PageTypeShape>={room: T;};
+export type ActivateRoom<Room extends PageTypeShape,PosAfter=never>={room: Room; pos_after: PosAfter;};
 export type UseInventory<T extends H.ItemShape>={target: T;};
 export type UseAction<U extends {
 	id: string,
