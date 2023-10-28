@@ -8,10 +8,20 @@ import {
 async function scope() {
 	for (let i = 0; i < 80; i++) {
 		const arr = [];
-		for (let j = 0; j < 100; j++) {
+		for (let j = 0; j < 75; j++) {
 			arr.push(fetch_one_page("poems"));
+			if (arr.length > 20 && j % 2 == 0) {
+				const start_wait = performance.now();
+				await arr.shift();
+				const end_wait = performance.now();
+				const perf_diff = end_wait - start_wait;
+				if (perf_diff > 50) {
+					console.log("perf", end_wait - start_wait);
+				}
+			}
 		}
 		await Promise.all(arr);
+		arr.length = 0;
 		reset_words_set();
 	}
 }
