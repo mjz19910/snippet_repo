@@ -43,7 +43,7 @@ type unscrew_armor={
 type take_piece_of_paper={
 	required: unscrew_armor;
 	fn: "take";
-	item: piece_of_paper;
+	item: Items.piece_of_paper;
 };
 type armour={
 	id: "armour",
@@ -214,14 +214,10 @@ export type uForest={
 	links: [uLeafage],
 	action: H.UseActionStr<"qweqwe">,
 };
-export type cowardly_dwarf={
-	type: "item";
-	id: "cowardly dwarf";
-};
 export type uForestEdge={
 	id: "uForestEdge",
 	links: [uForest],
-	action: H.TakeAction<cowardly_dwarf>;
+	action: H.TakeAction<Items.cowardly_dwarf>;
 };
 export type boiler={
 	id: "boiler";
@@ -246,26 +242,18 @@ export type floorOne={
 	id: "floorOne";
 	links: [eternalMaze],
 };
-type giant={
-	type: "item";
-	id: "giant";
-};
 export type floorTwo={
 	id: "floorTwo";
 	news: "Floor Two";
 	action: H.UseAction2<{
-		v: giant;
+		v: Items.giant;
 		caption: "Move furniture";
 	}>,
-};
-type genie={
-	type: "item";
-	id: "genie";
 };
 export type floorThree={
 	id: "floorThree";
 	news: "Floor Three",
-	action: H.TakeAction<genie>;
+	action: H.TakeAction<Items.genie>;
 };
 export type elev_underworld={
 	floor_number: 3;
@@ -315,10 +303,10 @@ type dwarfName={
 	id: "dwarfName",
 	links: [rozenbom],
 };
-type piece_of_paper={
-	type: "item";
+type piece_of_paper_inv={
 	id: "piece of paper",
 	links: [dwarfName],
+	item: Items.piece_of_paper;
 };
 type keycard={
 	type: "item",
@@ -623,7 +611,7 @@ type inventory={
 		"25% of shares": v_25_of_shares,
 		"screwdriver": screwdriver,
 		"fui": fui,
-		"piece of paper": piece_of_paper,
+		"piece of paper": piece_of_paper_inv,
 		"small green lamp": null,
 		"egg": egg,
 		"mosquito disinterest": null,
