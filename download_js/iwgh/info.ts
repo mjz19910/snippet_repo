@@ -846,9 +846,9 @@ type main={
 	id: "main";
 	links: [wall];
 	quest_chain: [
-		faq,
+		Do.ActivateRoom<faq>,
 		Do.RunTakeAct<faq,Items.gandalf_magic_book>,
-		picQ,
+		Do.ActivateRoom<picQ>,
 		Do.RunTakeAct<picQ,Items.dead_klingon>,
 		Do.ActivateRoom<readyRoom>,
 		Do.ActivateRoom<sickbay>,
