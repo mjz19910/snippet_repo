@@ -5,6 +5,5 @@ export type ConnectionMessage={
 	flags: ConnectFlag;
 	seq: number;
 	ack: number;
-	client_id: number;
 	data: MessageType|null;
 };

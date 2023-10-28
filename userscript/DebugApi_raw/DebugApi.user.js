@@ -182,15 +182,11 @@ class ClientSocket extends SocketBase {
 	/** @private */
 	m_port;
 	/** @private */
-	m_remote_target;
-	/** @private */
 	m_event_source;
-	/** @arg {number} connection_timeout @arg {Window} remote_target */
-	constructor(connection_timeout, remote_target) {
+	/** @arg {number} connection_timeout @arg {Window} event_source */
+	constructor(event_source) {
 		super("ClientSocket");
-		this.m_connection_timeout = connection_timeout;
-		this.m_remote_target = remote_target;
-		this.m_event_source = remote_target;
+		this.m_event_source = event_source;
 		const { server_port, client_port } = this.init_syn_data();
 		this.m_port = client_port;
 		this.send_syn(server_port);
@@ -339,7 +335,7 @@ class OriginState {
 	m_top = window.top;
 	/** @private @readonly @type {Window|null} */
 	m_opener = window.opener;
-	get_connect_target() {
+	get_event_source() {
 		if (this.m_opener) return this.m_opener;
 		if (this.m_top) return this.m_top;
 		throw new Error("unable to get connect target");
@@ -470,21 +466,14 @@ class WindowSocket extends SocketBase {
 	/** @private */
 	m_state = new OriginState();
 	/** @private */
-	m_local_handler;
+	m_socket;
 	/** @private @type {ServerSocket[]} */
 	m_connections = [];
-	/** @private */
-	m_client_max_id = 0;
 	constructor() {
 		super("WindowSocket");
-		const client_id = this.m_client_max_id++;
 		this.start_root_server();
-		const connect_target = this.m_state.get_connect_target();
-		this.m_local_handler = new ClientSocket(
-			30000,
-			client_id,
-			connect_target,
-		);
+		const event_source = this.m_state.get_event_source();
+		this.m_socket = new ClientSocket(event_source);
 	}
 	/** @arg {MessageEvent<unknown>} event_0 */
 	on_message_event(event_0) {
@@ -528,7 +517,7 @@ class WindowSocket extends SocketBase {
 	}
 	/** @override @arg {ConnectionMessage} message */
 	push_tcp_message(message) {
-		this.m_local_handler.push_tcp_message(message);
+		this.m_socket.push_tcp_message(message);
 	}
 	/** @arg {MessageEvent<unknown>} event */
 	handleEvent(event) {
