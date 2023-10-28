@@ -1,10 +1,5 @@
 import {H} from "../Helpers.ts";
 
-type PageMenuItems=[
-	{id: "main";},{id: "dictionary";},{id: "communication";},
-	{id: "members";},
-	{id: "faq";},
-];
 type PageTypeShape={id: string;};
 export type RunTakeAct<T extends H.ItemShape>={take: T;};
 type ExtractItemTakeAction<I extends number,T extends H.ItemShape>={
@@ -33,4 +28,4 @@ export type UseAction2<U extends ExtractItemUseAction<I,T>,I extends number,T ex
 	use: T;
 };
 export type UseInventory2<T extends H.ItemShape[]>={targets: T;};
-export type UseMenu<T extends {id: string;}>={target: T;};
+export type UseMenu<T extends PageTypeShape>={target: T;};
