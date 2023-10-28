@@ -4607,10 +4607,11 @@ class Socket extends ConsoleAccess {
 			);
 		} else this.m_port.postMessage(data);
 	}
-	/** @arg {ConnectionMessage} message */
-	client_connect(message) {
+	/** @arg {ConnectionMessage} tcp */
+	client_connect(tcp) {
 		if (testing_tcp) {
-			console.log("on_client_connect", message);
+			const socket_fmt = this.fmt_tag + "<" + tcp.seq + "," + tcp.ack + ">";
+			console.log("on_client_connect", socket_fmt, tcp.data);
 		}
 	}
 	/** @arg {MessageEvent<ConnectionMessage>} event */
