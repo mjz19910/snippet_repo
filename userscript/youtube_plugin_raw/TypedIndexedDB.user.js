@@ -25,7 +25,7 @@ if (typeof require === "undefined" || page_require !== __module_require__) {
 // yt_plugin/IndexedDB_Service(2) => base_require/BaseRequire(1)
 const { do_export } = require("../../base_require_raw/BaseRequire.user.js");
 // priority yt_plugin/IndexedDB_Service(2)
-const __module_name__ = "mod$IndexedDBService";
+const __module_name__ = "mod$TypedIndexedDB";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn, flags = { global: false }) {
 	do_export(fn, flags, exports, __module_name__);
@@ -33,22 +33,32 @@ function export_(fn, flags = { global: false }) {
 export_((exports) => {
 	exports.__is_module_flag__ = true;
 });
-class IndexedDBService {
-	/** @template T @arg {IDBRequest<T>} request @returns {Promise<Event>} */
-	await_success(request) {
-		return new Promise(function (accept, reject) {
-			request.onsuccess = (value) => {
-				accept(value);
-			};
-			request.onerror = (event) => {
-				console.log("await_success error", event);
-				reject(event);
-			};
-		});
+/** @template T @arg {IDBRequest<T>} request @returns {Promise<T>} */
+function await_success(request) {
+	return new Promise(function (accept, reject) {
+		request.onsuccess = () => {
+			accept(request.result);
+		};
+		request.onerror = (event) => {
+			console.log("await_success error", event);
+			reject(event);
+		};
+	});
+}
+/** @template T */
+class TypedIDBRequest {
+	/** @type {IDBRequest<T>} */
+	m_base;
+	/** @arg {IDBRequest<T>} */
+	constructor(request) {
+		this.m_base = request;
+	}
+	success_promise() {
+		return await_success(this.m_base);
 	}
 }
 export_((exports) => {
-	exports.IndexedDBService = IndexedDBService;
+	exports.TypedIDBRequest = TypedIDBRequest;
 });
 class TypedIndexedDB {
 	/** @arg {IDBDatabase} db */

@@ -21,46 +21,10 @@ const path_map = {
 	["./base_require_raw/BaseRequire.user.js"]: ["mod", "base_require"],
 	/** @type {["raw","DebugApi"]} */
 	["./DebugApi_raw/DebugApi.user.js"]: ["raw", "DebugApi"],
-	/** @type {["mod","YoutubePluginBase"]} */
-	["./youtube_plugin_raw/zc_child_modules/YTPlugin_Base.user.js"]: [
-		"mod",
-		"YoutubePluginBase",
-	],
-	/** @type {["mod","SupportService"]} */
-	["./youtube_plugin_raw/zc_child_modules/YTPlugin_Support_Service.user.js"]: [
-		"mod",
-		"SupportService",
-	],
-	/** @type {["mod","ECatcherService"]} */
-	["./youtube_plugin_raw/zc_child_modules/YTPlugin_ECatcherService_Plugin.user.js"]:
-		["mod", "ECatcherService"],
-	/** @type {["mod","ServiceMethods"]} */
-	["./youtube_plugin_raw/zc_child_modules/YTPlugin_ServiceMethods.user.js"]: [
-		"mod",
-		"ServiceMethods",
-	],
-	/** @type {["mod","ServiceLoaderPlugin"]} */
-	["./youtube_plugin_raw/zc_child_modules/YTPlugin_ServiceLoader_Plugin.user.js"]:
-		["mod", "ServiceLoaderPlugin"],
-	/** @type {["mod","CodegenService"]} */
-	["./youtube_plugin_raw/zc_child_modules/YTPlugin_Codegen.user.js"]: [
-		"mod",
-		"CodegenService",
-	],
-	/** @type {["mod","HandleTypes"]} */
-	["./youtube_plugin_raw/zc_child_modules/YTPlugin_HandleTypes.user.js"]: [
-		"mod",
-		"HandleTypes",
-	],
 	/** @type {["mod","IndexedDBService"]} */
-	["./youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB.user.js"]: [
+	["./indexed_db/TypedIndexedDB.user.js"]: [
 		"mod",
-		"IndexedDBService",
-	],
-	/** @type {["mod","ParserService"]} */
-	["./youtube_plugin_raw/zc_child_modules/YTPlugin_Parser_Service.user.js"]: [
-		"mod",
-		"ParserService",
+		"TypedIndexedDB",
 	],
 };
 /** @private @template U @arg {U} e @arg {U} [x] @returns {U} */
@@ -200,7 +164,7 @@ function required(x) {
 	if (x === void 0) throw new Error("missing required");
 	return x;
 }
-/** @template {import("../youtube_plugin_raw/zb_plugin_types/AllImportPaths.ts").AllImportPaths} T @arg {T} arg @arg {[]} r_args @returns {import("./ProcessImport.ts").ProcessImport<T>} */
+/** @arg {string} arg @arg {[]} r_args @returns {any} */
 function require(arg, ...r_args) {
 	if (arg === void 0) throw new Error("missing required argument");
 	window.__require_module_cache__ ??= {};
@@ -212,12 +176,10 @@ function require(arg, ...r_args) {
 		}
 		throw new Error("Unable to resolve path: " + arg);
 	}
-	/** @arg {unknown} x @returns {asserts x is import("./ProcessImport.ts").ProcessImport<T>} */
 	function correct_return_type(x) {
 		x;
 	}
 	const loc = path_map[resolved_path];
-	/** @type {import("./ProcessImport.ts").ProcessImport<import("../youtube_plugin_raw/zb_plugin_types/AllImportPaths.ts").AllImportPaths>} */
 	let mod;
 	if (loc[0] === "raw") mod = i(M[loc[1]]);
 	else mod = i(M[`${loc[0]}$${loc[1]}`]);
@@ -234,7 +196,6 @@ export_((exports) => {
 	exports.__path_map__ = path_map;
 });
 require.__system_require = false;
-/** @type {({__system_require:boolean;system_require?:unknown;<T extends import("../youtube_plugin_raw/zb_plugin_types/AllImportPaths.ts").AllImportPaths>(x:T):import("./ProcessImport.ts").ProcessImport<T>})} */
 let cur_require = require;
 
 // global exports
