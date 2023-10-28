@@ -10,7 +10,7 @@ async function scope() {
 		const arr = [];
 		for (let j = 0; j < 75; j++) {
 			arr.push(fetch_one_page("poems"));
-			if (arr.length > 20 && j % 2 == 0) {
+			if (arr.length > 4 && j % 2 == 0) {
 				const start_wait = performance.now();
 				await arr.shift();
 				const end_wait = performance.now();
