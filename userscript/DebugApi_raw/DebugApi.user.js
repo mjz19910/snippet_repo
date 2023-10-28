@@ -185,9 +185,9 @@ class ClientSocket extends SocketBase {
 	m_remote_target;
 	/** @private */
 	m_event_source;
-	/** @arg {number} connection_timeout @arg {number} client_id @arg {Window} remote_target */
-	constructor(connection_timeout, client_id, remote_target) {
-		super("ClientSocket", client_id);
+	/** @arg {number} connection_timeout @arg {Window} remote_target */
+	constructor(connection_timeout, remote_target) {
+		super("ClientSocket");
 		this.m_connection_timeout = connection_timeout;
 		this.m_remote_target = remote_target;
 		this.m_event_source = remote_target;
