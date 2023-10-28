@@ -315,19 +315,19 @@ function init_module() {
 		uv_unpack(x) {
 			return this.uv_unpack_mt(x, []);
 		}
-		/** @arg {import("../yt_json_types/m/make_item_group.ts").make_item_group<unknown>} x @returns {x is make_item_group<string>} */
+		/** @arg {import("../yt_json_types/m/make_item_group.ts").make_item_group<any>} x @returns {x is make_item_group<string>} */
 		is_vi_has_str(x) {
 			return this.is_vi_typeof_check(x, "string");
 		}
-		/** @arg {import("../yt_json_types/m/make_item_group.ts").make_item_group<unknown>} x @returns {x is make_item_group<number>} */
+		/** @arg {import("../yt_json_types/m/make_item_group.ts").make_item_group<any>} x @returns {x is make_item_group<number>} */
 		is_vi_has_num(x) {
 			return this.is_vi_typeof_check(x, "number");
 		}
-		/** @arg {import("../yt_json_types/m/make_item_group.ts").make_item_group<unknown>} x @returns {x is make_item_group<boolean>} */
+		/** @arg {import("../yt_json_types/m/make_item_group.ts").make_item_group<any>} x @returns {x is make_item_group<boolean>} */
 		is_vi_has_bool(x) {
 			return this.is_vi_typeof_check(x, "boolean");
 		}
-		/** @arg {import("../yt_json_types/m/make_item_group.ts").make_item_group<unknown>} x @returns {x is make_item_group<bigint>} */
+		/** @arg {import("../yt_json_types/m/make_item_group.ts").make_item_group<any>} x @returns {x is make_item_group<bigint>} */
 		is_vi_has_bigint(x) {
 			return this.is_vi_typeof_check(x, "bigint");
 		}
@@ -757,9 +757,12 @@ function init_module() {
 			let error_event = null;
 			try {
 				await this.await_success(req);
-			} catch (/**@type {unknown} */ e) {
-				if (req.error !== null) error_event = [e, req.error];
-				else throw e;
+			} catch (e) {
+				if (e instanceof Event) {
+					if (req.error !== null) error_event = [e, req.error];
+					else throw e;
+				}
+				throw e;
 			}
 			if (error_event !== null) return ["error", ...error_event];
 			return ["success", req.result];
