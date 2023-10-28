@@ -4507,6 +4507,23 @@ class ConsoleAccess {
 		console.groupEnd();
 		console.log("-?>");
 	}
+	/** @arg {ConnectionMessage} tcp */
+	send_ack(tcp) {
+		let { seq: ack, ack: seq, flags } = tcp;
+		flags |= tcp_ack;
+		if (seq == 0) {
+			seq = (Math.random() * ack_win) % ack_win | 0;
+		}
+		ack += 1;
+		this.push_tcp_message({
+			type: "tcp",
+			client_id: this.m_client_id,
+			ack,
+			seq,
+			flags,
+			data: null,
+		});
+	}
 }
 
 class Socket extends ConsoleAccess {
@@ -4628,24 +4645,6 @@ class Socket extends ConsoleAccess {
 			this.close_group();
 		}
 		this.handle_tcp_data(data);
-	}
-	/** @arg {ConnectionMessage} tcp_message */
-	send_ack(tcp_message) {
-		let flags = tcp_message.flags;
-		// seq=number & ack=number;
-		let seq = tcp_message.ack;
-		if (seq == 0) {
-			seq = (Math.random() * ack_win) % ack_win | 0;
-		}
-		flags |= tcp_ack;
-		this.push_tcp_message({
-			type: "tcp",
-			client_id: this.m_client_id,
-			ack: tcp_message.seq + 1,
-			seq,
-			flags,
-			data: null,
-		});
 	}
 	/** @arg {ConnectionMessage} tcp_message */
 	handle_tcp_data(tcp_message) {
