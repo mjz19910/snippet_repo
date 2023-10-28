@@ -1,5 +1,5 @@
 import { fetch_one_dictionary_page } from "./fetch_one_dictionary_page.js";
-import { new_words_set, parse_rng_word } from "./parse_rng_word.js";
+import { parse_rng_word, reset_words_set } from "./parse_rng_word.js";
 
 /** @param {string[]} dictionary_words_arr  */
 export async function iwgh_dict_main(dictionary_words_arr) {
@@ -7,10 +7,6 @@ export async function iwgh_dict_main(dictionary_words_arr) {
 		parse_rng_word(word, false, false);
 	}
 	const perf_start = performance.now();
-	const at_loop_end = () => {
-		console.log("dict word num", new_words_set.size);
-		new_words_set.clear();
-	};
 	let total_request_count = 0;
 	const request_log_interval = 15;
 	const inc_request_total = () => {
@@ -26,7 +22,7 @@ export async function iwgh_dict_main(dictionary_words_arr) {
 		console.log("request parallelism", request_parallelism);
 		arr.length = 0;
 		if (j % request_log_interval === (request_log_interval - 1)) {
-			at_loop_end();
+			reset_words_set();
 			if (j > 20) break;
 		}
 	}

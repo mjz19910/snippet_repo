@@ -75,3 +75,7 @@ export function parse_rng_word(
 		new_words_set.add(word);
 	}
 }
+export function reset_words_set() {
+	console.log("dict word num", new_words_set.size);
+	new_words_set.clear();
+}

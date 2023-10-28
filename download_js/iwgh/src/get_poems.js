@@ -8,7 +8,12 @@ import { parse_rng_word, random_dictionary_set } from "./parse_rng_word.js";
 
 async function scope() {
 	for (let i = 0; i < 40; i++) {
-		await fetch_one_page("poems");
+		const arr = [];
+		for (let j = 0; j < 50; j++) {
+			arr.push(fetch_one_page("poems"));
+		}
+		await Promise.all(arr);
+		reset_words_set();
 	}
 }
 async function main() {
