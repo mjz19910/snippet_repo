@@ -4831,13 +4831,12 @@ class ListenSocket extends ConsoleAccess {
 		}
 		if (this.m_flags.does_proxy_to_opener) {
 			let real_data = data.data;
-			/** @type {[number,number,null][]} */
+			/** @type {[number,number][]} */
 			const id_path = [];
 			if (real_data && real_data.type === "forward") {
 				id_path.push(...real_data.client_id_path, [
 					data.client_id,
 					this.m_client_id,
-					null,
 				]);
 				real_data = real_data.data;
 			}
