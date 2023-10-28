@@ -249,7 +249,10 @@ export type boiler={
 };
 type someone={
 	id: "someone";
-	action: H.UseAction<something_item>;
+	action: H.ActionArr<[
+		H.UseAction<something>,
+		H.TakeActionR<{item: glass_orb,required: something;}>,
+	]>;
 };
 type eternalMaze={
 	id: "eternalMaze";
@@ -400,13 +403,10 @@ type u_page={
 	],
 };
 type zbrogjdnfhvyensocuiehw=u_page;
-type something_item={
-	type: "item";
-	id: "something";
-};
 type something={
+	type: "item";
 	id: "something",
-	action: H.TakeAction<something_item>;
+	action: H.TakeAction<something>;
 };
 type rhino={
 	links: [something],
@@ -630,9 +630,13 @@ type gandalf_magic_book={
 	id: "Gandalf Magic Book",
 	links: [jrrtgandalf];
 };
+type glass_orb={
+	type: "item";
+	id: "Glass Orb";
+};
 type inventory={
 	items: {
-		"Glass Orb": null,
+		"Glass Orb": glass_orb,
 		"hand press": hand_press,
 		"fat worm": fat_worm,
 		"Gandalf Magic Book": gandalf_magic_book,
