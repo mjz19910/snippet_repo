@@ -7,3 +7,7 @@ youtube_plugin_generate_ts:
 
 clean:
 	make -C userscript clean
+	make -C cmd_js clean
+	make -C nmap clean
+	make -C browser_js clean
+	printf "cleaned \"%s\"\n" $$PWD
