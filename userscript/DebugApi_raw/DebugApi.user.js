@@ -42,6 +42,12 @@ function is_obj_with_property_CM(x, k) {
 	if (typeof x.data[k] !== "string") return false;
 	return true;
 }
+/** @template T @arg {CM<T>|null} x @returns {x is CM<T&{}>} */
+function is_object_CM(x) {
+	if (!x?.data) return false;
+	if (typeof x.data !== "object") return false;
+	return true;
+}
 /** @template {{}} T @template {string} U @arg {T} x @arg {U} k @returns {x is T&Record<U,unknown>} */
 function is_obj_with_property(x, k) {
 	if (x === null) return false;
@@ -57,9 +63,8 @@ function wrap_CM(x) {
 }
 /** @template T @arg {CM<T>|null} x */
 function cast_to_object_CM(x) {
-	if (!x?.data) return null;
-	if (typeof x.data !== "object") return null;
-	return wrap_CM(x.data);
+	if (!is_object_CM(x)) return null;
+	return x;
 }
 /** @template T @arg {CM<T>} x @returns {CM<T&{type:string}>|null} */
 function cast_to_event_like_CM(x) {
