@@ -256,46 +256,15 @@ function parse_sentence(str) {
 	parse_next_word(parsed, parsed_src);
 	return str;
 }
-/** @arg {string} prefix @arg {string} word */
-function strip_vowel(prefix, word) {
-	if (word.startsWith(prefix + "a")) {
-		return word.slice(prefix.length + 1);
-	}
-	if (word.startsWith(prefix + "e")) {
-		return word.slice(prefix.length + 1);
-	}
-	if (word.startsWith(prefix + "i")) {
-		return word.slice(prefix.length + 1);
-	}
-	if (word.startsWith(prefix + "o")) {
-		return word.slice(prefix.length + 1);
-	}
-	if (word.startsWith(prefix + "u")) {
-		return word.slice(prefix.length + 1);
-	}
-	if (word.startsWith(prefix + "y")) {
-		return word.slice(prefix.length + 1);
-	}
-	return word;
-}
-function word_starts_with_vowel(word) {
-	switch (word[0]) {
-		case "a":
-		case "e":
-		case "i":
-		case "o":
-		case "u":
-		case "y":
-			return true;
-		default:
-			return false;
-	}
-}
+/**
+ * @param {string} word
+ * @returns {["consonant",1|2]|["vowel",1]}
+ */
 function word_starts_with_consonant_seq(word) {
 	switch (word.slice(0, 2)) {
 		case "ch":
 		case "th":
-			return 2;
+			return ["consonant", 2];
 	}
 	switch (word[0]) {
 		case "b":
@@ -309,27 +278,17 @@ function word_starts_with_consonant_seq(word) {
 		case "t":
 		case "v":
 		case "w":
-			return 1;
+			return ["consonant", 1];
+		case "a":
+		case "e":
+		case "i":
+		case "o":
+		case "u":
+		case "y":
+			return ["vowel", 1];
 	}
-	return null;
+	throw new Error("Invalid word start '" + word.slice(0, 3) + "'");
 }
-function strip_word_part(word) {
-	if (word.startsWith("ch")) return strip_vowel("ch", word);
-	if (word.startsWith("th")) return strip_vowel("th", word);
-	if (word.startsWith("b")) return strip_vowel("b", word);
-	if (word.startsWith("c")) return strip_vowel("c", word);
-	if (word.startsWith("d")) return strip_vowel("d", word);
-	if (word.startsWith("f")) return strip_vowel("f", word);
-	if (word.startsWith("k")) return strip_vowel("k", word);
-	if (word.startsWith("m")) return strip_vowel("m", word);
-	if (word.startsWith("n")) return strip_vowel("n", word);
-	if (word.startsWith("p")) return strip_vowel("p", word);
-	if (word.startsWith("t")) return strip_vowel("t", word);
-	if (word.startsWith("v")) return strip_vowel("v", word);
-	if (word.startsWith("w")) return strip_vowel("w", word);
-	return word;
-}
-export { strip_word_part };
 /** @type {Map<string,number>} */
 const rng_word_num_map = new Map();
 const new_words_set = new Set();
@@ -341,17 +300,9 @@ function parse_rng_word(word, add_new_words = true, destructure_word = false) {
 		const word_arr = [];
 		let w2 = word;
 		do {
-			if (word_starts_with_vowel(w2)) {
-				word_arr.push("v:" + w2[0]);
-				w2 = w2.slice(1);
-				continue;
-			}
-			if (w2.length == 0) break;
-			const seq_len = word_starts_with_consonant_seq(w2);
-			if (seq_len === null) {
-				throw new Error("invalid consonant_seq:'" + w2 + "'");
-			}
-			word_arr.push("c:" + w2.slice(0, seq_len));
+			const [ty, seq_len] = word_starts_with_consonant_seq(w2);
+			const ty_log = ty == "consonant" ? "c" : "v";
+			word_arr.push(ty_log + ":" + w2.slice(0, seq_len));
 			w2 = w2.slice(seq_len);
 		} while (w2 !== "");
 		if (word_arr.length <= 3) {
