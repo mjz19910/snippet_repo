@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name	YTPlugin IndexedDB Service
+// @name	TypedIndexedDB
 // @namespace	https://github.com/mjz19910/
-// @version	0.1.2
-// @description	try to take over the world!
+// @version	0.1
+// @description	typed IndexedDB
 // @author Matthias Zimmerman
 // @copyright	Matthias Zimmerman 2023
 // @match	https://www.youtube.com/*
