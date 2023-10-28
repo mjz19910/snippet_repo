@@ -3647,7 +3647,7 @@ export type G_GV_0=
 	|"tt1e7" // 2 [dig_final] [dig_user@tt1:e7:[7,l]]
 	|"tt1el" // 2 [dig_final] [dig_user@tt1:el:[7,e]]
 	|"vgqsk" // 2 [dig_final] [dig_user@vgq:sk:[6,e,l,s,z]]
-	|"vgqsr" // 2 [dig_final] [dig_user@vgq:sr:[e,l,s,z]];
+	|"vgqsr"; // 2 [dig_final] [dig_user@vgq:sr:[e,l,s,z]];
 // cSpell:ignoreRegExp /rr1.sn-\w+?\.googlevideo\.com\. \d+ IN A\s+\d+\.\d+\.\d+\.\d+/
 // cSpell:ignoreRegExp /sn-\w+?\.googlevideo\.com.?"/
 export type PT_DigDomain=[
@@ -4624,7 +4624,7 @@ export type D_VideoPlaybackShape_LS_Params={
 	mv: "m";
 	mvi: "3";
 	pl: "24";
-	initcwndbps?: `${number}`;
+	initcwndbps?: `${number}`|undefined;
 };
 export type D_VideoSecondaryInfo={
 	owner: R_VideoOwner;

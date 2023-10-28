@@ -10,6 +10,9 @@ declare global {
 	}
 }
 declare global {
+	interface Window {
+		require?: typeof __module_require__|undefined;
+	}
 	var require: typeof __module_require__|undefined;
 	var __module_require__: typeof import("./BaseRequire.user.js").__module_require__;
 }
