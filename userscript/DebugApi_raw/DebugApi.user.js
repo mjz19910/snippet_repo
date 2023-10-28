@@ -403,6 +403,8 @@ class ServerSocket extends SocketBase {
 			p.handleEvent(new MessageEvent("message", { data: tcp }));
 		} else this.m_port.postMessage(tcp);
 	}
+	/** @type {(()=>void)[]} */
+	next_ack_listeners = [];
 	/** @arg {ConnectionMessage} tcp */
 	downstream_connect(tcp) {
 		const { seq, ack } = tcp;
@@ -415,7 +417,9 @@ class ServerSocket extends SocketBase {
 			ack,
 			{ type: "connected" },
 		));
-		console.groupEnd();
+		this.next_ack_listeners.push(() => {
+			console.groupEnd();
+		});
 	}
 	/** @arg {ConnectionMessage} info */
 	downstream_handle_event(info) {
@@ -479,7 +483,17 @@ class ServerSocket extends SocketBase {
 			this.m_connected = true;
 			this.downstream_connect(tcp);
 		}
+		if (f.is_ack()) this.notify_ack_listeners();
 		this.downstream_handle_event(tcp);
+	}
+	notify_ack_listeners() {
+		if (this.next_ack_listeners.length <= 0) {
+			return;
+		}
+		for (const listener of this.next_ack_listeners) {
+			listener();
+		}
+		this.next_ack_listeners.length = 0;
 	}
 }
 class WindowSocket extends SocketBase {
