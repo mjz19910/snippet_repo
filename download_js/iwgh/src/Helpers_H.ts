@@ -67,10 +67,11 @@ export type TakeActionR2<ActionProps extends {
 	item: ActionProps["item"];
 	requirements: ActionProps['requirements'];
 };
-export type ActionArr<T extends ActionShape[]>={
+export type ActionArrExt<T>={
 	type: "multi";
 	arr: T;
 };
+export type ActionArr<T extends ActionShape[]>=ActionArrExt<T>;
 export type StoryEvent<ActionProps extends {
 	required: ItemShape;
 }>={
