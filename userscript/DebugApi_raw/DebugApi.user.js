@@ -403,12 +403,12 @@ class ServerSocket extends SocketBase {
 			p.handleEvent(new MessageEvent("message", { data: tcp }));
 		} else this.m_port.postMessage(tcp);
 	}
-	/** @arg {ConnectionMessage} tcp_message */
-	downstream_connect(tcp_message) {
-		const { seq, ack } = tcp_message;
+	/** @arg {ConnectionMessage} tcp */
+	downstream_connect(tcp) {
+		const { seq, ack } = tcp;
 		if (!ack) throw new Error("Invalid message");
 		if (testing_tcp) {
-			console.log("on_server_connect", this.client_id(), this.m_event_source);
+			console.log("on_server_connect", tcp, tcp.data);
 		}
 		this.push_tcp_message(this.make_message(
 			seq,
