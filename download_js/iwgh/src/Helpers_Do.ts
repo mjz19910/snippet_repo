@@ -33,25 +33,4 @@ export type UseAction2<U extends ExtractItemUseAction<I,T>,I extends number,T ex
 	use: T;
 };
 export type UseInventory2<T extends H.ItemShape[]>={targets: T;};
-export type UseMenu<T extends PageMenuItems[number]>={target: T;};
-export type UseBold<T>={target: T;};
-export type FollowChain<T extends {
-	quest_chain: ({
-		id: string;
-	}|{
-		take: H.ItemShape;
-	}|{
-		target: H.ItemShape;
-	}|{
-		target: {
-			id: string;
-		};
-	})[];
-}>={
-	do: {
-		type: "follow";
-		dst: "quest_chain";
-	};
-	follow_chain: Pick<T,"quest_chain">;
-};
-export type AssertPageIs<T>={is: T;};
+export type UseMenu<T extends {id: string;}>={target: T;};
