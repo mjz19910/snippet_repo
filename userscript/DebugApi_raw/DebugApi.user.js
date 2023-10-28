@@ -4715,11 +4715,6 @@ class OriginState {
 export_((exports) => {
 	exports.OriginState = OriginState;
 });
-
-class ConnectionFlags {
-	does_proxy_to_opener = false;
-}
-
 class ListenSocket extends ConsoleAccess {
 	static direct_message = false;
 	/** @private @type {import("./support/dbg/ConnectionSide.ts").ConnectionSide} */
@@ -4824,19 +4819,6 @@ class ListenSocket extends ConsoleAccess {
 		if (data.type !== "tcp") {
 			this.m_unhandled_events.push(data);
 			console.log("unhandled event", data);
-			return;
-		}
-		if (this.m_flags.does_proxy_to_opener) {
-			this.push_tcp_message(TCPMessage.make_message(
-				this.m_client_id,
-				seq,
-				ack,
-				{
-					type: "forward",
-					forwarded_by_id: this.m_client_id,
-					data,
-				},
-			));
 			return;
 		}
 		if (testing_tcp) {
