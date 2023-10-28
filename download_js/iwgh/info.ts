@@ -309,6 +309,7 @@ type dwarfName={
 	links: [rozenbom],
 };
 type piece_of_paper={
+	type: "item";
 	id: "piece of paper",
 	links: [dwarfName],
 };
