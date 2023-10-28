@@ -4856,20 +4856,6 @@ class ListenSocket extends ConsoleAccess {
 		}
 		this.handle_tcp_data(data);
 	}
-	/** @arg {ConnectionMessage} tcp_message @arg {import("./support/dbg/ConnectFlag.ts").ConnectFlag} flags */
-	send_ack(tcp_message, flags) {
-		let { seq: ack, ack: seq } = tcp_message;
-		seq = (Math.random() * ack_win) % ack_win | 0;
-		ack += 1;
-		this.push_tcp_message({
-			type: "tcp",
-			client_id: this.m_client_id,
-			ack,
-			seq,
-			flags: flags | tcp_ack,
-			data: null,
-		});
-	}
 	/** @arg {ConnectionMessage} tcp_message */
 	handle_tcp_data(tcp_message) {
 		const f = new FlagHandler(tcp_message.flags);
@@ -4877,7 +4863,7 @@ class ListenSocket extends ConsoleAccess {
 		this.m_current_ack = tcp_message.ack;
 		if (f.is_syn() && !f.is_ack()) {
 			// seq=number & ack=null;
-			this.send_ack(tcp_message, tcp_syn);
+			this.send_ack(tcp_message);
 		}
 		if (f.is_none()) this.send_ack(tcp_message, 0);
 		if (f.is_ack() && this.m_is_connecting) {
