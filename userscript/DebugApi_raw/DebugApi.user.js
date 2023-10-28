@@ -117,12 +117,9 @@ class TCPMessage {
 const testing_tcp = true;
 class SocketBase {
 	fmt_tag;
-	/** @private */
-	m_client_id;
-	/** @arg {string} fmt_tag @arg {number} client_id */
-	constructor(fmt_tag, client_id) {
+	/** @arg {string} fmt_tag */
+	constructor(fmt_tag) {
 		this.fmt_tag = fmt_tag;
-		this.m_client_id = client_id;
 	}
 	/** @arg {import("./support/dbg/ConnectFlag.ts").ConnectFlag} flags */
 	stringify_flags(flags) {
@@ -156,31 +153,20 @@ class SocketBase {
 			seq = (Math.random() * ack_win) % ack_win | 0;
 		}
 		ack += 1;
-		this.push_tcp_message({
-			type: "tcp",
-			client_id: this.client_id(),
-			ack,
-			seq,
-			flags,
-			data: null,
-		});
+		this.push_tcp_message(this.make_message(ack, seq, null));
 	}
 	/** @arg {ConnectionMessage} _data */
 	push_tcp_message(_data) {
 		throw new Error("Abstract impl");
 	}
 	make_syn() {
-		return TCPMessage.make_syn(this.client_id());
-	}
-	client_id() {
-		return this.m_client_id;
+		return TCPMessage.make_syn();
 	}
 	/** @arg {ConnectionMessage["data"]} data @arg {number} seq @arg {number} ack @returns {ConnectionMessage} */
-	make_message(seq, ack, data) {
+	make_message(ack, seq, data) {
 		return TCPMessage.make_message(
-			this.client_id(),
-			seq,
 			ack,
+			seq,
 			data,
 		);
 	}
@@ -374,21 +360,15 @@ class ServerSocket extends SocketBase {
 	m_is_connecting = true;
 	/** @private @type {MessagePort} */
 	m_port;
-	/** @private @type {MessageEventSource} */
-	m_event_source;
-	/** @arg {MessagePort} connection_port @arg {number} client_id @arg {MessageEventSource} event_source */
-	constructor(client_id, connection_port, event_source) {
-		super("ListenSocket", client_id);
-		this.m_event_source = event_source;
+	/** @arg {MessagePort} connection_port */
+	constructor(connection_port) {
+		super("ListenSocket");
 		this.m_port = connection_port;
 		this.m_port.addEventListener("message", this);
 		this.m_port.start();
 	}
 	get side() {
 		return this.m_side;
-	}
-	get event_source() {
-		return this.m_event_source;
 	}
 	get is_connected() {
 		return this.m_is_connected;
@@ -407,16 +387,16 @@ class ServerSocket extends SocketBase {
 			p.handleEvent(new MessageEvent("message", { data: tcp }));
 		} else this.m_port.postMessage(tcp);
 	}
-	/** @arg {ConnectionMessage} tcp_message */
-	downstream_connect(tcp_message) {
-		const { seq, ack } = tcp_message;
+	/** @arg {ConnectionMessage} tcp */
+	downstream_connect(tcp) {
+		const { ack, seq } = tcp;
 		if (!ack) throw new Error("Invalid message");
 		if (testing_tcp) {
-			console.log("on_server_connect", this.client_id(), this.m_event_source);
+			console.log("on_server_connect", tcp);
 		}
 		this.push_tcp_message(this.make_message(
-			seq,
 			ack,
+			seq,
 			{ type: "connected" },
 		));
 	}
@@ -495,7 +475,7 @@ class WindowSocket extends SocketBase {
 	/** @private */
 	m_client_max_id = 0;
 	constructor() {
-		super("WindowSocket", -1);
+		super("WindowSocket");
 		const client_id = this.m_client_max_id++;
 		this.start_root_server();
 		const connect_target = this.m_state.get_connect_target();
@@ -511,18 +491,9 @@ class WindowSocket extends SocketBase {
 		if (!this.is_connection_message(event_0)) return;
 		const wrapped_msg = event_0.data;
 		if (wrapped_msg.type !== "WindowSocket") return;
-		const client_id = this.m_client_max_id++;
 		const connection_port = event_0.ports[0];
 		if (!event_0.source) throw new Error("No event source");
-		const event_source = event_0.source;
-		const handler = new ServerSocket(
-			client_id,
-			connection_port,
-			event_source,
-		);
-		const prev_connection_index = this.m_connections.findIndex((e) => {
-			return e.event_source === event_source;
-		});
+		const handler = new ServerSocket(connection_port);
 		const data = event_0.data.data;
 		if (testing_tcp) {
 			this.open_group("rx-window", data);
@@ -532,9 +503,6 @@ class WindowSocket extends SocketBase {
 			this.close_group();
 		}
 		handler.handle_tcp_data(data);
-		if (prev_connection_index > -1) {
-			this.m_connections.splice(prev_connection_index, 1);
-		}
 		this.m_connections.push(handler);
 	}
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<import("./support/dbg/WrappedMessage.ts").WrappedMessage<unknown>>} */
