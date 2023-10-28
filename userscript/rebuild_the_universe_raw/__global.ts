@@ -124,6 +124,7 @@ declare global {
 		adsbygoogle: GoogleAdList;
 		cint_arr: number[][];
 		on_on_timers_moved_first: boolean;
+		$: unknown;
 	}
 }
 

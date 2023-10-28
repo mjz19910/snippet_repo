@@ -72,24 +72,31 @@
 		}
 	}
 	function timer_nop() {}
+	/** @template T,U */
 	class PromiseExecutorHandle {
-		/** @arg {unknown} accept @arg {unknown} reject */
+		/** @type {((x:T)=>unknown)|null} */
+		m_accept;
+		/** @type {((x:U)=>unknown)|null} */
+		m_reject;
+		/** @arg {(x:T)=>unknown} accept @arg {(x:U)=>unknown} reject */
 		constructor(accept, reject) {
 			this.m_closed = false;
 			this.m_accept = accept;
 			this.m_reject = reject;
 		}
-		/** @arg {unknown} value */
+		/** @arg {T} value */
 		accept(value) {
 			if (this.m_closed) throw new Error("accept called on closed handle");
 			const accept = this.m_accept;
+			if (!accept) throw new Error("accept is null");
 			accept(value);
 			this.close();
 		}
-		/** @arg {unknown} error */
+		/** @arg {U} error */
 		reject(error) {
 			if (this.m_closed) throw new Error("accept called on closed handle");
 			const reject = this.m_reject;
+			if (!reject) throw new Error("reject is null");
 			reject(error);
 			this.close();
 		}
@@ -213,15 +220,15 @@
 	const TimeoutClearStringSingle = "clearTimeout";
 	const TimeoutClearStringRepeating = "clearInterval";
 	class TimeoutSetStrings {
-		/** @type {import("./constants.ts").WorkerConstants.TimeoutSetStringSingle} */
+		/** @type {import("./constants.ts").TimeoutSetStringSingle} */
 		single = TimeoutSetStringSingle;
-		/** @type {import("./constants.ts").WorkerConstants.TimeoutSetStringRepeating} */
+		/** @type {import("./constants.ts").TimeoutSetStringRepeating} */
 		repeating = TimeoutSetStringRepeating;
 	}
 	class TimeoutClearStrings {
-		/** @type {import("./constants.ts").WorkerConstants.TimeoutClearStringSingle} */
+		/** @type {import("./constants.ts").TimeoutClearStringSingle} */
 		single = TimeoutClearStringSingle;
-		/** @type {import("./constants.ts").WorkerConstants.TimeoutClearStringRepeating} */
+		/** @type {import("./constants.ts").TimeoutClearStringRepeating} */
 		repeating = TimeoutClearStringRepeating;
 	}
 	class TimerApi {
@@ -360,7 +367,7 @@
 			if (!value) throw new Error("Invalid");
 			return value;
 		}
-		/** @arg {1|2} tag @arg {unknown} target_fn @arg {number} timeout @arg {unknown} target_args */
+		/** @arg {1|2} tag @arg {TimerHandler} target_fn @arg {number} timeout @arg {unknown} target_args */
 		set(tag, target_fn, timeout, target_args) {
 			const remote_id = this.id_generator.next();
 			let is_repeating = false;
@@ -659,7 +666,7 @@
 		for_worker_state = true;
 		worker_types = new RemoteWorkerTypes();
 	}
-	/** @template T @template {abstract new (...args: unknown)=>unknown} U @arg {T} _obj @arg {U} _fn @returns {asserts _obj is InstanceType<U>} */
+	/** @template T @template {abstract new (...args: unknown[])=>unknown} U @arg {T} _obj @arg {U} _fn @returns {asserts _obj is InstanceType<U>} */
 	function assert_as_instance(_obj, _fn) {}
 	/** @extends {EmptyStateMessage} */
 	class WorkerStateMessage {
@@ -715,7 +722,7 @@
 	}
 	const _WorkerStateMessageV = WorkerStateMessage.as_any_of();
 	class WorkerState {
-		/** @arg {Blob} worker_code_blob @arg {Timer} timer @arg {PromiseExecutorHandle} executor_handle */
+		/** @arg {Blob} worker_code_blob @arg {Timer} timer @arg {PromiseExecutorHandle<any,any>} executor_handle */
 		constructor(worker_code_blob, timer, executor_handle) {
 			let has_blob = false;
 			if (worker_code_blob instanceof Blob) has_blob = true;
@@ -825,7 +832,7 @@
 					break;
 			}
 		}
-		/** @arg {unknown} handle */
+		/** @arg {PromiseExecutorHandle<any, any>} handle */
 		set_executor_handle(handle) {
 			this.executor_handle = handle;
 		}
@@ -971,19 +978,19 @@
 		}
 		/** @returns {WorkerState} */
 		static get_global_state() {
-			/** @type {unknown} */
+			/** @type {any} */
 			const any_window = window;
 			return any_window[this.global_state_key];
 		}
 		/** @arg {WorkerState} worker_state_value */
 		static set_global_state(worker_state_value) {
-			/** @type {unknown} */
+			/** @type {any} */
 			const any_window = window;
 			this.maybe_delete_old_global_state_value(worker_state_value);
 			any_window[this.global_state_key] = worker_state_value;
 		}
 		static delete_global_state() {
-			/** @type {unknown} */
+			/** @type {any} */
 			const any_window = window;
 			delete any_window[this.global_state_key];
 		}
@@ -1017,7 +1024,7 @@
 		executor_reject,
 	) {
 		let failed = false;
-		/** @type {unknown} */
+		/** @type {any} */
 		const any_global = globalThis;
 		if (any_global.remote_worker_state) {
 			typedPostMessage({ type: WorkerDestroyType });
@@ -1130,7 +1137,7 @@
 		};
 		/** @arg {{setTimeout: unknown,setInterval: unknown,clearTimeout: unknown,clearInterval: unknown}} obj */
 		function connect_local_to_remote_timer_api(obj) {
-			/** @type {unknown} */
+			/** @type {any} */
 			const any_window = window;
 			/** @type {keyof typeof obj} */
 			let key;
@@ -1173,7 +1180,7 @@
 				TimeoutSetTypes: TimeoutSetTypes,
 			});
 		}
-		/** @type {unknown[]} */
+		/** @type {MessageEvent<typeof _WorkerStateMessageV>[]} */
 		const cached_messages = [];
 		/** @template T @arg {T} value @returns {asserts value is NonNullable<T>} */
 		function assert_non_nullable_object(value) {
@@ -1186,31 +1193,28 @@
 			return value;
 		}
 		decay_to_object;
-		/** @arg {MessageEvent<typeof _WorkerStateMessageV>} e */
-		function message_without_types_handler(e) {
+		/** @arg {MessageEvent<typeof _WorkerStateMessageV>} event */
+		function message_without_types_handler(event) {
 			if (!g_timer_api.worker_set_types) throw 1;
-			const msg = e.data;
+			const msg = event.data;
 			switch (msg.type) {
-				case g_timer_api.worker_set_types:
-					{
-						const value = msg.worker_types;
-						const v_async = value.async;
-						if (v_async === WorkerAsyncMessage) g_timer_api.on_set_types(value);
-						else throw new Error("Invalid timer_api_types");
-						if (!g_timer_api.reply) {
-							throw new Error("Failed to set timer_api.types");
-						}
-						typedPostMessage({
-							type: g_timer_api.reply.from_worker,
-							source_type: g_timer_api.worker_set_types,
-							args: [msg.type],
-						});
+				case g_timer_api.worker_set_types: {
+					const value = msg.worker_types;
+					const v_async = value.async;
+					if (v_async === WorkerAsyncMessage) g_timer_api.on_set_types(value);
+					else throw new Error("Invalid timer_api_types");
+					if (!g_timer_api.reply) {
+						throw new Error("Failed to set timer_api.types");
 					}
+					typedPostMessage({
+						type: g_timer_api.reply.from_worker,
+						source_type: g_timer_api.worker_set_types,
+						args: [msg.type],
+					});
 					break;
+				}
 				default:
-					{
-						cached_messages.push({ data: msg });
-					}
+					cached_messages.push(event);
 					break;
 			}
 		}
@@ -1425,7 +1429,7 @@
 					throw new Error("tag verification failed in RemoteTimer");
 				}
 			}
-			/** @arg {_RemoteTimerState} state @arg {unknown} remote_id */
+			/** @arg {_RemoteTimerState} state @arg {number} remote_id */
 			verify_state(state, remote_id) {
 				if (!this.validate_state(state)) {
 					console.info("Removed invalid local_state");
@@ -1456,7 +1460,7 @@
 			validate_state(state) {
 				return this.validate_tag(state.type);
 			}
-			/** @arg {unknown} remote_id */
+			/** @arg {number} remote_id */
 			clear(remote_id) {
 				if (!this.m_remote_id_to_state_map.has(remote_id)) return null;
 				const state = this.m_remote_id_to_state_map.get(remote_id);
@@ -1509,7 +1513,7 @@
 			}
 		}
 		const remote_worker_state = new RemoteWorkerState();
-		/** @type {unknown} */
+		/** @type {any} */
 		const any_global = globalThis;
 		any_global.remote_worker_state = remote_worker_state;
 		remote_worker_state.set_timer(new RemoteTimer());

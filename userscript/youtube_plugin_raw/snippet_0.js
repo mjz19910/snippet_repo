@@ -92,22 +92,6 @@ export class Snippet_0_tmp {
 		if(!this.maybe_has_value(x)) return;
 		f(x);
 	}
-	/** @public @template U @template {{}} T @arg {T[]} x @arg {(this:this,x:T,i:number)=>U} f @returns {[Extract<U,{}>[],Extract<U,void>[]]}  */
-	z(x,f) {
-		if(x===void 0) {debugger; return [[],[]];}
-		if(!x.entries) {debugger; return [[],[]];}
-		/** @type {unknown[]} */
-		let c=[];
-		/** @type {unknown[]} */
-		let v=[];
-		for(let it of x.entries()) {
-			const [i,a]=it;
-			if(a===void 0) {debugger; continue;}
-			let u=f.call(this,a,i);
-			if(u!==void 0) {c.push(u);} else if(u===void 0) {v.push(u);} else {throw new Error();}
-		}
-		return [c,v];
-	}
 	/** @protected @template {{}} T @arg {{contents:T}} x @arg {(this:this,x:T)=>void} f */
 	w3(x,f) {f.call(this,x.contents);}
 	/** @arg {{}} x */
@@ -143,23 +127,6 @@ export class Snippet_0_tmp {
 		let q=this.split_string_once(r[1],"_");
 		return q[1];
 	}
-	/** @public @template {{}} T @arg {{commands:T[]}} x @arg {(x:T)=>void} f */
-	CommandsTemplate(x,f) {this.z(x.commands,f);}
-	/** @type {<T extends string[],U extends string[]>(k:string[] extends T?never:T,r:U)=>Exclude<T[number],U[number]>[]} */
-	filter_out_keys(keys,to_remove) {
-		to_remove=this.as(to_remove.slice());
-		/** @type {Exclude<typeof keys[number],typeof to_remove[number]>[]} */
-		let ok_e=[];
-		for(let i=0;i<keys.length;i++) {
-			if(to_remove.includes(keys[i])) {
-				let rm_i=to_remove.indexOf(keys[i]);
-				to_remove.splice(rm_i,1);
-				continue;
-			}
-			ok_e.push(this.as(keys[i]));
-		}
-		return ok_e;
-	}
 	/** @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {import("./support_1/Join.ts").Join<X,S>} */
 	join_string(x,s) {
 		if(!x) {debugger;}
@@ -178,16 +145,6 @@ class ND extends Snippet_0_tmp {
 	uppercase_first(x) {return x[0].toUpperCase()+x.slice(1);}
 	/** @protected @template {{}} T @arg {(this:this,x:T)=>void} f @returns {(x:T)=>void} */
 	c1(f) {return x => f.call(this,x);}
-	/** @protected @template {{}} T @arg {{items: T[]}} x @arg {(this:this,x:T)=>void} f */
-	ItemsTemplate(x,f) {this.z(this.w(x),f);}
-	/** @protected @template {{}} T @arg {Record<"contents",T[]>} x @arg {(this:this,x:T)=>void} f */
-	ContentsArrayTemplate(x,f) {this.z(this.w(x),f);}
-	/** @protected @template U @template {{}} T @template {Record<"commands",T[]>} C @arg {C} x @arg {(this:this,x:T)=>U} f @returns {[Omit<C,"commands">,[Extract<U, {}>[], Extract<U, void>[]]]}  */
-	CommandsTemplate$Omit(x,f) {
-		const {commands,...y}=x;
-		let ca=this.z(commands,f);
-		return [y,ca];
-	}
 	/** @public @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with(needle,str) {return str.startsWith(needle);}
 	/** @private @template T @typedef {{[U in keyof T as `${string&U extends `toggled${infer U1}${infer I1}`?`${Lowercase<U1>}${I1}`:never}`]:T[U]}} RemoveToggled */
@@ -204,7 +161,7 @@ class ND extends Snippet_0_tmp {
 			let c1=cc[0];
 			if(this.str_starts_with("toggled",c1)) {
 				let u1x=split_string_once(c1,"toggled");
-				/** @type {unknown} */
+				/** @type {any} */
 				let ac=u1x[1][0].toLowerCase()+u1x[1].slice(1);
 				/** @type {keyof RemoveToggled<U>} */
 				let u1=ac;
@@ -213,14 +170,14 @@ class ND extends Snippet_0_tmp {
 			}
 			if(this.str_starts_with("untoggled",c1)) {
 				let u1x=split_string_once(c1,"untoggled");
-				/** @type {unknown} */
+				/** @type {any} */
 				let ac=u1x[1][0].toLowerCase()+u1x[1].slice(1);
 				/** @type {keyof RemoveUnToggled<U>} */
 				let u1=ac;
 				untoggled[u1]=cc[1];
 				continue;
 			}
-			/** @type {unknown} */
+			/** @type {any} */
 			let ac=c1;
 			/** @type {keyof Omit<U,`toggled${string}`|`untoggled${string}`>} */
 			let u1=ac;
@@ -232,11 +189,6 @@ class ND extends Snippet_0_tmp {
 	ItemTemplate(x,f) {return f.call(this,x.item);}
 	/** @protected @template K,V @arg {import("./yt_json_types/stu/group_T.ts").T_MapEntry<K,V>} x @arg {(this:this,x:V,k:K)=>void} f */
 	MapTemplate(x,f) {f.call(this,x.value,x.key);}
-	/** @protected @template {{}} T @arg {T[]|undefined} x @arg {(this:this,x:T)=>void} f */
-	tz(x,f) {
-		if(!x) return;
-		this.z(x,f);
-	}
 	/** @template {{}} T @arg {T} x */
 	sd(x) {return x;}
 }

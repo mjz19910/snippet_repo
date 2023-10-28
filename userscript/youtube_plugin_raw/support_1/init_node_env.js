@@ -1,18 +1,18 @@
 const r_window = window;
 r_window;
-/** @type {EventTarget} */
+/** @type {any} */
 const t_ = new EventTarget();
-/** @type {Navigator} */
+/** @type {any} */
 const na = {};
 // deno-lint-ignore no-global-assign
 navigator = na;
 {
-	/** @type {Window&typeof globalThis} */
+	/** @type {import("./partial_window_node_env.ts").PartialWindow} */
 	const window = t_;
 	{
 		class Storage {
 			map = new Map();
-			/** @type {{ [x: string]: unknown; }} */
+			/** @type {{ [x: string]: any; }} */
 			index_arr = [];
 			/** @arg {string} str */
 			getItem(str) {

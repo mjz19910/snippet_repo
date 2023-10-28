@@ -4480,9 +4480,12 @@ class TCPMessage {
 const testing_tcp = true;
 class ConsoleAccess {
 	fmt_tag;
-	/** @arg {string} fmt_tag */
-	constructor(fmt_tag) {
+	/** @private */
+	m_client_id;
+	/** @arg {string} fmt_tag @arg {number} client_id */
+	constructor(fmt_tag, client_id) {
 		this.fmt_tag = fmt_tag;
+		this.m_client_id = client_id;
 	}
 	/** @arg {import("./support/dbg/ConnectFlag.ts").ConnectFlag} flags */
 	stringify_flags(flags) {
@@ -4510,6 +4513,7 @@ class ConsoleAccess {
 	/** @arg {ConnectionMessage} tcp */
 	send_ack(tcp) {
 		let { seq: ack, ack: seq, flags } = tcp;
+		if ((flags & 2) == 2) flags ^= 2;
 		flags |= tcp_ack;
 		if (seq == 0) {
 			seq = (Math.random() * ack_win) % ack_win | 0;
@@ -4517,12 +4521,31 @@ class ConsoleAccess {
 		ack += 1;
 		this.push_tcp_message({
 			type: "tcp",
-			client_id: this.m_client_id,
+			client_id: this.client_id(),
 			ack,
 			seq,
 			flags,
 			data: null,
 		});
+	}
+	/** @arg {ConnectionMessage} _data */
+	push_tcp_message(_data) {
+		throw new Error("Abstract impl");
+	}
+	make_syn() {
+		return TCPMessage.make_syn(this.client_id());
+	}
+	client_id() {
+		return this.m_client_id;
+	}
+	/** @arg {ConnectionMessage["data"]} data @arg {number} seq @arg {number} ack @returns {ConnectionMessage} */
+	make_message(seq, ack, data) {
+		return TCPMessage.make_message(
+			this.client_id(),
+			seq,
+			ack,
+			data,
+		);
 	}
 }
 
@@ -4535,8 +4558,6 @@ class Socket extends ConsoleAccess {
 	/** @private */
 	m_local_log = false;
 	/** @private */
-	m_client_id;
-	/** @private */
 	m_port;
 	/** @private */
 	m_remote_target;
@@ -4544,9 +4565,8 @@ class Socket extends ConsoleAccess {
 	m_event_source;
 	/** @arg {number} connection_timeout @arg {number} client_id @arg {Window} remote_target */
 	constructor(connection_timeout, client_id, remote_target) {
-		super("Socket");
+		super("Socket", client_id);
 		this.m_connection_timeout = connection_timeout;
-		this.m_client_id = client_id;
 		this.m_remote_target = remote_target;
 		this.m_event_source = remote_target;
 		if (this.m_remote_target === window) {
@@ -4558,9 +4578,6 @@ class Socket extends ConsoleAccess {
 	}
 	event_source() {
 		return this.m_event_source;
-	}
-	client_id() {
-		return this.m_client_id;
 	}
 	/** @returns {{server_port:MessagePort; client_port:MessagePort}} */
 	init_syn_data() {
@@ -4586,7 +4603,7 @@ class Socket extends ConsoleAccess {
 			console.group("syn");
 		}
 		this.init_handler();
-		this.send_init_request(TCPMessage.make_syn(this.m_client_id), server_port);
+		this.send_init_request(this.make_syn(), server_port);
 	}
 	/** @arg {ConnectionMessage} data @arg {MessagePort} server_port */
 	send_init_request(data, server_port) {
@@ -4609,7 +4626,7 @@ class Socket extends ConsoleAccess {
 		};
 		this.m_remote_target.postMessage(msg, "*", [server_port]);
 	}
-	/** @arg {ConnectionMessage} data */
+	/** @override @arg {ConnectionMessage} data */
 	push_tcp_message(data) {
 		if (testing_tcp) {
 			this.open_group("tx", data);
@@ -4619,9 +4636,8 @@ class Socket extends ConsoleAccess {
 			this.close_group();
 		}
 		if (ListenSocket.direct_message) {
-			ListenSocket.prototype.handleEvent(
-				new MessageEvent("message", { data: data }),
-			);
+			const p = ListenSocket.prototype;
+			p.handleEvent(new MessageEvent("message", { data }));
 		} else this.m_port.postMessage(data);
 	}
 	/** @arg {ConnectionMessage} tcp */
@@ -4646,18 +4662,18 @@ class Socket extends ConsoleAccess {
 		}
 		this.handle_tcp_data(data);
 	}
-	/** @arg {ConnectionMessage} tcp_message */
-	handle_tcp_data(tcp_message) {
-		const f = new FlagHandler(tcp_message.flags);
-		if (this.m_local_log) console.log("local", tcp_message);
+	/** @arg {ConnectionMessage} tcp */
+	handle_tcp_data(tcp) {
+		const f = new FlagHandler(tcp.flags);
+		if (this.m_local_log) console.log("local", tcp);
 		if ((f.is_syn() && f.is_ack()) || f.is_none()) {
-			this.send_ack(tcp_message);
+			this.send_ack(tcp);
 		}
-		if (!tcp_message.data) return;
-		const tcp_data = tcp_message.data;
+		if (!tcp.data) return;
+		const tcp_data = tcp.data;
 		switch (tcp_data.type) {
 			case "connected":
-				this.client_connect(tcp_message);
+				this.client_connect(tcp);
 				break;
 			case "will_disconnect":
 				this.m_can_reconnect = tcp_data.can_reconnect;
@@ -4669,14 +4685,13 @@ class Socket extends ConsoleAccess {
 				}
 				const perf_diff = performance.now() - this.m_disconnect_start;
 				console.log("before_unload took", perf_diff);
-				this.client_disconnect(tcp_message);
+				this.client_disconnect(tcp);
 				break;
 			}
-			case "side":
-				break;
-			case "forward":
-				break;
 			default:
+				if (testing_tcp) {
+					console.log("handle_tcp_data unexpected tcp_data", tcp_data);
+				}
 				break;
 		}
 	}
@@ -4725,19 +4740,13 @@ class ListenSocket extends ConsoleAccess {
 	m_is_connected = false;
 	/** @private */
 	m_is_connecting = true;
-	/** @private @type {ConnectionFlags} */
-	m_flags;
 	/** @private @type {MessagePort} */
 	m_port;
-	/** @private @type {number} */
-	m_client_id;
 	/** @private @type {MessageEventSource} */
 	m_event_source;
-	/** @arg {ConnectionFlags} flags @arg {MessagePort} connection_port @arg {number} client_id @arg {MessageEventSource} event_source */
-	constructor(flags, connection_port, client_id, event_source) {
-		super("ListenSocket");
-		this.m_flags = flags;
-		this.m_client_id = client_id;
+	/** @arg {MessagePort} connection_port @arg {number} client_id @arg {MessageEventSource} event_source */
+	constructor(client_id, connection_port, event_source) {
+		super("ListenSocket", client_id);
 		this.m_event_source = event_source;
 		this.m_port = connection_port;
 		this.m_port.addEventListener("message", this);
@@ -4746,16 +4755,13 @@ class ListenSocket extends ConsoleAccess {
 	get side() {
 		return this.m_side;
 	}
-	get client_id() {
-		return this.m_client_id;
-	}
 	get event_source() {
 		return this.m_event_source;
 	}
 	get is_connected() {
 		return this.m_is_connected;
 	}
-	/** @arg {ConnectionMessage} data */
+	/** @override @arg {ConnectionMessage} data */
 	push_tcp_message(data) {
 		if (testing_tcp) {
 			this.open_group("tx", data);
@@ -4765,7 +4771,8 @@ class ListenSocket extends ConsoleAccess {
 			this.close_group();
 		}
 		if (Socket.direct_message) {
-			Socket.prototype.handleEvent(new MessageEvent("message", { data }));
+			const p = Socket.prototype;
+			p.handleEvent(new MessageEvent("message", { data }));
 		} else this.m_port.postMessage(data);
 	}
 	/** @arg {ConnectionMessage} tcp_message */
@@ -4773,10 +4780,9 @@ class ListenSocket extends ConsoleAccess {
 		const { seq, ack } = tcp_message;
 		if (!ack) throw new Error("Invalid message");
 		if (testing_tcp) {
-			console.log("on_server_connect", this.m_client_id, this.m_event_source);
+			console.log("on_server_connect", this.client_id(), this.m_event_source);
 		}
-		this.push_tcp_message(TCPMessage.make_message(
-			this.m_client_id,
+		this.push_tcp_message(this.make_message(
 			seq,
 			ack,
 			{ type: "connected" },
@@ -4793,18 +4799,11 @@ class ListenSocket extends ConsoleAccess {
 		}
 	}
 	disconnected() {
-		this.push_tcp_message(
-			TCPMessage.make_message(this.m_client_id, 0, 0, { type: "disconnected" }),
-		);
-	}
-	/** @arg {ConnectionMessage["data"]} data */
-	make_message(data) {
-		return TCPMessage.make_message(this.m_client_id, 0, 0, data);
+		this.push_tcp_message(this.make_message(0, 0, { type: "disconnected" }));
 	}
 	/** @arg {boolean} can_reconnect */
 	will_disconnect(can_reconnect) {
-		this.push_tcp_message(TCPMessage.make_message(
-			this.m_client_id,
+		this.push_tcp_message(this.make_message(
 			0,
 			0,
 			{
@@ -4851,8 +4850,6 @@ class ListenSocket extends ConsoleAccess {
 
 class CrossOriginConnection extends ConsoleAccess {
 	/** @private */
-	m_flags = new ConnectionFlags();
-	/** @private */
 	m_state = new OriginState();
 	/** @private */
 	m_local_handler;
@@ -4861,11 +4858,11 @@ class CrossOriginConnection extends ConsoleAccess {
 	/** @private */
 	m_client_max_id = 0;
 	constructor() {
-		super("CrossOriginConnection");
+		super("CrossOriginConnection", -1);
 		elevate_event_handler(this);
 		const client_id = this.m_client_max_id++;
 		this.start_root_server();
-		const connect_target = this.m_state.get_connect_target(this.m_flags);
+		const connect_target = this.m_state.get_connect_target();
 		this.m_local_handler = new Socket(
 			30000,
 			client_id,
@@ -4883,9 +4880,8 @@ class CrossOriginConnection extends ConsoleAccess {
 		if (!event_0.source) throw new Error("No event source");
 		const event_source = event_0.source;
 		const handler = new ListenSocket(
-			this.m_flags,
-			connection_port,
 			client_id,
+			connection_port,
 			event_source,
 		);
 		const prev_connection_index = this.m_connections.findIndex((e) => {
@@ -4928,7 +4924,7 @@ class CrossOriginConnection extends ConsoleAccess {
 		if (!is_record_with_T(data.data, "data")) return false;
 		return true;
 	}
-	/** @arg {ConnectionMessage} message */
+	/** @override @arg {ConnectionMessage} message */
 	push_tcp_message(message) {
 		this.m_local_handler.push_tcp_message(message);
 	}
@@ -4977,10 +4973,95 @@ function parse_html_to_binary_arr(html) {
 export_((exports) => {
 	exports.parse_html_to_binary_arr = parse_html_to_binary_arr;
 });
-
+class DebugInfoValue {
+	valid = false;
+	/** @arg {string} __v @returns {{type: "eval-hidden-var",var: string}|{type: "var",data: [string,unknown]}|{type: "no-var", data: null}|null} */
+	get(__v) {
+		return null;
+	}
+}
+/** @template CLS_T */
+class StoredData2 {
+	/** @template T @arg {StoredData<T>|null} x @returns {x is StoredData<CLS_T>} */
+	assume_is_stored_data(x) {
+		if (x === null) return false;
+		return true;
+	}
+}
+/** @template T */
+class StoredData {
+	/** @arg {"tmp"|"u"|"d"|"getEventListeners"} tag @arg {T} data */
+	constructor(tag, data) {
+		this.store = data;
+		const g_this = () => {
+			return this;
+		};
+		switch (tag) {
+			case "u": {
+				/** @type {StoredData2<import("./support/dbg/I_undebug.ts").I_undebug>} */
+				const a = new StoredData2();
+				const o = g_this();
+				if (!a.assume_is_stored_data(o)) break;
+				this._u = o.store;
+				break;
+			}
+			case "tmp": {
+				/** @type {StoredData2<DebugInfoValue>} */
+				const a = new StoredData2();
+				const o = g_this();
+				if (!a.assume_is_stored_data(o)) break;
+				this._tmp = o.store;
+				break;
+			}
+			case "d": {
+				/** @type {StoredData2<import("./support/dbg/I_debug.ts").I_debug>} */
+				const a = new StoredData2();
+				const o = g_this();
+				if (!a.assume_is_stored_data(o)) break;
+				this._d = o.store;
+				break;
+			}
+			case "getEventListeners": {
+				/** @type {StoredData2<((x:unknown)=>{[x: string]: import("./support/dbg/EventListenerInternal.ts").EventListenerInternal[]})>} */
+				const a = new StoredData2();
+				const o = g_this();
+				if (!a.assume_is_stored_data(o)) break;
+				this._getEventListeners = o.store;
+				break;
+			}
+		}
+	}
+	store;
+	/** @private @type {((x:unknown)=>{[x: string]: import("./support/dbg/EventListenerInternal.ts").EventListenerInternal[]})|null} */
+	_getEventListeners = null;
+	get getEventListeners() {
+		if (this._getEventListeners === null) throw new Error("missing data");
+		return this._getEventListeners;
+	}
+	/** @private @type {DebugInfoValue|null} */
+	_tmp = null;
+	get tmp() {
+		if (this._tmp === null) throw new Error("missing data");
+		return this._tmp;
+	}
+	/** @private @type {import("./support/dbg/I_debug.ts").I_debug|null} */
+	_d = null;
+	/** @returns {import("./support/dbg/I_debug.ts").I_debug} */
+	get d() {
+		if (this._d === null) throw new Error("missing data");
+		return this._d;
+	}
+	/** @private @type {import("./support/dbg/I_undebug.ts").I_undebug|null} */
+	_u = null;
+	/** @returns {import("./support/dbg/I_undebug.ts").I_undebug} */
+	get u() {
+		if (this._u === null) throw new Error("missing data");
+		return this._u;
+	}
+}
 class DebugApi {
 	next_remote_id = 0;
-	/** @type {Map<string, unknown>|null} */
+	/** @type {Map<string, StoredData<unknown>>} */
 	data_store = new Map();
 	/** @type {DebugApi|null} */
 	static m_the = null;
@@ -4993,27 +5074,35 @@ class DebugApi {
 	hasData(key) {
 		return this.data_store.has(key);
 	}
-	/** @arg {string} key @returns {unknown} */
+	/** @arg {string} key */
 	getData(key) {
 		return this.data_store.get(key);
 	}
+	/** @arg {string} key */
+	ensureData(key) {
+		const v = this.data_store.get(key);
+		if (!v) throw new Error("missing data");
+		return v;
+	}
 	/** @returns {import("./support/dbg/I_undebug.ts").I_undebug} */
 	get_u() {
-		return this.getData("u");
+		const u = this.getData("u");
+		if (!u) throw new Error("missing data");
+		return u.u;
 	}
-	/** @returns {import("./support/dbg/dbg_get_ty.ts").dbg_get_ty} */
+	/** @returns {DebugInfoValue} */
 	get_k() {
-		return this.getData("k");
+		return this.ensureData("k").tmp;
 	}
 	/** @returns {import("./support/dbg/I_debug.ts").I_debug} */
 	get_d() {
-		return this.getData("d");
+		return this.ensureData("d").d;
 	}
 	/** @arg {"getEventListeners"} key @returns {(x:unknown)=>{[x: string]: import("./support/dbg/EventListenerInternal.ts").EventListenerInternal[]}} */
 	get_getEventListeners(key) {
-		return this.data_store.get(key);
+		return this.ensureData(key).getEventListeners;
 	}
-	/** @arg {string} key @arg {unknown} value @returns {this} */
+	/** @arg {string} key @arg {StoredData<unknown>} value @returns {this} */
 	setData(key, value) {
 		this.data_store.set(key, value);
 		return this;
@@ -5063,9 +5152,12 @@ class DebugApi {
 			obj_debug !== debug || obj_undebug !== undebug ||
 			get_ev_lis !== getEventListeners
 		) {
-			this.setData("d", debug);
-			this.setData("u", undebug);
-			this.setData("getEventListeners", getEventListeners);
+			this.setData("d", new StoredData("d", debug));
+			this.setData("u", new StoredData("u", undebug));
+			this.setData(
+				"getEventListeners",
+				new StoredData("getEventListeners", getEventListeners),
+			);
 		}
 		return this;
 	}
@@ -5073,29 +5165,32 @@ class DebugApi {
 	activateClass(class_value, arg_vec) {
 		return new class_value(...arg_vec);
 	}
-	/** @this {import("./support/dbg/ActivateFunction.ts").ActivateFunction} @arg {CallableFunction} function_value @arg {unknown} target_obj @arg {unknown[]} arg_vec @returns {boolean} */
+	/** @this {import("./support/dbg/ActivateFunction.ts").ActivateFunction} @returns {boolean} */
 	activateApply() {
 		return Reflect.apply(this.target, this.activate_this, this.activate_args);
 	}
 	/** @returns {void} */
 	debuggerBreakpointCode() {
-		window.__require_module_cache__.DebugApi.DebugApi.the();
-		window.inject_api?.DebugApi &&
+		window.__require_module_cache__?.DebugApi?.DebugApi.the();
+		window.__require_module_cache__?.DebugApi &&
 			(window.__require_module_cache__.DebugApi.DebugApi.the().get_k().get = (
 				/** @type {string} */ __v,
 			) => {
-				if (__v === "__v") return { type: "eval-hidden-var" };
+				if (__v === "__v") return { type: "eval-hidden-var", var: "__v" };
 				try {
 					return {
 						type: "var",
 						data: [__v, eval(__v)],
 					};
 				} catch {
-					return { type: "no-var" };
+					return { type: "no-var", data: null };
 				}
 			});
-		if (window.inject_api?.DebugApi) {
-			if (!window.inject_api.DebugApi.the().clearCurrentBreakpoint()) {
+		if (window.__require_module_cache__?.DebugApi) {
+			if (
+				!window.__require_module_cache__.DebugApi.DebugApi.the()
+					.clearCurrentBreakpoint()
+			) {
 				console.log("failed to clear breakpoint");
 			}
 		} else console.log("missing window.inject_api");
@@ -5143,8 +5238,7 @@ class DebugApi {
 		const vars_arr = sr.map((e) => String.fromCharCode(e));
 		this.current_function_value = function_value;
 		const tmp_key = "k";
-		/** @type {import("./support/dbg/dbg_get_ty.ts").dbg_get_ty} */
-		const tmp_value = {};
+		const tmp_value = new StoredData("tmp", new DebugInfoValue());
 		this.setData(tmp_key, tmp_value);
 		const debug = this.get_d();
 		const breakpoint_code_string = this.stringifyFunction(
@@ -5154,20 +5248,21 @@ class DebugApi {
 		// ---- Activate ----
 		let activate_return = null;
 		if (breakpoint_arguments.type === "function-breakpoint") {
-			const activate_vec = breakpoint_arguments.activate_args;
-			const target_fn = breakpoint_arguments.target;
+			const { target, activate_this, activate_args } = breakpoint_arguments;
 			activate_return = breakpoint_arguments.activate(
-				target_fn,
-				...activate_vec,
+				target,
+				activate_this,
+				activate_args,
 			);
 		} else {
 			this.get_u()(this.current_function_value);
 			return { type: "argument-error" };
 		}
 		const exec_res_arr = [];
-		if (tmp_value.get) {
+		if (tmp_value.tmp.get) {
 			for (const j of vars_arr) {
-				const res = tmp_value.get(j);
+				const res = tmp_value.tmp.get(j);
+				if (!res) continue;
 				switch (res.type) {
 					case "var":
 						exec_res_arr.push(res.data);
@@ -5214,7 +5309,8 @@ class DebugApi {
 			name: var_match,
 			target: function_value,
 			activate: this.activateApply,
-			activate_args,
+			activate_this: activate_args[0],
+			activate_args: activate_args[1],
 		});
 	}
 	/** @arg {import("./support/dbg/IDebugBreakpointArgs.ts").IDebugBreakpointArgs} breakpoint_arguments @returns {import("./__global.ts").dbg_result} */
@@ -5226,14 +5322,7 @@ class DebugApi {
 			return { type: "argument-error" };
 		}
 		const tmp_key = "k";
-		class DebugInfoValue {
-			valid = false;
-			/** @arg {string} __v @returns {{type: "hidden-var",var: string}|{type: "var",data: [string,unknown]}|{type: "no-var", data: null}|null} */
-			get(__v) {
-				return null;
-			}
-		}
-		const tmp_value = new DebugInfoValue();
+		const tmp_value = new StoredData("tmp", new DebugInfoValue());
 		this.setData(tmp_key, tmp_value);
 		const breakpoint_code_string = this.stringifyFunction(
 			this.debuggerBreakpointCode,
@@ -5259,7 +5348,7 @@ class DebugApi {
 			return { type: "argument-error" };
 		}
 		this.deleteData(tmp_key);
-		const breakpoint_result = tmp_value.get(breakpoint_arguments.name);
+		const breakpoint_result = tmp_value.tmp.get(breakpoint_arguments.name);
 		if (!breakpoint_result) {
 			return {
 				type: "no-response",
