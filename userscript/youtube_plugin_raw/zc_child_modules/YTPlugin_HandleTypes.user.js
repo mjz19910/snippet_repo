@@ -3365,7 +3365,7 @@ class HandleTypes extends BaseService {
 				return;
 			}
 			let group_container = container;
-			const item_group = group_container.z[0];
+			const item_group = group_container.z[1];
 			switch (item_group.l) {
 				case "many":
 					{

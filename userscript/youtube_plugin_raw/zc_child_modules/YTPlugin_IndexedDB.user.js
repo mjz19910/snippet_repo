@@ -26,7 +26,7 @@ if (typeof require === "undefined" || page_require !== __module_require__) {
 const { as, do_export } = require("../../base_require_raw/BaseRequire.user.js");
 // yt_plugin/IndexedDB_Service(10) => yt_plugin/Base(4) => base_require/BaseRequire(1)
 const { BaseService } = require("./YTPlugin_Base.user.js");
-/** @typedef {InstanceType<typeof StoreData>} StoreData */
+/** @typedef {import("./YTPlugin_Support_Service.user.js").StoreData} StoreData */
 
 // priority yt_plugin/IndexedDB_Service(10)
 
@@ -145,7 +145,8 @@ function init_module() {
 			if (!cur_id_box) {
 				this.expected_save_id = 0;
 				await this.put_boxed_id(version, "save_id", [
-					null,
+					"box:number",
+					"save_id",
 					this.expected_save_id,
 				]);
 				cur_id_box = await this.get_save_id(version);
@@ -158,7 +159,8 @@ function init_module() {
 			await this.save_store_data_to_database(store, version);
 			this.expected_save_id++;
 			await this.put_boxed_id(version, "save_id", [
-				null,
+				"box:number",
+				"save_id",
 				this.expected_save_id,
 			]);
 		}
@@ -168,7 +170,8 @@ function init_module() {
 			if (!cur_id_box) {
 				this.expected_load_id = 0;
 				const put_promise = this.put_boxed_id(version, "load_id", [
-					null,
+					"box:number",
+					"load_id",
 					this.expected_load_id,
 				]);
 				this.on_loaded_resolver.resolve();
@@ -183,7 +186,8 @@ function init_module() {
 			await this.load_store_from_database(store, version);
 			this.expected_load_id++;
 			await this.put_boxed_id(version, "load_id", [
-				null,
+				"box:number",
+				"load_id",
 				this.expected_load_id,
 			]);
 		}
@@ -238,24 +242,35 @@ function init_module() {
 		/** @arg {number} version @template {import("../zb_plugin_types/types.ts").Y_PutBoxedArgs} T @arg {T} s0 */
 		put_boxed_id(version, ...s0) {
 			const [k, x] = s0;
-			k;
-			x;
-			if (x[0] === null) {
+			if (x[0] === "box:number") {
 				switch (k) {
 					case "save_id":
 					case "load_id": {
 						/** @type {import("../yt_json_types/ghi/group_G.ts").DST_SaveId|import("../yt_json_types/ghi/group_G.ts").DST_LoadId} */
-						const z = this.make_box_size_1(k, x[1]);
+						const z = this.make_box_size_1(k, x[2]);
 						return this.put_box(z, version);
 					}
 				}
 				// deno-lint-ignore no-debugger
 				debugger;
 				return null;
+			} else if (x[0] === "group:number") {
+				/** @type {import("../yt_json_types/ghi/group_G.ts").DST_GroupNum} */
+				const z = {
+					key: `boxed_id:${k}:${x[0]}`,
+					z: ["number", x[2]],
+					_z: [k, x[0]],
+				};
+				return this.put_box(z, version);
+			} else {
+				/** @type {import("../yt_json_types/ghi/group_G.ts").DST_Group} */
+				const z = {
+					key: `boxed_id:${k}:${x[0]}`,
+					z: ["string", x[2]],
+					_z: [k, x[0]],
+				};
+				return this.put_box(z, version);
 			}
-			/** @type {import("../yt_json_types/ghi/group_G.ts").DST_Group} */
-			const z = { key: `boxed_id:${k}:${x[0]}`, z: [x[1]], _z: [k, x[0]] };
-			return this.put_box(z, version);
 		}
 		/** @template {import("../yt_json_types/ghi/group_G.ts").G_StoreDescription} T @arg {T} store @arg {T["data"][number]} item @arg {number} version */
 		save_store_item_to_database(store, item, version) {

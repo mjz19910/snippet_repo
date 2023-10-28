@@ -345,7 +345,12 @@ export type D_ExactValue={
 };
 export type DST_Group={
 	key: `boxed_id:${string}:${string}`;
-	z: [make_item_group<string>];
+	z: ["string",make_item_group<string>];
+	_z: [string,string];
+};
+export type DST_GroupNum={
+	key: `boxed_id:${string}:${string}`;
+	z: ["number",make_item_group<number>];
 	_z: [string,string];
 };
 export type DST_SaveId={
@@ -358,7 +363,7 @@ export type DST_LoadId={
 	z: [number];
 	_z: ["load_id"];
 };
-export type G_BoxedDatabaseData=DST_SaveId|DST_LoadId|DST_Group;
+export type G_BoxedDatabaseData=DST_SaveId|DST_LoadId|DST_Group|DST_GroupNum;
 //#endregion
 export type G_BoxedInner=[1,unknown];
 ;
