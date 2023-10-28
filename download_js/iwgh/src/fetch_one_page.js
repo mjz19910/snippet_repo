@@ -18,7 +18,13 @@ export async function fetch_one_page(target_page) {
 		case "poems": {
 			const [in_table_str] = string_contained_by(rt, "<table ", "</table>");
 			const row1_end = string_contained_by_end(in_table_str, "<tr>", "</tr>");
-			console.log(string_contained_by(in_table_str, "<tr>", "</tr>", row1_end)[0]);
+			const [row2_str] = string_contained_by(
+				in_table_str,
+				"<tr>",
+				"</tr>",
+				row1_end,
+			);
+			console.log(row2_str);
 			const [news_str] = string_contained_by(
 				in_table_str,
 				'<p class="news">',
