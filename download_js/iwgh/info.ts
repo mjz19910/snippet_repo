@@ -450,7 +450,8 @@ type uQuarters={
 };
 type v_10forward={
 	id: "10forward",
-	news: "Enterprise NCC-1701-D: Ten Forward",
+	news: "Enterprise NCC-1701-D: Ten Forward";
+	action: H.StoryEvent<{required: {type: "item",id: "after lockdown";};}>;
 };
 type engineering={
 	links: [cDisruptor];
@@ -612,6 +613,9 @@ type readyRoom={
 			uses: null,
 		};
 	};
+	action: H.ActionArr<[
+		H.StoryEvent<{required: Items.dead_klingon;}>,
+	]>,
 };
 type oLounge={
 	id: "oLounge",
@@ -842,6 +846,15 @@ type z={
 	};
 };
 
+type sickbay_has_dead_klingon={
+	type: "story";
+	id: "sickbay_has_dead_klingon";
+	action: "activate_room";
+	room: sickbay;
+	required: Items.dead_klingon;
+	remove_item: true;
+};
+
 type main={
 	id: "main";
 	links: [wall];
@@ -851,8 +864,11 @@ type main={
 		Do.ActivateRoom<picQ>,
 		Do.RunTakeAct<picQ,Items.dead_klingon>,
 		Do.ActivateRoom<readyRoom>,
+		{type: "story",action: "activate_room",room: readyRoom; required: Items.dead_klingon;},
 		Do.ActivateRoom<sickbay>,
+		Do.ActivateStory<sickbay_has_dead_klingon>,
 		Do.ActivateRoom<readyRoom>,
+		{type: "story",action: "activate_room",after_story: "sickbay_has_dead_klingon";},
 		Do.ActivateRoom<v_10forward,after_lockdown>,
 		Do.ActivateRoom<uQuarters>,
 		Do.RunTakeAct<uQuarters,Items.dead_romulan>,
@@ -860,7 +876,7 @@ type main={
 		Do.ActivateRoom<sickbay>,
 		Do.RunTakeAct2<sickbay,2,hypospray>,
 		uSuddEnd,
-		uFridgeOpen,
+		Do.ActivateRoom<uFridgeOpen>,
 		Do.RunTakeAct<uFridgeOpen,Items.hand_press>,
 		burrow,
 		larder,larRiver,larBoat,larDark,

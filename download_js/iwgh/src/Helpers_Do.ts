@@ -10,7 +10,27 @@ export type RunTakeAct2<U extends ExtractItemTakeAction<I,T>,I extends number,T 
 	index: I;
 	take: T;
 };
-export type ActivateRoom<Room extends H.PageTypeShape,PosAfter=never>={room: Room; pos_after: PosAfter;};
+export type ActivateRoom<Room extends {
+	id: string;
+	action: H.TakeAction<H.ItemShape>|
+	H.StoryEvent<{
+		required: H.ItemShape;
+	}>|
+	H.ActionArr<(
+		H.TakeAction<H.ItemShape>|
+		H.StoryEvent<{
+			required: H.ItemShape;
+		}>
+	)[]>;
+},PosAfter=never>={
+	room: Room;
+	pos_after: PosAfter;
+};
+export type ActivateStory<T extends {
+	type: "story";
+}>={
+	type: "activate_story"; target: T;
+};
 export type UseInventory<T extends H.ItemShape>={target: T;};
 export type UseAction<
 	U extends H.PageWithActShape<H.UseAction<T>>,
