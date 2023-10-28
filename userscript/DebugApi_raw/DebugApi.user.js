@@ -5251,7 +5251,8 @@ class DebugApi {
 		} else if (breakpoint_arguments.type === "function-breakpoint") {
 			activate_return = breakpoint_arguments.activate(
 				breakpoint_arguments.target,
-				...breakpoint_arguments.activate_args,
+				breakpoint_arguments.activate_this,
+				breakpoint_arguments.activate_args,
 			);
 		} else {
 			this.get_u()(this.current_function_value);
@@ -5304,7 +5305,8 @@ class DebugApi {
 			target: function_value,
 			name: var_name,
 			activate: this.activateApply,
-			activate_args: activate_vec,
+			activate_this: activate_vec[0],
+			activate_args: activate_vec[1],
 		});
 		if (ret.type !== "data") throw new Error("Debug fail");
 		return {
