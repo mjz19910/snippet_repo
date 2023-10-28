@@ -5235,7 +5235,9 @@ class DebugApi {
 		}
 		const tmp_value = new DebugInfoValue();
 		this.setData(tmp_key, tmp_value);
-		const breakpoint_code_string = this.stringifyFunction(this.debuggerBreakpointCode);
+		const breakpoint_code_string = this.stringifyFunction(
+			this.debuggerBreakpointCode,
+		);
 		const debug = this.get_d();
 		this.current_function_value = breakpoint_arguments.target;
 		debug(this.current_function_value, `${breakpoint_code_string}`);
@@ -5255,11 +5257,14 @@ class DebugApi {
 			this.get_u()(this.current_function_value);
 			return { type: "argument-error" };
 		}
-		let breakpoint_result = null;
-		if (tmp_value.get) {
-			breakpoint_result = tmp_value.get(breakpoint_arguments.name);
-		}
 		this.deleteData(tmp_key);
+		const breakpoint_result = tmp_value.get(breakpoint_arguments.name);
+		if (!breakpoint_result) {
+			return {
+				type: "no-response",
+				return: activate_return,
+			};
+		}
 		if (breakpoint_result?.type === "var") {
 			return {
 				type: "data",
