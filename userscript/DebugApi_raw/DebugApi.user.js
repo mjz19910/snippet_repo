@@ -24,7 +24,7 @@ if (typeof require === "undefined" || page_require !== __module_require__) {
 	reset_require = true;
 }
 const { do_export } = require("../base_require_raw/BaseRequire.user.js");
-/** @typedef {(import("./support/dbg/ConnectionMessage.ts") .ConnectionMessage)} ConnectionMessage */
+/** @typedef {(import("./a/ConnectionMessage.ts") .ConnectionMessage)} ConnectionMessage */
 const __module_name__ = "DebugApi";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn, flags = { global: false }) {
@@ -34,7 +34,7 @@ export_((exports) => {
 	exports.__is_module_flag__ = true;
 });
 //#region is_helpers
-/** @template T @typedef {import("./support/dbg/CM.ts").CM<T>} CM */
+/** @template T @typedef {import("./a/CM.ts").CM<T>} CM */
 /** @template {{}|null} T @template {string} U @arg {CM<T>|null} x @arg {U} k @returns {x is CM<T&Record<U,string>>} */
 function is_obj_with_property_CM(x, k) {
 	if (!x?.data) return false;
@@ -82,12 +82,12 @@ class FlagHandler {
 	is_ack() {
 		return (this.f & 2) == 2;
 	}
-	/** @arg {import("./support/dbg/ConnectFlag.ts").ConnectFlag} flags */
+	/** @arg {import("./a/ConnectFlag.ts").ConnectFlag} flags */
 	constructor(flags) {
 		this.f = flags;
 	}
 }
-/** @typedef {import("./support/dbg/ConnectFlag.ts").ConnectFlagT} ConnectFlagT */
+/** @typedef {import("./a/ConnectFlag.ts").ConnectFlagT} ConnectFlagT */
 /** @type {ConnectFlagT["Syn"]} */
 const tcp_syn = 1;
 /** @type {ConnectFlagT["Ack"]} */
@@ -96,7 +96,7 @@ const ack_win = 100_000;
 class TCPMessage {
 	/** @readonly */
 	type = "tcp";
-	/** @arg {import("./support/dbg/ConnectFlag.ts").ConnectFlag} flags @arg {number} seq @arg {number} ack @arg {ConnectionMessage["data"]} data */
+	/** @arg {import("./a/ConnectFlag.ts").ConnectFlag} flags @arg {number} seq @arg {number} ack @arg {ConnectionMessage["data"]} data */
 	constructor(flags, seq, ack, data) {
 		this.flags = flags;
 		this.seq = seq;
@@ -109,7 +109,7 @@ class TCPMessage {
 		const seq = (Math.random() * ack_win) % ack_win | 0;
 		return new TCPMessage(tcp_syn, seq, 0, null);
 	}
-	/** @arg {import("./support/dbg/ConnectFlag.ts").ConnectFlag} flags @arg {ConnectionMessage["data"]} data @arg {number} seq @arg {number} ack @returns {ConnectionMessage} */
+	/** @arg {import("./a/ConnectFlag.ts").ConnectFlag} flags @arg {ConnectionMessage["data"]} data @arg {number} seq @arg {number} ack @returns {ConnectionMessage} */
 	static make_message2(flags, seq, ack, data) {
 		return new TCPMessage(flags, seq, ack, data);
 	}
@@ -128,7 +128,7 @@ class SocketBase {
 		this.fmt_tag = fmt_tag;
 		this.m_client_id = client_id;
 	}
-	/** @arg {import("./support/dbg/ConnectFlag.ts").ConnectFlag} flags */
+	/** @arg {import("./a/ConnectFlag.ts").ConnectFlag} flags */
 	stringify_flags(flags) {
 		let ret = "";
 		if ((flags & 1) == 1) ret += "S";
@@ -263,7 +263,7 @@ class ClientSocket extends SocketBase {
 	}
 	/** @arg {ConnectionMessage} data @arg {MessagePort} server_port */
 	post_wrapped(data, server_port) {
-		/** @type {import("./support/dbg/WrappedMessage.ts").WrappedMessage<ConnectionMessage>} */
+		/** @type {import("./a/WrappedMessage.ts").WrappedMessage<ConnectionMessage>} */
 		const msg = {
 			type: "WindowSocket",
 			data,
@@ -377,7 +377,7 @@ export_((exports) => {
 });
 class ServerSocket extends SocketBase {
 	static direct_message = false;
-	/** @private @type {import("./support/dbg/ConnectionSide.ts").ConnectionSide} */
+	/** @private @type {import("./a/ConnectionSide.ts").ConnectionSide} */
 	m_side = "server";
 	/** @private @type {ConnectionMessage[]} */
 	m_unhandled_events = [];
@@ -552,13 +552,13 @@ class WindowSocket extends SocketBase {
 		}
 		this.m_connections.push(handler);
 	}
-	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<import("./support/dbg/WrappedMessage.ts").WrappedMessage<unknown>>} */
+	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<import("./a/WrappedMessage.ts").WrappedMessage<unknown>>} */
 	is_wrapped_message(event) {
 		const data = cast_to_event_like_CM(wrap_CM(event.data));
 		if (!data) return false;
 		return data.data.type === "WindowSocket";
 	}
-	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<import("./support/dbg/WrappedMessage.ts").WrappedMessage<ConnectionMessage>>} */
+	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<import("./a/WrappedMessage.ts").WrappedMessage<ConnectionMessage>>} */
 	is_connection_message(event) {
 		if (!this.is_wrapped_message(event)) return false;
 		const data_record = cast_to_event_like_CM(wrap_CM(event.data.data));
