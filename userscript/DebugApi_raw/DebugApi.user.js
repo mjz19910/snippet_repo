@@ -508,6 +508,8 @@ class WindowSocket extends SocketBase {
 	on_message_event(event_0) {
 		console.log(event_0.data);
 		if (!this.is_connection_message(event_0)) return;
+		const wrapped_msg = event_0.data;
+		if (wrapped_msg.type !== "WindowSocket") return;
 		const client_id = this.m_client_max_id++;
 		const connection_port = event_0.ports[0];
 		if (!event_0.source) throw new Error("No event source");
@@ -520,9 +522,7 @@ class WindowSocket extends SocketBase {
 		const prev_connection_index = this.m_connections.findIndex((e) => {
 			return e.event_source === event_source;
 		});
-		const wrapped_msg = event_0.data;
-		if (wrapped_msg.type !== "WindowSocket") return;
-		const data = wrapped_msg.data;
+		const data = event_0.data.data;
 		if (testing_tcp) {
 			this.open_group("rx-window", data);
 			console.log(".on_message_event ->");
