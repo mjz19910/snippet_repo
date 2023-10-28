@@ -10,10 +10,16 @@ function string_contained_by_end(v, needle1, needle2, search_pos = 0) {
 	const end_pos = v.indexOf(needle2, start_pos) + needle2.length;
 	return end_pos;
 }
+const show_news_str = false;
+/** @param {string} v */
+export function get_news_str(v) {
+	if (!show_news_str) return;
+	const [news_str] = string_contained_by(v, '<p class="news">', "</p>");
+	console.log(news_str);
+}
 function on_poems_page_text(v) {
 	const [tbl] = string_contained_by(v, "<table ", "</table>");
-	const [news_str] = string_contained_by(tbl, '<p class="news">', "</p>");
-	console.log(news_str);
+	get_news_str(tbl);
 	const row1_end = string_contained_by_end(tbl, "<tr>", "</tr>");
 	const [row2_str] = string_contained_by(tbl, "<tr>", "</tr>", row1_end);
 	const [poem_txt] = string_contained_by(row2_str, "<p>", "</p>");
