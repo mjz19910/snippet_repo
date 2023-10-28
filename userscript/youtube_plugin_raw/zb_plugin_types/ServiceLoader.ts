@@ -1,3 +1,3 @@
-import {RequireModuleCache} from "../../_module_cache/RequireModuleCache.ts";
+import {RequireModuleCache} from "../../base_require_raw/RequireModuleCache.ts";
 
 export type ServiceLoader=InstanceType<RequireModuleCache["mod$ServiceLoaderPlugin"]["ServiceLoader"]>;

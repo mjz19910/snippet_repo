@@ -1,7 +1,7 @@
 export interface RequireModuleCache {
 	debug$RebuildTheUniverse: typeof import("../rebuild_the_universe_raw/rebuild_the_universe.user.js");
 	DebugApi: typeof import("../DebugApi_raw/DebugApi.user.js");
-	mod$base_require: typeof import("../base_require_raw/BaseRequire.user.js");
+	mod$base_require: typeof import("./BaseRequire.user.js");
 	mod$CodegenService: typeof import("../youtube_plugin_raw/zc_child_modules/YTPlugin_Codegen.user.js");
 	mod$ECatcherService: typeof import("../youtube_plugin_raw/zc_child_modules/YTPlugin_ECatcherService_Plugin.user.js");
 	mod$HandleTypes: typeof import("../youtube_plugin_raw/zc_child_modules/YTPlugin_HandleTypes.user.js");

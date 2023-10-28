@@ -1,5 +1,5 @@
 // deno-lint-ignore-file
-import {RequireModuleCache} from "../_module_cache/RequireModuleCache.ts";
+import {RequireModuleCache} from "./RequireModuleCache.ts";
 
 export {};
 declare global {

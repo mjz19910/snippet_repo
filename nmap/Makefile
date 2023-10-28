@@ -1,6 +1,6 @@
 .PHONY: all clean
 
-all: ;
+all:
 
 clean:
 	pwd

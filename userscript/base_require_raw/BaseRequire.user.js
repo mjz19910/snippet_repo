@@ -155,11 +155,11 @@ function resolve_path_to_userscript_dir(x) {
 function get_exports() {
 	window.__require_module_cache__ ??= {};
 	let all_modules = window.__require_module_cache__;
-	/** @type {{[U in keyof import("../_module_cache/RequireModuleCache.ts").RequireModuleCache]?:import("../youtube_plugin_raw/zb_plugin_types/ambient_exports.ts").BaseModuleType}} */
+	/** @type {{[U in keyof import("./RequireModuleCache.ts").RequireModuleCache]?:import("../youtube_plugin_raw/zb_plugin_types/ambient_exports.ts").BaseModuleType}} */
 	let ok_modules = all_modules;
 	return ok_modules;
 }
-/** @arg {keyof import("../_module_cache/RequireModuleCache.ts").RequireModuleCache} module_name @template {import("../youtube_plugin_raw/zb_plugin_types/ambient_exports.ts").BaseModuleType} T @arg {(x:T)=>void} fn @arg {{global:boolean}} flags @arg {T} exports */
+/** @arg {keyof import("./RequireModuleCache.ts").RequireModuleCache} module_name @template {import("../youtube_plugin_raw/zb_plugin_types/ambient_exports.ts").BaseModuleType} T @arg {(x:T)=>void} fn @arg {{global:boolean}} flags @arg {T} exports */
 function do_export(fn, flags, exports, module_name) {
 	/** @typedef {typeof exports} ExportsT */
 	if (typeof exports === "object") fn(exports);
@@ -174,7 +174,7 @@ function do_export(fn, flags, exports, module_name) {
 			window.__require_module_cache__ ??= {};
 			let all_modules = window.__require_module_cache__;
 			exports = as(all_modules[module_name] ?? {});
-			/** @type {{[U in keyof import("../_module_cache/RequireModuleCache.ts").RequireModuleCache]?:import("../youtube_plugin_raw/zb_plugin_types/ambient_exports.ts").BaseModuleType}} */
+			/** @type {{[U in keyof import("./RequireModuleCache.ts").RequireModuleCache]?:import("../youtube_plugin_raw/zb_plugin_types/ambient_exports.ts").BaseModuleType}} */
 			let ok_modules = all_modules;
 			ok_modules[module_name] = as(exports);
 		}
