@@ -302,8 +302,7 @@ function parse_rng_word(word, add_new_words = true, destructure_word = false) {
 		let w2 = word;
 		do {
 			const [ty, seq_len] = word_starts_with_consonant_seq(w2);
-			const ty_log = ty == "consonant" ? "c" : "v";
-			word_arr.push(ty_log + ":" + w2.slice(0, seq_len));
+			word_arr.push([ty, w2.slice(0, seq_len)]);
 			w2 = w2.slice(seq_len);
 		} while (w2 !== "");
 		if (word_arr.length <= 3) {
