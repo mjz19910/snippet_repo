@@ -1,3 +1,5 @@
+import { write_entire_file } from "./deno_support.js";
+
 /**
  * @param {string} word
  * @returns {["consonant",1|2]|["vowel",1]}
