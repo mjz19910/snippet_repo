@@ -762,6 +762,7 @@ type cosmology={
 		{type: "chain",arr: [flatDisc,glimpse,a,dot];},
 		// chain from pattern
 		pattern,
+		{type: "chain",arr: [pattern,pcnt];},
 		difference,
 		deadEnd,
 	];
