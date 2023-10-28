@@ -665,6 +665,10 @@ type cosmology={
 		difference,
 		deadEnd,
 	];
+	quest_chain: [
+		pattern,
+		Do.ActivateRoom<pcnt>,
+	];
 };
 type opinion={
 	news: "Opinion page.";
