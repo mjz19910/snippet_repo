@@ -137,14 +137,6 @@ type picQ={
 		required: keycard;
 		item: dead_klingon;
 	}>;
-	quest_chain_part: readyRoom["story"]["dead_klingon"];
-	quest_chain: [
-		picQ,picTable,picCup,picRef,burrow,larder,larStairs,keep,floorFive,elevator,elev_boiler,boiler,
-		mechanic,
-		Do.UseAction<mechanic,hypospray>,
-		piping,
-		pipe1,
-	];
 };
 type good={
 	id: "good",
