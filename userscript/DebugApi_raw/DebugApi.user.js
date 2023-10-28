@@ -5227,7 +5227,7 @@ class DebugApi {
 		}
 		this.current_function_value = breakpoint_arguments.target;
 		const dbg_str_func = this.stringifyFunction(this.debuggerBreakpointCode);
-		const tmp_key = "__k";
+		const tmp_key = "k";
 		class DebugInfoValue {
 			valid = false;
 			/** @arg {string} __v @returns {{type: "hidden-var",var: string}|{type: "var",data: [string,unknown]}|{type: "no-var", data: null}|null} */
