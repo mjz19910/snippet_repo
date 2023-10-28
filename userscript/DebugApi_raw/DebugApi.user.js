@@ -4856,22 +4856,22 @@ class ListenSocket extends ConsoleAccess {
 		}
 		this.handle_tcp_data(data);
 	}
-	/** @arg {ConnectionMessage} tcp_message */
-	handle_tcp_data(tcp_message) {
-		const f = new FlagHandler(tcp_message.flags);
-		this.m_current_seq = tcp_message.seq;
-		this.m_current_ack = tcp_message.ack;
+	/** @arg {ConnectionMessage} tcp */
+	handle_tcp_data(tcp) {
+		const f = new FlagHandler(tcp.flags);
+		this.m_current_seq = tcp.seq;
+		this.m_current_ack = tcp.ack;
 		if (f.is_syn() && !f.is_ack()) {
 			// seq=number & ack=null;
-			this.send_ack(tcp_message);
+			this.send_ack(tcp);
 		}
-		if (f.is_none()) this.send_ack(tcp_message);
+		if (f.is_none()) this.send_ack(tcp);
 		if (f.is_ack() && this.m_is_connecting) {
 			this.m_is_connecting = false;
 			this.m_connected = true;
-			this.downstream_connect(tcp_message);
+			this.downstream_connect(tcp);
 		}
-		this.downstream_handle_event(tcp_message);
+		this.downstream_handle_event(tcp);
 	}
 }
 
@@ -4880,8 +4880,8 @@ class CrossOriginConnection extends ConsoleAccess {
 	m_flags = new ConnectionFlags();
 	/** @private */
 	m_state = new OriginState();
-	/** @private @type {Socket|null} */
-	m_local_handler = null;
+	/** @private @type {Socket} */
+	m_local_handler;
 	/** @private @type {ListenSocket[]} */
 	m_connections = [];
 	/** @private */
@@ -4892,13 +4892,11 @@ class CrossOriginConnection extends ConsoleAccess {
 		const client_id = this.m_client_max_id++;
 		this.start_root_server();
 		const connect_target = this.m_state.get_connect_target(this.m_flags);
-		if (connect_target !== window) {
-			this.m_local_handler = new Socket(
-				30000,
-				client_id,
-				connect_target,
-			);
-		}
+		this.m_local_handler = new Socket(
+			30000,
+			client_id,
+			connect_target,
+		);
 	}
 	/** @arg {MessageEvent<unknown>} event_0 */
 	on_message_event(event_0) {
@@ -4958,9 +4956,6 @@ class CrossOriginConnection extends ConsoleAccess {
 	}
 	/** @arg {ConnectionMessage} message */
 	push_tcp_message(message) {
-		if (!this.m_local_handler) {
-			throw new Error("send tcp message to non-existent connection");
-		}
 		this.m_local_handler.push_tcp_message(message);
 	}
 	/** @arg {MessageEvent<unknown>} event */
