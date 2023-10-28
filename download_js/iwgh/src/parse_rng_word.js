@@ -38,12 +38,12 @@ export function word_starts_with_consonant_seq(word) {
 }
 /**
  * @param {string} word
- * @returns {{type:"consonant"|"vowel",part:string,rest:string}}
+ * @returns {{part:{type:"consonant"|"vowel",v:string},rest:string}}
  */
 export function word_starts_with_consonant_seq2(word) {
 	const [type, seq_len] = word_starts_with_consonant_seq(word);
 	const part = word.slice(0, seq_len), rest = word.slice(seq_len);
-	return { type, part, rest };
+	return { part: { type, v: part }, rest };
 }
 /** @type {Set<string>} */
 export const random_dictionary_set = new Set();
@@ -63,36 +63,37 @@ export const new_words_set = new Set();
 export function parse_rng_word(word, opts) {
 	const { add_new_words, destructure_word } = opts;
 	if (random_dictionary_set.has(word)) return;
-	const word_arr = [],
-		/** @type {("c" | "v")[]} */
-		type_arr = [];
+	const word_arr = [];
 	let w2 = word;
 	for (;;) {
 		const r2 = word_starts_with_consonant_seq2(w2);
 		word_arr.push(r2.part);
-		type_arr.push(r2.type == "vowel" ? "v" : "c");
 		if (r2.rest === "") break;
 		w2 = r2.rest;
 	}
 	if (word_arr.length >= 4) {
-		console.log("end", word_arr.at(-1));
-		console.log("start", word_arr.at(0));
+		console.log("end", word_arr.at(-2));
+		if (word_arr.at(-2).type === "consonant") {
+			parse_rng_word(word_arr.slice(0, -2).map((v) => v.v).join(""), opts);
+		}
+		// parse_rng_word(word_arr.slice(0, -1).join(""), opts);
+		// parse_rng_word(word_arr.slice(1).join(""), opts);
 		return;
 	}
-	if (destructure_word) show_word_parts(word_arr, type_arr);
+	if (destructure_word) show_word_parts(word_arr);
 	random_dictionary_set.add(word);
 	if (add_new_words) {
 		new_words_set.add(word);
 	}
 }
 /**
- * @param {string[]} type_arr
- * @param {string[]} word_arr
+ * @param {ReturnType<typeof word_starts_with_consonant_seq2>["part"][]} word_arr
  */
-function show_word_parts(word_arr, type_arr) {
+function show_word_parts(word_arr) {
 	const len = word_arr.length;
 	if (len > 3) return;
-	const wj = word_arr.join(""), tj = type_arr.join("");
+	const wj = word_arr.map((v) => v.v).join(""),
+		tj = word_arr.map((v) => v.type == "vowel" ? "v" : "c").join("");
 	console.log("W:", wj, "T:", tj, [".parts", len]);
 }
 
