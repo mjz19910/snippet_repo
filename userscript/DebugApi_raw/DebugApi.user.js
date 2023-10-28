@@ -4662,7 +4662,7 @@ class Socket extends ConsoleAccess {
 				this.m_can_reconnect = tcp_data.can_reconnect;
 				this.m_disconnect_start = performance.now();
 				break;
-			case "disconnected":
+			case "disconnected": {
 				if (!this.m_disconnect_start) {
 					throw new Error("missed will_disconnect");
 				}
@@ -4670,7 +4670,13 @@ class Socket extends ConsoleAccess {
 				console.log("before_unload took", perf_diff);
 				this.client_disconnect(tcp_message);
 				break;
+			}
 			case "side":
+				break;
+			case "forward":
+				break;
+			default:
+				break;
 		}
 	}
 	client_start_connect() {
