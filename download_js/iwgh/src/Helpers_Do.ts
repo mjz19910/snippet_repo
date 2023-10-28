@@ -13,7 +13,8 @@ export type UseAction<
 	U extends H.PageWithActShape<H.UseAction<T>>,
 	T extends H.ItemShape
 >={
-	pos: U["id"],target: U["action"];
+	pos: U["id"];
+	target: U["action"];
 };
 type ExtractItemUseAction<
 	I extends number,T extends H.ItemShape
