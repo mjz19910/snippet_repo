@@ -183,16 +183,13 @@ class ClientSocket extends SocketBase {
 	m_port;
 	/** @private */
 	m_event_source;
-	/** @arg {number} connection_timeout @arg {Window} event_source */
+	/** @arg {Window} event_source */
 	constructor(event_source) {
 		super("ClientSocket");
 		this.m_event_source = event_source;
 		const { server_port, client_port } = this.init_syn_data();
 		this.m_port = client_port;
 		this.send_syn(server_port);
-	}
-	event_source() {
-		return this.m_event_source;
 	}
 	/** @returns {{server_port:MessagePort; client_port:MessagePort}} */
 	init_syn_data() {
@@ -239,7 +236,7 @@ class ClientSocket extends SocketBase {
 			type: "WindowSocket",
 			data,
 		};
-		this.m_remote_target.postMessage(msg, "*", [server_port]);
+		this.m_event_source.postMessage(msg, "*", [server_port]);
 	}
 	/** @override @arg {ConnectionMessage} tcp */
 	push_tcp_message(tcp) {
@@ -404,7 +401,7 @@ class ServerSocket extends SocketBase {
 			exports.socket.push_tcp_message(info);
 		});
 		if (testing_tcp) {
-			console.log("downstream_event", info.data, info.flags, info.client_id);
+			console.log("downstream_event", info.data, info.flags);
 		}
 	}
 	disconnected() {
