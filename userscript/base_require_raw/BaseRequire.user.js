@@ -21,7 +21,7 @@ const path_map = {
 	["./base_require_raw/BaseRequire.user.js"]: ["mod", "base_require"],
 	/** @type {["raw","DebugApi"]} */
 	["./DebugApi_raw/DebugApi.user.js"]: ["raw", "DebugApi"],
-	/** @type {["mod","IndexedDBService"]} */
+	/** @type {["mod","TypedIndexedDB"]} */
 	["./indexed_db/TypedIndexedDB.user.js"]: [
 		"mod",
 		"TypedIndexedDB",
@@ -39,91 +39,38 @@ const as = _as;
 function str_starts_with(str, needle) {
 	return str.startsWith(needle);
 }
-/** @private @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {import("../youtube_plugin_raw/yt_json_types/stu/group_T.ts").T_Split<X,string extends S?",":S>} */
-function split_string(x, s = as(",")) {
-	if (!x) debugger;
-	let r = x.split(s);
-	return as(r);
-}
 const log_path_resolve = false;
-/** @template {import("../youtube_plugin_raw/zb_plugin_types/AllImportPaths.ts").AllImportPaths} T @arg {T} x @returns {(keyof typeof path_map)|null} */
+/** @arg {string} x @returns {(keyof typeof path_map)|null} */
 function resolve_path_to_userscript_dir(x) {
-	/** @type {import("../youtube_plugin_raw/zb_plugin_types/AllImportPaths.ts").AllImportPaths} */
-	let u = x;
-	const yt_plugin_base_path = "youtube_plugin_raw/zc_child_modules";
-	if (!str_starts_with(u, ".")) return u;
-	let parts = split_string(u, "/");
+	if (!str_starts_with(x, ".")) return null;
+	let parts = x.split("/");
 	/** @type {(keyof typeof path_map)|null} */
 	let resolved_path = null;
 	m:
 	switch (parts[0]) {
-		case "..":
+		case ".":
 			switch (parts[1]) {
-				case "DebugApi_raw":
+				case "indexed_db":
 					switch (parts[2]) {
-						case "DebugApi.user.js":
+						case "TypedIndexedDB.user.js":
 							resolved_path = `./${parts[1]}/${parts[2]}`;
 							break m;
 					}
-				case "base_require_raw":
-					resolved_path = `./${parts[1]}/${parts[2]}`;
-					break m;
-				case "..":
-					switch (parts[2]) {
-						case "base_require_raw":
-							switch (parts[3]) {
-								case "BaseRequire.user.js":
-									resolved_path = `./${parts[2]}/${parts[3]}`;
-									break m;
-							}
-					}
-			}
-		case ".":
-			switch (parts[1]) {
-				case "YTPlugin_Base.user.js":
-					resolved_path = `./${yt_plugin_base_path}/${parts[1]}`;
-					break;
-				case "YTPlugin_Codegen.user.js":
-					resolved_path = `./${yt_plugin_base_path}/${parts[1]}`;
-					break;
-				case "YTPlugin_ECatcherService_Plugin.user.js":
-					resolved_path = `./${yt_plugin_base_path}/${parts[1]}`;
-					break;
-				case "YTPlugin_HandleTypes.user.js":
-					resolved_path = `./${yt_plugin_base_path}/${parts[1]}`;
-					break;
-				case "YTPlugin_IndexedDB.user.js":
-					resolved_path = `./${yt_plugin_base_path}/${parts[1]}`;
-					break;
-				case "YTPlugin_Parser_Service.user.js":
-					resolved_path = `./${yt_plugin_base_path}/${parts[1]}`;
-					break;
-				case "YTPlugin_ServiceLoader_Plugin.user.js":
-					resolved_path = `./${yt_plugin_base_path}/${parts[1]}`;
-					break;
-				case "YTPlugin_ServiceMethods.user.js":
-					resolved_path = `./${yt_plugin_base_path}/${parts[1]}`;
-					break;
-				case "YTPlugin_Support_Service.user.js":
-					resolved_path = `./${yt_plugin_base_path}/${parts[1]}`;
-					break;
 			}
 	}
 	if (resolved_path) {
 		if (log_path_resolve) console.log("resolved path", x, "->", resolved_path);
+		return resolved_path;
 	} else {
 		console.log("resolved_path", x);
 	}
-	return resolved_path;
+	throw new Error("Unresolved import");
 }
 function get_exports() {
 	window.__require_module_cache__ ??= {};
-	let all_modules = window.__require_module_cache__;
-	/** @type {{[U in keyof import("./RequireModuleCache.ts").RequireModuleCache]?:import("../youtube_plugin_raw/zb_plugin_types/ambient_exports.ts").BaseModuleType}} */
-	let ok_modules = all_modules;
-	return ok_modules;
+	return window.__require_module_cache__;
 }
-/** @arg {keyof import("./RequireModuleCache.ts").RequireModuleCache} module_name @template {import("../youtube_plugin_raw/zb_plugin_types/ambient_exports.ts").BaseModuleType} T @arg {(x:T)=>void} fn @arg {{global:boolean}} flags @arg {T} exports */
+/** @arg {keyof import("./RequireModuleCache.ts").RequireModuleCache} module_name @template T @arg {(x:T)=>void} fn @arg {{global:boolean}} flags @arg {T} exports */
 function do_export(fn, flags, exports, module_name) {
 	/** @typedef {typeof exports} ExportsT */
 	if (typeof exports === "object") fn(exports);
@@ -138,9 +85,7 @@ function do_export(fn, flags, exports, module_name) {
 			window.__require_module_cache__ ??= {};
 			let all_modules = window.__require_module_cache__;
 			exports = as(all_modules[module_name] ?? {});
-			/** @type {{[U in keyof import("./RequireModuleCache.ts").RequireModuleCache]?:import("../youtube_plugin_raw/zb_plugin_types/ambient_exports.ts").BaseModuleType}} */
-			let ok_modules = all_modules;
-			ok_modules[module_name] = as(exports);
+			all_modules[module_name] = as(exports);
 		}
 		fn(as(exports));
 	}
@@ -176,14 +121,10 @@ function require(arg, ...r_args) {
 		}
 		throw new Error("Unable to resolve path: " + arg);
 	}
-	function correct_return_type(x) {
-		x;
-	}
 	const loc = path_map[resolved_path];
 	let mod;
 	if (loc[0] === "raw") mod = i(M[loc[1]]);
 	else mod = i(M[`${loc[0]}$${loc[1]}`]);
-	correct_return_type(mod);
 	return mod;
 }
 

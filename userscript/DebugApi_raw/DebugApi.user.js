@@ -2783,8 +2783,8 @@ class MappedIterableIterator {
 				const { done, value } = result;
 				return { done, value: mapper(value) };
 			} else {
-				const { done, value } = result;
-				return { done, value: mapper(value) };
+				const { value } = result;
+				return { done: false, value: mapper(value) };
 			}
 		};
 		this[Symbol.iterator] = function () {

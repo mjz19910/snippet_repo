@@ -25,24 +25,25 @@ if (typeof require === "undefined" || page_require !== __module_require__) {
 	require = __module_require__;
 	reset_require = true;
 }
-const {do_export}=require("../../base_require_raw/BaseRequire.user.js");
+const { do_export } = require("../base_require_raw/BaseRequire.user.js");
 
-(function()
-{
-	'use strict';
-	const __module_name__="mod$Template";
-	/** 
+(function () {
+	"use strict";
+	const __module_name__ = "mod$Template";
+	/**
 	 * @private @arg {(x:typeof exports)=>void} fn
-	 * TODO: remove expect error when using template */
-	function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
-	export_(exports => {exports.__is_module_flag__=true;});
+	 */
+	function export_(fn, flags = { global: false }) {
+		do_export(fn, flags, exports, __module_name__);
+	}
+	export_((exports) => {
+		exports.__is_module_flag__ = true;
+	});
 	// Your code here...
-	export_(exports => exports.__module_loaded__=true);
+	export_((exports) => exports.__module_loaded__ = true);
 })();
-if(delete_require)
-{
+if (delete_require) {
 	delete window.require;
-} else if(reset_require)
-{
-	require=page_require;
+} else if (reset_require) {
+	require = page_require;
 }

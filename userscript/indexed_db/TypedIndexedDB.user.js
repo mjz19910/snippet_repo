@@ -8,8 +8,8 @@
 // @match	https://www.youtube.com/*
 // @grant	none
 // @run-at	document-start
-// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/TypedIndexedDB.user.js
-// @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/TypedIndexedDB.user.js
+// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/indexed_db/TypedIndexedDB.user.js
+// @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/indexed_db/TypedIndexedDB.user.js
 // ==/UserScript==
 
 const page_require = typeof require === "undefined"
@@ -49,7 +49,7 @@ function await_success(request) {
 class TypedIDBRequest {
 	/** @type {IDBRequest<T>} */
 	m_base;
-	/** @arg {IDBRequest<T>} */
+	/** @arg {IDBRequest<T>} request */
 	constructor(request) {
 		this.m_base = request;
 	}
