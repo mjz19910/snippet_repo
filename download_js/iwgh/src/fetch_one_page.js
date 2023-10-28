@@ -5,8 +5,8 @@ function string_contained_by(v, needle1, needle2, search_pos = 0) {
 	return [v.slice(start_pos, end_pos), end_pos];
 }
 /** @param {string} v @param {string} needle1 @param {string} needle2 */
-function string_contained_by_end(v, needle1, needle2) {
-	const start_pos = v.indexOf(needle1);
+function string_contained_by_end(v, needle1, needle2, search_pos = 0) {
+	const start_pos = v.indexOf(needle1, search_pos);
 	const end_pos = v.indexOf(needle2, start_pos) + needle2.length;
 	return end_pos;
 }
