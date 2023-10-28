@@ -110,7 +110,7 @@ class TCPMessage {
 		return new TCPMessage(tcp_syn, 0, seq, null);
 	}
 	/** @arg {ConnectionMessage["data"]} data @arg {number} seq @arg {number} ack @returns {ConnectionMessage} */
-	static make_message(seq, ack, data) {
+	static make_message(ack, seq, data) {
 		return new TCPMessage(0, ack, seq, data);
 	}
 }
