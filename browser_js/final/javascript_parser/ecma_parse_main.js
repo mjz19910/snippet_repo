@@ -2260,7 +2260,7 @@ class js_token_generator {
 }
 
 /** @arg {string} code_str */
-function parse_javascript_str(code_str) {
+export function parse_javascript_str(code_str) {
 	let token_gen = new js_token_generator(code_str);
 	let res_item;
 	let i = 0;
@@ -2284,17 +2284,7 @@ function parse_javascript_str(code_str) {
 	}
 	console.log(`parsed ${i} tokens`);
 }
-
 export function ecma_parse_main() {
 	let parse_str = "function x(){}";
 	parse_javascript_str(parse_str);
 }
-const { do_export } = require("../base_require_raw/BaseRequire.user.js");
-/** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn, flags = { global: false }) {
-	do_export(fn, flags, exports, __module_name__);
-}
-export_((exports) => {
-	exports.parse_javascript_str = parse_javascript_str;
-	exports.ecma_parse_main = ecma_parse_main;
-});
