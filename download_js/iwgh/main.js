@@ -385,6 +385,26 @@ async function fetch_one_dictionary_page() {
 		}
 	});
 }
+function show_rng_map() {
+	const rng_map = [...rng_word_num_map.entries()].sort((a, b) => b[1] - a[1]);
+	const arr = [];
+	let cur_item = [];
+	for (let i = 0; i < rng_map.length; i++) {
+		if (i % 4 === 0) arr.push(cur_item = []);
+		cur_item.push(rng_map[i]);
+	}
+	for (const part of arr) {
+		console.log(part);
+	}
+}
+export { show_rng_map };
+function peek_description_arr(description_arr) {
+	const description_arr2 = description_arr.slice(0, 5);
+	for (const description of description_arr2) {
+		console.log("%o", description);
+	}
+}
+export { peek_description_arr };
 async function run() {
 	const description_file = await deno_default_open("./description_cache.json");
 	/** @type {string[]} */
@@ -404,16 +424,9 @@ async function run() {
 		new_words_set.clear();
 	};
 	let request_total = 0;
-	const request_log_interval = 30;
-	let should_break = false;
+	const request_log_interval = 11;
 	const inc_request_total = () => {
 		request_total++;
-		if (request_total % request_log_interval === (request_log_interval - 1)) {
-			at_loop_end();
-			if (request_total > (10 * 8 * 2)) {
-				should_break = true;
-			}
-		}
 	};
 	const arr = [];
 	for (let j = 0;; j++) {
@@ -421,13 +434,13 @@ async function run() {
 		for (let i = 0; i < request_count; i++) {
 			arr.push(fetch_one_dictionary_page().then(inc_request_total));
 		}
-		while (arr.length > 80) {
-			console.log("shift1");
-			await arr.shift();
+		await Promise.all(arr);
+		arr.length = 0;
+		if (j % request_log_interval === (request_log_interval - 1)) {
+			at_loop_end();
+			if (j > 16) break;
 		}
-		if (should_break) break;
 	}
-	await Promise.all(arr);
 	const perf_end = performance.now();
 	const perf_diff = perf_end - perf_start;
 	const total_seconds = Math.floor(perf_diff / 100) / 10;
