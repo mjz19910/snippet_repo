@@ -955,7 +955,7 @@ type main={
 		pipe1,
 		something,
 		Do.RunTakeAct<Items.something>,
-		someone,
+		Do.ActivateRoom<someone>,
 		Do.UseAction2<someone,0,Items.something>,
 		Do.RunTakeAct2<someone,1,glass_orb>,
 	];
