@@ -289,6 +289,15 @@ function word_starts_with_consonant_seq(word) {
 	}
 	throw new Error("Invalid word start '" + word.slice(0, 3) + "'");
 }
+/**
+ * @param {string} word
+ * @returns {{type:"consonant"|"vowel",part:string,rest:string}}
+ */
+function word_starts_with_consonant_seq2(word) {
+	const [type, seq_len] = word_starts_with_consonant_seq(word);
+	const part = word.slice(0, seq_len), rest = word.slice(seq_len);
+	return { type, part, rest };
+}
 /** @type {Map<string,number>} */
 const rng_word_num_map = new Map();
 const new_words_set = new Set();
@@ -301,9 +310,9 @@ function parse_rng_word(word, add_new_words = true, destructure_word = false) {
 		const word_arr = [];
 		let w2 = word;
 		do {
-			const [ty, seq_len] = word_starts_with_consonant_seq(w2);
-			word_arr.push([ty, w2.slice(0, seq_len)]);
-			w2 = w2.slice(seq_len);
+			const r2 = word_starts_with_consonant_seq2(w2);
+			word_arr.push(r2.part);
+			w2 = r2.rest;
 		} while (w2 !== "");
 		if (word_arr.length <= 3) {
 			console.log(word_arr.length, "XXX:" + word_arr.join(","));
