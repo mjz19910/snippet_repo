@@ -920,7 +920,7 @@ type y={
 };
 type mosquitoZ={
 	type: "item";
-	id: "mosquitoz";
+	id: "mosquitoZ";
 };
 type z={
 	news: "This is Z space";

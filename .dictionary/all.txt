@@ -172,6 +172,7 @@ getcursor
 gettype
 GFEEDBACK
 ggpht
+ghbs
 gitdir
 googleads
 googleadservices
@@ -443,6 +444,7 @@ tlele
 tlen
 tlis
 tobj
+tohru
 tonext
 topbar
 totalAchi
