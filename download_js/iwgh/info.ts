@@ -252,8 +252,8 @@ export type boiler={
 type someone={
 	id: "someone";
 	action: H.ActionArr<[
-		H.UseAction<something_item>,
-		H.TakeActionR<{item: glass_orb,required: something_item;}>,
+		H.UseAction<Items.something>,
+		H.TakeActionR<{item: glass_orb,required: Items.something;}>,
 	]>;
 };
 type eternalMaze={

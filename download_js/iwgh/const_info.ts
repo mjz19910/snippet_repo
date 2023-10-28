@@ -1,5 +1,6 @@
 import {RT} from "./Helpers.ts";
 import {WorkQueueItem,boiler,cowardly_dwarf,elev_boiler,elev_floorFive,elev_floorOne,elev_floorThree,elev_floorTwo,elev_uForest,elev_underworld,elevator,floorFive,floorOne,floorThree,floorTwo,redbridge,uForest,uForestEdge,underworld} from "./info.ts";
+import {something} from "./items.ts";
 //#region underworld
 const redbridge: redbridge={id: "redbridge",news: "Red bridge",action: {fn: "use",usingItem: "sword"}};
 const underworld: underworld={id: "underworld",links: [redbridge]};
@@ -64,14 +65,16 @@ const boiler: boiler={
 		}
 	}]
 };
+const Items: {something: something;}={
+	something: {
+		type: "item",
+		id: "something"
+	}
+};
 const floorOne: floorOne={
 	id: "floorOne",links: [{
 		id: "eternalMaze",links: [{
-			id: "someone",action: {
-				fn: "use",usingItem: {
-					id: "something",type: "item"
-				}
-			}
+			id: "someone",action: {type: "multi",arr: [{fn: "use",usingItem: Items.something},{fn: "take",item: {id: "Glass Orb",type: "item"},required: Items.something}]}
 		}]
 	}]
 };
