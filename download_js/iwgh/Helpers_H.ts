@@ -12,18 +12,18 @@ export type TakeActionStr<T extends string>={
 };
 export type UseAction<T extends ItemShape>={
 	fn: "use";
-	usingitem: T;
+	usingItem: T;
 };
 export type UseActionStr<T extends string>={
 	fn: "use";
-	usingitem: T;
+	usingItem: T;
 };
 export type UseAction2<P extends {
 	v: ItemShape;
 	caption: string;
 }>={
 	fn: "use";
-	usingitem: P["v"];
+	usingItem: P["v"];
 	caption: P["caption"];
 };
 export type Decay<T>={[U in keyof T]: T[U];};

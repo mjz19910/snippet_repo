@@ -11,7 +11,7 @@ export type UseAction<U extends {
 	id: string,
 	action: {
 		fn: "use",
-		usingitem: T;
+		usingItem: T;
 	},
 },T extends H.ItemShape>={pos: U["id"],target: U["action"];};
 export type UseInventory2<T extends H.ItemShape[]>={targets: T;};
