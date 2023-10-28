@@ -2495,7 +2495,7 @@ function do_message_handler_overwrite(handler) {
 		}
 		if (event instanceof MessageEvent) {
 			/** @type {unknown} */
-			const d = event.tcp;
+			const d = event.data;
 			if (typeof d === "object" && d !== null && "type" in d) {
 				if (d.type === post_message_connect_message_type) {
 					if (api_debug_enabled) {
@@ -2754,7 +2754,7 @@ class AddEventListenerExtension {
 		if (args[0] instanceof MessageEvent) {
 			/** @type {MessageEvent<unknown>} */
 			const msg_event = args[0];
-			const d = msg_event.tcp;
+			const d = msg_event.data;
 			if (typeof d === "object" && d !== null && "type" in d) {
 				if (d.type === post_message_connect_message_type) {
 					if (api_debug_enabled) {
@@ -4640,7 +4640,7 @@ class ClientSocket extends SocketBase {
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
 		if (ClientSocket.prototype === this) return;
-		const tcp = event.tcp;
+		const tcp = event.data;
 		if (tcp.type !== "tcp") throw new Error();
 		if (testing_tcp) {
 			this.open_group("rx-client", tcp);
@@ -4864,9 +4864,9 @@ class WindowSocket extends SocketBase {
 	}
 	/** @arg {MessageEvent<unknown>} event_0 */
 	on_message_event(event_0) {
-		console.log(event_0.tcp);
+		console.log(event_0.data);
 		if (!this.is_connection_message(event_0)) return;
-		const wrapped_msg = event_0.tcp;
+		const wrapped_msg = event_0.data;
 		if (wrapped_msg.type !== post_message_connect_message_type) return;
 		const client_id = this.m_client_max_id++;
 		const connection_port = event_0.ports[0];
@@ -4880,7 +4880,7 @@ class WindowSocket extends SocketBase {
 		const prev_connection_index = this.m_connections.findIndex((e) => {
 			return e.event_source === event_source;
 		});
-		const data = event_0.tcp.data;
+		const data = event_0.data.data;
 		if (testing_tcp) {
 			this.open_group("rx-window", data);
 			console.log(".on_message_event ->");
@@ -4896,7 +4896,7 @@ class WindowSocket extends SocketBase {
 	}
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<import("./support/dbg/WrappedMessage.ts").WrappedMessage<unknown>>} */
 	is_wrapped_message(event) {
-		const data = cast_to_record_with_string_type(new_cast_monad(event.tcp));
+		const data = cast_to_record_with_string_type(new_cast_monad(event.data));
 		if (!data) return false;
 		return data.data.type === post_message_connect_message_type;
 	}
@@ -4904,7 +4904,7 @@ class WindowSocket extends SocketBase {
 	is_connection_message(event) {
 		if (!this.is_wrapped_message(event)) return false;
 		const data_record = cast_to_record_with_string_type(
-			new_cast_monad(event.tcp.data),
+			new_cast_monad(event.data.data),
 		);
 		if (!data_record) return false;
 		if (data_record.data.type !== "tcp") return false;
