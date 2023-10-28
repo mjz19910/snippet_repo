@@ -410,7 +410,7 @@ class ServerSocket extends SocketBase {
 		const { seq, ack } = tcp;
 		if (!ack) throw new Error("Invalid message");
 		if (testing_tcp) {
-			console.log("on_server_connect", tcp, tcp.data);
+			console.log("on_server_connect", tcp);
 		}
 		this.push_tcp_message(this.make_message(
 			seq,
