@@ -1,5 +1,12 @@
 /** @param {string} word */
 export function strip_word_part(word) {
+	//spell:ignore bcdfkmnptvw
+	const mat = /[ct]h|[aeiouy]|[bcdfkmnptvw]/.exec(word);
+	if (!mat) {
+		console.log("not match", word);
+		return word;
+	}
+	mat[0];
 	if (word.startsWith("ch")) return strip_vowel("ch", word);
 	if (word.startsWith("th")) return strip_vowel("th", word);
 	if (word.startsWith("b")) return strip_vowel("b", word);
