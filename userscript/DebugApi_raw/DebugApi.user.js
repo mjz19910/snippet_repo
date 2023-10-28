@@ -271,7 +271,7 @@ class ClientSocket extends SocketBase {
 		}
 		if (ServerSocket.direct_message) {
 			const p = ServerSocket.prototype;
-			p.handleEvent(new MessageEvent("message", { tcp }));
+			p.handleEvent(new MessageEvent("message", { data: tcp }));
 		} else this.m_port.postMessage(tcp);
 	}
 	/** @arg {ConnectionMessage} tcp */
@@ -587,7 +587,7 @@ class WindowSocket extends SocketBase {
 }
 export_((exports) => {
 	exports.WindowSocket = WindowSocket;
-	exports.socket = new WindowSocket;
+	exports.socket = new WindowSocket();
 });
 export_((exports) => exports.__module_loaded__ = true);
 if (delete_require) {
