@@ -1,3 +1,8 @@
+export type gandalf_magic_book={
+	type: "item";
+	id: "Gandalf Magic Book";
+	seq: 0;
+};
 export type something={
 	type: "item";
 	id: "something";
@@ -61,10 +66,6 @@ export type broken_water_filter={
 export type fake_orb={
 	type: "item";
 	id: "Fake Orb",
-};
-export type gandalf_magic_book={
-	type: "item";
-	id: "Gandalf Magic Book";
 };
 export type glass_orb={
 	type: "item";
