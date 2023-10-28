@@ -953,7 +953,7 @@ type main={
 		Do.UseAction<mechanic,hypospray>,
 		piping,
 		pipe1,
-		something,
+		Do.ActivateRoom<something>,
 		Do.RunTakeAct<Items.something>,
 		Do.ActivateRoom<someone>,
 		Do.UseAction2<someone,0,Items.something>,
