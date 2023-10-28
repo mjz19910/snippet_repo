@@ -18,6 +18,7 @@ export type ActivateRoom<Room extends {
 	}>|
 	H.ActionArr<(
 		H.TakeAction<H.ItemShape>|
+		H.UseAction<H.ItemShape>|
 		H.StoryEvent<{
 			required: H.ItemShape;
 		}>
