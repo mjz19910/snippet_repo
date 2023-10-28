@@ -212,10 +212,7 @@ export type uLeafage={
 export type uForest={
 	id: "uForest",
 	links: [uLeafage],
-	action: {
-		fn: "use",
-		usingItem: "qweqwe",
-	}|H.UseActionStr<"qweqwe">,
+	action: H.UseActionStr<"qweqwe">,
 };
 export type cowardly_dwarf={
 	type: "item";
