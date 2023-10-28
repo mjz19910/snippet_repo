@@ -363,7 +363,12 @@ export type DST_LoadId={
 	z: [number];
 	_z: ["load_id"];
 };
-export type G_BoxedDatabaseData=DST_SaveId|DST_LoadId|DST_Group|DST_GroupNum;
+export type DST_StoreItem={
+	key: `boxed_id:${string}:${string}`;
+	z: ["store",make_item_group<string|number|bigint|boolean>];
+	_z: [string,string];
+};
+export type G_BoxedDatabaseData=DST_SaveId|DST_LoadId|DST_Group|DST_GroupNum|DST_StoreItem;
 //#endregion
 export type G_BoxedInner=[1,unknown];
 ;

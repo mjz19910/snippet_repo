@@ -239,6 +239,17 @@ function init_module() {
 			this.assert_is_distributed_iter(z, fn_ex);
 			return z;
 		}
+		/** @template {import("../yt_json_types/ghi/group_G.ts").G_StoreDescription} T @arg {T} store @arg {T["data"][number]} item @arg {number} version */
+		put_boxed_id2(version, store, item) {
+			const k = store.type, x = item;
+			/** @type {import("../yt_json_types/ghi/group_G.ts").DST_StoreItem} */
+			const z = {
+				key: `boxed_id:${k}:${x[0]}`,
+				z: ["store", x[1]],
+				_z: [k, x[0]],
+			};
+			return this.put_box(z, version);
+		}
 		/** @arg {number} version @template {import("../zb_plugin_types/types.ts").Y_PutBoxedArgs} T @arg {T} s0 */
 		put_boxed_id(version, ...s0) {
 			const [k, x] = s0;
@@ -274,7 +285,7 @@ function init_module() {
 		}
 		/** @template {import("../yt_json_types/ghi/group_G.ts").G_StoreDescription} T @arg {T} store @arg {T["data"][number]} item @arg {number} version */
 		save_store_item_to_database(store, item, version) {
-			return this.put_boxed_id(version, store.type, item);
+			return this.put_boxed_id2(version, store, item);
 		}
 		/** @arg {import("../yt_json_types/ghi/group_G.ts").G_BoxedDatabaseData} x */
 		store_cache_tree(x) {
