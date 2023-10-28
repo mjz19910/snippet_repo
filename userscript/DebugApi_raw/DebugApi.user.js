@@ -4569,9 +4569,6 @@ class Socket extends ConsoleAccess {
 		this.m_connection_timeout = connection_timeout;
 		this.m_remote_target = remote_target;
 		this.m_event_source = remote_target;
-		if (this.m_remote_target === window) {
-			throw new Error("Sending messages to self is means i have a bad time");
-		}
 		const { server_port, client_port } = this.init_syn_data();
 		this.m_port = client_port;
 		this.send_syn(server_port);
