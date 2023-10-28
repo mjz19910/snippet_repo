@@ -44,7 +44,7 @@ export function word_starts_with_consonant_seq2(word) {
 	return { type, part, rest };
 }
 /** @type {Set<string>} */
-export const dict = new Set();
+export const random_dictionary_set = new Set();
 export const new_words_set = new Set();
 /**
  * @param {string} word
@@ -54,7 +54,7 @@ export function parse_rng_word(
 	add_new_words = true,
 	destructure_word = false,
 ) {
-	if (dict.has(word)) return;
+	if (random_dictionary_set.has(word)) return;
 	if (destructure_word) {
 		const word_arr = [],
 			/** @type {("c" | "v")[]} */
@@ -70,7 +70,7 @@ export function parse_rng_word(
 			console.log("W:", word_arr.join(""), "T:", type_arr.join(""));
 		}
 	}
-	dict.add(word);
+	random_dictionary_set.add(word);
 	if (add_new_words) {
 		new_words_set.add(word);
 	}

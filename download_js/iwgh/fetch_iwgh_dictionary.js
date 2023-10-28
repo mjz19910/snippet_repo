@@ -3,13 +3,16 @@ import {
 	read_json_array_file,
 	write_entire_file,
 } from "./deno_support.js";
-import { dict, new_words_set, parse_rng_word } from "./parse_rng_word.js";
+import {
+	description_cache_set,
+	parse_rng_description,
+} from "./parse_rng_description.js";
+import {
+	new_words_set,
+	parse_rng_word,
+	random_dictionary_set,
+} from "./parse_rng_word.js";
 import { split_at } from "./string_helpers.js";
-/** @type {Set<string>} */
-const description_set = new Set();
-const description_set_state = {
-	modified: false,
-};
 async function fetch_one_dictionary_page() {
 	const res = await fetch("https://louigiverona.com/iwgh/?page=dictionary");
 	let rt = await res.text();
@@ -23,11 +26,7 @@ async function fetch_one_dictionary_page() {
 		word = word.slice(3, -4);
 		word = word.toLowerCase();
 		parse_rng_word(word, true, true);
-		if (!description_set.has(description)) {
-			description_set.add(description);
-			console.log(["new_description", description]);
-			description_set_state.modified = true;
-		}
+		parse_rng_description(description);
 	});
 }
 async function run() {
@@ -36,11 +35,11 @@ async function run() {
 	const description_load_arr = await read_json_array_file(description_file);
 	for (const description_item of description_load_arr) {
 		if (description_item.endsWith("...")) {
-			description_set.add(description_item);
+			description_cache_set.add(description_item);
 		} else if (description_item.endsWith(".")) {
-			description_set.add(description_item);
+			description_cache_set.add(description_item);
 		} else {
-			description_set.add(description_item + ".");
+			description_cache_set.add(description_item + ".");
 		}
 	}
 	const dictionary_file = await deno_default_open("./random_dictionary.json");
@@ -82,13 +81,13 @@ async function run() {
 		+(request_total / total_seconds).toFixed(3),
 	);
 	if (description_set_state.modified) {
-		const description_arr = [...description_set.values()].sort();
+		const description_arr = [...description_cache_set.values()].sort();
 		console.log("description_arr.length", description_arr.length);
 		await write_entire_file(description_file, description_arr);
 	}
 	description_file.close();
 	{
-		const dictionary_arr = [...dict.values()].sort();
+		const dictionary_arr = [...random_dictionary_set.values()].sort();
 		console.log("dictionary.length", dictionary_arr.length);
 		await write_entire_file(dictionary_file, dictionary_arr);
 	}
