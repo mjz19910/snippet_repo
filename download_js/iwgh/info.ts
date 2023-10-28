@@ -1,8 +1,4 @@
-//cspell:word IWGH
-
-import {Do} from "./Helpers.ts";
-import {H} from "./Helpers.ts";
-
+import {H,Do} from "./Helpers.ts";
 type larTorch={
 	id: "larTorch",
 	news_str: "Lonely torch page",
