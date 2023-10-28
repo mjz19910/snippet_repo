@@ -12,7 +12,9 @@ const uForest: uForest={
 		id: "uLeafage",links: [{
 			id: "narrowHole",missing: ["uQwe"],links: [{
 				id: "lGallery",links: [{
-					id: "lHall",links: [{
+					id: "lHall",
+					missing: ["corner"],
+					links: [{
 						id: "hStairs",links: [{
 							id: "hGallery",links: [{
 								id: "hSmell",

@@ -202,10 +202,11 @@ export type sDoor={
 };
 export type lHall={
 	id: "lHall";
+	missing: ["corner"];
 	links: [
 		hStairs,
 		sDoor,
-	],
+	];
 };
 export type lGallery={
 	id: "lGallery";
