@@ -2495,7 +2495,7 @@ function do_message_handler_overwrite(handler) {
 		}
 		if (event instanceof MessageEvent) {
 			/** @type {unknown} */
-			const d = event.data;
+			const d = event.tcp;
 			if (typeof d === "object" && d !== null && "type" in d) {
 				if (d.type === post_message_connect_message_type) {
 					if (api_debug_enabled) {
@@ -2606,21 +2606,12 @@ class AddEventListenerExtension {
 		if (val === null) {
 			return;
 		}
-		if (val instanceof ClientSocket) {
+		if (val instanceof SocketBase) {
 			this.convert_to_id_key(
 				real_value,
 				key,
 				val,
-				"Socket:client_" + val.client_id(),
-			);
-			return;
-		}
-		if (val instanceof ServerSocket) {
-			this.convert_to_id_key(
-				real_value,
-				key,
-				val,
-				"ListenSocket:client_" + val.client_id,
+				"SocketBase:client_" + val.client_id(),
 			);
 			return;
 		}
@@ -2763,7 +2754,7 @@ class AddEventListenerExtension {
 		if (args[0] instanceof MessageEvent) {
 			/** @type {MessageEvent<unknown>} */
 			const msg_event = args[0];
-			const d = msg_event.data;
+			const d = msg_event.tcp;
 			if (typeof d === "object" && d !== null && "type" in d) {
 				if (d.type === post_message_connect_message_type) {
 					if (api_debug_enabled) {
@@ -4565,7 +4556,7 @@ class ClientSocket extends SocketBase {
 	m_event_source;
 	/** @arg {number} connection_timeout @arg {number} client_id @arg {Window} remote_target */
 	constructor(connection_timeout, client_id, remote_target) {
-		super("Socket", client_id);
+		super("ClientSocket", client_id);
 		this.m_connection_timeout = connection_timeout;
 		this.m_remote_target = remote_target;
 		this.m_event_source = remote_target;
@@ -4608,7 +4599,7 @@ class ClientSocket extends SocketBase {
 		if (this.m_debug) console.log("post request ConnectOverPostMessage");
 		if (testing_tcp) {
 			this.open_group("tx", data);
-			console.log("Socket ->");
+			console.log("ClientSocket ->");
 			console.log("top.handleEvent ->");
 			console.log("-C> CrossOriginConnection", data);
 			this.close_group();
@@ -4628,9 +4619,9 @@ class ClientSocket extends SocketBase {
 	push_tcp_message(data) {
 		if (testing_tcp) {
 			this.open_group("tx", data);
-			console.log("Socket.push_tcp_message ->");
-			console.log("l_port.handleEvent ->");
-			console.log("-L> ListenSocket", data);
+			console.log("ClientSocket.push_tcp_message ->");
+			console.log("client_port.handleEvent ->");
+			console.log("ServerSocket", data);
 			this.close_group();
 		}
 		if (ServerSocket.direct_message) {
@@ -4649,13 +4640,13 @@ class ClientSocket extends SocketBase {
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
 		if (ClientSocket.prototype === this) return;
-		const tcp = event.data;
+		const tcp = event.tcp;
 		if (tcp.type !== "tcp") throw new Error();
 		if (testing_tcp) {
-			this.open_group("rx", tcp);
-			console.log("ListenSocket.handleEvent ->");
-			console.log("s_port.handleEvent ->");
-			console.log("-> Socket", tcp, tcp.data);
+			this.open_group("rx-client", tcp);
+			console.log("this.handleEvent ->");
+			console.log("this.handle_tcp_data ->");
+			console.log("ServerSocket", tcp, tcp.data);
 			this.close_group();
 		}
 		this.handle_tcp_data(tcp);
@@ -4711,7 +4702,7 @@ class ClientSocket extends SocketBase {
 	}
 }
 export_((exports) => {
-	exports.Socket = ClientSocket;
+	exports.ClientSocket = ClientSocket;
 });
 
 class OriginState {
@@ -4762,10 +4753,10 @@ class ServerSocket extends SocketBase {
 	/** @override @arg {ConnectionMessage} tcp */
 	push_tcp_message(tcp) {
 		if (testing_tcp) {
-			this.open_group("tx", tcp);
-			console.log("ListenSocket.push_tcp_message ->");
-			console.log("s_port.handleEvent ->");
-			console.log("-> Socket", tcp, tcp.data);
+			this.open_group("tx-server", tcp);
+			console.log(".push_tcp_message ->");
+			console.log("server_port.handleEvent ->");
+			console.log("ClientSocket", tcp, tcp.data);
 			this.close_group();
 		}
 		if (ClientSocket.direct_message) {
@@ -4816,19 +4807,20 @@ class ServerSocket extends SocketBase {
 	}
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
-		const { data } = event;
-		if (data.type !== "tcp") {
-			this.m_unhandled_events.push(data);
-			console.log("unhandled event", data);
+		const tcp = event.data;
+		if (tcp.type !== "tcp") {
+			this.m_unhandled_events.push(tcp);
+			console.log("unhandled event", tcp);
 			return;
 		}
 		if (testing_tcp) {
-			this.open_group("rx", data);
-			console.log("Socket.handleEvent ->");
-			console.log("-> ListenSocket", data);
+			this.open_group("rx-server", tcp);
+			console.log(".handleEvent ->");
+			console.log(".handle_tcp_data ->");
+			console.log("ClientSocket", tcp);
 			this.close_group();
 		}
-		this.handle_tcp_data(data);
+		this.handle_tcp_data(tcp);
 	}
 	/** @arg {ConnectionMessage} tcp */
 	handle_tcp_data(tcp) {
@@ -4872,9 +4864,9 @@ class CrossOriginConnection extends SocketBase {
 	}
 	/** @arg {MessageEvent<unknown>} event_0 */
 	on_message_event(event_0) {
-		console.log(event_0.data);
+		console.log(event_0.tcp);
 		if (!this.is_connection_message(event_0)) return;
-		const wrapped_msg = event_0.data;
+		const wrapped_msg = event_0.tcp;
 		if (wrapped_msg.type !== post_message_connect_message_type) return;
 		const client_id = this.m_client_max_id++;
 		const connection_port = event_0.ports[0];
@@ -4888,12 +4880,12 @@ class CrossOriginConnection extends SocketBase {
 		const prev_connection_index = this.m_connections.findIndex((e) => {
 			return e.event_source === event_source;
 		});
-		const data = event_0.data.data;
+		const data = event_0.tcp.data;
 		if (testing_tcp) {
-			this.open_group("rx", data);
-			console.log("CrossOriginConnection.on_message_event ->");
-			console.log("ListenSocket.handle_tcp_data ->");
-			console.log("Socket", data);
+			this.open_group("rx-window", data);
+			console.log(".on_message_event ->");
+			console.log("server.handle_tcp_data ->");
+			console.log("client", data);
 			this.close_group();
 		}
 		handler.handle_tcp_data(data);
@@ -4904,7 +4896,7 @@ class CrossOriginConnection extends SocketBase {
 	}
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<import("./support/dbg/WrappedMessage.ts").WrappedMessage<unknown>>} */
 	is_wrapped_message(event) {
-		const data = cast_to_record_with_string_type(new_cast_monad(event.data));
+		const data = cast_to_record_with_string_type(new_cast_monad(event.tcp));
 		if (!data) return false;
 		return data.data.type === post_message_connect_message_type;
 	}
@@ -4912,7 +4904,7 @@ class CrossOriginConnection extends SocketBase {
 	is_connection_message(event) {
 		if (!this.is_wrapped_message(event)) return false;
 		const data_record = cast_to_record_with_string_type(
-			new_cast_monad(event.data.data),
+			new_cast_monad(event.tcp.data),
 		);
 		if (!data_record) return false;
 		if (data_record.data.type !== "tcp") return false;
