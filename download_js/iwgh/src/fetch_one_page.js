@@ -10,10 +10,7 @@ export async function fetch_one_page(target_page) {
 	const rt = await res.text();
 	switch (target_page) {
 		case "poems": {
-			const start_pos = rt.indexOf("<table ");
-			const end_pos = rt.indexOf("</table>");
-			const in_table_str = rt.slice(start_pos, end_pos);
-			in_table_str.indexOf('<p class="news">');
+			const in_table_str = string_contained_by(rt, '<table ', "</table>");
 			console.log(in_table_str);
 			console.log(
 				string_contained_by(in_table_str, '<p class="news">', "</p>"),
