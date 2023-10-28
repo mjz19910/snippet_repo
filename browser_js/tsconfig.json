@@ -1,16 +1,17 @@
 {
 	"compilerOptions": {
 		"noEmit": true,
+		"target": "ESNext",
 		"module": "ESNext",
 		"moduleResolution": "Bundler",
-		"target": "ESNext",
 		"lib": [
 			"ESNext",
-			"DOM"
+			"DOM",
 		],
 		"outDir": "./dist",
 		"allowImportingTsExtensions": true,
 		"allowJs": true,
+		"allowSyntheticDefaultImports": true,
 		"checkJs": true,
 		"declaration": true,
 		"esModuleInterop": true,
@@ -28,6 +29,7 @@
 		"noPropertyAccessFromIndexSignature": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
+		"resolveJsonModule": true,
 		"sourceMap": true,
 		"strict": true,
 		"useUnknownInCatchVariables": true,
@@ -41,6 +43,6 @@
 	"exclude": [
 		"node_modules",
 		"**/*-spec.ts",
-		"./dist"
+		"./dist",
 	],
 }
