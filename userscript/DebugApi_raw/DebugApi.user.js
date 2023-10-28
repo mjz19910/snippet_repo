@@ -96,30 +96,34 @@ const ack_win = 100_000;
 class TCPMessage {
 	/** @readonly */
 	type = "tcp";
-	/** @arg {import("./support/dbg/ConnectFlag.ts").ConnectFlag} flags @arg {number} seq @arg {number} ack @arg {ConnectionMessage["data"]} data */
-	constructor(flags, ack, seq, data) {
+	/** @arg {import("./support/dbg/ConnectFlag.ts").ConnectFlag} flags @arg {number} client_id @arg {number} seq @arg {number} ack @arg {ConnectionMessage["data"]} data */
+	constructor(flags, client_id, seq, ack, data) {
 		this.flags = flags;
-		this.ack = ack;
+		this.client_id = client_id;
 		this.seq = seq;
+		this.ack = ack;
 		/** @type {ConnectionMessage["data"]} */
 		this.data = data;
 	}
-	/** @returns {ConnectionMessage} */
-	static make_syn() {
+	/** @arg {number} client_id @returns {ConnectionMessage} */
+	static make_syn(client_id) {
 		const seq = (Math.random() * ack_win) % ack_win | 0;
-		return new TCPMessage(tcp_syn, 0, seq, null);
+		return new TCPMessage(tcp_syn, client_id, seq, 0, null);
 	}
-	/** @arg {ConnectionMessage["data"]} data @arg {number} seq @arg {number} ack @returns {ConnectionMessage} */
-	static make_message(ack, seq, data) {
-		return new TCPMessage(0, ack, seq, data);
+	/** @arg {number} client_id @arg {ConnectionMessage["data"]} data @arg {number} seq @arg {number} ack @returns {ConnectionMessage} */
+	static make_message(client_id, seq, ack, data) {
+		return new TCPMessage(0, client_id, seq, ack, data);
 	}
 }
 const testing_tcp = true;
 class SocketBase {
 	fmt_tag;
-	/** @arg {string} fmt_tag */
-	constructor(fmt_tag) {
+	/** @private */
+	m_client_id;
+	/** @arg {string} fmt_tag @arg {number} client_id */
+	constructor(fmt_tag, client_id) {
 		this.fmt_tag = fmt_tag;
+		this.m_client_id = client_id;
 	}
 	/** @arg {import("./support/dbg/ConnectFlag.ts").ConnectFlag} flags */
 	stringify_flags(flags) {
@@ -153,20 +157,31 @@ class SocketBase {
 			seq = (Math.random() * ack_win) % ack_win | 0;
 		}
 		ack += 1;
-		this.push_tcp_message(this.make_message(ack, seq, null));
+		this.push_tcp_message({
+			type: "tcp",
+			client_id: this.client_id(),
+			ack,
+			seq,
+			flags,
+			data: null,
+		});
 	}
 	/** @arg {ConnectionMessage} _data */
 	push_tcp_message(_data) {
 		throw new Error("Abstract impl");
 	}
 	make_syn() {
-		return TCPMessage.make_syn();
+		return TCPMessage.make_syn(this.client_id());
+	}
+	client_id() {
+		return this.m_client_id;
 	}
 	/** @arg {ConnectionMessage["data"]} data @arg {number} seq @arg {number} ack @returns {ConnectionMessage} */
-	make_message(ack, seq, data) {
+	make_message(seq, ack, data) {
 		return TCPMessage.make_message(
-			ack,
+			this.client_id(),
 			seq,
+			ack,
 			data,
 		);
 	}
@@ -182,14 +197,21 @@ class ClientSocket extends SocketBase {
 	/** @private */
 	m_port;
 	/** @private */
+	m_remote_target;
+	/** @private */
 	m_event_source;
-	/** @arg {Window} event_source */
-	constructor(event_source) {
-		super("ClientSocket");
-		this.m_event_source = event_source;
+	/** @arg {number} connection_timeout @arg {number} client_id @arg {Window} remote_target */
+	constructor(connection_timeout, client_id, remote_target) {
+		super("ClientSocket", client_id);
+		this.m_connection_timeout = connection_timeout;
+		this.m_remote_target = remote_target;
+		this.m_event_source = remote_target;
 		const { server_port, client_port } = this.init_syn_data();
 		this.m_port = client_port;
 		this.send_syn(server_port);
+	}
+	event_source() {
+		return this.m_event_source;
 	}
 	/** @returns {{server_port:MessagePort; client_port:MessagePort}} */
 	init_syn_data() {
@@ -236,7 +258,7 @@ class ClientSocket extends SocketBase {
 			type: "WindowSocket",
 			data,
 		};
-		this.m_event_source.postMessage(msg, "*", [server_port]);
+		this.m_remote_target.postMessage(msg, "*", [server_port]);
 	}
 	/** @override @arg {ConnectionMessage} tcp */
 	push_tcp_message(tcp) {
@@ -332,7 +354,7 @@ class OriginState {
 	m_top = window.top;
 	/** @private @readonly @type {Window|null} */
 	m_opener = window.opener;
-	get_event_source() {
+	get_connect_target() {
 		if (this.m_opener) return this.m_opener;
 		if (this.m_top) return this.m_top;
 		throw new Error("unable to get connect target");
@@ -353,15 +375,21 @@ class ServerSocket extends SocketBase {
 	m_is_connecting = true;
 	/** @private @type {MessagePort} */
 	m_port;
-	/** @arg {MessagePort} connection_port */
-	constructor(connection_port) {
-		super("ListenSocket");
+	/** @private @type {MessageEventSource} */
+	m_event_source;
+	/** @arg {MessagePort} connection_port @arg {number} client_id @arg {MessageEventSource} event_source */
+	constructor(client_id, connection_port, event_source) {
+		super("ListenSocket", client_id);
+		this.m_event_source = event_source;
 		this.m_port = connection_port;
 		this.m_port.addEventListener("message", this);
 		this.m_port.start();
 	}
 	get side() {
 		return this.m_side;
+	}
+	get event_source() {
+		return this.m_event_source;
 	}
 	get is_connected() {
 		return this.m_is_connected;
@@ -380,19 +408,18 @@ class ServerSocket extends SocketBase {
 			p.handleEvent(new MessageEvent("message", { data: tcp }));
 		} else this.m_port.postMessage(tcp);
 	}
-	/** @arg {ConnectionMessage} tcp */
-	downstream_connect(tcp) {
-		const { ack, seq } = tcp;
+	/** @arg {ConnectionMessage} tcp_message */
+	downstream_connect(tcp_message) {
+		const { seq, ack } = tcp_message;
 		if (!ack) throw new Error("Invalid message");
 		if (testing_tcp) {
-			console.log("on_server_connect", tcp);
+			console.log("on_server_connect", this.client_id(), this.m_event_source);
 		}
 		this.push_tcp_message(this.make_message(
-			ack,
 			seq,
+			ack,
 			{ type: "connected" },
 		));
-		console.groupEnd();
 	}
 	/** @arg {ConnectionMessage} info */
 	downstream_handle_event(info) {
@@ -401,7 +428,7 @@ class ServerSocket extends SocketBase {
 			exports.socket.push_tcp_message(info);
 		});
 		if (testing_tcp) {
-			console.log("downstream_event", info.data, info.flags);
+			console.log("downstream_event", info.data, info.flags, info.client_id);
 		}
 	}
 	disconnected() {
@@ -463,14 +490,21 @@ class WindowSocket extends SocketBase {
 	/** @private */
 	m_state = new OriginState();
 	/** @private */
-	m_socket;
+	m_local_handler;
 	/** @private @type {ServerSocket[]} */
 	m_connections = [];
+	/** @private */
+	m_client_max_id = 0;
 	constructor() {
-		super("WindowSocket");
+		super("WindowSocket", -1);
+		const client_id = this.m_client_max_id++;
 		this.start_root_server();
-		const event_source = this.m_state.get_event_source();
-		this.m_socket = new ClientSocket(event_source);
+		const connect_target = this.m_state.get_connect_target();
+		this.m_local_handler = new ClientSocket(
+			30000,
+			client_id,
+			connect_target,
+		);
 	}
 	/** @arg {MessageEvent<unknown>} event_0 */
 	on_message_event(event_0) {
@@ -478,9 +512,18 @@ class WindowSocket extends SocketBase {
 		if (!this.is_connection_message(event_0)) return;
 		const wrapped_msg = event_0.data;
 		if (wrapped_msg.type !== "WindowSocket") return;
+		const client_id = this.m_client_max_id++;
 		const connection_port = event_0.ports[0];
 		if (!event_0.source) throw new Error("No event source");
-		const handler = new ServerSocket(connection_port);
+		const event_source = event_0.source;
+		const handler = new ServerSocket(
+			client_id,
+			connection_port,
+			event_source,
+		);
+		const prev_connection_index = this.m_connections.findIndex((e) => {
+			return e.event_source === event_source;
+		});
 		const data = event_0.data.data;
 		if (testing_tcp) {
 			this.open_group("rx-window", data);
@@ -490,6 +533,9 @@ class WindowSocket extends SocketBase {
 			this.close_group();
 		}
 		handler.handle_tcp_data(data);
+		if (prev_connection_index > -1) {
+			this.m_connections.splice(prev_connection_index, 1);
+		}
 		this.m_connections.push(handler);
 	}
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<import("./support/dbg/WrappedMessage.ts").WrappedMessage<unknown>>} */
@@ -514,7 +560,7 @@ class WindowSocket extends SocketBase {
 	}
 	/** @override @arg {ConnectionMessage} message */
 	push_tcp_message(message) {
-		this.m_socket.push_tcp_message(message);
+		this.m_local_handler.push_tcp_message(message);
 	}
 	/** @arg {MessageEvent<unknown>} event */
 	handleEvent(event) {
@@ -543,7 +589,7 @@ class WindowSocket extends SocketBase {
 }
 export_((exports) => {
 	exports.WindowSocket = WindowSocket;
-	exports.socket = new WindowSocket();
+	exports.socket = new WindowSocket;
 });
 export_((exports) => exports.__module_loaded__ = true);
 if (delete_require) {
