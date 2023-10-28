@@ -433,6 +433,8 @@ class ServerSocket extends SocketBase {
 	}
 	disconnected() {
 		this.push_tcp_message(this.make_message(0, 0, { type: "disconnected" }));
+		// </group> (rst)
+		console.groupEnd();
 	}
 	/** @arg {boolean} can_reconnect */
 	will_disconnect(can_reconnect) {
