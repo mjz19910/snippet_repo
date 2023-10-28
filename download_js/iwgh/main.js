@@ -441,8 +441,7 @@ async function run() {
 		for (let i = 0; i < request_count; i++) {
 			arr.push(fetch_one_dictionary_page().then(inc_request_total));
 		}
-		await arr.shift();
-		while (arr.length > 50) {
+		while (arr.length > 80) {
 			await arr.shift();
 		}
 		if (should_break) break;
