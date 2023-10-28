@@ -6,7 +6,7 @@ export type ConnectionMessage={
 	type: "tcp";
 	flags: ConnectFlag;
 	seq: number;
-	ack: number|null;
+	ack: number;
 	client_id: number;
 	data: MessageType|ConnectionForward|null;
 };

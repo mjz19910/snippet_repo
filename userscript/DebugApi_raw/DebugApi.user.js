@@ -4458,7 +4458,7 @@ const ack_win = 5000;
 class TCPMessage {
 	/** @readonly */
 	type = "tcp";
-	/** @arg {import("./support/dbg/ConnectFlag.ts").ConnectFlag} flags @arg {number} client_id @arg {number} seq @arg {number|null} ack @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage["data"]} data */
+	/** @arg {import("./support/dbg/ConnectFlag.ts").ConnectFlag} flags @arg {number} client_id @arg {number} seq @arg {number} ack @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage["data"]} data */
 	constructor(flags, client_id, seq, ack, data) {
 		this.flags = flags;
 		this.client_id = client_id;
@@ -4473,7 +4473,7 @@ class TCPMessage {
 		return new TCPMessage(tcp_syn, client_id, seq, 0, null);
 	}
 	/** @arg {number} client_id @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage["data"]} data @arg {number} seq @arg {number} ack @returns {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} */
-	static make_message(client_id, data, seq, ack) {
+	static make_message(client_id, seq, ack, data) {
 		return new TCPMessage(0, client_id, seq, ack, data);
 	}
 }
@@ -4632,9 +4632,8 @@ class Socket extends ConsoleAccess {
 	send_ack(tcp_message, flags) {
 		// seq=number & ack=number;
 		let seq = tcp_message.ack;
-		if (!seq) {
+		if (seq == 0) {
 			seq = (Math.random() * ack_win) % ack_win | 0;
-			if (testing_tcp) seq = 300;
 		}
 		flags |= tcp_ack;
 		this.push_tcp_message({
@@ -4787,9 +4786,9 @@ class ListenSocket extends ConsoleAccess {
 		}
 		this.push_tcp_message(TCPMessage.make_message(
 			this.m_client_id,
-			{ type: "connected" },
 			seq,
 			ack,
+			{ type: "connected" },
 		));
 	}
 	/** @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} info */
@@ -4804,19 +4803,19 @@ class ListenSocket extends ConsoleAccess {
 	}
 	disconnected() {
 		this.push_tcp_message(
-			TCPMessage.make_message(this.m_client_id, { type: "disconnected" }, 1, 1),
+			TCPMessage.make_message(this.m_client_id, 1, 1, { type: "disconnected" }),
 		);
 	}
 	/** @arg {boolean} can_reconnect */
 	will_disconnect(can_reconnect) {
 		this.push_tcp_message(TCPMessage.make_message(
 			this.m_client_id,
+			0,
+			0,
 			{
 				type: "will_disconnect",
 				can_reconnect,
 			},
-			0,
-			0,
 		));
 	}
 	/** @arg {MessageEvent<import("./support/dbg/ConnectionMessage.ts").ConnectionMessage>} event */
