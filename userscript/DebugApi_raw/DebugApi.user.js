@@ -34,21 +34,16 @@ export_((exports) => {
 	exports.__is_module_flag__ = true;
 });
 //#region is_helpers
-/** @template {{}|null} T @template {string} U @arg {import("./support/dbg/CM.ts").CM<T>|null} x @arg {U} k @returns {x is import("./support/dbg/CM.ts").CM<T&Record<U,string>>} */
-function is_record_with_string_type(x, k) {
+/** @template T @typedef {import("./support/dbg/CM.ts").CM<T>} CM */
+/** @template {{}|null} T @template {string} U @arg {CM<T>|null} x @arg {U} k @returns {x is CM<T&Record<U,string>>} */
+function is_obj_with_property_CM(x, k) {
 	if (!x?.data) return false;
-	if (!is_record_with_T(x.data, k)) return false;
+	if (!is_obj_with_property(x.data, k)) return false;
 	if (typeof x.data[k] !== "string") return false;
 	return true;
 }
-/** @template T @arg {import("./support/dbg/CM.ts").CM<T>|null} x @returns {x is import("./support/dbg/CM.ts").CM<T&{}>} */
-function is_object(x) {
-	if (!x?.data) return false;
-	if (typeof x.data !== "object") return false;
-	return true;
-}
 /** @template {{}} T @template {string} U @arg {T} x @arg {U} k @returns {x is T&Record<U,unknown>} */
-function is_record_with_T(x, k) {
+function is_obj_with_property(x, k) {
 	if (x === null) return false;
 	if (!(k in x)) return false;
 	return true;
@@ -56,19 +51,20 @@ function is_record_with_T(x, k) {
 //#endregion
 
 //#region cast_monad
-/** @template T @arg {T} x @returns {import("./support/dbg/CM.ts").CM<T>} */
+/** @template T @arg {T} x @returns {CM<T>} */
 function wrap_CM(x) {
 	return { type: "cast", data: x };
 }
-/** @template T @arg {import("./support/dbg/CM.ts").CM<T>|null} x @returns {import("./support/dbg/CM.ts").CM<T&{}|null>|null} */
+/** @template T @arg {CM<T>|null} x */
 function cast_to_object_CM(x) {
-	if (!is_object(x)) return null;
-	return x;
+	if (!x?.data) return null;
+	if (typeof x.data !== "object") return null;
+	return wrap_CM(x.data);
 }
-/** @template T @arg {import("./support/dbg/CM.ts").CM<T>} x @returns {import("./support/dbg/CM.ts").CM<T&{type:string}>|null} */
+/** @template T @arg {CM<T>} x @returns {CM<T&{type:string}>|null} */
 function cast_to_event_like_CM(x) {
 	const cast_result = cast_to_object_CM(x);
-	if (!is_record_with_string_type(cast_result, "type")) return null;
+	if (!is_obj_with_property_CM(cast_result, "type")) return null;
 	return cast_result;
 }
 //#endregion
@@ -560,10 +556,10 @@ class WindowSocket extends SocketBase {
 		if (data_record.data.type !== "tcp") return false;
 		return true;
 	}
-	/** @template {import("./support/dbg/CM.ts").CM<{type:string}>} T @arg {T|null} data @returns {data is T&import("./support/dbg/CM.ts").CM<{type:string,data:unknown}>} */
+	/** @template {CM<{type:string}>} T @arg {T|null} data @returns {data is T&CM<{type:string,data:unknown}>} */
 	is_with_data_decay(data) {
 		if (data === null) return false;
-		if (!is_record_with_T(data.data, "data")) return false;
+		if (!is_obj_with_property(data.data, "data")) return false;
 		return true;
 	}
 	/** @override @arg {ConnectionMessage} message */
