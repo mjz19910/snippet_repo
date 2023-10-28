@@ -458,7 +458,7 @@ type sickbay={
 		}>,
 	];
 };
-type enterprise={
+export type enterprise={
 	links: [
 		deck8,
 		v_10forward,
