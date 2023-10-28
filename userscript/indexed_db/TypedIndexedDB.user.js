@@ -5,7 +5,8 @@
 // @description	typed IndexedDB
 // @author Matthias Zimmerman
 // @copyright	Matthias Zimmerman 2023
-// @match	https://www.youtube.com/*
+// @match		https://*/*
+// @match		http://*/*
 // @grant	none
 // @run-at	document-start
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/indexed_db/TypedIndexedDB.meta.js
