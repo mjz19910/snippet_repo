@@ -24,13 +24,13 @@
 	<script id="current_script">
 		let open_win;
 		let body=document.body;
-		function create_site_link(page)
-		{
+		function create_site_link(page) {
 			let v=document.createElement("div");
 			v.classList.add("site_link");
 			v.innerText=page;
 			current_script.insertAdjacentElement("beforebegin",v);
 		}
+		// cspell:disable
 		const pages_list=[
 			"faq",
 			"off",
@@ -45,31 +45,25 @@
 			"floortwo",
 			"enterprise",
 		];
-		for(let page of pages_list)
-		{
+		//cspell:enable
+		for(let page of pages_list) {
 			create_site_link(page);
 		}
-		window.onmessage=function(event)
-		{
+		window.onmessage=function(event) {
 			console.log("message event",event);
 		};
 		/** @type {NodeListOf<HTMLDivElement>} */
 		let list=document.querySelectorAll(".site_link");
-		for(let item of list)
-		{
-			item.onclick=function()
-			{
+		for(let item of list) {
+			item.onclick=function() {
 				let page_req=item.innerText;
-				if(open_win)
-				{
+				if(open_win) {
 					open_win.close();
 				}
 				open_win=window.open("https://louigiverona.com/iwgh/?page="+page_req);
 				item.remove();
-				window.onbeforeunload=function()
-				{
-					if(open_win)
-					{
+				window.onbeforeunload=function() {
+					if(open_win) {
 						open_win.close();
 					}
 				};

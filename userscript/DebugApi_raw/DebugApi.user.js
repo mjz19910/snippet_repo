@@ -260,19 +260,19 @@ class ClientSocket extends SocketBase {
 		};
 		this.m_remote_target.postMessage(msg, "*", [server_port]);
 	}
-	/** @override @arg {ConnectionMessage} data */
-	push_tcp_message(data) {
+	/** @override @arg {ConnectionMessage} tcp */
+	push_tcp_message(tcp) {
 		if (testing_tcp) {
-			this.open_group("tx-client", data);
+			this.open_group("tx-client", tcp);
 			console.log(".push_tcp_message ->");
-			console.log("server_port.handleEvent ->");
-			console.log("server", data);
+			console.log("port.handleEvent ->");
+			console.log("server", tcp);
 			this.close_group();
 		}
 		if (ServerSocket.direct_message) {
 			const p = ServerSocket.prototype;
-			p.handleEvent(new MessageEvent("message", { data }));
-		} else this.m_port.postMessage(data);
+			p.handleEvent(new MessageEvent("message", { tcp }));
+		} else this.m_port.postMessage(tcp);
 	}
 	/** @arg {ConnectionMessage} tcp */
 	client_connect(tcp) {
