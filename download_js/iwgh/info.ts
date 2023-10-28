@@ -833,8 +833,8 @@ type all_pages={
 	menu: {
 		items: [
 			main,
-			"dictionary",
-			"communication",
+			dictionary,
+			communication,
 			members,
 			faq,
 		],
@@ -858,8 +858,8 @@ type ghbs={
 type tohru={
 	id: "tohru";
 };
-type communications={
-	id: "communications";
+type communication={
+	id: "communication";
 };
 type dictionary={
 	id: "dictionary";
@@ -868,7 +868,7 @@ type open_dir={
 	links: [
 		main,
 		generator,
-		communications,
+		communication,
 		dictionary,
 		wall,
 		o,
