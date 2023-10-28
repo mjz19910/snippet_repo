@@ -214,8 +214,8 @@ export type uForest={
 	links: [uLeafage],
 	action: {
 		fn: "use",
-		usingItem: "QweQwe",
-	},
+		usingItem: "qweqwe",
+	}|H.UseActionStr<"qweqwe">,
 };
 export type cowardly_dwarf={
 	type: "item";
