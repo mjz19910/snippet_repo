@@ -87,7 +87,7 @@ function show_word_parts(word_arr, type_arr) {
 	const len = word_arr.length;
 	if (len > 4) return;
 	const wj = word_arr.join(""), tj = type_arr.join("");
-	console.log("W:", wj, "T:", tj, "word.parts", len);
+	console.log("W:", wj, "T:", tj, [".parts", len]);
 }
 
 export function reset_words_set() {
