@@ -10,31 +10,22 @@ function string_contained_by_end(v, needle1, needle2) {
 	const end_pos = v.indexOf(needle2, start_pos) + needle2.length;
 	return end_pos;
 }
+function on_poems_page_text(v) {
+	const [tbl] = string_contained_by(v, "<table ", "</table>");
+	const row1_end = string_contained_by_end(tbl, "<tr>", "</tr>");
+	const [row2_str] = string_contained_by(tbl, "<tr>", "</tr>", row1_end);
+	console.log(row2_str);
+	const [news_str] = string_contained_by(tbl, '<p class="news">', "</p>");
+	console.log(news_str);
+}
 /** @param {"poems"} target_page */
 export async function fetch_one_page(target_page) {
 	const res = await fetch(`https://louigiverona.com/iwgh/?page=${target_page}`);
 	const rt = await res.text();
 	switch (target_page) {
 		case "poems": {
-			const [in_table_str] = string_contained_by(rt, "<table ", "</table>");
-			const row1_end = string_contained_by_end(in_table_str, "<tr>", "</tr>");
-			const [row2_str] = string_contained_by(
-				in_table_str,
-				"<tr>",
-				"</tr>",
-				row1_end,
-			);
-			console.log(row2_str);
-			const [news_str] = string_contained_by(
-				in_table_str,
-				'<p class="news">',
-				"</p>",
-			);
-			console.log(news_str);
+			on_poems_page_text(rt);
 			break;
 		}
 	}
 }
-async function main() {
-}
-await main();
