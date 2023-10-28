@@ -418,9 +418,7 @@ class ServerSocket extends SocketBase {
 			{ type: "connected" },
 		));
 		this.next_ack_listeners.add(() => {
-			this.next_ack_listeners.add(() => {
-				console.groupEnd();
-			});
+			console.groupEnd();
 		});
 	}
 	/** @arg {ConnectionMessage} info */
