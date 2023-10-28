@@ -265,7 +265,7 @@ class ClientSocket extends SocketBase {
 		if (testing_tcp) {
 			this.open_group("tx-client", tcp);
 			console.log(".push_tcp_message ->");
-			console.log("port.handleEvent ->");
+			console.log("port.postMessage ->");
 			console.log("server", tcp);
 			this.close_group();
 		}
