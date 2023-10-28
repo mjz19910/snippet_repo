@@ -914,4 +914,9 @@ type main={
 		Do.UseAction2<someone,0,Items.something>,
 		Do.RunTakeAct2<someone,1,Items.glass_orb>,
 	];
+	quest_chain2: [
+		main,
+		faq,
+		Items.gandalf_magic_book,
+	];
 };
