@@ -881,7 +881,6 @@ type open_dir={
 };
 export {type all_pages};
 const work_queue: {
-	floor_number: 4;
 	destination: uForestEdge;
 }[]=[];
 work_queue.push(elevator.destinations.elev_uForest);
