@@ -365,7 +365,7 @@ async function fetch_one_dictionary_page() {
 		let [word, description] = v.split(" - ");
 		word = word.slice(3, -4);
 		word = word.toLowerCase();
-		parse_rng_word(word, true, false);
+		parse_rng_word(word, true, true);
 		description = parse_sentence(description);
 		if (!description_set.has(description)) {
 			description_set.add(description);
@@ -408,16 +408,9 @@ async function run() {
 	for (const word of load_arr2) {
 		parse_rng_word(word, false, false);
 	}
-	let before_wait = dict.size;
 	const at_loop_end = () => {
-		const new_words = dict.size - before_wait;
-		before_wait = dict.size;
-		const new_words_arr = [...new_words_set.values()].sort();
-		for (const new_word of new_words_arr) {
-			parse_rng_word(new_word, true, true);
-		}
+		console.log("dict word num", new_words_set.size);
 		new_words_set.clear();
-		console.log("dict word num", new_words);
 	};
 	const request_log_interval = 11;
 	for (let j = 0; j < (10 * 8 + request_log_interval - 1); j++) {
