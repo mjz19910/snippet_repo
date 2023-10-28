@@ -484,7 +484,7 @@ class ServerSocket extends SocketBase {
 			this.downstream_connect(tcp);
 		}
 		this.downstream_handle_event(tcp);
-		if (f.is_ack() && this.m_connected) this.notify_ack_listeners();
+		if (f.is_ack()) this.notify_ack_listeners();
 	}
 	notify_ack_listeners() {
 		const listeners = this.next_ack_listeners;
