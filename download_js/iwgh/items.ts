@@ -18,3 +18,15 @@ export type piece_of_paper={
 	type: "item";
 	id: "piece of paper";
 };
+export type hand_press={
+	type: "item";
+	id: "hand press";
+};
+export type fui={
+	type: "item";
+	id: "fui";
+};
+export type orb_book={
+	type: "item";
+	id: "Orb Book",
+};

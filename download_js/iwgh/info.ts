@@ -68,8 +68,8 @@ type larFm={
 	id: "larFm";
 	action: H.TakeActionR2<{
 		requirements: [
-			hand_press,
-			fui,
+			Items.hand_press,
+			Items.fui,
 		];
 		item: egg;
 	}>;
@@ -507,7 +507,7 @@ type grave={
 		ut2,
 		ut3,
 	],
-	action: H.TakeAction<fui>;
+	action: H.TakeAction<Items.fui>;
 };
 type mechanic={
 	id: "mechanic";
@@ -605,12 +605,12 @@ type glass_orb={
 type inventory={
 	items: {
 		"Glass Orb": glass_orb,
-		"hand press": hand_press,
+		"hand press": Items.hand_press,
 		"fat worm": fat_worm,
 		"Gandalf Magic Book": gandalf_magic_book,
 		"25% of shares": v_25_of_shares,
 		"screwdriver": screwdriver,
-		"fui": fui,
+		"fui": Items.fui,
 		"piece of paper": piece_of_paper_inv,
 		"small green lamp": null,
 		"egg": egg,
@@ -618,7 +618,7 @@ type inventory={
 		"hypospray": hypospray,
 		"broken water filter": broken_water_filter,
 		"Fake Orb": fake_orb,
-		"Orb Book": orb_book,
+		"Orb Book": orb_book_inv,
 		"dead Klingon": dead_klingon,
 		"dead Romulan": dead_romulan,
 		"mosquitoZ": mosquitoZ,
@@ -666,17 +666,9 @@ type usuddend={
 	id: "usuddend",
 	links: [uFridgeOpen];
 };
-type hand_press={
-	type: "item";
-	id: "hand press";
-};
-type fui={
-	type: "item";
-	id: "fui";
-};
 type uFridgeOpen={
 	id: "uFridgeOpen",
-	action: H.TakeAction<hand_press>;
+	action: H.TakeAction<Items.hand_press>;
 	quest_chain: [
 	];
 };
@@ -692,7 +684,7 @@ type library={
 };
 type lib1={
 	news: "Or-Os";
-	action: H.TakeAction<orb_book>;
+	action: H.TakeAction<Items.orb_book>;
 };
 type lib2={
 	news: "Gt-Gz";
@@ -766,12 +758,10 @@ type kukiOrbs={
 		"naada"
 	];
 };
-type orb_book={
-	type: "item";
+type orb_book_inv={
 	id: "Orb Book",
-	links: [
-		kukiOrbs
-	];
+	links: [kukiOrbs];
+	item: Items.orb_book;
 };
 type all_pages={
 	generic: {
@@ -898,13 +888,13 @@ type main={
 			required: dead_romulan;
 			item: hypospray,
 		}>,
-		Do.RunTakeAct<hand_press>,
+		Do.RunTakeAct<Items.hand_press>,
 		burrow,
 		larder,larRiver,larBoat,larDark,
 		larDark,
 		deathDome,
 		grave,
-		Do.RunTakeAct<fui>,
+		Do.RunTakeAct<Items.fui>,
 		o,
 		zbrogjdnfhvyensocuiehw,
 		cosmology,
@@ -920,7 +910,7 @@ type main={
 		burrow,larder,larRiver,larBoat,
 		larDark,larLake,
 		Do.ActivateRoom<larFm>,
-		Do.UseInventory2<[hand_press,fui]>,
+		Do.UseInventory2<[Items.hand_press,Items.fui]>,
 		picQ,
 		picTable,picCup,picRef,burrow,larder,larStairs,keep,floorFive,elevator,elev_boiler,boiler,
 		mechanic,
