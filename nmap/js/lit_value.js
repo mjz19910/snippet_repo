@@ -1,4 +1,4 @@
-/** @type {<T extends unknown[]>(...val_arr: T)=>import("./types/lit_valueT.js").lit_valueT<T>} */
+/** @type {<T extends unknown[]>(...val_arr: T)=>["lit_value",T]} */
 export function lit_value(...val_arr) {
 	return ['lit_value', ...val_arr];
 }
