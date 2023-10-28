@@ -34,14 +34,6 @@ export_((exports) => {
 	exports.__is_module_flag__ = true;
 });
 class IndexedDBService {
-	/** @arg {IDBTransaction} tx @returns {Promise<Event>} */
-	await_complete(tx) {
-		return new Promise(function (accept, reject) {
-			tx.addEventListener("abort", reject);
-			tx.addEventListener("error", reject);
-			tx.addEventListener("complete", accept);
-		});
-	}
 	/** @template T @arg {IDBRequest<T>} request @returns {Promise<Event>} */
 	await_success(request) {
 		return new Promise(function (accept, reject) {
