@@ -4880,7 +4880,7 @@ class CrossOriginConnection extends ConsoleAccess {
 	m_flags = new ConnectionFlags();
 	/** @private */
 	m_state = new OriginState();
-	/** @private @type {Socket} */
+	/** @private */
 	m_local_handler;
 	/** @private @type {ListenSocket[]} */
 	m_connections = [];
