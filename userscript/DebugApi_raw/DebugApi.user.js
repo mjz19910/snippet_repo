@@ -88,16 +88,11 @@ class FlagHandler {
 		this.f = flags;
 	}
 }
-/** @type {1} */
+/** @typedef {import("./support/dbg/ConnectFlag.ts").ConnectFlagT} ConnectFlagT */
+/** @type {ConnectFlagT["Syn"]} */
 const tcp_syn = 1;
-/** @type {(import("./support/dbg/ConnectFlag.ts").ConnectFlagT)["Syn"]} */
-const val_tcp_syn = tcp_syn;
-val_tcp_syn;
-/** @type {2} */
+/** @type {ConnectFlagT["Ack"]} */
 const tcp_ack = 2;
-/** @readonly @type {import("./support/dbg/ConnectFlag.ts").ConnectFlagT["Ack"]} */
-const val_tcp_ack = tcp_ack;
-val_tcp_ack;
 const ack_win = 100_000;
 class TCPMessage {
 	/** @readonly */
