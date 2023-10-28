@@ -4980,6 +4980,7 @@ export_((exports) => {
 
 class DebugApi {
 	next_remote_id = 0;
+	/** @type {Map<string, unknown>|null} */
 	data_store = new Map();
 	/** @type {DebugApi|null} */
 	static m_the = null;
@@ -5000,9 +5001,9 @@ class DebugApi {
 	get_u() {
 		return this.getData("u");
 	}
-	/** @arg {"__k"} key @returns {import("./support/dbg/dbg_get_ty.ts").dbg_get_ty} */
-	get_k(key) {
-		return this.getData(key);
+	/** @returns {import("./support/dbg/dbg_get_ty.ts").dbg_get_ty} */
+	get_k() {
+		return this.getData("k");
 	}
 	/** @returns {import("./support/dbg/I_debug.ts").I_debug} */
 	get_d() {
@@ -5078,17 +5079,26 @@ class DebugApi {
 	}
 	/** @returns {void} */
 	debuggerBreakpointCode() {
-		console.log("FIXME add breakpoint code");
-		// window.inject_api?.DebugApi&&(window.inject_api.DebugApi.the().get_k("__k").get=(/** @type {string} */ __v) => {
-		// 	if(__v==="__v") {return {type: "eval-hidden-var"};}
-		// 	try {
-		// 		return {
-		// 			type: "var",
-		// 			data: [__v,eval(__v)]
-		// 		};
-		// 	} catch {return {type: "no-var"};}
-		// });
-		// if(window.inject_api?.DebugApi) {if(!window.inject_api.DebugApi.the().clearCurrentBreakpoint()) {console.log("failed to clear breakpoint");} } else {console.log("missing window.inject_api");}
+		window.__require_module_cache__.DebugApi.DebugApi.the();
+		window.inject_api?.DebugApi &&
+			(window.__require_module_cache__.DebugApi.DebugApi.the().get_k().get = (
+				/** @type {string} */ __v,
+			) => {
+				if (__v === "__v") return { type: "eval-hidden-var" };
+				try {
+					return {
+						type: "var",
+						data: [__v, eval(__v)],
+					};
+				} catch {
+					return { type: "no-var" };
+				}
+			});
+		if (window.inject_api?.DebugApi) {
+			if (!window.inject_api.DebugApi.the().clearCurrentBreakpoint()) {
+				console.log("failed to clear breakpoint");
+			}
+		} else console.log("missing window.inject_api");
 		0;
 	}
 	/** @returns {boolean} */
@@ -5132,7 +5142,7 @@ class DebugApi {
 		}
 		const vars_arr = sr.map((e) => String.fromCharCode(e));
 		this.current_function_value = function_value;
-		const tmp_key = "__k";
+		const tmp_key = "k";
 		/** @type {import("./support/dbg/dbg_get_ty.ts").dbg_get_ty} */
 		const tmp_value = {};
 		this.setData(tmp_key, tmp_value);

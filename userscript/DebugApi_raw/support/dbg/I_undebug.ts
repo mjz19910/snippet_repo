@@ -1,4 +1,4 @@
-import {Constructor} from "../types/Constructor.ts";
+import {FunctionLike} from "../types/FunctionLike.ts";
 export interface I_undebug {
-	(fn: Constructor|CallableFunction|((...x: unknown[]) => unknown)): void;
+	(fn: FunctionLike): void;
 }

@@ -1,6 +1,4 @@
 import {FunctionLike} from "../types/FunctionLike.ts";
-
-export type I_debug={
-	_bad: true;
+export interface I_debug {
 	(fn: FunctionLike,code: string): void;
-};
+}
