@@ -19,6 +19,3 @@ export {
 	lit_value,
 	Query,
 };
-
-/** @typedef {import("./js/types/types_todo.js").ip_range_in_type} ip_range_in_type */
-/** @typedef {import("./js/types/mod.js").DNS_IN_A_Type} DNS_IN_A_Type */

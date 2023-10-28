@@ -2,6 +2,10 @@
 
 all:
 
+.PHONY: typescript_build
+typescript_build:
+	tsc
+
 clean:
 	printf "clean \"%s\"\n" $$PWD
 	[ -f ./dist ] && rm ./dist || true
