@@ -10,14 +10,6 @@ async function scope() {
 		const arr = [];
 		for (let j = 0; j < 50; j++) {
 			arr.push(fetch_one_page("poems"));
-			if (arr.length > 4 && j % 2 == 0) {
-				const start_wait = performance.now();
-				await arr.shift();
-				const end_wait = performance.now();
-				const perf_diff = end_wait - start_wait;
-				if (perf_diff > 1000) console.log("perf", +perf_diff.toFixed(1));
-				if (perf_diff > 200) break;
-			}
 		}
 		await Promise.all(arr);
 		arr.length = 0;
