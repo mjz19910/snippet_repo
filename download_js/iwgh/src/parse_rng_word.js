@@ -58,31 +58,33 @@ export function save_dictionary(dictionary_file, dictionary_words_arr) {
 export const new_words_set = new Set();
 /**
  * @param {string} word
+ * @param {{add_new_words:boolean;destructure_word:boolean}} opts
  */
-export function parse_rng_word(
-	word,
-	add_new_words = true,
-	destructure_word = false,
-) {
+export function parse_rng_word(word, opts) {
+	const { add_new_words, destructure_word } = opts;
 	if (random_dictionary_set.has(word)) return;
-	if (destructure_word) {
-		const word_arr = [],
-			/** @type {("c" | "v")[]} */
-			type_arr = [];
-		let w2 = word;
-		do {
-			const r2 = word_starts_with_consonant_seq2(w2);
-			word_arr.push(r2.part);
-			type_arr.push(r2.type == "vowel" ? "v" : "c");
-			w2 = r2.rest;
-		} while (w2 !== "");
-		show_word_parts(word_arr, type_arr);
+	const word_arr = [],
+		/** @type {("c" | "v")[]} */
+		type_arr = [];
+	let w2 = word;
+	for (;;) {
+		const r2 = word_starts_with_consonant_seq2(w2);
+		word_arr.push(r2.part);
+		type_arr.push(r2.type == "vowel" ? "v" : "c");
+		if (r2.rest === "") break;
+		w2 = r2.rest;
 	}
+	if (word_arr.length > 5) return;
+	if (destructure_word) show_word_parts(word_arr, type_arr);
 	random_dictionary_set.add(word);
 	if (add_new_words) {
 		new_words_set.add(word);
 	}
 }
+/**
+ * @param {string[]} type_arr
+ * @param {string[]} word_arr
+ */
 function show_word_parts(word_arr, type_arr) {
 	const len = word_arr.length;
 	if (len > 3) return;

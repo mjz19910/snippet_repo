@@ -14,7 +14,7 @@ export async function fetch_one_dictionary_page() {
 		let [word, description] = v.split(" - ");
 		word = word.slice(3, -4);
 		word = word.toLowerCase();
-		parse_rng_word(word, true, true);
+		parse_rng_word(word, { add_new_words: true, destructure_word: true });
 		parse_rng_description(description);
 	});
 }
