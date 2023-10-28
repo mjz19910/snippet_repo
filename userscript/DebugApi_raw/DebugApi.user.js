@@ -96,23 +96,22 @@ const ack_win = 100_000;
 class TCPMessage {
 	/** @readonly */
 	type = "tcp";
-	/** @arg {import("./support/dbg/ConnectFlag.ts").ConnectFlag} flags @arg {number} client_id @arg {number} seq @arg {number} ack @arg {ConnectionMessage["data"]} data */
-	constructor(flags, client_id, seq, ack, data) {
+	/** @arg {import("./support/dbg/ConnectFlag.ts").ConnectFlag} flags @arg {number} seq @arg {number} ack @arg {ConnectionMessage["data"]} data */
+	constructor(flags, seq, ack, data) {
 		this.flags = flags;
-		this.client_id = client_id;
 		this.seq = seq;
 		this.ack = ack;
 		/** @type {ConnectionMessage["data"]} */
 		this.data = data;
 	}
-	/** @arg {number} client_id @returns {ConnectionMessage} */
-	static make_syn(client_id) {
+	/** @returns {ConnectionMessage} */
+	static make_syn() {
 		const seq = (Math.random() * ack_win) % ack_win | 0;
-		return new TCPMessage(tcp_syn, client_id, seq, 0, null);
+		return new TCPMessage(tcp_syn, seq, 0, null);
 	}
-	/** @arg {number} client_id @arg {ConnectionMessage["data"]} data @arg {number} seq @arg {number} ack @returns {ConnectionMessage} */
-	static make_message(client_id, seq, ack, data) {
-		return new TCPMessage(0, client_id, seq, ack, data);
+	/** @arg {ConnectionMessage["data"]} data @arg {number} seq @arg {number} ack @returns {ConnectionMessage} */
+	static make_message(seq, ack, data) {
+		return new TCPMessage(0, seq, ack, data);
 	}
 }
 const testing_tcp = true;
@@ -589,7 +588,7 @@ class WindowSocket extends SocketBase {
 }
 export_((exports) => {
 	exports.WindowSocket = WindowSocket;
-	exports.socket = new WindowSocket;
+	exports.socket = new WindowSocket();
 });
 export_((exports) => exports.__module_loaded__ = true);
 if (delete_require) {
