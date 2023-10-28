@@ -180,6 +180,20 @@ class SocketBase {
 			data,
 		);
 	}
+	/** @type {(()=>void)|null} */
+	on_next_packet = null;
+	seen_packet() {
+		if (!this.on_next_packet) return;
+		this.on_next_packet();
+		this.on_next_packet = null;
+	}
+	/** @arg {ConnectionMessage} _ */
+	handle_tcp_data(_) {
+		this.seen_packet();
+		this.on_next_packet = () => {
+			console.groupEnd();
+		};
+	}
 }
 class ClientSocket extends SocketBase {
 	static direct_message = false;
@@ -269,8 +283,6 @@ class ClientSocket extends SocketBase {
 			p.handleEvent(new MessageEvent("message", { data: tcp }));
 		} else this.m_port.postMessage(tcp);
 	}
-	/** @type {(()=>void)|null} */
-	on_next_packet = null;
 	/** @arg {ConnectionMessage} tcp */
 	client_connect(tcp) {
 		if (testing_tcp) {
@@ -293,22 +305,14 @@ class ClientSocket extends SocketBase {
 		}
 		this.handle_tcp_data(tcp);
 	}
-	seen_packet() {
-		if (!this.on_next_packet) return;
-		this.on_next_packet();
-		this.on_next_packet = null;
-	}
-	/** @arg {ConnectionMessage} tcp */
+	/** @override @arg {ConnectionMessage} tcp */
 	handle_tcp_data(tcp) {
-		this.seen_packet();
+		super.handle_tcp_data(tcp);
 		const f = new FlagHandler(tcp.flags);
 		if (this.m_local_log) console.log("client", tcp);
 		if ((f.is_syn() && f.is_ack()) || f.is_none()) {
 			this.send_ack(tcp);
 		}
-		this.on_next_packet = () => {
-			console.groupEnd();
-		};
 		if (!tcp.data) return;
 		const tcp_data = tcp.data;
 		switch (tcp_data.type) {
@@ -476,8 +480,9 @@ class ServerSocket extends SocketBase {
 		}
 		this.handle_tcp_data(tcp);
 	}
-	/** @arg {ConnectionMessage} tcp */
+	/** @override @arg {ConnectionMessage} tcp */
 	handle_tcp_data(tcp) {
+		super.handle_tcp_data(tcp);
 		const f = new FlagHandler(tcp.flags);
 		this.m_current_seq = tcp.seq;
 		this.m_current_ack = tcp.ack;
