@@ -45,10 +45,10 @@ type take_piece_of_paper={
 type armour={
 	id: "armour",
 	news: "Knight's armour",
-	actions: [
+	action: H.ActionArr<[
 		unscrew_armor,
 		take_piece_of_paper,
-	],
+	]>,
 };
 type larStairs={
 	id: "larStairs",
