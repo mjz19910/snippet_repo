@@ -4513,7 +4513,7 @@ class ConsoleAccess {
 	/** @arg {ConnectionMessage} tcp */
 	send_ack(tcp) {
 		let { seq: ack, ack: seq, flags } = tcp;
-		if ((flags & 1) == 1) flags ^= 1;
+		if ((flags & 2) && (flags & 1) == 1) flags ^= 1;
 		flags |= tcp_ack;
 		if (seq == 0) {
 			seq = (Math.random() * ack_win) % ack_win | 0;
@@ -4758,19 +4758,19 @@ class ListenSocket extends ConsoleAccess {
 	get is_connected() {
 		return this.m_is_connected;
 	}
-	/** @override @arg {ConnectionMessage} data */
-	push_tcp_message(data) {
+	/** @override @arg {ConnectionMessage} tcp */
+	push_tcp_message(tcp) {
 		if (testing_tcp) {
-			this.open_group("tx", data);
+			this.open_group("tx", tcp);
 			console.log("ListenSocket.push_tcp_message ->");
 			console.log("s_port.onmessage.handleEvent ->");
-			console.log("-> Socket", data);
+			console.log("-> Socket", tcp, tcp.data);
 			this.close_group();
 		}
 		if (Socket.direct_message) {
 			const p = Socket.prototype;
-			p.handleEvent(new MessageEvent("message", { data }));
-		} else this.m_port.postMessage(data);
+			p.handleEvent(new MessageEvent("message", { data: tcp }));
+		} else this.m_port.postMessage(tcp);
 	}
 	/** @arg {ConnectionMessage} tcp_message */
 	downstream_connect(tcp_message) {
