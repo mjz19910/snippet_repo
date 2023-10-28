@@ -4598,10 +4598,10 @@ class ClientSocket extends SocketBase {
 	send_init_request(data, server_port) {
 		if (this.m_debug) console.log("post request ConnectOverPostMessage");
 		if (testing_tcp) {
-			this.open_group("tx", data);
-			console.log("ClientSocket ->");
-			console.log("top.handleEvent ->");
-			console.log("-C> CrossOriginConnection", data);
+			this.open_group("tx-client", data);
+			console.log("client.send_init_request ->");
+			console.log("<remote window>.handleEvent ->");
+			console.log("CrossOriginConnection", data);
 			this.close_group();
 		}
 		this.post_wrapped(data, server_port);
