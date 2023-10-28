@@ -8,7 +8,7 @@ import {
 async function scope() {
 	for (let i = 0; i < 80; i++) {
 		const arr = [];
-		for (let j = 0; j < 50; j++) {
+		for (let j = 0; j < 40; j++) {
 			arr.push(fetch_one_page("poems"));
 		}
 		await Promise.all(arr);
