@@ -945,6 +945,7 @@ type main={
 	links: [wall];
 	quest_chain: [
 		faq,
+		Do.RunTakeAct<faq["action"]["item"]>,
 		y,
 		picQ,picTable,picCup,picRef,burrow,larder,larStairs,keep,floorFive,elevator,elev_boiler,boiler,
 		mechanic,
