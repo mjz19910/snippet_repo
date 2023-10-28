@@ -43,7 +43,7 @@ class HashMap {
 		if (!this.backing_map) {
 			return;
 		}
-		for (let x of this.backing_map.entries()) {
+		for (const x of this.backing_map.entries()) {
 			if (callback.apply(this, x) === "Break") {
 				break;
 			}
@@ -333,11 +333,11 @@ class JSLineTerminators extends ECMA262Base {
 class Comments extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	Comment(str, index) {
-		let ml_len = this.MultiLineComment(str, index);
+		const ml_len = this.MultiLineComment(str, index);
 		if (ml_len[2] > 0) {
 			return ml_len;
 		}
-		let sl_len = this.SingleLineComment(str, index);
+		const sl_len = this.SingleLineComment(str, index);
 		if (sl_len[2] > 0) {
 			return sl_len;
 		}
@@ -355,7 +355,7 @@ class Comments extends ECMA262Base {
 			if (str.slice(index + off, index + off + 2) === "*/") {
 				return [true, "MultiLineComment", 4];
 			}
-			let [valid, , com_len] = this.MultiLineCommentChars(str, index + off);
+			const [valid, , com_len] = this.MultiLineCommentChars(str, index + off);
 			if (!valid) {
 				return [false, null, 0];
 			}
@@ -378,17 +378,20 @@ class Comments extends ECMA262Base {
 			throw Error("stack overflow");
 		}
 		this.dep++;
-		let ml_na = this.MultiLineNotAsteriskChar(str, index + start_len);
+		const ml_na = this.MultiLineNotAsteriskChar(str, index + start_len);
 		if (ml_na[2] > 0) {
 			start_len++;
 			for (;;) {
-				let [, , ml_na] = this.MultiLineNotAsteriskChar(str, index + start_len);
+				const [, , ml_na] = this.MultiLineNotAsteriskChar(
+					str,
+					index + start_len,
+				);
 				if (ml_na > 0) {
 					start_len += ml_na;
 					continue;
 				}
 				if (str[index + start_len] === "*") {
-					let [, , pac] = this.PostAsteriskCommentChars(
+					const [, , pac] = this.PostAsteriskCommentChars(
 						str,
 						index + start_len + 1,
 					);
@@ -401,7 +404,10 @@ class Comments extends ECMA262Base {
 			}
 		}
 		if (str[index + start_len] === "*") {
-			let [, , pac] = this.PostAsteriskCommentChars(str, index + start_len + 1);
+			const [, , pac] = this.PostAsteriskCommentChars(
+				str,
+				index + start_len + 1,
+			);
 			if (pac > 0) {
 				start_len++;
 				start_len += pac;
@@ -419,21 +425,24 @@ class Comments extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	PostAsteriskCommentChars(str, index) {
 		let index_offset = 0;
-		let offset_1 = this.MultiLineNotForwardSlashOrAsteriskChar(
+		const offset_1 = this.MultiLineNotForwardSlashOrAsteriskChar(
 			str,
 			index + index_offset,
 		);
 		if (!offset_1[0]) return [false, null, 0];
 		if (offset_1[2] > 0) {
 			index_offset += offset_1[2];
-			let la = this.MultiLineCommentChars(str, index + index_offset);
+			const la = this.MultiLineCommentChars(str, index + index_offset);
 			index_offset += la[2];
 			return [true, "PostAsteriskCommentChars", index_offset];
 		}
 		if (offset_1[2] === 0) {
 			if (str[index + index_offset] === "*") {
 				index_offset++;
-				let offset_2 = this.PostAsteriskCommentChars(str, index + index_offset);
+				const offset_2 = this.PostAsteriskCommentChars(
+					str,
+					index + index_offset,
+				);
 				if (!offset_2[0]) {
 					throw new Error("Recursive call to PostAsteriskCommentChars failed");
 				}
@@ -463,7 +472,7 @@ class Comments extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	SingleLineComment(str, index) {
 		if (str.slice(index, index + 2) === "//") {
-			let comment_length = this.SingleLineCommentChars(str, index + 2);
+			const comment_length = this.SingleLineCommentChars(str, index + 2);
 			if (!comment_length[0]) {
 				throw new Error("Failed to parse single line comment");
 			}
@@ -494,7 +503,7 @@ class HashbangComments extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	HashbangComment(str, index) {
 		if (str[index] === "#" && str[index + 1] === "!") {
-			let res = this.parent.comments.SingleLineCommentChars(str, index + 2);
+			const res = this.parent.comments.SingleLineCommentChars(str, index + 2);
 			return [true, "HashbangComment", res[2] + 2];
 		}
 		return [false, null, 0];
@@ -553,21 +562,21 @@ class NamesAndKeywords extends ECMA262Base {
 		if (str[index] !== "#") {
 			return [false, null, 0];
 		}
-		let cur = this.IdentifierName(str, index + 1);
+		const cur = this.IdentifierName(str, index + 1);
 		if (!cur[0]) return [false, null, 0];
 		return [true, "PrivateIdentifier", cur[2] + 1];
 	}
 	static IdentifierName_not_start_regex = /[0-9a-zA-Z$_]+/g;
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	IdentifierName(str, index) {
-		let res = this.IdentifierStart(str, index);
+		const res = this.IdentifierStart(str, index);
 		if (!res[0]) {
 			return [false, null, 0];
 		}
-		let [, , id_start_len] = res;
+		const [, , id_start_len] = res;
 		NamesAndKeywords.IdentifierName_not_start_regex.lastIndex = index +
 			id_start_len;
-		let id_continue_match = NamesAndKeywords.IdentifierName_not_start_regex
+		const id_continue_match = NamesAndKeywords.IdentifierName_not_start_regex
 			.exec(str);
 		if (!id_continue_match || id_continue_match.index != (index + 1)) {
 			return [true, "IdentifierName", id_start_len];
@@ -589,7 +598,7 @@ class NamesAndKeywords extends ECMA262Base {
 			return [false, null, 0];
 		}
 		if (str[index] === "\\") {
-			let res = this.parent.string_literals.UnicodeEscapeSequence(
+			const res = this.parent.string_literals.UnicodeEscapeSequence(
 				str,
 				index + 1,
 			);
@@ -639,8 +648,8 @@ class Punctuators extends PunctuatorsData {
 	// https://tc39.es/ecma262/#prod-Punctuator
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	Punctuator(str, index) {
-		var max_len = 0, type = null, ret;
-		var new_type, new_len;
+		let max_len = 0, type = null, ret;
+		let new_type, new_len;
 		ret = this.OptionalChainingPunctuator(str, index);
 		[, new_type, new_len] = ret;
 		if (new_len > max_len) {
@@ -660,7 +669,7 @@ class Punctuators extends PunctuatorsData {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	OptionalChainingPunctuator(str, index) {
 		if (str.slice(index, index + 2) === "?.") {
-			let [, , num_len] = this.parent.numeric_literals.DecimalDigit(
+			const [, , num_len] = this.parent.numeric_literals.DecimalDigit(
 				str,
 				index + 2,
 			);
@@ -782,7 +791,7 @@ class NumericLiterals extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	NumericLiteral(str, index) {
 		let max_len = 0;
-		let len = this.DecimalLiteral(str, index);
+		const len = this.DecimalLiteral(str, index);
 		if (len[2] > max_len) {
 			max_len = len[2];
 		}
@@ -796,7 +805,7 @@ class NumericLiterals extends ECMA262Base {
 	DecimalBigIntegerLiteral(str, index) {
 		if (str[index] === "0") {
 			let len = 1;
-			let res = this.BigIntLiteralSuffix(str, index + len);
+			const res = this.BigIntLiteralSuffix(str, index + len);
 			if (res[2] > 0) {
 				len += res[2];
 				return [true, "DecimalBigIntegerLiteral", len];
@@ -859,7 +868,7 @@ class NumericLiterals extends ECMA262Base {
 		let max_len = 0;
 		let len = 0;
 		{
-			let cur = this.DecimalIntegerLiteral(str, index + len);
+			const cur = this.DecimalIntegerLiteral(str, index + len);
 			len += cur[2];
 		}
 		if (len > 0 && str[index + len] === ".") {
@@ -880,7 +889,7 @@ class NumericLiterals extends ECMA262Base {
 		let len = 0;
 		{
 			// NonZeroDigit
-			let [, , tmp] = this.NonZeroDigit(str, index);
+			const [, , tmp] = this.NonZeroDigit(str, index);
 			if (tmp > len) {
 				len = tmp;
 			}
@@ -897,7 +906,7 @@ class NumericLiterals extends ECMA262Base {
 				if (res > 0) {
 					tmp_len += res;
 				}
-				let prev_sep_flag = this.parent.flags.sep;
+				const prev_sep_flag = this.parent.flags.sep;
 				this.parent.flags.sep = true;
 				[, , res] = this.DecimalDigits(str, index + tmp_len);
 				this.parent.flags.sep = prev_sep_flag;
@@ -2280,8 +2289,14 @@ export function ecma_parse_main() {
 	let parse_str = "function x(){}";
 	parse_javascript_str(parse_str);
 }
-
-if (typeof exports === "object") {
-	exports.parse_javascript_str = parse_javascript_str;
-	exports.ecma_parse_main = ecma_parse_main;
+/** @private @arg {(x:typeof exports)=>void} fn */
+function export_(fn, flags = { global: false }) {
+	do_export(fn, flags, exports, __module_name__);
 }
+export_((exports) => {
+	if (typeof exports === "object") {
+		exports.parse_javascript_str = parse_javascript_str;
+		exports.ecma_parse_main = ecma_parse_main;
+	}
+});
+const {} = require("./ecma_lex.js");
