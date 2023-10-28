@@ -237,7 +237,6 @@ class ClientSocket extends SocketBase {
 	init_handler() {
 		this.m_port.addEventListener("message", this);
 		this.m_port.start();
-		elevate_event_handler(this);
 	}
 	/** @arg {MessagePort} server_port */
 	send_syn(server_port) {
