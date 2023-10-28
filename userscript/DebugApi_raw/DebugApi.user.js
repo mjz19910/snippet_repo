@@ -116,7 +116,6 @@ class TCPMessage {
 		return new TCPMessage(0, client_id, seq, ack, data);
 	}
 }
-
 const testing_tcp = true;
 class SocketBase {
 	fmt_tag;
