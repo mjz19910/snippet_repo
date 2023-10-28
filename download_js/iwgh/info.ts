@@ -1,4 +1,6 @@
 import {H,Do} from "./Helpers.ts";
+import * as Items from "./items.ts";
+
 type larTorch={
 	id: "larTorch",
 	news_str: "Lonely torch page",
@@ -403,13 +405,9 @@ type u_page={
 	],
 };
 type zbrogjdnfhvyensocuiehw=u_page;
-type something_item={
-	type: "item";
-	id: "something";
-};
 type something={
 	id: "something";
-	action: H.TakeAction<something_item>;
+	action: H.TakeAction<Items.something>;
 };
 type rhino={
 	links: [something],
