@@ -85,7 +85,7 @@ export function parse_rng_word(
 }
 function show_word_parts(word_arr, type_arr) {
 	const len = word_arr.length;
-	if (len > 4) return;
+	if (len > 3) return;
 	const wj = word_arr.join(""), tj = type_arr.join("");
 	console.log("W:", wj, "T:", tj, [".parts", len]);
 }
