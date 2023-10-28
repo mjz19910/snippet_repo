@@ -30,17 +30,8 @@ async function fetch_one_dictionary_page() {
 		parse_rng_description(description);
 	});
 }
-async function run() {
-	const description_file = await deno_default_open("./description_cache.json");
-	/** @type {string[]} */
-	const description_load_arr = await read_json_array_file(description_file);
-	for (const description_item of description_load_arr) {
-		description_cache_set.add(description_item);
-	}
-	const dictionary_file = await deno_default_open("./random_dictionary.json");
-	/** @type {string[]} */
-	const load_arr2 = await read_json_array_file(dictionary_file);
-	for (const word of load_arr2) {
+async function async_main(dictionary_words_arr) {
+	for (const word of dictionary_words_arr) {
 		parse_rng_word(word, false, false);
 	}
 	const perf_start = performance.now();
@@ -76,6 +67,18 @@ async function run() {
 		"requests per second:",
 		+(total_request_count / total_seconds).toFixed(3),
 	);
+}
+async function run() {
+	const description_file = await deno_default_open("./description_cache.json");
+	/** @type {string[]} */
+	const description_load_arr = await read_json_array_file(description_file);
+	for (const description_item of description_load_arr) {
+		description_cache_set.add(description_item);
+	}
+	const dictionary_file = await deno_default_open("./random_dictionary.json");
+	/** @type {string[]} */
+	const dictionary_words_arr = await read_json_array_file(dictionary_file);
+	await async_main(dictionary_words_arr);
 	if (description_set_state.modified) {
 		const description_arr = [...description_cache_set.values()].sort();
 		console.log("description_arr.length", description_arr.length);
