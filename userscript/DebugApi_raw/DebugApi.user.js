@@ -4628,20 +4628,20 @@ class Socket extends ConsoleAccess {
 		}
 		this.handle_tcp_data(data);
 	}
-	/** @arg {ConnectionMessage} tcp_message @arg {import("./support/dbg/ConnectFlag.ts").ConnectFlag} flags */
-	send_ack(tcp_message, flags) {
+	/** @arg {ConnectionMessage} tcp_message */
+	send_ack(tcp_message) {
 		// seq=number & ack=number;
 		let seq = tcp_message.ack;
 		if (seq == 0) {
 			seq = (Math.random() * ack_win) % ack_win | 0;
 		}
-		flags |= tcp_ack;
+		tcp_message.flags |= tcp_ack;
 		this.push_tcp_message({
 			type: "tcp",
 			client_id: this.m_client_id,
 			ack: tcp_message.seq + 1,
 			seq,
-			flags,
+			flags: tcp_message.flags,
 			data: null,
 		});
 	}
@@ -4650,33 +4650,25 @@ class Socket extends ConsoleAccess {
 		const f = new FlagHandler(tcp_message.flags);
 		if (this.m_local_log) console.log("local", tcp_message);
 		if ((f.is_syn() && f.is_ack()) || f.is_none()) {
-			this.send_ack(tcp_message, 0);
+			this.send_ack(tcp_message);
 		}
 		if (!tcp_message.data) return;
 		const tcp_data = tcp_message.data;
 		switch (tcp_data.type) {
 			case "connected":
-				{
-					this.client_connect(tcp_message);
-				}
+				this.client_connect(tcp_message);
 				break;
 			case "will_disconnect":
-				{
-					this.m_can_reconnect = tcp_data.can_reconnect;
-					this.m_disconnect_start = performance.now();
-				}
+				this.m_can_reconnect = tcp_data.can_reconnect;
+				this.m_disconnect_start = performance.now();
 				break;
 			case "disconnected":
-				{
-					if (!this.m_disconnect_start) {
-						throw new Error("missed will_disconnect");
-					}
-					console.log(
-						"before_unload took",
-						performance.now() - this.m_disconnect_start,
-					);
-					this.client_disconnect(tcp_message);
+				if (!this.m_disconnect_start) {
+					throw new Error("missed will_disconnect");
 				}
+				const perf_diff = performance.now() - this.m_disconnect_start;
+				console.log("before_unload took", perf_diff);
+				this.client_disconnect(tcp_message);
 				break;
 			case "side":
 		}
