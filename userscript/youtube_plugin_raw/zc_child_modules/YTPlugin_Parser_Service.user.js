@@ -52,7 +52,7 @@ class ParserService extends BaseService
 	/** @private @template {`${U}${string}${U}`} I @template {string} U @arg {I} x @arg {U} _w @returns {I extends `${U}${infer V}${U}`?V:never} */
 	extract_inner(x,_w)
 	{
-		/** @private @type {unknown} */
+		/** @private @type {string} */
 		let ac=x.slice(1,-1);
 		return ac;
 	}

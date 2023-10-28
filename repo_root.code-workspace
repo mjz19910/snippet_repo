@@ -22,8 +22,5 @@
 		"typescript.format.insertSpaceBeforeAndAfterBinaryOperators": false,
 		"typescript.format.semicolons": "insert",
 		"typescript.preferences.importModuleSpecifierEnding": "js",
-		"deno.enable": true,
-		"deno.lint": true,
-		"deno.unstable": true,
 	}
 }

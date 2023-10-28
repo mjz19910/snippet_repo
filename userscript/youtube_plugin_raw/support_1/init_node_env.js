@@ -191,5 +191,5 @@ async function do_node_exit(exit_status) {
 		process.exit(exit_status);
 	}
 }
-exports.window = window;
-exports.destroy_env = destroy_env;
+export { destroy_env };
+export { t_ as window };
