@@ -406,7 +406,6 @@ function peek_description_arr(description_arr) {
 }
 export { peek_description_arr };
 async function run() {
-	const arr = [];
 	const description_file = await deno_default_open("./description_cache.json");
 	/** @type {string[]} */
 	const description_load_arr = await read_json_array_file(description_file);
@@ -429,6 +428,7 @@ async function run() {
 	const inc_request_total = () => {
 		request_total++;
 	};
+	const arr = [];
 	for (let j = 0;; j++) {
 		const request_count = 8;
 		for (let i = 0; i < request_count; i++) {
