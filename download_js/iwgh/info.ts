@@ -230,10 +230,14 @@ export type uForest={
 		usingItem: "QweQwe",
 	},
 };
+export type cowardly_dwarf={
+	type: "item";
+	id: "cowardly dwarf";
+};
 export type uForestEdge={
 	id: "uForestEdge",
 	links: [uForest],
-	action: H.TakeActionStr<"cowardly dwarf">;
+	action: H.TakeAction<cowardly_dwarf>;
 };
 export type boiler={
 	id: "boiler";
