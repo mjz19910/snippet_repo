@@ -5225,8 +5225,6 @@ class DebugApi {
 		if (typeof breakpoint_arguments.target != "function") {
 			return { type: "argument-error" };
 		}
-		this.current_function_value = breakpoint_arguments.target;
-		const dbg_str_func = this.stringifyFunction(this.debuggerBreakpointCode);
 		const tmp_key = "k";
 		class DebugInfoValue {
 			valid = false;
@@ -5237,8 +5235,10 @@ class DebugApi {
 		}
 		const tmp_value = new DebugInfoValue();
 		this.setData(tmp_key, tmp_value);
+		const breakpoint_code_string = this.stringifyFunction(this.debuggerBreakpointCode);
 		const debug = this.get_d();
-		debug(this.current_function_value, `${dbg_str_func}`);
+		this.current_function_value = breakpoint_arguments.target;
+		debug(this.current_function_value, `${breakpoint_code_string}`);
 		// ---- Activate ----
 		let activate_return = null;
 		if (breakpoint_arguments.type === "class-breakpoint") {
