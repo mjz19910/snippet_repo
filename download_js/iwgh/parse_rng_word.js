@@ -43,3 +43,35 @@ export function word_starts_with_consonant_seq2(word) {
 	const part = word.slice(0, seq_len), rest = word.slice(seq_len);
 	return { type, part, rest };
 }
+/** @type {Set<string>} */
+export const dict = new Set();
+export const new_words_set = new Set();
+/**
+ * @param {string} word
+ */
+export function parse_rng_word(
+	word,
+	add_new_words = true,
+	destructure_word = false,
+) {
+	if (dict.has(word)) return;
+	if (destructure_word) {
+		const word_arr = [],
+			/** @type {("c" | "v")[]} */
+			type_arr = [];
+		let w2 = word;
+		do {
+			const r2 = word_starts_with_consonant_seq2(w2);
+			word_arr.push(r2.part);
+			type_arr.push(r2.type == "vowel" ? "v" : "c");
+			w2 = r2.rest;
+		} while (w2 !== "");
+		if (word_arr.length <= 3) {
+			console.log("W:", word_arr.join(""), "T:", type_arr.join(""));
+		}
+	}
+	dict.add(word);
+	if (add_new_words) {
+		new_words_set.add(word);
+	}
+}
