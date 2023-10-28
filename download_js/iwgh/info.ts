@@ -138,17 +138,13 @@ type picQ={
 		item: dead_klingon;
 	}>;
 	quest_chain_part: readyRoom["story"]["dead_klingon"];
-	story: {
-		burrow: {
-			quest_chain: [
-				picQ,picTable,picCup,picRef,burrow,larder,larStairs,keep,floorFive,elevator,elev_boiler,boiler,
-				mechanic,
-				Do.UseAction<mechanic,hypospray>,
-				piping,
-				pipe1,
-			];
-		};
-	};
+	quest_chain: [
+		picQ,picTable,picCup,picRef,burrow,larder,larStairs,keep,floorFive,elevator,elev_boiler,boiler,
+		mechanic,
+		Do.UseAction<mechanic,hypospray>,
+		piping,
+		pipe1,
+	];
 };
 type good={
 	id: "good",
@@ -345,11 +341,6 @@ type keycard={
 type off={
 	id: "off",
 	action: H.TakeAction<keycard>;
-	quest_chain: [
-		Do.RunTakeAct<keycard>,
-		Do.UseMenu<members>,
-		members,green,red,picQ,
-	];
 };
 type on={
 	id: "on",
@@ -844,9 +835,6 @@ type orb_book={
 		kukiOrbs
 	];
 };
-type main={
-	links: [wall],
-};
 type all_pages={
 	generic: {
 		links: [
@@ -952,3 +940,16 @@ type z={
 	};
 };
 
+type main={
+	id: "main";
+	links: [wall];
+	quest_chain: [
+		faq,
+		y,
+		picQ,picTable,picCup,picRef,burrow,larder,larStairs,keep,floorFive,elevator,elev_boiler,boiler,
+		mechanic,
+		Do.UseAction<mechanic,hypospray>,
+		piping,
+		pipe1,
+	];
+};
