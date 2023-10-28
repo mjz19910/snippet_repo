@@ -12,11 +12,12 @@ function string_contained_by_end(v, needle1, needle2, search_pos = 0) {
 }
 function on_poems_page_text(v) {
 	const [tbl] = string_contained_by(v, "<table ", "</table>");
-	const row1_end = string_contained_by_end(tbl, "<tr>", "</tr>");
-	const [row2_str] = string_contained_by(tbl, "<tr>", "</tr>", row1_end);
-	console.log(row2_str);
 	const [news_str] = string_contained_by(tbl, '<p class="news">', "</p>");
 	console.log(news_str);
+	const row1_end = string_contained_by_end(tbl, "<tr>", "</tr>");
+	const [row2_str] = string_contained_by(tbl, "<tr>", "</tr>", row1_end);
+	const [poem_txt] = string_contained_by(row2_str, "<p>", "</p>");
+	console.log(poem_txt);
 }
 /** @param {"poems"} target_page */
 export async function fetch_one_page(target_page) {
