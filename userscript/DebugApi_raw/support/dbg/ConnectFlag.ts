@@ -1,5 +1,3 @@
-import {Constructor} from "../types/Constructor.ts";
-
 enum ConnectFlag_base {
 	None=0,
 	Syn=1<<0,
@@ -7,4 +5,3 @@ enum ConnectFlag_base {
 }
 export type ConnectFlag=ConnectFlag_base;
 export type ConnectFlagT=typeof ConnectFlag_base;
-export type RecordKey<T>=Constructor&{key: T;};
