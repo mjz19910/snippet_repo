@@ -44,16 +44,12 @@ function on_poems_page_text(v) {
 	const poem_txt = unwrap_html_str("p", poem_txt2);
 	const poem_str = poem_txt.replaceAll("<br>", "\n").split("\n\n")[1];
 	const poem_lines = poem_str.split("\n");
-	const all_poem_words = [];
 	for (const poem_line of poem_lines) {
 		const poem_words = on_poem_line(poem_line);
 		for (const word of poem_words) {
-			if (all_poem_words.includes(word)) continue;
-			all_poem_words.push(word);
 			parse_rng_word(word, true, true);
 		}
 	}
-	console.log(all_poem_words);
 }
 /** @param {"poems"} target_page */
 export async function fetch_one_page(target_page) {
