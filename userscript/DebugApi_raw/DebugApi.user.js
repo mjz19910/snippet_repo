@@ -4411,8 +4411,8 @@ function cast_to_record_with_key_and_string_type(x, k) {
 }
 add_function(cast_to_record_with_key_and_string_type);
 //#endregion
-/** @readonly @type {"CrossOriginConnection"} */
-const post_message_connect_message_type = "CrossOriginConnection";
+/** @readonly @type {"WindowSocket"} */
+const post_message_connect_message_type = "WindowSocket";
 export_((exports) => {
 	exports.post_message_connect_message_type = post_message_connect_message_type;
 });
@@ -4600,8 +4600,8 @@ class ClientSocket extends SocketBase {
 		if (testing_tcp) {
 			this.open_group("tx-client", data);
 			console.log("client.send_init_request ->");
-			console.log("<remote window>.handleEvent ->");
-			console.log("CrossOriginConnection", data);
+			console.log(".handleEvent ->");
+			console.log("<remote window>", data);
 			this.close_group();
 		}
 		this.post_wrapped(data, server_port);
@@ -4618,10 +4618,10 @@ class ClientSocket extends SocketBase {
 	/** @override @arg {ConnectionMessage} data */
 	push_tcp_message(data) {
 		if (testing_tcp) {
-			this.open_group("tx", data);
-			console.log("ClientSocket.push_tcp_message ->");
-			console.log("client_port.handleEvent ->");
-			console.log("ServerSocket", data);
+			this.open_group("tx-client", data);
+			console.log(".push_tcp_message ->");
+			console.log("server_port.handleEvent ->");
+			console.log("server", data);
 			this.close_group();
 		}
 		if (ServerSocket.direct_message) {
@@ -4644,9 +4644,9 @@ class ClientSocket extends SocketBase {
 		if (tcp.type !== "tcp") throw new Error();
 		if (testing_tcp) {
 			this.open_group("rx-client", tcp);
-			console.log("this.handleEvent ->");
-			console.log("this.handle_tcp_data ->");
-			console.log("ServerSocket", tcp, tcp.data);
+			console.log(".handleEvent ->");
+			console.log(".handle_tcp_data ->");
+			console.log("server", tcp, tcp.data);
 			this.close_group();
 		}
 		this.handle_tcp_data(tcp);
@@ -4755,8 +4755,8 @@ class ServerSocket extends SocketBase {
 		if (testing_tcp) {
 			this.open_group("tx-server", tcp);
 			console.log(".push_tcp_message ->");
-			console.log("server_port.handleEvent ->");
-			console.log("ClientSocket", tcp, tcp.data);
+			console.log("port.postMessage ->");
+			console.log("client", tcp, tcp.data);
 			this.close_group();
 		}
 		if (ClientSocket.direct_message) {
@@ -4781,7 +4781,7 @@ class ServerSocket extends SocketBase {
 	downstream_handle_event(info) {
 		if (!info.data) return;
 		export_((exports) => {
-			exports.remote_origin.push_tcp_message(info);
+			exports.socket.push_tcp_message(info);
 		});
 		if (testing_tcp) {
 			console.log("downstream_event", info.data, info.flags, info.client_id);
@@ -4817,7 +4817,7 @@ class ServerSocket extends SocketBase {
 			this.open_group("rx-server", tcp);
 			console.log(".handleEvent ->");
 			console.log(".handle_tcp_data ->");
-			console.log("ClientSocket", tcp);
+			console.log("client", tcp);
 			this.close_group();
 		}
 		this.handle_tcp_data(tcp);
@@ -4841,7 +4841,7 @@ class ServerSocket extends SocketBase {
 	}
 }
 
-class CrossOriginConnection extends SocketBase {
+class WindowSocket extends SocketBase {
 	/** @private */
 	m_state = new OriginState();
 	/** @private */
@@ -4851,7 +4851,7 @@ class CrossOriginConnection extends SocketBase {
 	/** @private */
 	m_client_max_id = 0;
 	constructor() {
-		super("CrossOriginConnection", -1);
+		super("WindowSocket", -1);
 		elevate_event_handler(this);
 		const client_id = this.m_client_max_id++;
 		this.start_root_server();
@@ -4946,12 +4946,12 @@ class CrossOriginConnection extends SocketBase {
 	}
 	static connect_to_api() {
 		export_((exports) => {
-			exports.CrossOriginConnection = this;
-			exports.remote_origin = new this();
+			exports.WindowSocket = this;
+			exports.socket = new this();
 		});
 	}
 }
-CrossOriginConnection.connect_to_api();
+WindowSocket.connect_to_api();
 
 const html_parsing_div_element = document.createElement("div");
 /** @arg {string} html */
