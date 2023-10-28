@@ -857,11 +857,8 @@ type main={
 		Do.ActivateRoom<uQuarters>,
 		Do.RunTakeAct<uQuarters,Items.dead_romulan>,
 		oLounge,
-		sickbay,
-		H.TakeActionR<{
-			required: Items.dead_romulan;
-			item: hypospray,
-		}>,
+		Do.ActivateRoom<sickbay>,
+		Do.RunTakeAct2<sickbay,2,hypospray>,
 		uSuddEnd,
 		uFridgeOpen,
 		Do.RunTakeAct<uFridgeOpen,Items.hand_press>,
