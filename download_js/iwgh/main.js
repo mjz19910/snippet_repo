@@ -296,6 +296,7 @@ const new_words_set = new Set();
  * @param {string} word
  */
 function parse_rng_word(word, add_new_words = true, destructure_word = false) {
+	if (dict.has(word)) return;
 	if (destructure_word) {
 		const word_arr = [];
 		let w2 = word;
@@ -309,7 +310,6 @@ function parse_rng_word(word, add_new_words = true, destructure_word = false) {
 			console.log(word_arr.length, "XXX:" + word_arr.join(","));
 		}
 	}
-	if (dict.has(word)) return;
 	dict.add(word);
 	if (add_new_words) {
 		new_words_set.add(word);
