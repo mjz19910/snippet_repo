@@ -3,7 +3,7 @@ import {
 	read_json_array_file,
 	write_entire_file,
 } from "./deno_support.js";
-import { parse_rng_word } from "./parse_rng_word.js";
+import { dict, new_words_set, parse_rng_word } from "./parse_rng_word.js";
 import { split_at } from "./string_helpers.js";
 /** @type {Set<string>} */
 const description_set = new Set();
