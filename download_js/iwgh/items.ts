@@ -16,6 +16,5 @@ export type genie={
 };
 export type piece_of_paper={
 	type: "item";
-	id: "piece of paper",
-	links: [dwarfName],
+	id: "piece of paper";
 };
