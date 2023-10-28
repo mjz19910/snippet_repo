@@ -424,7 +424,6 @@ async function run() {
 			at_loop_end();
 		}
 	}
-	at_loop_end();
 	if (description_set_state.modified) {
 		const description_arr = [...description_set.values()].sort();
 		console.log("description_arr.length", description_arr.length);
