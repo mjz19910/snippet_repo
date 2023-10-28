@@ -428,7 +428,6 @@ async function run() {
 		if (j % request_log_interval === (request_log_interval - 1)) {
 			at_loop_end();
 		}
-		if (request_total > 800) break;
 	}
 	const perf_end = performance.now();
 	const perf_diff = perf_end - perf_start;
