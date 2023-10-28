@@ -61,13 +61,13 @@ function wrap_CM(x) {
 	return { type: "cast", data: x };
 }
 /** @template T @arg {import("./support/dbg/CM.ts").CM<T>|null} x @returns {import("./support/dbg/CM.ts").CM<T&{}|null>|null} */
-function cast_to_object(x) {
+function cast_to_object_CM(x) {
 	if (!is_object(x)) return null;
 	return x;
 }
 /** @template T @arg {import("./support/dbg/CM.ts").CM<T>} x @returns {import("./support/dbg/CM.ts").CM<T&{type:string}>|null} */
 function cast_to_event_like_CM(x) {
-	const cast_result = cast_to_object(x);
+	const cast_result = cast_to_object_CM(x);
 	if (!is_record_with_string_type(cast_result, "type")) return null;
 	return cast_result;
 }
