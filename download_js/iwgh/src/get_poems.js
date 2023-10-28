@@ -23,7 +23,9 @@ async function scope() {
 		}
 		await Promise.all(arr);
 		arr.length = 0;
-		reset_words_set();
+		if (i % 8 == 7) {
+			reset_words_set();
+		}
 	}
 }
 async function main() {
