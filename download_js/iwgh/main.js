@@ -408,15 +408,20 @@ async function run() {
 	for (const word of load_arr2) {
 		parse_rng_word(word, false, false);
 	}
+	const perf_start = performance.now();
 	const at_loop_end = () => {
 		console.log("dict word num", new_words_set.size);
 		new_words_set.clear();
 	};
+	let request_total = 0;
 	const request_log_interval = 11;
+	const inc_request_total = () => {
+		request_total++;
+	};
 	for (let j = 0; j < (10 * 8 + request_log_interval - 1); j++) {
 		const request_count = 4;
 		for (let i = 0; i < request_count; i++) {
-			arr.push(fetch_one_dictionary_page());
+			arr.push(fetch_one_dictionary_page().then(inc_request_total));
 		}
 		await Promise.all(arr);
 		arr.length = 0;
@@ -424,6 +429,15 @@ async function run() {
 			at_loop_end();
 		}
 	}
+	const perf_end = performance.now();
+	const perf_diff = perf_end - perf_start;
+	const total_seconds = Math.floor(perf_diff / 100) / 10;
+	console.log("requests took %s seconds", total_seconds.toFixed(1));
+	console.log("request_total:", request_total);
+	console.log(
+		"requests per second:",
+		+(request_total / total_seconds).toFixed(3),
+	);
 	if (description_set_state.modified) {
 		const description_arr = [...description_set.values()].sort();
 		console.log("description_arr.length", description_arr.length);
