@@ -4877,20 +4877,17 @@ class ListenSocket extends ConsoleAccess {
 	/** @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} tcp_message */
 	handle_tcp_data(tcp_message) {
 		const f = new FlagHandler(tcp_message.flags);
-		const { ack: seq } = tcp_message;
+		this.m_current_seq = tcp_message.seq;
+		this.m_current_ack = tcp_message.ack;
 		if (f.is_syn() && !f.is_ack()) {
 			// seq=number & ack=null;
 			this.send_ack(tcp_message, tcp_syn);
 		}
 		if (f.is_none()) this.send_ack(tcp_message, 0);
-		if (f.is_none() && seq == null) console.log("bad tcp", tcp_message);
 		if (f.is_ack() && this.m_is_connecting) {
 			this.m_is_connecting = false;
 			this.m_connected = true;
 			this.downstream_connect(tcp_message);
-		}
-		if (f.is_ack() && this.m_is_connecting && seq == null) {
-			console.log("bad tcp", tcp_message);
 		}
 		const downstream_data = tcp_message.data;
 		if (downstream_data) this.downstream_handle_event(tcp_message);
