@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<style type="text/css">
+		body {
+			margin: 0;
+			padding: 0;
+			height: 100%;
+		}
+
+		.site_link {
+			text-align: center;
+			background-color: green;
+			min-width: 60px;
+			width: fit-content;
+			margin: 0.5rem;
+			padding: 0.2rem 0.4rem
+		}
+	</style>
+</head>
+
+<body>
+	<script id="current_script">
+		let open_win;
+		let body=document.body;
+		function create_site_link(page)
+		{
+			let v=document.createElement("div");
+			v.classList.add("site_link");
+			v.innerText=page;
+			current_script.insertAdjacentElement("beforebegin",v);
+		}
+		const pages_list=[
+			"faq",
+			"off",
+			"picq",
+			"floorthree",
+			"rozenbom",
+			"ufridgeopen",
+			"larfm",
+		];
+		const disabled_pages=[
+			"uforest",
+			"floortwo",
+			"enterprise",
+		];
+		for(let page of pages_list)
+		{
+			create_site_link(page);
+		}
+		window.onmessage=function(event)
+		{
+			console.log("message event",event);
+		};
+		/** @type {NodeListOf<HTMLDivElement>} */
+		let list=document.querySelectorAll(".site_link");
+		for(let item of list)
+		{
+			item.onclick=function()
+			{
+				let page_req=item.innerText;
+				if(open_win)
+				{
+					open_win.close();
+				}
+				open_win=window.open("https://louigiverona.com/iwgh/?page="+page_req);
+				item.remove();
+				window.onbeforeunload=function()
+				{
+					if(open_win)
+					{
+						open_win.close();
+					}
+				};
+			};
+		}
+	</script>
+</body>
+
+</html>

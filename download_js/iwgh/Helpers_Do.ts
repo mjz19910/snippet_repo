@@ -1,0 +1,39 @@
+import {H} from "./Helpers.ts";
+
+type PageMenuItems=[
+	{id: "main";},{id: "dictionary";},{id: "communication";},
+	{id: "members";},
+	{id: "faq";},
+];
+export type TakeAction<T extends H.ItemShape>={take: T;};
+export type UseInventory<T extends H.ItemShape>={target: T;};
+export type UseAction<U extends {
+	id: string,
+	action: {
+		fn: "use",
+		usingitem: T;
+	},
+},T extends H.ItemShape>={pos: U["id"],target: U["action"];};
+export type UseInventory2<T extends H.ItemShape[]>={targets: T;};
+export type UseMenu<T extends PageMenuItems[number]>={target: T;};
+export type UseBold<T>={target: T;};
+export type FollowChain<T extends {
+	quest_chain: ({
+		id: string;
+	}|{
+		take: H.ItemShape;
+	}|{
+		target: H.ItemShape;
+	}|{
+		target: {
+			id: string;
+		};
+	})[];
+}>={
+	do: {
+		type: "follow";
+		dst: "quest_chain";
+	};
+	follow_chain: Pick<T,"quest_chain">;
+};
+export type AssertPageIs<T>={is: T;};
