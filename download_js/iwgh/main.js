@@ -429,17 +429,23 @@ async function run() {
 		request_total++;
 	};
 	const arr = [];
+	let wait_idx = 0;
 	for (let j = 0;; j++) {
 		const request_count = 8;
 		for (let i = 0; i < request_count; i++) {
 			arr.push(fetch_one_dictionary_page().then(inc_request_total));
 		}
-		await Promise.all(arr);
-		arr.length = 0;
+		await arr[wait_idx];
+		arr[wait_idx] = null;
+		wait_idx++;
 		if (j % request_log_interval === (request_log_interval - 1)) {
 			at_loop_end();
 			if (j > (10 * 8)) break;
 		}
+	}
+	for (; wait_idx < arr.length; wait_idx++) {
+		await arr[wait_idx];
+		arr[wait_idx] = null;
 	}
 	const perf_end = performance.now();
 	const perf_diff = perf_end - perf_start;
