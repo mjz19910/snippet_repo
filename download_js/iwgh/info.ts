@@ -908,7 +908,6 @@ type main={
 	quest_chain: [
 		faq,
 		Do.RunTakeAct<gandalf_magic_book>,
-		y,
 		picQ,
 		Do.RunTakeAct<dead_klingon>,
 		readyRoom,
