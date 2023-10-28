@@ -3560,7 +3560,6 @@ function run_modules_plugin() {
 	/** @this {()=>void} @arg {unknown} tv @arg {unknown} r */
 	function function_prototype_apply_inject(tv, r) {
 		if (r === void 0 || r === null) r = [];
-		// @ts-ignore
 		const ret = bound_apply_call(this, [tv, ...r]);
 		if (function_as_string_vec.indexOf(this.toString()) == -1) {
 			function_as_string_vec.push(this.toString());
@@ -5042,17 +5041,14 @@ class DebugApi {
 	}
 	/** @returns {import("./support/dbg/I_undebug.ts").I_undebug} */
 	get_u() {
-		// @ts-ignore
 		return this.getData("u");
 	}
 	/** @arg {"__k"} key @returns {import("./support/dbg/dbg_get_ty.ts").dbg_get_ty} */
 	get_k(key) {
-		// @ts-ignore
 		return this.getData(key);
 	}
 	/** @returns {import("./support/dbg/I_debug.ts").I_debug} */
 	get_d() {
-		// @ts-ignore
 		return this.getData("d");
 	}
 	/** @arg {"getEventListeners"} key @returns {(x:unknown)=>{[x: string]: import("./support/dbg/EventListenerInternal.ts").EventListenerInternal[]}} */
