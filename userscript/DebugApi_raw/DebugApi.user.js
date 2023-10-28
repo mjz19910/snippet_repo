@@ -270,7 +270,7 @@ class ClientSocket extends SocketBase {
 		} else this.m_port.postMessage(tcp);
 	}
 	/** @type {(()=>void)|null} */
-	next_ack_listener = null;
+	on_next_packet = null;
 	/** @arg {ConnectionMessage} tcp */
 	client_connect(tcp) {
 		if (testing_tcp) {
@@ -293,26 +293,22 @@ class ClientSocket extends SocketBase {
 		}
 		this.handle_tcp_data(tcp);
 	}
-	seen_syn_packet() {
-		if (!this.next_ack_listener) return;
-		this.next_ack_listener();
-		this.next_ack_listener = null;
+	seen_packet() {
+		if (!this.on_next_packet) return;
+		this.on_next_packet();
+		this.on_next_packet = null;
 	}
 	/** @arg {ConnectionMessage} tcp */
 	handle_tcp_data(tcp) {
+		this.seen_packet();
 		const f = new FlagHandler(tcp.flags);
 		if (this.m_local_log) console.log("client", tcp);
 		if ((f.is_syn() && f.is_ack()) || f.is_none()) {
 			this.send_ack(tcp);
 		}
-		if (f.is_syn()) {
-			this.seen_syn_packet();
-		}
-		if (f.is_none() && !this.m_connected) {
-			this.next_ack_listener = () => {
-				console.groupEnd();
-			};
-		}
+		this.on_next_packet = () => {
+			console.groupEnd();
+		};
 		if (!tcp.data) return;
 		const tcp_data = tcp.data;
 		switch (tcp_data.type) {
