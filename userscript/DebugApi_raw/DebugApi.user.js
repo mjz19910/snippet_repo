@@ -4610,7 +4610,8 @@ class Socket extends ConsoleAccess {
 	/** @arg {ConnectionMessage} tcp */
 	client_connect(tcp) {
 		if (testing_tcp) {
-			const socket_fmt = this.fmt_tag + "<" + tcp.seq + "," + tcp.ack + ">";
+			const flags = this.stringify_flags(tcp.flags);
+			const socket_fmt = this.fmt_tag + `<${tcp.seq},${tcp.ack},"${flags}">`;
 			console.log("on_client_connect", socket_fmt, tcp.data);
 		}
 	}
