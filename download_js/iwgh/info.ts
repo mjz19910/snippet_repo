@@ -854,7 +854,7 @@ type main={
 		Do.ActivateRoom<sickbay>,
 		Do.ActivateRoom<readyRoom>,
 		Do.ActivateRoom<v_10forward,after_lockdown>,
-		uQuarters,
+		Do.ActivateRoom<uQuarters>,
 		Do.RunTakeAct<uQuarters,Items.dead_romulan>,
 		oLounge,
 		sickbay,
