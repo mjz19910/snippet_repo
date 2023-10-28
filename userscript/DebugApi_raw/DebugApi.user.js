@@ -4381,20 +4381,12 @@ function is_record_with_string_type(x, k) {
 	if (typeof x.data[k] !== "string") return false;
 	return true;
 }
-
-/** @template T @template {string} U @arg {import("./support/dbg/CM.ts").CM<MessageEvent<T>>} x @arg {U} k @returns {x is import("./support/dbg/CM.ts").CM<MessageEvent<T>&MessageEvent<Record<U,unknown>>>} */
-function is_record_with_T_msg_m(x, k) {
-	if (!is_record_with_T(x.data, k)) return false;
-	return true;
-}
-
 /** @template T @arg {import("./support/dbg/CM.ts").CM<T>|null} x @returns {x is import("./support/dbg/CM.ts").CM<T&{}>} */
 function is_object(x) {
 	if (!x?.data) return false;
 	if (typeof x.data !== "object") return false;
 	return true;
 }
-
 /** @template {{}} T @template {string} U @arg {T} x @arg {U} k @returns {x is T&Record<U,unknown>} */
 function is_record_with_T(x, k) {
 	if (x === null) return false;
@@ -4421,44 +4413,6 @@ function cast_to_record_with_string_type(x) {
 	if (!is_record_with_string_type(cast_result, "type")) return null;
 	return cast_result;
 }
-/** @template T @arg {import("./support/dbg/CM.ts").CM<MessageEvent<T>>|null} x @returns {x is import("./support/dbg/CM.ts").CM<MessageEvent<T&{}>>} */
-function is_object_msg(x) {
-	if (!x?.data) return false;
-	if (typeof x.data.data !== "object") return false;
-	if (x.data.data === null) return false;
-	return true;
-}
-
-/** @template T @arg {import("./support/dbg/CM.ts").CM<MessageEvent<T>>|null} x @returns {import("./support/dbg/CM.ts").CM<MessageEvent<T&{}>>|null} */
-function cast_to_object_msg(x) {
-	if (!is_object_msg(x)) return null;
-	return x;
-}
-/** @template {{}} T @template {string} U @arg {import("./support/dbg/CM.ts").CM<MessageEvent<T>>} x @arg {U} k @returns {x is import("./support/dbg/CM.ts").CM<MessageEvent<T&Record<U,string>>>} */
-function is_record_with_string_type_msg(x, k) {
-	if (x.data === null) return false;
-	if (x.data.data === null) return false;
-	return is_record_with_string_type(new_cast_monad(x.data.data), k);
-}
-
-/** @template T @arg {import("./support/dbg/CM.ts").CM<MessageEvent<T>>|null} x @returns {import("./support/dbg/CM.ts").CM<MessageEvent<T&{type:string}>>|null} */
-function cast_to_record_with_string_type_msg(x) {
-	const cast_result = cast_to_object_msg(x);
-	if (!cast_result?.data?.data) return null;
-	if (!is_record_with_string_type_msg(cast_result, "type")) return null;
-	return cast_result;
-}
-
-/** @template {import("./support/dbg/CM.ts").CM<MessageEvent<{type:string;}>>|null} T @arg {T} x */
-function cast_to_wrapped_message(x) {
-	if (x === null) return null;
-	if (!is_record_with_T_msg_m(x, "data")) return null;
-	return cast_to_wrapped_message_impl(x);
-}
-/** @arg {import("./support/dbg/CM.ts").CM<MessageEvent<import("./support/dbg/WrappedMessage.ts").WrappedMessage<unknown>>>|null} x */
-function cast_to_wrapped_message_impl(x) {
-	return x;
-}
 /** @template {string} U @template {{}} T @arg {import("./support/dbg/CM.ts").CM<T>|null} x @arg {U} k @returns {import("./support/dbg/CM.ts").CM<T&{[P in U]:string}>|null} */
 function cast_to_record_with_key_and_string_type(x, k) {
 	if (x === null) return null;
@@ -4467,7 +4421,6 @@ function cast_to_record_with_key_and_string_type(x, k) {
 }
 add_function(cast_to_record_with_key_and_string_type);
 //#endregion
-
 /** @readonly @type {"CrossOriginConnection"} */
 const post_message_connect_message_type = "CrossOriginConnection";
 export_((exports) => {
@@ -4973,23 +4926,9 @@ class CrossOriginConnection extends ConsoleAccess {
 	/** @arg {MessageEvent<unknown>} event_0 */
 	on_message_event(event_0) {
 		console.log(event_0.data);
-		const e_monad = new_cast_monad(event_0);
-		const e_monad_1 = cast_to_record_with_string_type_msg(e_monad);
-		const e_monad_2 = cast_to_wrapped_message(e_monad_1);
-		if (!e_monad_2) return;
-		const wrapped_msg = e_monad_2.data.data;
-		if (wrapped_msg.type !== post_message_connect_message_type) return;
-		const wrapped_unknown1 = new_cast_monad(wrapped_msg.data);
-		const wrapped_unknown2 = cast_to_record_with_string_type(wrapped_unknown1);
-		if (!wrapped_unknown2) return;
-		const unwrapped_event = wrapped_unknown2.data;
-		switch (unwrapped_event.type) {
-			case "tcp":
-				break;
-			default:
-				return;
-		}
 		if (!this.is_connection_message(event_0)) return;
+		const wrapped_msg = event_0.data;
+		if (wrapped_msg.type !== post_message_connect_message_type) return;
 		const client_id = this.m_client_max_id++;
 		const connection_port = event_0.ports[0];
 		if (!event_0.source) throw new Error("No event source");
