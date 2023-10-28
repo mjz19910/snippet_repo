@@ -20,6 +20,19 @@ export function get_news_str(v) {
 	const [news_str] = string_contained_by(v, '<p class="news">', "</p>");
 	console.log(news_str);
 }
+/** @param {string} line */
+function on_poem_line(line) {
+	const poem_words = line.slice(0, -1).split(" ");
+	for (let i = 0; i < poem_words.length; i++) {
+		const poem_word = poem_words[i];
+		if (poem_word.endsWith("...")) {
+			poem_words[i] = poem_words[i].slice(0, -3);
+		} else if (poem_word.endsWith(",")) {
+			poem_words[i] = poem_words[i].slice(0, -1);
+		}
+	}
+	return poem_words;
+}
 function on_poems_page_text(v) {
 	const [tbl] = string_contained_by(v, "<table ", "</table>");
 	get_news_str(tbl);
@@ -29,11 +42,15 @@ function on_poems_page_text(v) {
 	const poem_txt = unwrap_html_str("p", poem_txt2);
 	const poem_str = poem_txt.replaceAll("<br>", "\n").split("\n\n")[1];
 	const poem_lines = poem_str.split("\n");
+	const all_poem_words = [];
 	for (const poem_line of poem_lines) {
-		const poem_words = poem_line.slice(0, -1).split(" ");
-		poem_words.push(poem_line.at(-1));
-		console.log(poem_words.length, poem_words);
+		const poem_words = on_poem_line(poem_line);
+		for (const word of poem_words) {
+			if (all_poem_words.includes(word)) continue;
+			all_poem_words.push(word);
+		}
 	}
+	console.log(all_poem_words);
 }
 /** @param {"poems"} target_page */
 export async function fetch_one_page(target_page) {
