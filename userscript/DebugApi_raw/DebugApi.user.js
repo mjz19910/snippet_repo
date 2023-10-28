@@ -98,7 +98,7 @@ const tcp_ack = 2;
 /** @readonly @type {import("./support/dbg/ConnectFlag.ts").ConnectFlagT["Ack"]} */
 const val_tcp_ack = tcp_ack;
 val_tcp_ack;
-const ack_win = 5000;
+const ack_win = 100_000;
 class TCPMessage {
 	/** @readonly */
 	type = "tcp";
