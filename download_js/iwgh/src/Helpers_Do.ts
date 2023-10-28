@@ -1,4 +1,4 @@
-import {H} from "./Helpers.ts";
+import {H} from "../Helpers.ts";
 
 type PageMenuItems=[
 	{id: "main";},{id: "dictionary";},{id: "communication";},

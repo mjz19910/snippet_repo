@@ -1,5 +1,2 @@
-import * as H from "./Helpers_H.ts";
-export {H};
-
-import * as Do from "./Helpers_Do.ts";
-export {Do};
+export * as H from "./src/Helpers_H.ts";
+export * as Do from "./src/Helpers_Do.ts";
