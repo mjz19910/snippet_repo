@@ -4513,7 +4513,7 @@ class ConsoleAccess {
 	/** @arg {ConnectionMessage} tcp */
 	send_ack(tcp) {
 		let { seq: ack, ack: seq, flags } = tcp;
-		if ((flags & 2) == 2) flags ^= 2;
+		if ((flags & 1) == 1) flags ^= 1;
 		flags |= tcp_ack;
 		if (seq == 0) {
 			seq = (Math.random() * ack_win) % ack_win | 0;
@@ -4652,7 +4652,7 @@ class Socket extends ConsoleAccess {
 		if (data.type !== "tcp") throw new Error();
 		if (testing_tcp) {
 			this.open_group("rx", data);
-			console.log("ListenSocket ->");
+			console.log("ListenSocket.handleEvent ->");
 			console.log("s_port.onmessage.handleEvent ->");
 			console.log("-?> Socket", data);
 			this.close_group();
@@ -4762,7 +4762,7 @@ class ListenSocket extends ConsoleAccess {
 	push_tcp_message(data) {
 		if (testing_tcp) {
 			this.open_group("tx", data);
-			console.log("ListenSocket ->");
+			console.log("ListenSocket.push_tcp_message ->");
 			console.log("s_port.onmessage.handleEvent ->");
 			console.log("-> Socket", data);
 			this.close_group();
@@ -4887,7 +4887,7 @@ class CrossOriginConnection extends ConsoleAccess {
 		const data = event_0.data.data;
 		if (testing_tcp) {
 			this.open_group("rx", data);
-			console.log("CrossOriginConnection ->");
+			console.log("CrossOriginConnection.on_message_event ->");
 			console.log("ListenSocket.handle_tcp_data ->");
 			console.log("s_port.onmessage.handleEvent ->");
 			console.log("-> Socket", data);
