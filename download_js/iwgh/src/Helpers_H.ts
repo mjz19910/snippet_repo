@@ -4,6 +4,12 @@ export type PageTypeShape={
 export type ItemShape={
 	type: "item";
 	id: string;
+}|{
+	type: "item";
+	item: {
+		type: string;
+		id: string;
+	};
 };
 export type TakeAction<T extends ItemShape>={
 	fn: "take";

@@ -57,6 +57,7 @@ automix
 autonav
 bgub
 bigbusiness
+bookitem
 botguard
 bouncingdvdlogo
 breit

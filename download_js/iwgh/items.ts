@@ -1,6 +1,9 @@
 export type gandalf_magic_book={
 	type: "item";
-	id: "Gandalf Magic Book";
+	item: {
+		type: "bookitem";
+		id: "Gandalf Magic Book";
+	};
 	seq: 0;
 };
 export type something={
