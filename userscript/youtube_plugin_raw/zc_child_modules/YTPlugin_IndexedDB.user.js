@@ -11,7 +11,6 @@
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB.user.js
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB.user.js
 // ==/UserScript==
-// @ts-nocheck
 
 const page_require = typeof require === "undefined"
 	? __module_require__
@@ -27,7 +26,6 @@ if (typeof require === "undefined" || page_require !== __module_require__) {
 const { as, do_export } = require("../../base_require_raw/BaseRequire.user.js");
 // yt_plugin/IndexedDB_Service(10) => yt_plugin/Base(4) => base_require/BaseRequire(1)
 const { BaseService } = require("./YTPlugin_Base.user.js");
-const { StoreData } = require("./YTPlugin_Support_Service.user.js");
 /** @typedef {InstanceType<typeof StoreData>} StoreData */
 
 // priority yt_plugin/IndexedDB_Service(10)
