@@ -10,6 +10,9 @@ function string_contained_by_end(v, needle1, needle2, search_pos = 0) {
 	const end_pos = v.indexOf(needle2, start_pos) + needle2.length;
 	return end_pos;
 }
+function unwrap_html_str(html_tag, str) {
+	return str.slice(html_tag.length + 2, -html_tag.length - 3);
+}
 const show_news_str = false;
 /** @param {string} v */
 export function get_news_str(v) {
@@ -22,8 +25,13 @@ function on_poems_page_text(v) {
 	get_news_str(tbl);
 	const row1_end = string_contained_by_end(tbl, "<tr>", "</tr>");
 	const [row2_str] = string_contained_by(tbl, "<tr>", "</tr>", row1_end);
-	const [poem_txt] = string_contained_by(row2_str, "<p>", "</p>");
-	console.log(poem_txt);
+	const [poem_txt2] = string_contained_by(row2_str, "<p>", "</p>");
+	const poem_txt = unwrap_html_str("p", poem_txt2);
+	const poem_str = poem_txt.replaceAll("<br>", "\n").split("\n\n")[1];
+	const poem_lines = poem_str.split("\n");
+	for(const poem_line of poem_lines) {
+		console.log(poem_line.split(" "));
+	}
 }
 /** @param {"poems"} target_page */
 export async function fetch_one_page(target_page) {
