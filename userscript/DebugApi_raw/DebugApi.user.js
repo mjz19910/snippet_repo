@@ -2606,7 +2606,7 @@ class AddEventListenerExtension {
 		if (val === null) {
 			return;
 		}
-		if (val instanceof Socket) {
+		if (val instanceof ClientSocket) {
 			this.convert_to_id_key(
 				real_value,
 				key,
@@ -2615,7 +2615,7 @@ class AddEventListenerExtension {
 			);
 			return;
 		}
-		if (val instanceof ListenSocket) {
+		if (val instanceof ServerSocket) {
 			this.convert_to_id_key(
 				real_value,
 				key,
@@ -4478,7 +4478,7 @@ class TCPMessage {
 }
 
 const testing_tcp = true;
-class ConsoleAccess {
+class SocketBase {
 	fmt_tag;
 	/** @private */
 	m_client_id;
@@ -4549,7 +4549,7 @@ class ConsoleAccess {
 	}
 }
 
-class Socket extends ConsoleAccess {
+class ClientSocket extends SocketBase {
 	static direct_message = false;
 	/** @readonly */
 	m_side = "client";
@@ -4609,7 +4609,7 @@ class Socket extends ConsoleAccess {
 		if (testing_tcp) {
 			this.open_group("tx", data);
 			console.log("Socket ->");
-			console.log("top.onmessage.handleEvent ->");
+			console.log("top.handleEvent ->");
 			console.log("-C> CrossOriginConnection", data);
 			this.close_group();
 		}
@@ -4629,12 +4629,12 @@ class Socket extends ConsoleAccess {
 		if (testing_tcp) {
 			this.open_group("tx", data);
 			console.log("Socket.push_tcp_message ->");
-			console.log("l_port.onmessage.handleEvent ->");
+			console.log("l_port.handleEvent ->");
 			console.log("-L> ListenSocket", data);
 			this.close_group();
 		}
-		if (ListenSocket.direct_message) {
-			const p = ListenSocket.prototype;
+		if (ServerSocket.direct_message) {
+			const p = ServerSocket.prototype;
 			p.handleEvent(new MessageEvent("message", { data }));
 		} else this.m_port.postMessage(data);
 	}
@@ -4648,13 +4648,13 @@ class Socket extends ConsoleAccess {
 	}
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
-		if (Socket.prototype === this) return;
+		if (ClientSocket.prototype === this) return;
 		const tcp = event.data;
 		if (tcp.type !== "tcp") throw new Error();
 		if (testing_tcp) {
 			this.open_group("rx", tcp);
 			console.log("ListenSocket.handleEvent ->");
-			console.log("s_port.onmessage.handleEvent ->");
+			console.log("s_port.handleEvent ->");
 			console.log("-> Socket", tcp, tcp.data);
 			this.close_group();
 		}
@@ -4711,7 +4711,7 @@ class Socket extends ConsoleAccess {
 	}
 }
 export_((exports) => {
-	exports.Socket = Socket;
+	exports.Socket = ClientSocket;
 });
 
 class OriginState {
@@ -4728,7 +4728,7 @@ class OriginState {
 export_((exports) => {
 	exports.OriginState = OriginState;
 });
-class ListenSocket extends ConsoleAccess {
+class ServerSocket extends SocketBase {
 	static direct_message = false;
 	/** @private @type {import("./support/dbg/ConnectionSide.ts").ConnectionSide} */
 	m_side = "server";
@@ -4764,12 +4764,12 @@ class ListenSocket extends ConsoleAccess {
 		if (testing_tcp) {
 			this.open_group("tx", tcp);
 			console.log("ListenSocket.push_tcp_message ->");
-			console.log("s_port.onmessage.handleEvent ->");
+			console.log("s_port.handleEvent ->");
 			console.log("-> Socket", tcp, tcp.data);
 			this.close_group();
 		}
-		if (Socket.direct_message) {
-			const p = Socket.prototype;
+		if (ClientSocket.direct_message) {
+			const p = ClientSocket.prototype;
 			p.handleEvent(new MessageEvent("message", { data: tcp }));
 		} else this.m_port.postMessage(tcp);
 	}
@@ -4825,7 +4825,6 @@ class ListenSocket extends ConsoleAccess {
 		if (testing_tcp) {
 			this.open_group("rx", data);
 			console.log("Socket.handleEvent ->");
-			console.log("l_port.onmessage.handleEvent ->");
 			console.log("-> ListenSocket", data);
 			this.close_group();
 		}
@@ -4850,12 +4849,12 @@ class ListenSocket extends ConsoleAccess {
 	}
 }
 
-class CrossOriginConnection extends ConsoleAccess {
+class CrossOriginConnection extends SocketBase {
 	/** @private */
 	m_state = new OriginState();
 	/** @private */
 	m_local_handler;
-	/** @private @type {ListenSocket[]} */
+	/** @private @type {ServerSocket[]} */
 	m_connections = [];
 	/** @private */
 	m_client_max_id = 0;
@@ -4865,7 +4864,7 @@ class CrossOriginConnection extends ConsoleAccess {
 		const client_id = this.m_client_max_id++;
 		this.start_root_server();
 		const connect_target = this.m_state.get_connect_target();
-		this.m_local_handler = new Socket(
+		this.m_local_handler = new ClientSocket(
 			30000,
 			client_id,
 			connect_target,
@@ -4881,7 +4880,7 @@ class CrossOriginConnection extends ConsoleAccess {
 		const connection_port = event_0.ports[0];
 		if (!event_0.source) throw new Error("No event source");
 		const event_source = event_0.source;
-		const handler = new ListenSocket(
+		const handler = new ServerSocket(
 			client_id,
 			connection_port,
 			event_source,
@@ -4894,8 +4893,7 @@ class CrossOriginConnection extends ConsoleAccess {
 			this.open_group("rx", data);
 			console.log("CrossOriginConnection.on_message_event ->");
 			console.log("ListenSocket.handle_tcp_data ->");
-			console.log("s_port.onmessage.handleEvent ->");
-			console.log("-> Socket", data);
+			console.log("Socket", data);
 			this.close_group();
 		}
 		handler.handle_tcp_data(data);
