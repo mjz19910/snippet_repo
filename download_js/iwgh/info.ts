@@ -1,33 +1,35 @@
+//cspell:word IWGH
+
 import {Do} from "./Helpers.ts";
 import {H} from "./Helpers.ts";
 
-type lartorch={
-	id: "lartorch",
+type larTorch={
+	id: "larTorch",
 	news_str: "Lonely torch page",
 };
 type roof={
 	id: "roof",
 	news: "Roof.",
 };
-type floorfive={
-	id: "floorfive",
+type floorFive={
+	id: "floorFive",
 	links: [
 		roof,
 		elevator,
 	],
 };
-type keepkitchen={
-	id: "keepkitchen";
+type keepKitchen={
+	id: "keepKitchen";
 	news: "Kitchen.";
 };
 type keep={
 	id: "keep",
 	links: [
-		floorone,
-		floortwo,
-		floorthree,
-		floorfive,
-		keepkitchen,
+		floorOne,
+		floorTwo,
+		floorThree,
+		floorFive,
+		keepKitchen,
 	],
 };
 type screwdriver={
@@ -41,7 +43,7 @@ type armour={
 		{
 			id: "unscrew_armor",
 			fn: "use",
-			usingitem: screwdriver,
+			usingItem: screwdriver,
 		},
 		{
 			required: "unscrew_armor",
@@ -50,8 +52,8 @@ type armour={
 		}
 	],
 };
-type larstairs={
-	id: "larstairs",
+type larStairs={
+	id: "larStairs",
 	links: [
 		keep,
 		armour,
@@ -61,8 +63,8 @@ type egg={
 	type: "item";
 	id: "egg";
 };
-type larfm={
-	id: "larfm";
+type larFm={
+	id: "larFm";
 	action: H.TakeActionR2<{
 		requirements: [
 			hand_press,
@@ -71,43 +73,43 @@ type larfm={
 		item: egg;
 	}>;
 };
-type larlake={
-	id: "larlake",
-	links: [larfm],
+type larLake={
+	id: "larLake",
+	links: [larFm],
 };
-type lardark={
-	id: "lardark",
+type larDark={
+	id: "larDark",
 	links: [
-		larlake,
-		deathdome,
+		larLake,
+		deathDome,
 	];
 };
-type deathdome={
-	id: "deathdome";
+type deathDome={
+	id: "deathDome";
 	links: [grave];
 };
-type larboat={
-	id: "larboat",
-	links: [lardark],
+type larBoat={
+	id: "larBoat",
+	links: [larDark],
 };
-type larriver={
-	id: "larriver",
-	links: [larboat];
+type larRiver={
+	id: "larRiver",
+	links: [larBoat];
 };
 type larder={
 	id: "larder",
 	links: [
-		lartorch,
-		larstairs,
-		larriver,
+		larTorch,
+		larStairs,
+		larRiver,
 	],
 };
 type burrow={
 	id: "burrow",
 	links: [larder],
 };
-type picref={
-	id: "picref";
+type picRef={
+	id: "picRef";
 	links: [
 		{
 			bold: true;
@@ -115,30 +117,30 @@ type picref={
 		}
 	];
 };
-type piccup={
-	id: "piccup",
-	links: [picref],
+type picCup={
+	id: "picCup",
+	links: [picRef],
 };
-type pictable={
-	id: "pictable",
-	links: [piccup],
+type picTable={
+	id: "picTable",
+	links: [picCup],
 };
 type dead_klingon={
 	type: "item";
 	id: "dead Klingon";
 };
-type picq={
-	id: "picq";
-	links: [pictable],
+type picQ={
+	id: "picQ";
+	links: [picTable],
 	action: H.TakeActionR<{
 		required: keycard;
 		item: dead_klingon;
 	}>;
-	quest_chain_part: readyroom["story"]["dead_klingon"];
+	quest_chain_part: readyRoom["story"]["dead_klingon"];
 	story: {
 		burrow: {
 			quest_chain: [
-				picq,pictable,piccup,picref,burrow,larder,larstairs,keep,floorfive,elevator,elev_boiler,boiler,
+				picQ,picTable,picCup,picRef,burrow,larder,larStairs,keep,floorFive,elevator,elev_boiler,boiler,
 				mechanic,
 				Do.UseAction<mechanic,hypospray>,
 				piping,
@@ -159,7 +161,7 @@ type red={
 	id: "red",
 	links: [
 		read,
-		picq,
+		picQ,
 	],
 };
 type green={
@@ -176,48 +178,48 @@ type redbridge={
 type underworld={
 	links: [redbridge],
 };
-type hsmell={
+type hSmell={
 	news: "Weird smell in the hall gallery.",
 };
-type hgallery={
-	links: [hsmell],
+type hGallery={
+	links: [hSmell],
 };
-type hstairs={
-	links: [hgallery],
+type hStairs={
+	links: [hGallery],
 };
-type sdoor={
+type sDoor={
 	news: "Small door...",
 	state: "closed",
 };
-type lhall={
+type lHall={
 	links: [
-		hstairs,
-		sdoor,
+		hStairs,
+		sDoor,
 	],
 };
-type lgallery={
-	links: [lhall],
+type lGallery={
+	links: [lHall],
 };
-type narrowhole={
-	links: [lgallery],
+type narrowHole={
+	links: [lGallery],
 	// 404 pages
-	missing: ["uqwe"],
+	missing: ["uQwe"],
 };
-type uleafage={
-	id: "uleafage",
-	links: [narrowhole],
+type uLeafage={
+	id: "uLeafage",
+	links: [narrowHole],
 };
-type uforest={
-	id: "uforest",
-	links: [uleafage],
+type uForest={
+	id: "uForest",
+	links: [uLeafage],
 	action: {
 		fn: "use",
-		usingitem: "qweqwe",
+		usingItem: "QweQwe",
 	},
 };
-type uforestedge={
-	id: "uforestedge",
-	links: [uforest],
+type uForestEdge={
+	id: "uForestEdge",
+	links: [uForest],
 };
 type boiler={
 	news: "Boiler room",
@@ -230,20 +232,20 @@ type someone={
 	id: "someone";
 	uses: something_item;
 };
-type eternalmaze={
-	id: "eternalmaze";
+type eternalMaze={
+	id: "eternalMaze";
 	links: [someone],
 };
-type floorone={
-	id: "floorone";
-	links: [eternalmaze],
+type floorOne={
+	id: "floorOne";
+	links: [eternalMaze],
 };
 type giant={
 	type: "item";
 	id: "giant";
 };
-type floortwo={
-	id: "floortwo";
+type floorTwo={
+	id: "floorTwo";
 	news: "Floor Two";
 	action: H.UseAction2<{
 		v: giant;
@@ -254,62 +256,63 @@ type genie={
 	type: "item";
 	id: "genie";
 };
-type floorthree={
-	id: "floorthree";
+type floorThree={
+	id: "floorThree";
 	news: "Floor Three",
 	action: H.TakeAction<genie>;
 };
-type elev_floorfive={
+type elev_floorFive={
 	floor_number: 9;
-	destination: floorfive;
+	destination: floorFive;
 };
 type elev_underworld={
 	floor_number: 3;
 	destination: underworld;
 };
-type elev_uforest={
+type elev_uForest={
 	floor_number: 4;
-	destination: uforestedge;
+	destination: uForestEdge;
 };
 type elev_boiler={
 	floor_number: 5;
 	destination: boiler;
 };
-type elev_floorone={
+type elev_floorOne={
 	floor_number: 6;
-	destination: floorone;
+	destination: floorOne;
 };
-type elev_floortwo={
+type elev_floorTwo={
 	floor_number: 7;
-	destination: floortwo;
+	destination: floorTwo;
 };
-type elev_floorthree={
+type elev_floorThree={
 	floor_number: 8;
-	destination: floorthree;
+	destination: floorThree;
 };
 type elevator={
 	destinations: {
 		"elev_underworld": elev_underworld,
-		"elev_uforest": elev_uforest,
+		"elev_uForest": elev_uForest,
 		"elev_boiler": elev_boiler,
-		"elev_floorone": elev_floorone,
-		"elev_floortwo": elev_floortwo,
-		"elev_floorthree": elev_floorthree,
-		"elev_floorfive": elev_floorfive,
+		"elev_floorOne": elev_floorOne,
+		"elev_floorTwo": elev_floorTwo,
+		"elev_floorThree": elev_floorThree,
+		"elev_floorFive": elev_floorFive,
 	},
 };
 const elevator: elevator={} as elevator;
+// cspell:word rozenbom
 type rozenbom={
 	id: "rozenbom",
 	action: H.TakeActionStr<"small green lamp">,
 };
-type dwarfname={
-	id: "dwarfname",
+type dwarfName={
+	id: "dwarfName",
 	links: [rozenbom],
 };
 type piece_of_paper={
 	id: "piece of paper",
-	links: [dwarfname],
+	links: [dwarfName],
 };
 type keycard={
 	type: "item",
@@ -321,7 +324,7 @@ type off={
 	quest_chain: [
 		Do.TakeAction<keycard>,
 		Do.UseMenu<members>,
-		members,green,red,picq,
+		members,green,red,picQ,
 	];
 };
 type on={
@@ -333,6 +336,7 @@ type v_25_of_shares={
 	id: "25% of shares",
 	links: [on],
 };
+// cspell:ignore zbrogjdnfhvyensocuiehw
 type u_page={
 	id: "zbrogjdnfhvyensocuiehw",
 	rid: "u",
@@ -342,7 +346,7 @@ type u_page={
 		"An absense of a fourth floor does not mean there is no fifth",
 		// cosmology -> pattern -> pcnt
 		"An hourglass is more than it seems",
-		// dwarfname
+		// dwarfName
 		"Be sure to find small green lamp - otherwise lots of locations would be too dark for you to explore!",
 		"Bee yourself",
 		"Beware!",
@@ -355,7 +359,7 @@ type u_page={
 		// secret communication room
 		"Keyword: <b>caramel</b>",
 		"Keyword: <b>cosmology</b>",
-		"Keyword: <b>flatjoke</b>",
+		"Keyword: <b>flatJoke</b>",
 		"Keyword: <b>jrrtgandalf</b>",
 		"Selldome page: <b>selldome</b>",
 		"Stay alert!",
@@ -369,7 +373,7 @@ type u_page={
 		bridge,
 		"caramel",
 		cosmology,
-		flatjoke,
+		flatJoke,
 		"herculepoirot",
 		jrrtgandalf,
 		library,
@@ -444,7 +448,7 @@ type enterprise={
 	quarters: [
 		"riker",
 		"worf",
-		uquarters,
+		uQuarters,
 	];
 };
 type deck8={
@@ -455,24 +459,25 @@ type dead_romulan={
 	id: "dead Romulan";
 };
 
-type uquarters={
+type uQuarters={
 	news: "Uninhabited quarters";
 	extra: "the Romulan just entered their quarters, there is no one *visible* inside";
 	action: H.TakeActionR<{
 		required: after_lockdown;
 		item: dead_romulan;
 	}>;
-	quest_chain_part: readyroom["story"]["dead_klingon"];
+	quest_chain_part: readyRoom["story"]["dead_klingon"];
 };
 type v_10forward={
 	id: "10forward",
 	news: "Enterprise NCC-1701-D: Ten Forward",
 };
 type engineering={
-	links: [cdisruptor];
+	links: [cDisruptor];
+	//cspell:ignore wqwrqr
 	action: H.UseActionStr<"wqwrqr">;
 };
-type cdisruptor={
+type cDisruptor={
 	news: "Cloak disruptor",
 };
 type fat_worm={
@@ -497,7 +502,7 @@ type ut231={
 };
 type ut232={
 	news_fmt: "Underground tunnel, section 232.";
-	links: [ufridge];
+	links: [uFridge];
 };
 type ut2={
 	news: "Underground tunnel, section 2.";
@@ -507,7 +512,7 @@ type ut2={
 	];
 };
 type ut3={
-	links: [deadend];
+	links: [deadEnd];
 };
 type grave={
 	links: [
@@ -625,27 +630,27 @@ type inventory={
 		"Orb Book": orb_book,
 		"dead Klingon": dead_klingon,
 		"dead Romulan": dead_romulan,
-		"mosquitoz": mosquitoz,
+		"mosquitoZ": mosquitoZ,
 	};
 };
 type after_lockdown={
 	type: "story_pos";
 	pos: "after lockdown";
 };
-type readyroom={
+type readyRoom={
 	story: {
 		dead_klingon: {
 			uses: dead_klingon;
 			quest_chain: [
 				Do.TakeAction<dead_klingon>,
-				readyroom,
+				readyRoom,
 				sickbay,
-				readyroom,
+				readyRoom,
 				v_10forward,
 				after_lockdown,
-				uquarters,
+				uQuarters,
 				Do.TakeAction<dead_romulan>,
-				olounge,
+				oLounge,
 				sickbay,
 				H.TakeActionR<{
 					required: dead_romulan;
@@ -658,31 +663,32 @@ type readyroom={
 		};
 	};
 };
-type olounge={
-	id: "olounge",
+type oLounge={
+	id: "oLounge",
 	news: "Enterprise NCC-1701-D: Observation lounge",
 };
 type bridge={
 	id: "bridge",
 	links: [
-		readyroom,
-		olounge,
+		readyRoom,
+		oLounge,
 	];
 };
-type ufridge={
-	id: "ufridge",
+//cspell:ignore usuddend
+type uFridge={
+	id: "uFridge",
 	links: [
-		deadend,
+		deadEnd,
 		usuddend,
 	];
 };
-type deadend={
-	id: "deadend",
+type deadEnd={
+	id: "deadEnd",
 	news: "Dead end.";
 };
 type usuddend={
 	id: "usuddend",
-	links: [ufridgeopen];
+	links: [uFridgeOpen];
 };
 type hand_press={
 	type: "item";
@@ -692,15 +698,15 @@ type fui={
 	type: "item";
 	id: "fui";
 };
-type ufridgeopen={
-	id: "ufridgeopen",
+type uFridgeOpen={
+	id: "uFridgeOpen",
 	action: H.TakeAction<hand_press>;
 	quest_chain: [
 		Do.TakeAction<hand_press>,
 		burrow,
-		larder,larriver,larboat,lardark,
-		lardark,
-		deathdome,
+		larder,larRiver,larBoat,larDark,
+		larDark,
+		deathDome,
 		grave,
 		Do.TakeAction<fui>,
 		o,
@@ -708,12 +714,12 @@ type ufridgeopen={
 		Do.FollowChain<pattern>["follow_chain"]["quest_chain"],
 		Do.AssertPageIs<pcnt>,Do.FollowChain<pcnt>["follow_chain"]["quest_chain"],
 		Do.AssertPageIs<off>,Do.FollowChain<off>["follow_chain"]["quest_chain"],
-		Do.AssertPageIs<picq>,pictable,piccup,picref,
-		burrow,larder,larriver,larboat,lardark,
-		deathdome,
+		Do.AssertPageIs<picQ>,picTable,picCup,picRef,
+		burrow,larder,larRiver,larBoat,larDark,
+		deathDome,
 		grave,
 		Do.TakeAction<fui>,
-		lardark,larlake,larfm,
+		larDark,larLake,larFm,
 		Do.UseInventory2<[hand_press,fui]>,
 	];
 };
@@ -738,12 +744,12 @@ type cosmology={
 		opinion,
 		characteristics,
 		generation,
-		flatdisc,
-		{type: "chain",arr: [flatdisc,glimpse,a,dot];},
+		flatDisc,
+		{type: "chain",arr: [flatDisc,glimpse,a,dot];},
 		// chain from pattern
 		pattern,
 		difference,
-		deadend,
+		deadEnd,
 	];
 };
 type opinion={
@@ -780,7 +786,7 @@ type pcnt={
 		on,off,
 	];
 };
-type flatdisc={
+type flatDisc={
 	links: [glimpse];
 };
 type glimpse={
@@ -793,14 +799,16 @@ type jrrtgandalf={
 	id: "jrrtgandalf",
 	news: "Gandalf Magic Book extracts.";
 };
-type flatjoke={
+type flatJoke={
 	news: "Flat joke.";
 };
-type kukiorbs={
+//cspell:word kuki mudi naada
+type kukiOrbs={
 	links: [
 		"clearlake",
-		"mudicat",
-		"simonnavil",
+		"mudiCat",
+		//cspell:ignore simon navil
+		"simonNavil",
 		"naada"
 	];
 };
@@ -808,7 +816,7 @@ type orb_book={
 	type: "item";
 	id: "Orb Book",
 	links: [
-		kukiorbs
+		kukiOrbs
 	];
 };
 type main={
@@ -875,9 +883,9 @@ type open_dir={
 export {type all_pages};
 const work_queue: {
 	floor_number: 4;
-	destination: uforestedge;
+	destination: uForestEdge;
 }[]=[];
-work_queue.push(elevator.destinations.elev_uforest);
+work_queue.push(elevator.destinations.elev_uForest);
 
 type a={
 	news: "This is the A page.";
@@ -910,7 +918,7 @@ type y={
 		y: [missions];
 	};
 };
-type mosquitoz={
+type mosquitoZ={
 	type: "item";
 	id: "mosquitoz";
 };
@@ -918,7 +926,7 @@ type z={
 	news: "This is Z space";
 	action: {
 		fn: "take",
-		item: mosquitoz,
+		item: mosquitoZ,
 	};
 };
 

@@ -385,26 +385,6 @@ async function fetch_one_dictionary_page() {
 		}
 	});
 }
-function show_rng_map() {
-	const rng_map = [...rng_word_num_map.entries()].sort((a, b) => b[1] - a[1]);
-	const arr = [];
-	let cur_item = [];
-	for (let i = 0; i < rng_map.length; i++) {
-		if (i % 4 === 0) arr.push(cur_item = []);
-		cur_item.push(rng_map[i]);
-	}
-	for (const part of arr) {
-		console.log(part);
-	}
-}
-export { show_rng_map };
-function peek_description_arr(description_arr) {
-	const description_arr2 = description_arr.slice(0, 5);
-	for (const description of description_arr2) {
-		console.log("%o", description);
-	}
-}
-export { peek_description_arr };
 async function run() {
 	const description_file = await deno_default_open("./description_cache.json");
 	/** @type {string[]} */
