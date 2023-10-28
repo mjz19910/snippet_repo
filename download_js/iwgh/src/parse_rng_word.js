@@ -76,16 +76,20 @@ export function parse_rng_word(
 			type_arr.push(r2.type == "vowel" ? "v" : "c");
 			w2 = r2.rest;
 		} while (w2 !== "");
-		if (word_arr.length <= 3) {
-			console.log("word.parts", word_arr.length);
-			console.log("W:", word_arr.join(""), "T:", type_arr.join(""));
-		}
+		show_word_parts(word_arr, type_arr);
 	}
 	random_dictionary_set.add(word);
 	if (add_new_words) {
 		new_words_set.add(word);
 	}
 }
+function show_word_parts(word_arr, type_arr) {
+	const len = word_arr.length;
+	if (len > 4) return;
+	const wj = word_arr.join(""), tj = type_arr.join("");
+	console.log("W:", wj, "T:", tj, "word.parts", len);
+}
+
 export function reset_words_set() {
 	console.log("dict word num", new_words_set.size);
 	new_words_set.clear();
