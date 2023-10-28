@@ -74,7 +74,11 @@ export function parse_rng_word(word, opts) {
 		if (r2.rest === "") break;
 		w2 = r2.rest;
 	}
-	if (word_arr.length >= 5) return;
+	if (word_arr.length >= 4) {
+		parse_rng_word(word_arr.slice(0, -1), opts);
+		parse_rng_word(word_arr.slice(1), opts);
+		return;
+	}
 	if (destructure_word) show_word_parts(word_arr, type_arr);
 	random_dictionary_set.add(word);
 	if (add_new_words) {
