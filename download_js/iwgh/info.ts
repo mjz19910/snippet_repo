@@ -295,13 +295,13 @@ export type elev_floorFive={
 };
 export type elevator={
 	destinations: {
-		"elev_underworld": elev_underworld,
-		"elev_uForest": elev_uForest,
-		"elev_boiler": elev_boiler,
-		"elev_floorOne": elev_floorOne,
-		"elev_floorTwo": elev_floorTwo,
-		"elev_floorThree": elev_floorThree,
-		"elev_floorFive": elev_floorFive,
+		elev_underworld: elev_underworld,
+		elev_uForest: elev_uForest,
+		elev_boiler: elev_boiler,
+		elev_floorOne: elev_floorOne,
+		elev_floorTwo: elev_floorTwo,
+		elev_floorThree: elev_floorThree,
+		elev_floorFive: elev_floorFive,
 	},
 };
 // cspell:word rozenbom
