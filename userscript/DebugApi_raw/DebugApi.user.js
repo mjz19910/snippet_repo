@@ -4631,18 +4631,19 @@ class Socket extends ConsoleAccess {
 	}
 	/** @arg {ConnectionMessage} tcp_message */
 	send_ack(tcp_message) {
+		let flags = tcp_message.flags;
 		// seq=number & ack=number;
 		let seq = tcp_message.ack;
 		if (seq == 0) {
 			seq = (Math.random() * ack_win) % ack_win | 0;
 		}
-		tcp_message.flags |= tcp_ack;
+		flags |= tcp_ack;
 		this.push_tcp_message({
 			type: "tcp",
 			client_id: this.m_client_id,
 			ack: tcp_message.seq + 1,
 			seq,
-			flags: tcp_message.flags,
+			flags,
 			data: null,
 		});
 	}
