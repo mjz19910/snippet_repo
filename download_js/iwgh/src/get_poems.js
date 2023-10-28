@@ -28,12 +28,13 @@ async function scope() {
 		}
 	}
 }
+/[ct]h|[bcdfkmnptvw]/;
+/[ct]h|[aeiouy]|[bcdfkmnptvw]/;
 async function main() {
 	const dictionary_file = await deno_default_open("src/random_dictionary.json");
 	/** @type {string[]} */
 	const dictionary_words_arr = await read_json_array_file(dictionary_file);
 	for (const word of dictionary_words_arr) {
-		/[ct]h|[aeiouy]|[bcdfkmnptvw]/;
 		parse_rng_word(word, false, false);
 	}
 	await scope();
