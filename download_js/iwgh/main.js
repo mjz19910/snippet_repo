@@ -424,13 +424,13 @@ async function run() {
 		new_words_set.clear();
 	};
 	let request_total = 0;
-	const request_log_interval = 11;
+	const request_log_interval = 30;
 	let should_break = false;
 	const inc_request_total = () => {
 		request_total++;
 		if (request_total % request_log_interval === (request_log_interval - 1)) {
 			at_loop_end();
-			if (request_total > (10 * 8 * 10)) {
+			if (request_total > (10 * 8 * 2)) {
 				should_break = true;
 			}
 		}
@@ -441,7 +441,9 @@ async function run() {
 		for (let i = 0; i < request_count; i++) {
 			arr.push(fetch_one_dictionary_page().then(inc_request_total));
 		}
-		await arr.shift();
+		while (arr.length > 50) {
+			await arr.shift();
+		}
 		if (should_break) break;
 	}
 	await Promise.all(arr);
