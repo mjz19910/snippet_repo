@@ -359,7 +359,10 @@ type u_page={
 		jrrtgandalf: jrrtgandalf,
 		library: library,
 		selldome: selldome,
-	},
+	};
+	quests: {
+		cosmology: cosmology["quest_chain"];
+	};
 };
 type zbrogjdnfhvyensocuiehw=u_page;
 type something={
