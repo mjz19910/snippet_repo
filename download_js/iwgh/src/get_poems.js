@@ -4,7 +4,11 @@ import {
 	write_entire_file,
 } from "./deno_support.js";
 import { fetch_one_page } from "./fetch_one_page.js";
-import { parse_rng_word, random_dictionary_set } from "./parse_rng_word.js";
+import {
+	parse_rng_word,
+	random_dictionary_set,
+	reset_words_set,
+} from "./parse_rng_word.js";
 
 async function scope() {
 	for (let i = 0; i < 40; i++) {
@@ -26,7 +30,7 @@ async function main() {
 	await scope();
 	const dictionary_arr = [...random_dictionary_set.values()].sort();
 	console.log(
-		"dictionary.length",
+		"diff(dictionary.length,dictionary_words.length)",
 		dictionary_arr.length - dictionary_words_arr.length,
 	);
 	await write_entire_file(dictionary_file, dictionary_arr);
