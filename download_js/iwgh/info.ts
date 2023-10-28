@@ -309,9 +309,14 @@ type on={
 	links: [off],
 };
 type v_25_of_shares={
-	type: "item",
-	id: "25% of shares",
-	links: [on],
+	type: "item";
+	id: "25% of shares";
+	links: [on];
+	quest_chain: [
+		on,
+		Do.ActivateRoom<off>,
+		Do.RunTakeAct<off,keycard>,
+	];
 };
 type caramel={
 	id: "caramel";
@@ -382,6 +387,7 @@ type missions={
 	},
 };
 type faq={
+	id: "faq";
 	links: [
 		missions,
 		y,
@@ -433,6 +439,7 @@ type deck8={
 	id: "deck8",
 };
 type uQuarters={
+	id: "uQuarters";
 	news: "Uninhabited quarters";
 	extra: "the Romulan just entered their quarters, there is no one *visible* inside";
 	action: H.TakeActionR<{
@@ -484,6 +491,7 @@ type ut3={
 	links: [deadEnd];
 };
 type grave={
+	id: "grave";
 	links: [
 		ut1,
 		ut2,
@@ -621,15 +629,15 @@ type uFridge={
 	id: "uFridge",
 	links: [
 		deadEnd,
-		usuddend,
+		uSuddEnd,
 	];
 };
 type deadEnd={
-	id: "deadEnd",
+	id: "deadEnd";
 	news: "Dead end.";
 };
-type usuddend={
-	id: "usuddend",
+type uSuddEnd={
+	id: "uSuddEnd";
 	links: [uFridgeOpen];
 };
 type uFridgeOpen={
@@ -839,28 +847,30 @@ type main={
 	links: [wall];
 	quest_chain: [
 		faq,
-		Do.RunTakeAct<Items.gandalf_magic_book>,
+		Do.RunTakeAct<faq,Items.gandalf_magic_book>,
 		picQ,
-		Do.RunTakeAct<Items.dead_klingon>,
+		Do.RunTakeAct<picQ,Items.dead_klingon>,
 		Do.ActivateRoom<readyRoom>,
 		Do.ActivateRoom<sickbay>,
 		Do.ActivateRoom<readyRoom>,
 		Do.ActivateRoom<v_10forward,after_lockdown>,
 		uQuarters,
-		Do.RunTakeAct<Items.dead_romulan>,
+		Do.RunTakeAct<uQuarters,Items.dead_romulan>,
 		oLounge,
 		sickbay,
 		H.TakeActionR<{
 			required: Items.dead_romulan;
 			item: hypospray,
 		}>,
-		Do.RunTakeAct<Items.hand_press>,
+		uSuddEnd,
+		uFridgeOpen,
+		Do.RunTakeAct<uFridgeOpen,Items.hand_press>,
 		burrow,
 		larder,larRiver,larBoat,larDark,
 		larDark,
 		deathDome,
 		grave,
-		Do.RunTakeAct<Items.fui>,
+		Do.RunTakeAct<grave,Items.fui>,
 		o,
 		zbrogjdnfhvyensocuiehw,
 		cosmology,

@@ -1,6 +1,9 @@
 import {H} from "../Helpers.ts";
 
-export type RunTakeAct<T extends H.ItemShape>={take: T;};
+export type RunTakeAct<U extends H.PageWithActShape<H.TakeAction<T>>,T extends H.ItemShape>={
+	target: U;
+	take: T;
+};
 type ExtractItemTakeAction<I extends number,T extends H.ItemShape>=H.ActionArrExt2<Record<I,H.TakeAction<T>>>;
 export type RunTakeAct2<U extends ExtractItemTakeAction<I,T>,I extends number,T extends H.ItemShape>={
 	target: U;
