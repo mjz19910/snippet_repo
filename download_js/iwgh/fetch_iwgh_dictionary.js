@@ -3,6 +3,7 @@ import {
 	read_json_array_file,
 	write_entire_file,
 } from "./deno_support.js";
+import { word_starts_with_consonant_seq2 } from "./random_reverse.js";
 
 const word3_dict = [
 	"art",
@@ -255,51 +256,6 @@ function parse_sentence(str) {
 	}
 	parse_next_word(parsed, parsed_src);
 	return str;
-}
-/**
- * @param {string} word
- * @returns {["consonant",1|2]|["vowel",1]}
- */
-function word_starts_with_consonant_seq(word) {
-	switch (word.slice(0, 2)) {
-		case "ch":
-		case "th":
-			return ["consonant", 2];
-	}
-	//cspell:ignore aeiouy
-	//cspell:ignore bcdfkmnptvw
-	/([aeiouy]|[ct]h|[bcdfkmnptvw]){4}/;
-	switch (word[0]) {
-		case "b":
-		case "c":
-		case "d":
-		case "f":
-		case "k":
-		case "m":
-		case "n":
-		case "p":
-		case "t":
-		case "v":
-		case "w":
-			return ["consonant", 1];
-		case "a":
-		case "e":
-		case "i":
-		case "o":
-		case "u":
-		case "y":
-			return ["vowel", 1];
-	}
-	throw new Error("Invalid word start '" + word.slice(0, 3) + "'");
-}
-/**
- * @param {string} word
- * @returns {{type:"consonant"|"vowel",part:string,rest:string}}
- */
-function word_starts_with_consonant_seq2(word) {
-	const [type, seq_len] = word_starts_with_consonant_seq(word);
-	const part = word.slice(0, seq_len), rest = word.slice(seq_len);
-	return { type, part, rest };
 }
 /** @type {Map<string,number>} */
 const rng_word_num_map = new Map();
