@@ -262,6 +262,7 @@ class ClientSocket extends SocketBase {
 	}
 	/** @arg {ConnectionMessage} data @arg {MessagePort} server_port */
 	post_wrapped(data, server_port) {
+		if (this.m_remote_target === window) return;
 		/** @type {import("./support/dbg/WrappedMessage.ts").WrappedMessage<ConnectionMessage>} */
 		const msg = {
 			type: "WindowSocket",
