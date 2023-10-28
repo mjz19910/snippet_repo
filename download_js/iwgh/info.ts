@@ -32,20 +32,22 @@ type screwdriver={
 	type: "item";
 	id: "screwdriver",
 };
+type unscrew_armor={
+	id: "unscrew_armor";
+	fn: "use";
+	usingItem: screwdriver;
+};
+type take_piece_of_paper={
+	required: unscrew_armor;
+	fn: "take";
+	item: piece_of_paper;
+};
 type armour={
 	id: "armour",
 	news: "Knight's armour",
 	actions: [
-		{
-			id: "unscrew_armor",
-			fn: "use",
-			usingItem: screwdriver,
-		},
-		{
-			required: "unscrew_armor",
-			fn: "take",
-			item: piece_of_paper,
-		}
+		unscrew_armor,
+		take_piece_of_paper,
 	],
 };
 type larStairs={
