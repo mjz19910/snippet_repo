@@ -55,7 +55,7 @@ async function run() {
 	};
 	const arr = [];
 	for (let j = 0;; j++) {
-		const request_parallelism = j + 60;
+		const request_parallelism = 1;
 		for (let i = 0; i < request_parallelism; i++) {
 			arr.push(fetch_one_dictionary_page().then(inc_request_total));
 		}
@@ -64,7 +64,7 @@ async function run() {
 		arr.length = 0;
 		if (j % request_log_interval === (request_log_interval - 1)) {
 			at_loop_end();
-			if (j > 60) break;
+			if (j > 20) break;
 		}
 	}
 	const perf_end = performance.now();
