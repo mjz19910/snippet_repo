@@ -1,6 +1,7 @@
 import { fetch_one_dictionary_page } from "./fetch_one_dictionary_page.js";
 import { new_words_set, parse_rng_word } from "./parse_rng_word.js";
 
+/** @param {string[]} dictionary_words_arr  */
 export async function iwgh_dict_main(dictionary_words_arr) {
 	for (const word of dictionary_words_arr) {
 		parse_rng_word(word, false, false);

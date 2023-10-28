@@ -1,3 +1,5 @@
+import { parse_rng_word } from "./parse_rng_word.js";
+
 /** @param {string} v @param {string} needle1 @param {string} needle2 @returns {[string,number]} */
 function string_contained_by(v, needle1, needle2, search_pos = 0) {
 	const start_pos = v.indexOf(needle1, search_pos);
@@ -48,6 +50,7 @@ function on_poems_page_text(v) {
 		for (const word of poem_words) {
 			if (all_poem_words.includes(word)) continue;
 			all_poem_words.push(word);
+			parse_rng_word(word, true, true);
 		}
 	}
 	console.log(all_poem_words);
