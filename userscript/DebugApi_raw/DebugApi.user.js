@@ -4830,21 +4830,17 @@ class ListenSocket extends ConsoleAccess {
 			return;
 		}
 		if (this.m_flags.does_proxy_to_opener) {
-			let real_data = data.data;
-			/** @type {[number,number][]} */
-			const id_path = [];
-			if (real_data && real_data.type === "forward") {
-				id_path.push(...real_data.client_id_path, [
-					data.client_id,
-					this.m_client_id,
-				]);
-				real_data = real_data.data;
-			}
-			data.data = {
-				type: "forward",
-				client_id_path: id_path,
-				data: real_data,
-			};
+			this.push_tcp_message(TCPMessage.make_message(
+				this.m_client_id,
+				seq,
+				ack,
+				{
+					type: "forward",
+					forwarded_by_id: this.m_client_id,
+					data,
+				},
+			));
+			return;
 		}
 		if (testing_tcp) {
 			this.open_group("rx", data);
