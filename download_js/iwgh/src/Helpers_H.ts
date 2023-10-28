@@ -6,6 +6,10 @@ export type TakeAction<T extends ItemShape>={
 	fn: "take";
 	item: T;
 };
+export type WallPostAct={
+	dst: "wall_post.php",
+	message: string,
+};
 export type TakeActionStr<T extends string>={
 	fn: "take";
 	item: T;

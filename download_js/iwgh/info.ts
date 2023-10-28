@@ -360,6 +360,10 @@ type v_25_of_shares={
 	id: "25% of shares",
 	links: [on],
 };
+type caramel={
+	id: "caramel";
+	news: "This is a secret communication room. Please, use it with care.";
+};
 // cspell:ignore zbrogjdnfhvyensocuiehw
 type u_page={
 	id: "zbrogjdnfhvyensocuiehw",
@@ -392,17 +396,17 @@ type u_page={
 		"The underground river from the castle larder leads to the Silent Lake... that is, if you do not drown!",
 		"Whenever in doubt - consult a wise book",
 	],
-	hint_refs: [
-		v_74stars,
-		bridge,
-		"caramel",
-		cosmology,
-		flatJoke,
-		"herculepoirot",
-		jrrtgandalf,
-		library,
-		"selldome",
-	],
+	hint_refs: {
+		"74stars": v_74stars,
+		bridge: bridge,
+		caramel: caramel,
+		cosmology: cosmology,
+		flatJoke: flatJoke,
+		herculepoirot: "herculepoirot",
+		jrrtgandalf: jrrtgandalf,
+		library: library,
+		selldome: selldome,
+	},
 };
 type zbrogjdnfhvyensocuiehw=u_page;
 type something={
@@ -431,10 +435,7 @@ type faq={
 type wall={
 	id: "wall";
 	news: "Great Wall of IWGH";
-	action: {
-		dst: "wall_post.php",
-		message: string,
-	},
+	action: H.WallPostAct,
 };
 type d_essay={
 	news: "An essay explaining why IWGH has no D page",
@@ -748,6 +749,7 @@ type uFridgeOpen={
 	];
 };
 type v_74stars={
+	id: "74stars";
 	news: "74 StArS";
 };
 type library={
