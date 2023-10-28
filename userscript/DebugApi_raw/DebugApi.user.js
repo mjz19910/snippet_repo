@@ -57,7 +57,7 @@ function is_record_with_T(x, k) {
 
 //#region cast_monad
 /** @template T @arg {T} x @returns {import("./support/dbg/CM.ts").CM<T>} */
-function new_cast_monad(x) {
+function wrap_CM(x) {
 	return { type: "cast", data: x };
 }
 /** @template T @arg {import("./support/dbg/CM.ts").CM<T>|null} x @returns {import("./support/dbg/CM.ts").CM<T&{}|null>|null} */
@@ -66,7 +66,7 @@ function cast_to_object(x) {
 	return x;
 }
 /** @template T @arg {import("./support/dbg/CM.ts").CM<T>} x @returns {import("./support/dbg/CM.ts").CM<T&{type:string}>|null} */
-function cast_to_record_with_string_type(x) {
+function cast_to_event_like_CM(x) {
 	const cast_result = cast_to_object(x);
 	if (!is_record_with_string_type(cast_result, "type")) return null;
 	return cast_result;
@@ -549,16 +549,14 @@ class WindowSocket extends SocketBase {
 	}
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<import("./support/dbg/WrappedMessage.ts").WrappedMessage<unknown>>} */
 	is_wrapped_message(event) {
-		const data = cast_to_record_with_string_type(new_cast_monad(event.data));
+		const data = cast_to_event_like_CM(wrap_CM(event.data));
 		if (!data) return false;
 		return data.data.type === "WindowSocket";
 	}
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<import("./support/dbg/WrappedMessage.ts").WrappedMessage<ConnectionMessage>>} */
 	is_connection_message(event) {
 		if (!this.is_wrapped_message(event)) return false;
-		const data_record = cast_to_record_with_string_type(
-			new_cast_monad(event.data.data),
-		);
+		const data_record = cast_to_event_like_CM(wrap_CM(event.data.data));
 		if (!data_record) return false;
 		if (data_record.data.type !== "tcp") return false;
 		return true;
