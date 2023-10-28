@@ -4889,8 +4889,7 @@ class ListenSocket extends ConsoleAccess {
 			this.m_connected = true;
 			this.downstream_connect(tcp_message);
 		}
-		const downstream_data = tcp_message.data;
-		if (downstream_data) this.downstream_handle_event(tcp_message);
+		this.downstream_handle_event(tcp_message);
 	}
 }
 
