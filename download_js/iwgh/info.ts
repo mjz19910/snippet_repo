@@ -346,7 +346,7 @@ type off={
 	id: "off",
 	action: H.TakeAction<keycard>;
 	quest_chain: [
-		Do.TakeAction<keycard>,
+		Do.RunTakeAct<keycard>,
 		Do.UseMenu<members>,
 		members,green,red,picQ,
 	];
@@ -667,14 +667,14 @@ type readyRoom={
 		dead_klingon: {
 			uses: dead_klingon;
 			quest_chain: [
-				Do.TakeAction<dead_klingon>,
+				Do.RunTakeAct<dead_klingon>,
 				readyRoom,
 				sickbay,
 				readyRoom,
 				v_10forward,
 				after_lockdown,
 				uQuarters,
-				Do.TakeAction<dead_romulan>,
+				Do.RunTakeAct<dead_romulan>,
 				oLounge,
 				sickbay,
 				H.TakeActionR<{
@@ -727,20 +727,20 @@ type uFridgeOpen={
 	id: "uFridgeOpen",
 	action: H.TakeAction<hand_press>;
 	quest_chain: [
-		Do.TakeAction<hand_press>,
+		Do.RunTakeAct<hand_press>,
 		burrow,
 		larder,larRiver,larBoat,larDark,
 		larDark,
 		deathDome,
 		grave,
-		Do.TakeAction<fui>,
+		Do.RunTakeAct<fui>,
 		o,
 		zbrogjdnfhvyensocuiehw,cosmology,
 		pattern,pcnt,
-		Do.TakeAction<v_25_of_shares>,
+		Do.RunTakeAct<v_25_of_shares>,
 		Do.UseInventory<v_25_of_shares>,
 		on,off,
-		Do.TakeAction<keycard>,
+		Do.RunTakeAct<keycard>,
 		Do.UseMenu<members>,
 		members,green,red,picQ,
 		picTable,picCup,picRef,
