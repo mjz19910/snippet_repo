@@ -7,11 +7,11 @@ type roof={
 	id: "roof",
 	news: "Roof.",
 };
-type floorFive={
+export type floorFive={
 	id: "floorFive",
 	links: [
 		roof,
-		elevator,
+		elevator|null,
 	],
 };
 type keepKitchen={
@@ -182,38 +182,45 @@ export type underworld={
 	id: "underworld",
 	links: [redbridge],
 };
-type hSmell={
-	news: "Weird smell in the hall gallery.",
+export type hSmell={
+	id: "hSmell";
+	news: "Weird smell in the hall gallery.";
 };
-type hGallery={
-	links: [hSmell],
+export type hGallery={
+	id: "hGallery";
+	links: [hSmell];
 };
-type hStairs={
-	links: [hGallery],
+export type hStairs={
+	id: "hStairs";
+	links: [hGallery];
 };
-type sDoor={
+export type sDoor={
+	id: "sDoor";
 	news: "Small door...",
 	state: "closed",
 };
-type lHall={
+export type lHall={
+	id: "lHall";
 	links: [
 		hStairs,
 		sDoor,
 	],
 };
-type lGallery={
+export type lGallery={
+	id: "lGallery";
 	links: [lHall],
 };
-type narrowHole={
+export type narrowHole={
+	id: "narrowHole";
 	links: [lGallery],
 	// 404 pages
 	missing: ["uQwe"],
 };
-type uLeafage={
+export type uLeafage={
 	id: "uLeafage",
 	links: [narrowHole],
 };
-type uForest={
+export type uForest={
 	id: "uForest",
 	links: [uLeafage],
 	action: {
@@ -221,11 +228,12 @@ type uForest={
 		usingItem: "QweQwe",
 	},
 };
-type uForestEdge={
+export type uForestEdge={
 	id: "uForestEdge",
 	links: [uForest],
 };
-type boiler={
+export type boiler={
+	id: "boiler";
 	news: "Boiler room",
 	links: [
 		piping,
@@ -234,13 +242,13 @@ type boiler={
 };
 type someone={
 	id: "someone";
-	uses: something_item;
+	action: H.UseAction<something_item>;
 };
 type eternalMaze={
 	id: "eternalMaze";
 	links: [someone],
 };
-type floorOne={
+export type floorOne={
 	id: "floorOne";
 	links: [eternalMaze],
 };
@@ -248,7 +256,7 @@ type giant={
 	type: "item";
 	id: "giant";
 };
-type floorTwo={
+export type floorTwo={
 	id: "floorTwo";
 	news: "Floor Two";
 	action: H.UseAction2<{
@@ -260,7 +268,7 @@ type genie={
 	type: "item";
 	id: "genie";
 };
-type floorThree={
+export type floorThree={
 	id: "floorThree";
 	news: "Floor Three",
 	action: H.TakeAction<genie>;
