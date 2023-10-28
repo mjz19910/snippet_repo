@@ -4596,7 +4596,8 @@ class Socket extends ConsoleAccess {
 	}
 	/** @arg {MessagePort} server_port */
 	send_syn(server_port) {
-		if (testing_tcp) { // <group syn>
+		if (testing_tcp) {
+			// <group syn>
 			console.group("syn");
 		}
 		this.init_handler();
@@ -4627,7 +4628,7 @@ class Socket extends ConsoleAccess {
 	push_tcp_message(data) {
 		if (testing_tcp) {
 			this.open_group("tx", data);
-			console.log("Socket ->");
+			console.log("Socket.push_tcp_message ->");
 			console.log("l_port.onmessage.handleEvent ->");
 			console.log("-L> ListenSocket", data);
 			this.close_group();
@@ -4800,6 +4801,10 @@ class ListenSocket extends ConsoleAccess {
 	}
 	/** @arg {boolean} can_reconnect */
 	will_disconnect(can_reconnect) {
+		// <group rst>
+		if (testing_tcp) {
+			console.group("rst");
+		}
 		this.push_tcp_message(this.make_message(
 			0,
 			0,
@@ -4819,7 +4824,7 @@ class ListenSocket extends ConsoleAccess {
 		}
 		if (testing_tcp) {
 			this.open_group("rx", data);
-			console.log("Socket ->");
+			console.log("Socket.handleEvent ->");
 			console.log("l_port.onmessage.handleEvent ->");
 			console.log("-> ListenSocket", data);
 			this.close_group();
