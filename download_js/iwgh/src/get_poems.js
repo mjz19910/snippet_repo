@@ -1,6 +1,7 @@
 import { deno_fs_init } from "./deno_fs_init.js";
 import { deno_default_open, read_json_array_file } from "./deno_support.js";
 import { fetch_one_page } from "./fetch_one_page.js";
+import { random_dictionary_path } from "./file_paths.js";
 import {
 	parse_rng_word,
 	reset_words_set,
