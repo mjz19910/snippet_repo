@@ -9,7 +9,7 @@ import {
 /** @param {GetPoemsState} state */
 async function scope(state) {
 	const lim = 4;
-	for (let i = 0; i < (5 * 50); i++) {
+	for (let i = 0; i < (4 * 6); i++) {
 		const arr = [];
 		for (let j = 0; j < (20 + Math.floor(i / 4)); j++) {
 			arr.push(fetch_one_page("poems"));
