@@ -4,6 +4,8 @@ import {
 	write_entire_file,
 } from "./deno_support.js";
 
+const vowel_list = ["a", "e", "i", "o", "u", "y"];
+
 /**
  * @param {string} word
  * @returns {["consonant",1|2]|["vowel",1]}
@@ -145,7 +147,6 @@ export function parse_rng_word2(word, opts) {
 		return;
 	}
 	add_word_to_cache(opts, word, word_arr, { generated: false });
-	const vowel_list = ["a", "e", "i", "o", "u", "y"];
 	/** @type {WordArrItem} */
 	const v_obj = { type: "vowel", v: "" };
 	word_arr.push(v_obj);
