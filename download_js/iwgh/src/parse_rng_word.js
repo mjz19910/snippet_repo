@@ -56,6 +56,7 @@ export function save_dictionary(dictionary_file, dictionary_words_arr) {
 	return write_entire_file(dictionary_file, dictionary_arr);
 }
 export const new_words_set = new Set();
+export const partial_words = new Set();
 /**
  * @param {string} word
  * @param {{add_new_words:boolean;destructure_word:boolean}} opts
@@ -72,14 +73,17 @@ export function parse_rng_word(word, opts) {
 		v = r2.rest;
 	}
 	if (word_arr.length >= 4) {
-		console.log("end", word_arr.at(-2));
-		if (word_arr.at(-2).type === "consonant") {
-			//
+		x: if (word_arr.at(-2).type === "consonant") {
+			if (word_arr.length > 5) {
+				parse_rng_word(word_arr.slice(0, -2).map((v) => v.v).join(""), opts);
+				break x;
+			}
+			partial_words.add(word);
 		} else {
 			parse_rng_word(word_arr.slice(0, -1).map((v) => v.v).join(""), opts);
 		}
 		// parse_rng_word(word_arr.slice(0, -1).join(""), opts);
-		// parse_rng_word(word_arr.slice(1).join(""), opts);
+		parse_rng_word(word_arr.slice(1).map((v) => v.v).join(""), opts);
 		return;
 	}
 	if (destructure_word) show_word_parts(word_arr);
