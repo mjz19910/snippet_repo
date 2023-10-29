@@ -577,6 +577,7 @@ type orb_book_inv={
 type h={
 	id: "h";
 	news: "This is the H page.";
+	// History enabled.
 };
 type guide={
 	id: "guide";
@@ -588,7 +589,7 @@ type all_pages={
 			inventory,
 			o,
 			u_page,
-			h,
+			"history",
 		],
 	},
 	menu: {
@@ -627,6 +628,7 @@ type communication={
 };
 type dictionary={
 	id: "dictionary";
+	links: [h];
 };
 type open_dir={
 	links: [
@@ -874,4 +876,4 @@ export type pcnt={
 	id: "pcnt";
 	action: H.TakeAction<Items.v_25_of_shares>;
 };
-// You have visited 125 places:
+// You have visited 133 places:
