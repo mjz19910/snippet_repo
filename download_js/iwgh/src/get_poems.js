@@ -12,13 +12,13 @@ const global_abort = new AbortController();
 function delay(ms) {
 	return new Promise(function (accept, reject) {
 		const signal = global_abort.signal;
-		signal.addEventListener("abort", listener);
-		const done = () => {
-			signal.removeEventListener("abort", listener);
-		};
 		const listener = () => {
 			reject(signal.reason);
 			abort();
+		};
+		signal.addEventListener("abort", listener);
+		const done = () => {
+			signal.removeEventListener("abort", listener);
 		};
 		const abort = () => {
 			done();
