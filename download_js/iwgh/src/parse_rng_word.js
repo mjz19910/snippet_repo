@@ -91,14 +91,20 @@ export function load_dictionary_sync(file) {
 	return dictionary_words_arr.length;
 }
 
+/** @param {ParseRngOpts} opts */
+export function parse_rng_word(opts) {
+	parse_rng_word2(opts.word, opts);
+}
+
 /** @typedef {{type: "consonant" | "vowel";v: string;}} WordArrItem */
+/** @typedef {{word:string; add_new_words:boolean; destructure_word:boolean;}} ParseRngOpts */
 
 const length_limit = 4;
 /**
  * @param {string} word
- * @param {{add_new_words:boolean;destructure_word:boolean}} opts
+ * @param {ParseRngOpts} opts
  */
-export function parse_rng_word(word, opts) {
+export function parse_rng_word2(word, opts) {
 	if (word === "") return;
 	const { add_new_words } = opts;
 	if (random_dictionary_set.has(word)) return;
@@ -138,14 +144,14 @@ export function parse_rng_word(word, opts) {
 		if (p2.type === "consonant") {
 			const truncated_word = word_arr.slice(0, -2).map((v) => v.v).join("");
 			if (word_arr.length > ll) {
-				parse_rng_word(truncated_word, opts);
+				parse_rng_word2(truncated_word, opts);
 			} else {
 				partial_words.add(truncated_word);
 			}
 		} else {
-			parse_rng_word(word_arr.slice(0, -1).map((v) => v.v).join(""), opts);
+			parse_rng_word2(word_arr.slice(0, -1).map((v) => v.v).join(""), opts);
 		}
-		parse_rng_word(word_arr.slice(1).map((v) => v.v).join(""), opts);
+		parse_rng_word2(word_arr.slice(1).map((v) => v.v).join(""), opts);
 		return;
 	}
 	add_word_to_cache(opts, word, word_arr);
@@ -159,7 +165,7 @@ export function parse_rng_word(word, opts) {
 	}
 }
 
-/** @param {{add_new_words:boolean;destructure_word:boolean}} opts @param {string} word @param {WordArrItem} word_arr */
+/** @param {ParseRngOpts} opts @param {string} word @param {WordArrItem} word_arr */
 function add_word_to_cache(opts, word, word_arr) {
 	if (random_dictionary_set.has(word)) return;
 	random_dictionary_set.add(word);

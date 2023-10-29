@@ -49,7 +49,11 @@ function on_poems_page_text(v) {
 	for (const poem_line of poem_lines) {
 		const poem_words = on_poem_line(poem_line);
 		for (const word of poem_words) {
-			parse_rng_word(word, { add_new_words: true, destructure_word: true });
+			parse_rng_word({
+				word,
+				add_new_words: true,
+				destructure_word: true,
+			});
 		}
 	}
 }
