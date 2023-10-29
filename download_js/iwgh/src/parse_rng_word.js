@@ -64,6 +64,7 @@ const length_limit = 2;
  * @param {{add_new_words:boolean;destructure_word:boolean}} opts
  */
 export function parse_rng_word(word, opts) {
+	if (word === "") return;
 	const { add_new_words, destructure_word } = opts;
 	if (random_dictionary_set.has(word)) return;
 	if (!add_new_words) {
