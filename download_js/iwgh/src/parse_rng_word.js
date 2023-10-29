@@ -103,6 +103,7 @@ export function parse_rng_word(word, opts) {
 		if (word === "") return;
 	} while (true);
 	x: if (trimmed.length !== 0) {
+		if(trimmed.length >= ll) break x;
 		const vowel_word = trimmed.map((v) => v.v).join("");
 		if (random_dictionary_set.has(vowel_word)) break x;
 		random_dictionary_set.add(vowel_word);
