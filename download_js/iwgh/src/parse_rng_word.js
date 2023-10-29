@@ -42,12 +42,12 @@ export function word_starts_with_consonant_seq(word) {
 }
 /**
  * @param {string} word
- * @returns {{part:{type:"consonant"|"vowel",v:string},rest:string}}
+ * @returns {{item:WordArrItem,rest:string}}
  */
 export function word_starts_with_consonant_seq2(word) {
 	const [type, idx] = word_starts_with_consonant_seq(word);
 	const part = word.slice(0, idx), rest = word.slice(idx);
-	return { part: { type, v: part }, rest };
+	return { item: { type, v: part }, rest };
 }
 /** @type {Set<string>} */
 export const random_dictionary_set = new Set();
@@ -91,6 +91,8 @@ export function load_dictionary_sync(file) {
 	return dictionary_words_arr.length;
 }
 
+/** @typedef {{type: "consonant" | "vowel";v: string;}} WordArrItem */
+
 const length_limit = 4;
 /**
  * @param {string} word
@@ -98,7 +100,7 @@ const length_limit = 4;
  */
 export function parse_rng_word(word, opts) {
 	if (word === "") return;
-	const { add_new_words, destructure_word } = opts;
+	const { add_new_words } = opts;
 	if (random_dictionary_set.has(word)) return;
 	if (!add_new_words) {
 		partial_words.add(word.slice(0, -1));
@@ -107,32 +109,27 @@ export function parse_rng_word(word, opts) {
 	let v = word;
 	for (;;) {
 		const r2 = word_starts_with_consonant_seq2(v);
-		word_arr.push(r2.part);
+		word_arr.push(r2.item);
 		if (r2.rest === "") break;
 		v = r2.rest;
 	}
 	const ll = length_limit + 1;
-	const trimmed = [];
+	const vowel_word_arr = [];
 	do {
 		const r1 = word_arr.at(-1);
 		if (r1 && r1.type === "vowel") {
 			word = word.slice(0, -1);
 			const del = word_arr.splice(-1, 1);
-			trimmed.unshift(...del);
+			vowel_word_arr.unshift(...del);
 		} else {
 			break;
 		}
 		if (word === "") return;
 	} while (true);
-	x: if (trimmed.length !== 0) {
-		if (trimmed.length >= ll) break x;
-		const vowel_word = trimmed.map((v) => v.v).join("");
-		if (random_dictionary_set.has(vowel_word)) break x;
-		random_dictionary_set.add(vowel_word);
-		if (add_new_words) {
-			new_words_set.add(vowel_word);
-		}
-		console.log(trimmed.length, vowel_word);
+	x: if (vowel_word_arr.length !== 0) {
+		if (vowel_word_arr.length >= ll) break x;
+		const vowel_word = vowel_word_arr.map((v) => v.v).join("");
+		add_word_to_cache(opts, vowel_word, vowel_word_arr);
 	}
 	if (random_dictionary_set.has(word)) return;
 	if (word_arr.length >= ll) {
@@ -152,17 +149,24 @@ export function parse_rng_word(word, opts) {
 		parse_rng_word(word_arr.slice(1).map((v) => v.v).join(""), opts);
 		return;
 	}
-	if (destructure_word) show_word_parts(word_arr);
+	add_word_to_cache(opts, word, word_arr);
+}
+
+/** @param {{add_new_words:boolean;destructure_word:boolean}} opts @param {string} word @param {WordArrItem} word_arr */
+function add_word_to_cache(opts, word, word_arr) {
+	if (random_dictionary_set.has(vowel_word)) return;
 	random_dictionary_set.add(word);
-	if (add_new_words) {
+	if (opts.add_new_words) {
 		new_words_set.add(word);
 	}
+	if (opts.destructure_word) show_word_parts(word_arr);
 }
+
 /**
- * @param {ReturnType<typeof word_starts_with_consonant_seq2>["part"][]} word_arr
+ * @param {ReturnType<typeof word_starts_with_consonant_seq2>["item"][]} word_arr
  */
 function show_word_parts(word_arr) {
-	if (word_arr.length > 3) return;
+	if (word_arr.length > length_limit) return;
 	const wj = word_arr.map((v) => v.v).join(""),
 		tj = word_arr.map((v) => v.type == "vowel" ? "v" : "c").join("");
 	console.log("W:", wj, "T:", tj, [".parts", word_arr.length]);
