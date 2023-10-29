@@ -1,9 +1,9 @@
 import { deno_fs_init } from "./deno_fs_init.js";
-import { deno_default_open, read_json_array_file } from "./deno_support.js";
+import { deno_default_open } from "./deno_support.js";
 import { fetch_one_page } from "./fetch_one_page.js";
 import { random_dictionary_path } from "./file_paths.js";
 import {
-	parse_rng_word,
+	load_dictionary,
 	reset_words_set,
 	save_dictionary,
 } from "./parse_rng_word.js";
@@ -25,13 +25,9 @@ async function scope() {
 async function main() {
 	await deno_fs_init();
 	const dictionary_file = await deno_default_open(random_dictionary_path);
-	/** @type {string[]} */
-	const dictionary_words_arr = await read_json_array_file(dictionary_file);
-	for (const word of dictionary_words_arr) {
-		parse_rng_word(word, { add_new_words: false, destructure_word: false });
-	}
+	const dict_size = await load_dictionary(dictionary_file);
 	await scope();
-	await save_dictionary(dictionary_file, dictionary_words_arr);
+	await save_dictionary(dictionary_file, dict_size);
 	dictionary_file.close();
 }
 await main();
