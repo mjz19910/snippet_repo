@@ -32,6 +32,9 @@ function delay(ms) {
 async function scope(state) {
 	const lim = 4;
 	for (let i = 0; i < (4 * 6); i++) {
+		if (i % lim == 0) {
+			console.log("start", Math.floor(i / lim));
+		}
 		const arr = [];
 		const par = 2 + Math.floor(i / 4) - 1;
 		for (let j = 0; j < par; j++) {
@@ -44,7 +47,6 @@ async function scope(state) {
 			await state.save();
 			// pause so we don't overload the ddos protection
 			await delay(8 * 1000);
-			console.log("start", Math.floor(i / lim));
 		}
 	}
 }
