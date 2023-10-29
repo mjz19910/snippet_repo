@@ -5,7 +5,7 @@
 			"DOM"
 		],
 		"module": "Node16",
-		"outDir": "./dist",
+		"outDir": "./.z_dist",
 		"target": "ESNext",
 		"moduleResolution": "Node16",
 		"allowImportingTsExtensions": true,
@@ -41,5 +41,6 @@
 		"node_modules",
 		"**/*-spec.ts",
 		"./dist",
+		"./.z_dist",
 	],
 }
