@@ -173,17 +173,18 @@ function add_word_to_cache(opts, word, word_arr) {
 	if (opts.add_new_words) {
 		new_words_set.add(word);
 	}
-	if (opts.destructure_word) show_word_parts(word_arr);
+	if (opts.destructure_word) show_word_parts(opts, word_arr);
 }
 
 /**
- * @param {ReturnType<typeof word_starts_with_consonant_seq2>["item"][]} word_arr
+ * @param {ParseRngOpts} opts @param {WordArrItem[]} word_arr
  */
-function show_word_parts(word_arr) {
+function show_word_parts(opts, word_arr) {
 	if (word_arr.length > length_limit) return;
+	if (!opts.word_arr) return;
 	const wj = word_arr.map((v) => v.v).join(""),
-		tj = word_arr.map((v) => v.type == "vowel" ? "v" : "c").join("");
-	console.log("W:", wj, "T:", tj, [".parts", word_arr.length]);
+		tj = opts.word_arr.map((v) => v.type == "vowel" ? "v" : "c").join("");
+	console.log("W:", wj, [".parts", word_arr.length], "T:", tj);
 }
 
 /** @param {number} par */
