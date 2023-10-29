@@ -44,6 +44,7 @@ async function scope(state) {
 			await state.save();
 			// pause so we don't overload the ddos protection
 			await delay(8 * 1000);
+			console.log("start");
 		}
 	}
 }
