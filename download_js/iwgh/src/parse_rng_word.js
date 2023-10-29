@@ -4,7 +4,7 @@ import {
 	write_entire_file,
 } from "./deno_support.js";
 
-const vowel_list = ["a", "e", "i", "o", "u", "y"];
+const vowel_list = "aeiouy".split("");
 
 /**
  * @param {string} word
@@ -15,6 +15,9 @@ export function word_starts_with_consonant_seq(word) {
 		case "ch":
 		case "th":
 			return ["consonant", 2];
+	}
+	if (vowel_list.includes(word[0])) {
+		return ["vowel", 1];
 	}
 	//cspell:ignore aeiouy
 	//cspell:ignore bcdfkmnptvw
@@ -32,13 +35,6 @@ export function word_starts_with_consonant_seq(word) {
 		case "v":
 		case "w":
 			return ["consonant", 1];
-		case "a":
-		case "e":
-		case "i":
-		case "o":
-		case "u":
-		case "y":
-			return ["vowel", 1];
 	}
 	throw new Error("Invalid word start '" + word.slice(0, 3) + "'");
 }
