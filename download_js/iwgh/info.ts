@@ -274,23 +274,33 @@ type u_page={
 		"Cross the road only when you see green light",
 		// something
 		"If something is mentioned twice, chances are it hints to a room",
+		v_74stars,
 		"Keyword: <b>74stars</b>",
+		bridge,
 		"Keyword: <b>bridge</b>",
 		// secret communication room
+		caramel,
 		"Keyword: <b>caramel</b>",
+		cosmology,
 		"Keyword: <b>cosmology</b>",
+		flatJoke,
 		"Keyword: <b>flatJoke</b>",
+		jrrtgandalf,
 		"Keyword: <b>jrrtgandalf</b>",
+		selldome,
 		"Selldome page: <b>selldome</b>",
 		// [?]
 		"Stay alert!",
+		herculepoirot,
 		"The Poirot page: <b>herculepoirot</b>",
 		// ut1 -> Items.screwdriver -> armour
 		ut1,armour,
 		"The best way to get rid of an angry mosquito is to hide from it!",
-		// SilentLake,
+		larDark,
+		larLake,
 		"The underground river from the castle larder leads to the Silent Lake... that is, if you do not drown!",
 		// [?]
+		guide,
 		"Whenever in doubt - consult a wise book",
 	],
 	hint_refs: {
