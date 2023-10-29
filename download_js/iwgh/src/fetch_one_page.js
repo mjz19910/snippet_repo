@@ -36,6 +36,7 @@ function on_poem_line(line) {
 	}
 	return poem_words;
 }
+/** @param {string} v */
 function on_poems_page_text(v) {
 	const [tbl] = string_contained_by(v, "<table ", "</table>");
 	get_news_str(tbl);
