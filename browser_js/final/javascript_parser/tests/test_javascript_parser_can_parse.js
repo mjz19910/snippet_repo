@@ -23,15 +23,15 @@ export async function test_javascript_parser_can_parse(ctx) {
 		},
 	});
 	await ctx.step({
-		name: "can_parse_get_module_data_string",
-		fn() {
-			test_javascript_parser_can_parse_get_module_data_string();
-		},
-	});
-	await ctx.step({
 		name: "can_parse_is_valid_utf8_import",
 		fn() {
 			test_javascript_parser_can_parse_is_valid_utf8_import();
+		},
+	});
+	await ctx.step({
+		name: "can_parse_get_module_data_string",
+		fn() {
+			test_javascript_parser_can_parse_get_module_data_string();
 		},
 	});
 }
