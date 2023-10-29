@@ -175,8 +175,6 @@ function add_word_to_cache(opts, word, word_arr) {
  * @param {ParseRngOpts} opts @param {WordArrItem[]} word_arr
  */
 function show_word_parts(opts, word_arr) {
-	if (word_arr.length > length_limit) return;
-	if (!opts.word_arr) return;
 	const wj = word_arr.map((v) => v.v).join(""),
 		tj1 = word_arr.map((v) => v.type == "vowel" ? "v" : "c").join(""),
 		tj2 = opts.word_arr.map((v) => v.type == "vowel" ? "v" : "c").join("");
