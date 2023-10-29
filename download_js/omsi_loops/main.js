@@ -1,6 +1,6 @@
 (function main() {
 	class OutputResult {
-		result = res;
+		result = eval("res");
 		/**
 		 * @param {{ setup: ({ pot: number; }|{pick_locks:number}|{buy_mana:number})[]; used: { mana: number; time: string; }; result: { mana: number; gold: number; time: string; }; }} val_any
 		 */

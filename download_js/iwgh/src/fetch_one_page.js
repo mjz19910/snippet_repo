@@ -12,6 +12,7 @@ function string_contained_by_end(v, needle1, needle2, search_pos = 0) {
 	const end_pos = v.indexOf(needle2, start_pos) + needle2.length;
 	return end_pos;
 }
+/** @param {string} html_tag @param {string} str */
 function unwrap_html_str(html_tag, str) {
 	return str.slice(html_tag.length + 2, -html_tag.length - 3);
 }
