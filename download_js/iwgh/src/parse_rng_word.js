@@ -135,6 +135,11 @@ export function parse_rng_word2(word, opts) {
 		if (vowel_word_arr.length > ll) break x;
 		const vowel_word = vowel_word_arr.map((v) => v.v).join("");
 		add_word_to_cache(opts, vowel_word, vowel_word_arr, { generated: false });
+		const v_obj = vowel_word_arr.at(-1);
+		if(!v_obj) break x;
+		for (const v_end of vowel_list) {
+			v_obj.v = v_end;
+		}
 	}
 	if (random_dictionary_set.has(word)) return;
 	if (word_arr.length > ll) {
