@@ -300,7 +300,6 @@ type u_page={
 		larLake,
 		"The underground river from the castle larder leads to the Silent Lake... that is, if you do not drown!",
 		// [?]
-		guide,
 		"Whenever in doubt - consult a wise book",
 	],
 	hint_refs: {
