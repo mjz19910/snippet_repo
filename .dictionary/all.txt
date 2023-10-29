@@ -369,6 +369,7 @@ retv
 revindex
 rewalk
 romulan
+rozenbom
 sandboxed
 sargs
 savecursor

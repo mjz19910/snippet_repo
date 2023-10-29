@@ -36,30 +36,12 @@ type unscrew_armor={
 	fn: "use";
 	usingItem: Items.screwdriver;
 };
-type armour={
-	id: "armour",
-	news: "Knight's armour",
-	action: H.ActionArr<[
-		unscrew_armor,
-		H.TakeActionR<{item: Items.piece_of_paper,required: unscrew_armor;}>,
-	]>,
-};
 type larStairs={
 	id: "larStairs",
 	links: [
 		keep,
 		armour,
 	],
-};
-type larFm={
-	id: "larFm";
-	action: H.TakeActionR2<{
-		requirements: [
-			Items.hand_press,
-			Items.fui,
-		];
-		item: Items.egg;
-	}>;
 };
 type larLake={
 	id: "larLake",
@@ -113,14 +95,6 @@ type picTable={
 	id: "picTable",
 	links: [picCup],
 };
-type picQ={
-	id: "picQ";
-	links: [picTable],
-	action: H.TakeActionR<{
-		required: keycard;
-		item: Items.dead_klingon;
-	}>;
-};
 type good={
 	id: "good",
 	news: "Good page.",
@@ -143,11 +117,6 @@ type green={
 type members={
 	id: "members",
 	links: [green],
-};
-export type redbridge={
-	id: "redbridge";
-	news: "Red bridge",
-	action: H.UseActionStr<"sword">;
 };
 export type underworld={
 	id: "underworld",
@@ -192,16 +161,6 @@ export type uLeafage={
 	id: "uLeafage",
 	links: [narrowHole],
 };
-export type uForest={
-	id: "uForest",
-	links: [uLeafage],
-	action: H.UseActionStr<"qweqwe">,
-};
-export type uForestEdge={
-	id: "uForestEdge",
-	links: [uForest],
-	action: H.TakeAction<Items.cowardly_dwarf>;
-};
 export type boiler={
 	id: "boiler";
 	news: "Boiler room",
@@ -210,13 +169,6 @@ export type boiler={
 		mechanic,
 	],
 };
-type someone={
-	id: "someone";
-	action: H.ActionArr<[
-		H.UseAction<Items.something>,
-		H.TakeActionR<{item: Items.glass_orb,required: Items.something;}>,
-	]>;
-};
 type eternalMaze={
 	id: "eternalMaze";
 	links: [someone],
@@ -224,19 +176,6 @@ type eternalMaze={
 export type floorOne={
 	id: "floorOne";
 	links: [eternalMaze],
-};
-export type floorTwo={
-	id: "floorTwo";
-	news: "Floor Two";
-	action: H.UseAction2<{
-		v: Items.giant;
-		caption: "Move furniture";
-	}>,
-};
-export type floorThree={
-	id: "floorThree";
-	news: "Floor Three",
-	action: H.TakeAction<Items.genie>;
 };
 export type elev_underworld={
 	floor_number: 3;
@@ -277,11 +216,6 @@ export type elevator={
 		elev_floorFive: elev_floorFive,
 	},
 };
-// cspell:word rozenbom
-type rozenbom={
-	id: "rozenbom",
-	action: H.TakeAction<Items.small_green_lamp>,
-};
 type dwarfName={
 	id: "dwarfName",
 	links: [rozenbom],
@@ -294,10 +228,6 @@ type piece_of_paper_inv={
 type keycard={
 	type: "item",
 	id: "keycard",
-};
-type off={
-	id: "off",
-	action: H.TakeAction<keycard>;
 };
 type on={
 	id: "on",
@@ -365,10 +295,6 @@ type u_page={
 	};
 };
 type zbrogjdnfhvyensocuiehw=u_page;
-type something={
-	id: "something";
-	action: H.TakeAction<Items.something>;
-};
 type rhino={
 	links: [something],
 };
@@ -381,40 +307,12 @@ type missions={
 		beginner: [u_page,"zbrogjdnfhvyensocuiehw"],
 	},
 };
-type faq={
-	id: "faq";
-	links: [
-		missions,
-		y,
-	],
-	action: H.TakeAction<Items.gandalf_magic_book>;
-};
-type wall={
-	id: "wall";
-	news: "Great Wall of IWGH";
-	action: H.WallPostAct,
-};
 type d_essay={
 	news: "An essay explaining why IWGH has no D page",
 };
 type hypospray={
 	type: "item",
 	id: "hypospray",
-};
-type sickbay={
-	id: "sickbay";
-	action: H.ActionArr<[
-		H.StoryEvent<{
-			required: Items.dead_klingon;
-		}>,
-		H.StoryEvent<{
-			required: Items.dead_romulan;
-		}>,
-		H.TakeActionR<{
-			required: Items.dead_romulan;
-			item: hypospray,
-		}>,
-	]>;
 };
 export type enterprise={
 	links: [
@@ -433,40 +331,11 @@ export type enterprise={
 type deck8={
 	id: "deck8",
 };
-type uQuarters={
-	id: "uQuarters";
-	news: "Uninhabited quarters";
-	extra: "the Romulan just entered their quarters, there is no one *visible* inside";
-	action: H.TakeActionR<{
-		required: after_lockdown;
-		item: Items.dead_romulan;
-	}>;
-};
-type v_10forward={
-	id: "10forward",
-	news: "Enterprise NCC-1701-D: Ten Forward";
-	action: H.StoryEvent<{required: {type: "item",id: "after lockdown";};}>;
-};
-type engineering={
-	links: [cDisruptor];
-	//cspell:ignore wqwrqr
-	action: H.UseAction<Items.wqwrqr>;
-};
 type cDisruptor={
 	news: "Cloak disruptor",
 };
-type worms={
-	id: "worms";
-	news: "Worms";
-	action: H.TakeAction<Items.fat_worm>;
-};
 type hole={
 	links: [worms];
-};
-type ut1={
-	news: "Underground tunnel, section 1.";
-	action: H.TakeAction<Items.screwdriver>;
-	links: [hole];
 };
 type ut231={
 	news_fmt: "Underground tunnel, section 231.";
@@ -485,20 +354,6 @@ type ut2={
 type ut3={
 	links: [deadEnd];
 };
-type grave={
-	id: "grave";
-	links: [
-		ut1,
-		ut2,
-		ut3,
-	],
-	action: H.TakeAction<Items.fui>;
-};
-type mechanic={
-	id: "mechanic";
-	news: "Mechanic in the boiler room";
-	action: H.UseAction<hypospray>;
-};
 type piping={
 	news: "Piping",
 	links: [
@@ -515,20 +370,8 @@ type piping={
 type pipe1={
 	news: "Pipe passage 1",
 };
-type pipe3={
-	news: "Pipe passage 3",
-	action: H.TakeAction<Items.philosophical_principles>,
-};
 type pipe5={
 	news: "Pipe passage 5",
-};
-type pipe6={
-	news: "Pipe passage 6",
-	action: H.TakeAction<Items.broken_water_filter>;
-};
-type pipe7={
-	news: "Pipe passage 7",
-	action: H.TakeAction<Items.fake_orb>,
 };
 type pipe9={
 	news: "Pipe passage 9";
@@ -597,20 +440,6 @@ type after_lockdown={
 	type: "story_pos";
 	pos: "after lockdown";
 };
-type readyRoom={
-	id: "readyRoom";
-	story: {
-		dead_klingon: {
-			uses: Items.dead_klingon;
-		};
-		null: {
-			uses: null,
-		};
-	};
-	action: H.ActionArr<[
-		H.StoryEvent<{required: Items.dead_klingon;}>,
-	]>,
-};
 type oLounge={
 	id: "oLounge",
 	news: "Enterprise NCC-1701-D: Observation lounge",
@@ -638,12 +467,6 @@ type uSuddEnd={
 	id: "uSuddEnd";
 	links: [uFridgeOpen];
 };
-type uFridgeOpen={
-	id: "uFridgeOpen",
-	action: H.TakeAction<Items.hand_press>;
-	quest_chain: [
-	];
-};
 type v_74stars={
 	id: "74stars";
 	news: "74 StArS";
@@ -653,10 +476,6 @@ type library={
 		lib1,
 		lib2,
 	];
-};
-type lib1={
-	news: "Or-Os";
-	action: H.TakeAction<Items.orb_book>;
 };
 type lib2={
 	news: "Gt-Gz";
@@ -682,15 +501,6 @@ type cosmology={
 type opinion={
 	news: "Opinion page.";
 };
-type characteristics={
-	news: "Random super hero";
-	action: {
-		type: "reload_link",
-		button: {
-			caption: "Generate superhero",
-		},
-	},
-};
 type generation={
 	news: "Generation page.";
 };
@@ -703,10 +513,6 @@ type pattern={
 	quest_chain: [
 		pattern,pcnt,
 	];
-};
-type pcnt={
-	id: "pcnt";
-	action: H.TakeAction<v_25_of_shares>;
 };
 type flatDisc={
 	links: [glimpse];
@@ -832,23 +638,6 @@ type y={
 		y: [missions];
 	};
 };
-type z={
-	news: "This is Z space";
-	action: {
-		fn: "take",
-		item: Items.mosquitoZ,
-	};
-};
-
-type sickbay_has_dead_klingon={
-	type: "story";
-	id: "sickbay_has_dead_klingon";
-	action: "activate_room";
-	room: sickbay;
-	required: Items.dead_klingon;
-	remove_item: true;
-};
-
 type main={
 	id: "main";
 	links: [wall];
@@ -915,4 +704,199 @@ type main={
 		faq,
 		Items.gandalf_magic_book,
 	];
+};
+type uQuarters={
+	id: "uQuarters";
+	news: "Uninhabited quarters";
+	extra: "the Romulan just entered their quarters, there is no one *visible* inside";
+	action: H.TakeActionR<{
+		required: after_lockdown;
+		item: Items.dead_romulan;
+	}>;
+};
+type v_10forward={
+	id: "10forward",
+	news: "Enterprise NCC-1701-D: Ten Forward";
+	action: H.StoryEvent<{required: {type: "item",id: "after lockdown";};}>;
+};
+type engineering={
+	links: [cDisruptor];
+	//cspell:ignore wqwrqr
+	action: H.UseAction<Items.wqwrqr>;
+};
+type z={
+	news: "This is Z space";
+	action: H.TakeAction<Items.mosquitoZ>;
+};
+type sickbay_has_dead_klingon={
+	type: "story";
+	id: "sickbay_has_dead_klingon";
+	action: "activate_room";
+	room: sickbay;
+	required: Items.dead_klingon;
+	remove_item: true;
+};
+type armour={
+	id: "armour",
+	news: "Knight's armour",
+	action: H.ActionArr<[
+		unscrew_armor,
+		H.TakeActionR<{item: Items.piece_of_paper,required: unscrew_armor;}>,
+	]>,
+};
+type larFm={
+	id: "larFm";
+	action: H.TakeActionR2<{
+		requirements: [
+			Items.hand_press,
+			Items.fui,
+		];
+		item: Items.egg;
+	}>;
+};
+type picQ={
+	id: "picQ";
+	links: [picTable],
+	action: H.TakeActionR<{
+		required: keycard;
+		item: Items.dead_klingon;
+	}>;
+};
+export type redbridge={
+	id: "redbridge";
+	news: "Red bridge",
+	action: H.UseActionStr<"sword">;
+};
+export type uForest={
+	id: "uForest",
+	links: [uLeafage],
+	action: H.UseActionStr<"qweqwe">,
+};
+export type uForestEdge={
+	id: "uForestEdge",
+	links: [uForest],
+	action: H.TakeAction<Items.cowardly_dwarf>;
+};
+type someone={
+	id: "someone";
+	action: H.ActionArr<[
+		H.UseAction<Items.something>,
+		H.TakeActionR<{item: Items.glass_orb,required: Items.something;}>,
+	]>;
+};
+export type floorTwo={
+	id: "floorTwo";
+	news: "Floor Two";
+	action: H.UseAction2<{
+		v: Items.giant;
+		caption: "Move furniture";
+	}>,
+};
+export type floorThree={
+	id: "floorThree";
+	news: "Floor Three",
+	action: H.TakeAction<Items.genie>;
+};
+type rozenbom={
+	id: "rozenbom",
+	action: H.TakeAction<Items.small_green_lamp>,
+};
+type off={
+	id: "off",
+	action: H.TakeAction<keycard>;
+};
+type something={
+	id: "something";
+	action: H.TakeAction<Items.something>;
+};
+type faq={
+	id: "faq";
+	links: [
+		missions,
+		y,
+	],
+	action: H.TakeAction<Items.gandalf_magic_book>;
+};
+type wall={
+	id: "wall";
+	news: "Great Wall of IWGH";
+	action: H.WallPostAct,
+};
+type sickbay={
+	id: "sickbay";
+	action: H.ActionArr<[
+		H.StoryEvent<{
+			required: Items.dead_klingon;
+		}>,
+		H.StoryEvent<{
+			required: Items.dead_romulan;
+		}>,
+		H.TakeActionR<{
+			required: Items.dead_romulan;
+			item: hypospray,
+		}>,
+	]>;
+};
+type worms={
+	id: "worms";
+	news: "Worms";
+	action: H.TakeAction<Items.fat_worm>;
+};
+type ut1={
+	news: "Underground tunnel, section 1.";
+	action: H.TakeAction<Items.screwdriver>;
+	links: [hole];
+};
+type grave={
+	id: "grave";
+	links: [
+		ut1,
+		ut2,
+		ut3,
+	],
+	action: H.TakeAction<Items.fui>;
+};
+type mechanic={
+	id: "mechanic";
+	news: "Mechanic in the boiler room";
+	action: H.UseAction<hypospray>;
+};
+type pipe3={
+	news: "Pipe passage 3",
+	action: H.TakeAction<Items.philosophical_principles>,
+};
+type pipe6={
+	news: "Pipe passage 6",
+	action: H.TakeAction<Items.broken_water_filter>;
+};
+type pipe7={
+	news: "Pipe passage 7",
+	action: H.TakeAction<Items.fake_orb>,
+};
+type readyRoom={
+	id: "readyRoom";
+	action: H.ActionArr<[
+		H.StoryEvent<{required: Items.dead_klingon;}>,
+	]>,
+};
+type uFridgeOpen={
+	id: "uFridgeOpen",
+	action: H.TakeAction<Items.hand_press>;
+};
+type lib1={
+	news: "Or-Os";
+	action: H.TakeAction<Items.orb_book>;
+};
+type characteristics={
+	news: "Random super hero";
+	action: {
+		type: "reload_link",
+		button: {
+			caption: "Generate superhero",
+		},
+	},
+};
+type pcnt={
+	id: "pcnt";
+	action: H.TakeAction<v_25_of_shares>;
 };
