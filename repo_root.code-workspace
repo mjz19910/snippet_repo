@@ -22,5 +22,14 @@
 		"typescript.format.insertSpaceBeforeAndAfterBinaryOperators": false,
 		"typescript.format.semicolons": "insert",
 		"typescript.preferences.importModuleSpecifierEnding": "js",
+		"files.exclude": {
+			"**/.git": true,
+			"**/.svn": true,
+			"**/.hg": true,
+			"**/CVS": true,
+			"**/.DS_Store": true,
+			"**/Thumbs.db": true,
+			".z_dist": true,
+		}
 	}
 }
