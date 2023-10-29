@@ -141,7 +141,8 @@ export function parse_rng_word2(word, opts) {
 		if (!v_obj) break x;
 		for (const v_end of vowel_list) {
 			v_obj.v = v_end;
-			add_word_to_cache(opts, vowel_word + v_end, vowel_word_arr, opt_was_gen);
+			const vowel_word = vowel_word_arr.map((v) => v.v).join("");
+			add_word_to_cache(opts, vowel_word, vowel_word_arr, opt_was_gen);
 		}
 	}
 	if (random_dictionary_set.has(word)) return;
