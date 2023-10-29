@@ -285,7 +285,7 @@ export type elevator={
 // cspell:word rozenbom
 type rozenbom={
 	id: "rozenbom",
-	action: H.TakeActionStr<"small green lamp">,
+	action: H.TakeAction<Items.small_green_lamp>,
 };
 type dwarfName={
 	id: "dwarfName",

@@ -78,3 +78,7 @@ export type mosquitoZ={
 	type: "item";
 	id: "mosquitoZ";
 };
+export type small_green_lamp={
+	type: "item";
+	id: "small green lamp";
+};
