@@ -140,13 +140,7 @@ export function parse_rng_word2(word, opts) {
 	}
 	if (random_dictionary_set.has(word)) return;
 	if (word_arr.length > ll) {
-		const p2 = word_arr.at(-2);
-		if (p2 && p2.type === "consonant") {
-			const truncated_word = word_arr.slice(0, -2).map((v) => v.v).join("");
-			parse_rng_word2(truncated_word, opts);
-		} else {
-			parse_rng_word2(word_arr.slice(0, -1).map((v) => v.v).join(""), opts);
-		}
+		parse_rng_word2(word_arr.slice(0, -1).map((v) => v.v).join(""), opts);
 		parse_rng_word2(word_arr.slice(1).map((v) => v.v).join(""), opts);
 		return;
 	}
