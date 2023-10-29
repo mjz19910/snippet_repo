@@ -183,8 +183,9 @@ function show_word_parts(opts, word_arr) {
 	if (word_arr.length > length_limit) return;
 	if (!opts.word_arr) return;
 	const wj = word_arr.map((v) => v.v).join(""),
-		tj = opts.word_arr.map((v) => v.type == "vowel" ? "v" : "c").join("");
-	console.log("W:", wj, [".parts", word_arr.length], "T:", tj);
+		tj1 = word_arr.map((v) => v.type == "vowel" ? "v" : "c").join(""),
+		tj2 = opts.word_arr.map((v) => v.type == "vowel" ? "v" : "c").join("");
+	console.log("W:", wj, [".parts", word_arr.length], "T:", tj2, "->", tj1);
 }
 
 /** @param {number} par */
