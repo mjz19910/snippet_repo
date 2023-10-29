@@ -17,7 +17,6 @@ async function scope() {
 		arr.length = 0;
 		if (i % 5 == 4) {
 			reset_words_set();
-			console.log("parallelism", 20 + Math.floor(i / 4));
 		}
 	}
 }
