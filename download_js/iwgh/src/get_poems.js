@@ -32,9 +32,12 @@ class GetPoemsState {
 		});
 		this.dictionary_size = load_dictionary_sync(this.dictionary_file);
 	}
-	async save() {
-		const v = await save_dictionary(this.dictionary_file, this.dictionary_size);
-		this.dictionary_size = v;
+	save() {
+		return save_dictionary(
+			this.dictionary_file,
+			this.dictionary_size,
+			false,
+		);
 	}
 	async dispose() {
 		await save_dictionary(this.dictionary_file, this.dictionary_size);
