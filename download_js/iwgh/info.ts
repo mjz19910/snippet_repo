@@ -36,11 +36,6 @@ type unscrew_armor={
 	fn: "use";
 	usingItem: Items.screwdriver;
 };
-type take_piece_of_paper={
-	required: unscrew_armor;
-	fn: "take";
-	item: Items.piece_of_paper;
-};
 type armour={
 	id: "armour",
 	news: "Knight's armour",
