@@ -445,7 +445,7 @@ type inventory={
 		"hand press": Items.hand_press,
 		"fat worm": Items.fat_worm,
 		"Gandalf Magic Book": gandalf_magic_book_inv;
-		"25% of shares": v_25_of_shares,
+		"25% of shares": Items.v_25_of_shares,
 		"screwdriver": Items.screwdriver,
 		"fui": Items.fui,
 		"piece of paper": piece_of_paper_inv,
