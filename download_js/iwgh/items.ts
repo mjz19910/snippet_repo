@@ -1,3 +1,7 @@
+export type wqwrqr={
+	type: "item";
+	id: "wqwrqr";
+};
 export type gandalf_magic_book={
 	type: "item";
 	item: {

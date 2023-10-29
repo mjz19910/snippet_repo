@@ -450,7 +450,7 @@ type v_10forward={
 type engineering={
 	links: [cDisruptor];
 	//cspell:ignore wqwrqr
-	action: H.UseActionStr<"wqwrqr">;
+	action: H.UseAction<Items.wqwrqr>;
 };
 type cDisruptor={
 	news: "Cloak disruptor",
