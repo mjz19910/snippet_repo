@@ -56,7 +56,7 @@ export type main={
 		mechanic,
 		Do.UseAction<mechanic,hypospray>,
 		piping,
-		pipe1,
+		pipe2,
 		Do.ActivateRoom<something>,
 		Do.RunTakeAct<something,Items.something>,
 		Do.ActivateRoom<someone>,
@@ -67,5 +67,8 @@ export type main={
 		main,
 		faq,
 		Items.gandalf_magic_book
+	];
+	hidden: [
+		"k",
 	];
 };

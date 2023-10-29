@@ -816,15 +816,15 @@ export type mechanic={
 	news: "Mechanic in the boiler room";
 	action: H.UseAction<hypospray>;
 };
-type pipe3={
+export type pipe3={
 	news: "Pipe passage 3",
 	action: H.TakeAction<Items.philosophical_principles>,
 };
-type pipe6={
+export type pipe6={
 	news: "Pipe passage 6",
 	action: H.TakeAction<Items.broken_water_filter>;
 };
-type pipe7={
+export type pipe7={
 	news: "Pipe passage 7",
 	action: H.TakeAction<Items.fake_orb>,
 };
