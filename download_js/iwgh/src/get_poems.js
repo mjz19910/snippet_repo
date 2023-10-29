@@ -8,14 +8,14 @@ import {
 	save_dictionary,
 } from "./parse_rng_word.js";
 async function scope() {
-	for (let i = 0; i < (6 * 3); i++) {
+	for (let i = 0; i < (5 * 12); i++) {
 		const arr = [];
-		for (let j = 0; j < 20; j++) {
+		for (let j = 0; j < 40; j++) {
 			arr.push(fetch_one_page("poems"));
 		}
 		await Promise.all(arr);
 		arr.length = 0;
-		if (i % 6 == 5) {
+		if (i % 5 == 4) {
 			reset_words_set();
 		}
 	}
