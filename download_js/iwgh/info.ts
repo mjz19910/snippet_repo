@@ -272,7 +272,7 @@ type u_page={
 		"Books are typically kept in the library",
 		// [?]
 		"Cross the road only when you see green light",
-		// [?]
+		// something
 		"If something is mentioned twice, chances are it hints to a room",
 		"Keyword: <b>74stars</b>",
 		"Keyword: <b>bridge</b>",
