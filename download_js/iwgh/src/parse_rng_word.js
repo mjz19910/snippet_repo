@@ -77,7 +77,6 @@ export function parse_rng_word(word, opts) {
 	const ll = length_limit + 1;
 	if (word_arr.length >= ll) {
 		if (word_arr.at(-2).type === "consonant") {
-			partial_words.add(word_arr.slice(0, -1).map((v) => v.v).join(""));
 			const truncated_word = word_arr.slice(0, -2).map((v) => v.v).join("");
 			if (word_arr.length > ll) {
 				parse_rng_word(truncated_word, opts);
