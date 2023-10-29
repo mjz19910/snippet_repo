@@ -1,11 +1,7 @@
 import { fetch_one_dictionary_page } from "./fetch_one_dictionary_page.js";
-import { parse_rng_word, reset_words_set } from "./parse_rng_word.js";
+import { reset_words_set } from "./parse_rng_word.js";
 
-/** @param {string[]} dictionary_words_arr  */
-export async function iwgh_dict_main(dictionary_words_arr) {
-	for (const word of dictionary_words_arr) {
-		parse_rng_word(word, { add_new_words: false, destructure_word: false });
-	}
+export async function iwgh_dict_main() {
 	const perf_start = performance.now();
 	let total_request_count = 0;
 	const request_log_interval = 15;
