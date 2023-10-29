@@ -133,6 +133,7 @@ ducdat
 dups
 dvdbouncinglogo
 dvdlogo
+dwarfname
 dwsh
 ecatcher
 echoctl

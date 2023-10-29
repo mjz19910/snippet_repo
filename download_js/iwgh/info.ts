@@ -217,13 +217,13 @@ export type elevator={
 		elev_floorFive: elev_floorFive,
 	},
 };
-type dwarfName={
-	id: "dwarfName",
+type dwarfname={
+	id: "dwarfname",
 	links: [rozenbom],
 };
 type piece_of_paper_inv={
 	id: "piece of paper",
-	links: [dwarfName],
+	links: [dwarfname],
 	item: Items.piece_of_paper;
 };
 export type on={
@@ -297,7 +297,7 @@ type u_page={
 		genie: [floorThree,Items.genie];
 		floorFive: floorFive,
 		pcnt: [cosmology,pattern,pcnt],
-		small_green_lamp: [dwarfName,rozenbom,Items.small_green_lamp],
+		small_green_lamp: [dwarfname,rozenbom,Items.small_green_lamp],
 		b: b;
 		library: library,
 		"74stars": v_74stars,
@@ -545,14 +545,18 @@ type jrrtgandalf={
 type flatJoke={
 	news: "Flat joke.";
 };
+type clearlake={id: "clearlake";};
+type mudiCat={id: "mudiCat";};
+type simonNavil={id: "simonNavil";};
+type naada={id: "naada";};
 //cspell:word kuki mudi naada
 type kukiOrbs={
 	links: [
-		"clearlake",
-		"mudiCat",
+		clearlake,
+		mudiCat,
 		//cspell:ignore simon navil
-		"simonNavil",
-		"naada"
+		simonNavil,
+		naada,
 	];
 };
 type orb_book_inv={
