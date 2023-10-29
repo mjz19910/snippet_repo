@@ -31,7 +31,7 @@ function delay(ms) {
 /** @param {GetPoemsState} state */
 async function scope(state) {
 	const lim = 4;
-	for (let i = 0; i < (4 * 50); i++) {
+	for (let i = 0; i < (4 * 6); i++) {
 		if (i % lim == 0) {
 			console.log("enter", Math.floor(i / lim));
 		}
