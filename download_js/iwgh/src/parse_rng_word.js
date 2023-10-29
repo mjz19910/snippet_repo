@@ -52,12 +52,18 @@ export function word_starts_with_consonant_seq2(word) {
 /** @type {Set<string>} */
 export const random_dictionary_set = new Set();
 /** @param {Deno.FsFile} dictionary_file @param {number} dictionary_size */
-export async function save_dictionary(dictionary_file, dictionary_size) {
+export async function save_dictionary(
+	dictionary_file,
+	dictionary_size,
+	debug = true,
+) {
 	const dictionary_arr = [...random_dictionary_set.values()].sort();
-	console.log(
-		"diff(dictionary.length,dictionary_words.length)",
-		dictionary_arr.length - dictionary_size,
-	);
+	if (debug) {
+		console.log(
+			"diff(dictionary.length,dictionary_words.length)",
+			dictionary_arr.length - dictionary_size,
+		);
+	}
 	await write_entire_file(dictionary_file, dictionary_arr);
 	return dictionary_arr.length;
 }
