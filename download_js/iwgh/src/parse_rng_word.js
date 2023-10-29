@@ -142,6 +142,7 @@ export function parse_rng_word2(word, opts) {
 		for (const v_end of vowel_list) {
 			v_obj.v = v_end;
 			const gen_word = vowel_word_arr.map((v) => v.v).join("");
+			if (gen_word === vowel_word) continue;
 			add_word_to_cache(opts, gen_word, vowel_word_arr, opt_was_gen);
 		}
 	}
