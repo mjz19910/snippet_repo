@@ -341,6 +341,7 @@ rdgmem
 rdmm
 rdsh
 readahead
+readyroom
 realpath
 rebuffer
 rebuildtheuniverse
