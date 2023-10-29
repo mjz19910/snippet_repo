@@ -8,6 +8,7 @@ import {
 } from "./parse_rng_word.js";
 /** @param {GetPoemsState} state */
 async function scope(state) {
+	const lim = 4;
 	for (let i = 0; i < (5 * 50); i++) {
 		const arr = [];
 		for (let j = 0; j < (20 + Math.floor(i / 4)); j++) {
@@ -15,7 +16,7 @@ async function scope(state) {
 		}
 		await Promise.all(arr);
 		arr.length = 0;
-		if (i % 5 == 4) {
+		if (i % lim == lim - 1) {
 			reset_words_set(20 + Math.floor(i / 4));
 			await state.save();
 		}
