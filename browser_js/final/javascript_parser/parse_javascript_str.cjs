@@ -2123,7 +2123,7 @@ function parse_javascript_str(code_str) {
 			}
 			break;
 		}
-		console.log(res_description);
+		console.log(res_description[1]);
 	}
 	console.log(`parsed ${i} tokens`);
 };
