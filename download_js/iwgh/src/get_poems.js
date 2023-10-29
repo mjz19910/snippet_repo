@@ -11,7 +11,7 @@ async function scope(state) {
 	const lim = 4;
 	for (let i = 0; i < (4 * 8); i++) {
 		const arr = [];
-		const par = 20 + Math.floor(i / 2);
+		const par = 20 + Math.floor(i / 2) - 1;
 		for (let j = 0; j < par; j++) {
 			arr.push(fetch_one_page("poems"));
 		}
