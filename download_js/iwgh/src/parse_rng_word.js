@@ -97,7 +97,7 @@ export function parse_rng_word(opts) {
 }
 
 /** @typedef {{type: "consonant" | "vowel";v: string;}} WordArrItem */
-/** @typedef {{word:string; add_new_words:boolean; destructure_word:boolean;}} ParseRngOpts */
+/** @typedef {{word:string; add_new_words:boolean; destructure_word:boolean; word_arr?: WordArrItem[]}} ParseRngOpts */
 
 const length_limit = 4;
 /**
@@ -119,6 +119,7 @@ export function parse_rng_word2(word, opts) {
 		if (r2.rest === "") break;
 		v = r2.rest;
 	}
+	opts.word_arr = word_arr.slice();
 	const ll = length_limit + 1;
 	const vowel_word_arr = [];
 	do {
