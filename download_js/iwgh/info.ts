@@ -294,6 +294,7 @@ type u_page={
 		"Whenever in doubt - consult a wise book",
 	],
 	hint_refs: {
+		guide: guide;
 		genie: [floorThree,Items.genie];
 		floorFive: floorFive,
 		pcnt: [cosmology,pattern,pcnt],
@@ -568,6 +569,10 @@ type h={
 	id: "h";
 	news: "This is the H page.";
 };
+type guide={
+	id: "guide";
+	links: [open_dir];
+};
 type all_pages={
 	generic: {
 		links: [
@@ -589,7 +594,10 @@ type all_pages={
 	hidden: [
 		open_dir,
 		a,
-		b,c,d,z,
+		b,
+		c,
+		d,
+		z,
 	];
 };
 type generator={
