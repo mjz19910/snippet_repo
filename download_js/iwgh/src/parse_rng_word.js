@@ -90,16 +90,27 @@ export function parse_rng_word(word, opts) {
 		v = r2.rest;
 	}
 	const ll = length_limit + 1;
+	const trimmed = [];
 	do {
 		const r1 = word_arr.at(-1);
 		if (r1 && r1.type === "vowel") {
 			word = word.slice(0, -1);
-			word_arr.splice(-1, 1);
+			const del = word_arr.splice(-1, 1);
+			trimmed.unshift(...del);
 		} else {
 			break;
 		}
 		if (word === "") return;
 	} while (true);
+	x: if (trimmed.length !== 0) {
+		const vowel_word = trimmed.map((v) => v.v).join("");
+		if (random_dictionary_set.has(vowel_word)) break x;
+		random_dictionary_set.add(vowel_word);
+		if (add_new_words) {
+			new_words_set.add(vowel_word);
+		}
+		console.log(trimmed.length, vowel_word);
+	}
 	if (random_dictionary_set.has(word)) return;
 	if (word_arr.length >= ll) {
 		const p2 = word_arr.at(-2);
