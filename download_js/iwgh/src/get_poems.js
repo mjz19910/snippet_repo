@@ -24,10 +24,11 @@ function delay(ms) {
 			done();
 			clearTimeout(interval);
 		};
-		const interval = setTimeout(() => {
-			accept();
+		const complete = () => {
 			done();
-		}, ms);
+			accept();
+		};
+		const interval = setTimeout(complete, ms);
 	});
 }
 
