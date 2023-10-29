@@ -53,6 +53,7 @@ export function save_dictionary(dictionary_file, dictionary_words_arr) {
 		"diff(dictionary.length,dictionary_words.length)",
 		dictionary_arr.length - dictionary_words_arr.length,
 	);
+	console.log(partial_words);
 	return write_entire_file(dictionary_file, dictionary_arr);
 }
 export const new_words_set = new Set();
