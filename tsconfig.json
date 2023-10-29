@@ -1,13 +1,12 @@
 {
 	"compilerOptions": {
-		"noEmit": true,
-		"target": "ESNext",
-		"module": "ESNext",
 		"lib": [
 			"ESNext",
-			"DOM",
+			"DOM"
 		],
+		"module": "ESNext",
 		"outDir": "./dist",
+		"target": "ESNext",
 		"allowImportingTsExtensions": true,
 		"allowJs": true,
 		"allowSyntheticDefaultImports": true,
@@ -19,6 +18,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"incremental": true,
 		"isolatedModules": true,
+		"noEmit": true,
 		"noErrorTruncation": true,
 		"noFallthroughCasesInSwitch": true,
 		"noImplicitAny": true,
