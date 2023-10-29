@@ -154,7 +154,7 @@ export function parse_rng_word(word, opts) {
 
 /** @param {{add_new_words:boolean;destructure_word:boolean}} opts @param {string} word @param {WordArrItem} word_arr */
 function add_word_to_cache(opts, word, word_arr) {
-	if (random_dictionary_set.has(vowel_word)) return;
+	if (random_dictionary_set.has(word)) return;
 	random_dictionary_set.add(word);
 	if (opts.add_new_words) {
 		new_words_set.add(word);
