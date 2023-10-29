@@ -1,5 +1,6 @@
 import {H,Do} from "./Helpers.ts";
 import * as Items from "./items.ts";
+import {main} from "./main.ts";
 
 type larTorch={
 	id: "larTorch",
@@ -21,7 +22,7 @@ type keepKitchen={
 	id: "keepKitchen";
 	news: "Kitchen.";
 };
-type keep={
+export type keep={
 	id: "keep",
 	links: [
 		floorOne,
@@ -36,37 +37,37 @@ type unscrew_armor={
 	fn: "use";
 	usingItem: Items.screwdriver;
 };
-type larStairs={
+export type larStairs={
 	id: "larStairs",
 	links: [
 		keep,
 		armour,
 	],
 };
-type larLake={
+export type larLake={
 	id: "larLake",
 	links: [larFm],
 };
-type larDark={
+export type larDark={
 	id: "larDark",
 	links: [
 		larLake,
 		deathDome,
 	];
 };
-type deathDome={
+export type deathDome={
 	id: "deathDome";
 	links: [grave];
 };
-type larBoat={
+export type larBoat={
 	id: "larBoat",
 	links: [larDark],
 };
-type larRiver={
+export type larRiver={
 	id: "larRiver",
 	links: [larBoat];
 };
-type larder={
+export type larder={
 	id: "larder",
 	links: [
 		larTorch,
@@ -74,11 +75,11 @@ type larder={
 		larRiver,
 	],
 };
-type burrow={
+export type burrow={
 	id: "burrow",
 	links: [larder],
 };
-type picRef={
+export type picRef={
 	id: "picRef";
 	links: [
 		{
@@ -87,11 +88,11 @@ type picRef={
 		}
 	];
 };
-type picCup={
+export type picCup={
 	id: "picCup",
 	links: [picRef],
 };
-type picTable={
+export type picTable={
 	id: "picTable",
 	links: [picCup],
 };
@@ -103,18 +104,18 @@ type read={
 	id: "read",
 	links: [good],
 };
-type red={
+export type red={
 	id: "red",
 	links: [
 		read,
 		picQ,
 	],
 };
-type green={
+export type green={
 	id: "green",
 	links: [red],
 };
-type members={
+export type members={
 	id: "members",
 	links: [green],
 };
@@ -225,15 +226,15 @@ type piece_of_paper_inv={
 	links: [dwarfName],
 	item: Items.piece_of_paper;
 };
-type keycard={
+export type keycard={
 	type: "item",
 	id: "keycard",
 };
-type on={
+export type on={
 	id: "on",
 	links: [off],
 };
-type v_25_of_shares={
+export type v_25_of_shares={
 	type: "item";
 	id: "25% of shares";
 	links: [on];
@@ -315,7 +316,7 @@ type u_page={
 		cosmology: cosmology["quest_chain"];
 	};
 };
-type zbrogjdnfhvyensocuiehw=u_page;
+export type zbrogjdnfhvyensocuiehw=u_page;
 type rhino={
 	links: [something],
 };
@@ -331,7 +332,7 @@ type missions={
 type d_essay={
 	news: "An essay explaining why IWGH has no D page",
 };
-type hypospray={
+export type hypospray={
 	type: "item",
 	id: "hypospray",
 };
@@ -375,7 +376,7 @@ type ut2={
 type ut3={
 	links: [deadEnd];
 };
-type piping={
+export type piping={
 	news: "Piping",
 	links: [
 		pipe1,
@@ -388,7 +389,7 @@ type piping={
 		pipe13,
 	],
 };
-type pipe1={
+export type pipe1={
 	news: "Pipe passage 1",
 };
 type pipe5={
@@ -457,11 +458,11 @@ type inventory={
 		"mosquitoZ": Items.mosquitoZ,
 	};
 };
-type after_lockdown={
+export type after_lockdown={
 	type: "story_pos";
 	pos: "after lockdown";
 };
-type oLounge={
+export type oLounge={
 	id: "oLounge",
 	news: "Enterprise NCC-1701-D: Observation lounge",
 };
@@ -484,7 +485,7 @@ type deadEnd={
 	id: "deadEnd";
 	news: "Dead end.";
 };
-type uSuddEnd={
+export type uSuddEnd={
 	id: "uSuddEnd";
 	links: [uFridgeOpen];
 };
@@ -501,7 +502,7 @@ type library={
 type lib2={
 	news: "Gt-Gz";
 };
-type cosmology={
+export type cosmology={
 	links: [
 		opinion,
 		characteristics,
@@ -528,7 +529,7 @@ type generation={
 type difference={
 	news: "Difference page.";
 };
-type pattern={
+export type pattern={
 	id: "pattern";
 	links: [pcnt];
 	quest_chain: [
@@ -639,7 +640,7 @@ type c={
 	news: "This is the See page";
 	links: [rhino],
 };
-type o={
+export type o={
 	id: "o",
 	news: "This is the O page.";
 };
@@ -659,74 +660,7 @@ type y={
 		y: [missions];
 	};
 };
-type main={
-	id: "main";
-	links: [wall];
-	quest_chain: [
-		Do.ActivateRoom<faq>,
-		Do.RunTakeAct<faq,Items.gandalf_magic_book>,
-		Do.ActivateRoom<rozenbom>,
-		Do.RunTakeAct<rozenbom,Items.small_green_lamp>,
-		Do.ActivateRoom<picQ>,
-		Do.RunTakeAct<picQ,Items.dead_klingon>,
-		Do.ActivateRoom<readyRoom>,
-		{type: "story",action: "activate_room",room: readyRoom; required: Items.dead_klingon;},
-		Do.ActivateRoom<sickbay>,
-		Do.ActivateStory<sickbay_has_dead_klingon>,
-		Do.ActivateRoom<readyRoom>,
-		{type: "story",action: "activate_room",after_story: "sickbay_has_dead_klingon";},
-		Do.ActivateRoom<v_10forward,after_lockdown>,
-		Do.ActivateRoom<uQuarters>,
-		Do.RunTakeAct<uQuarters,Items.dead_romulan>,
-		oLounge,
-		Do.ActivateRoom<sickbay>,
-		Do.RunTakeAct2<sickbay,2,hypospray>,
-		uSuddEnd,
-		Do.ActivateRoom<uFridgeOpen>,
-		Do.RunTakeAct<uFridgeOpen,Items.hand_press>,
-		burrow,
-		larder,larRiver,larBoat,larDark,
-		larDark,
-		deathDome,
-		grave,
-		Do.RunTakeAct<grave,Items.fui>,
-		o,
-		zbrogjdnfhvyensocuiehw,
-		cosmology,
-		pattern,
-		pcnt,
-		Do.RunTakeAct<pcnt,v_25_of_shares>,
-		Do.UseInventory<v_25_of_shares>,
-		on,
-		off,
-		Do.RunTakeAct<off,keycard>,
-		Do.UseMenu<members>,
-		members,green,red,
-		picQ,
-		picTable,picCup,picRef,
-		burrow,larder,larRiver,larBoat,
-		larDark,larLake,
-		Do.ActivateRoom<larFm>,
-		Do.UseInventory2<[Items.hand_press,Items.fui]>,
-		picQ,
-		picTable,picCup,picRef,burrow,larder,larStairs,keep,floorFive,elevator,elev_boiler,boiler,
-		mechanic,
-		Do.UseAction<mechanic,hypospray>,
-		piping,
-		pipe1,
-		Do.ActivateRoom<something>,
-		Do.RunTakeAct<something,Items.something>,
-		Do.ActivateRoom<someone>,
-		Do.UseAction2<someone,0,Items.something>,
-		Do.RunTakeAct2<someone,1,Items.glass_orb>,
-	];
-	quest_chain2: [
-		main,
-		faq,
-		Items.gandalf_magic_book,
-	];
-};
-type uQuarters={
+export type uQuarters={
 	id: "uQuarters";
 	news: "Uninhabited quarters";
 	extra: "the Romulan just entered their quarters, there is no one *visible* inside";
@@ -735,7 +669,7 @@ type uQuarters={
 		item: Items.dead_romulan;
 	}>;
 };
-type v_10forward={
+export type v_10forward={
 	id: "10forward",
 	news: "Enterprise NCC-1701-D: Ten Forward";
 	action: H.StoryEvent<{required: {type: "item",id: "after lockdown";};}>;
@@ -749,7 +683,7 @@ type z={
 	news: "This is Z space";
 	action: H.TakeAction<Items.mosquitoZ>;
 };
-type sickbay_has_dead_klingon={
+export type sickbay_has_dead_klingon={
 	type: "story";
 	id: "sickbay_has_dead_klingon";
 	action: "activate_room";
@@ -765,7 +699,7 @@ type armour={
 		H.TakeActionR<{item: Items.piece_of_paper,required: unscrew_armor;}>,
 	]>,
 };
-type larFm={
+export type larFm={
 	id: "larFm";
 	action: H.TakeActionR2<{
 		requirements: [
@@ -775,7 +709,7 @@ type larFm={
 		item: Items.egg;
 	}>;
 };
-type picQ={
+export type picQ={
 	id: "picQ";
 	links: [picTable],
 	action: H.TakeActionR<{
@@ -798,7 +732,7 @@ export type uForestEdge={
 	links: [uForest],
 	action: H.TakeAction<Items.cowardly_dwarf>;
 };
-type someone={
+export type someone={
 	id: "someone";
 	action: H.ActionArr<[
 		H.UseAction<Items.something>,
@@ -818,19 +752,19 @@ export type floorThree={
 	news: "Floor Three",
 	action: H.TakeAction<Items.genie>;
 };
-type rozenbom={
+export type rozenbom={
 	id: "rozenbom",
 	action: H.TakeAction<Items.small_green_lamp>,
 };
-type off={
+export type off={
 	id: "off",
 	action: H.TakeAction<keycard>;
 };
-type something={
+export type something={
 	id: "something";
 	action: H.TakeAction<Items.something>;
 };
-type faq={
+export type faq={
 	id: "faq";
 	links: [
 		missions,
@@ -838,12 +772,12 @@ type faq={
 	],
 	action: H.TakeAction<Items.gandalf_magic_book>;
 };
-type wall={
+export type wall={
 	id: "wall";
 	news: "Great Wall of IWGH";
 	action: H.WallPostAct,
 };
-type sickbay={
+export type sickbay={
 	id: "sickbay";
 	action: H.ActionArr<[
 		H.StoryEvent<{
@@ -868,7 +802,7 @@ type ut1={
 	action: H.TakeAction<Items.screwdriver>;
 	links: [hole];
 };
-type grave={
+export type grave={
 	id: "grave";
 	links: [
 		ut1,
@@ -877,7 +811,7 @@ type grave={
 	],
 	action: H.TakeAction<Items.fui>;
 };
-type mechanic={
+export type mechanic={
 	id: "mechanic";
 	news: "Mechanic in the boiler room";
 	action: H.UseAction<hypospray>;
@@ -894,13 +828,13 @@ type pipe7={
 	news: "Pipe passage 7",
 	action: H.TakeAction<Items.fake_orb>,
 };
-type readyRoom={
+export type readyRoom={
 	id: "readyRoom";
 	action: H.ActionArr<[
 		H.StoryEvent<{required: Items.dead_klingon;}>,
 	]>,
 };
-type uFridgeOpen={
+export type uFridgeOpen={
 	id: "uFridgeOpen",
 	action: H.TakeAction<Items.hand_press>;
 };
@@ -917,7 +851,7 @@ type characteristics={
 		},
 	},
 };
-type pcnt={
+export type pcnt={
 	id: "pcnt";
 	action: H.TakeAction<v_25_of_shares>;
 };
