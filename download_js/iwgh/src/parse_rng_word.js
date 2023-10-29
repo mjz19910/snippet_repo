@@ -149,7 +149,14 @@ export function parse_rng_word(word, opts) {
 		parse_rng_word(word_arr.slice(1).map((v) => v.v).join(""), opts);
 		return;
 	}
-	add_word_to_cache(opts, word, word_arr);
+	const vowel_list = ["a", "e", "i", "o", "u", "y"];
+	/** @type {WordArrItem} */
+	const v_obj = { type: "vowel", v: "" };
+	word_arr.push(v_obj);
+	for (const v_end of vowel_list) {
+		v_obj.v = v_end;
+		add_word_to_cache(opts, word + v_end, word_arr);
+	}
 }
 
 /** @param {{add_new_words:boolean;destructure_word:boolean}} opts @param {string} word @param {WordArrItem} word_arr */
