@@ -16,10 +16,9 @@ function delay(ms) {
 			clearTimeout(interval);
 			reject(signal.reason);
 		};
-		const opts = { once: true };
-		signal.addEventListener("abort", abort, opts);
+		signal.addEventListener("abort", abort, { once: true });
 		const done = () => {
-			signal.removeEventListener("abort", abort, opts);
+			signal.removeEventListener("abort", abort);
 		};
 		const complete = () => {
 			done();
