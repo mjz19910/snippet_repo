@@ -91,7 +91,7 @@ export function load_dictionary_sync(file) {
 	return dictionary_words_arr.length;
 }
 
-const length_limit = 3;
+const length_limit = 4;
 /**
  * @param {string} word
  * @param {{add_new_words:boolean;destructure_word:boolean}} opts
