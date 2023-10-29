@@ -149,6 +149,7 @@ export function parse_rng_word(word, opts) {
 		parse_rng_word(word_arr.slice(1).map((v) => v.v).join(""), opts);
 		return;
 	}
+	add_word_to_cache(opts, word, word_arr);
 	const vowel_list = ["a", "e", "i", "o", "u", "y"];
 	/** @type {WordArrItem} */
 	const v_obj = { type: "vowel", v: "" };
