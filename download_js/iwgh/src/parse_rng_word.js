@@ -90,6 +90,9 @@ export function parse_rng_word(word, opts) {
 		parse_rng_word(word_arr.slice(1).map((v) => v.v).join(""), opts);
 		return;
 	}
+	if (word_arr.length >= length_limit) {
+		word = word.slice(0, -1);
+	}
 	if (destructure_word) show_word_parts(word_arr);
 	random_dictionary_set.add(word);
 	if (add_new_words) {
