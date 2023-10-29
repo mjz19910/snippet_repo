@@ -574,11 +574,6 @@ type orb_book_inv={
 	links: [kukiOrbs];
 	item: Items.orb_book;
 };
-type h={
-	id: "h";
-	news: "This is the H page.";
-	// History enabled.
-};
 type guide={
 	id: "guide";
 	links: [open_dir];
@@ -669,6 +664,11 @@ type d={
 	id: "d",
 	news: "As confusing as it may seem, this is the M page";
 	links: [m];
+};
+type h={
+	id: "h";
+	news: "This is the H page.";
+	// History enabled.
 };
 type m={
 	id: "m";
