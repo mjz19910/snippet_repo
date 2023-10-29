@@ -297,13 +297,13 @@ type u_page={
 		pcnt: [cosmology,pattern,pcnt],
 		small_green_lamp: [dwarfName,rozenbom,Items.small_green_lamp],
 		b: b;
+		library: library,
 		"74stars": v_74stars,
 		bridge: bridge,
 		caramel: caramel,
 		cosmology: cosmology,
 		flatJoke: flatJoke,
 		jrrtgandalf: jrrtgandalf,
-		library: library,
 		selldome: selldome,
 		herculepoirot: herculepoirot,
 	};
