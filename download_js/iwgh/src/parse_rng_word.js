@@ -1,4 +1,8 @@
-import { read_json_array_file, write_entire_file } from "./deno_support.js";
+import {
+	read_json_array_file,
+	read_json_array_file_sync,
+	write_entire_file,
+} from "./deno_support.js";
 
 /**
  * @param {string} word
@@ -54,7 +58,6 @@ export function save_dictionary(dictionary_file, dictionary_size) {
 		"diff(dictionary.length,dictionary_words.length)",
 		dictionary_arr.length - dictionary_size,
 	);
-	console.log(partial_words);
 	return write_entire_file(dictionary_file, dictionary_arr);
 }
 export const new_words_set = new Set();
@@ -69,6 +72,18 @@ export async function load_dictionary(file) {
 	}
 	return dictionary_words_arr.length;
 }
+
+/** @param {Deno.FsFile} file  */
+export function load_dictionary_sync(file) {
+	/** @type {string[]} */
+	const dictionary_words_arr = read_json_array_file_sync(file);
+	for (const word of dictionary_words_arr) {
+		if (word === "") continue;
+		random_dictionary_set.add(word);
+	}
+	return dictionary_words_arr.length;
+}
+
 const length_limit = 3;
 /**
  * @param {string} word
@@ -103,7 +118,7 @@ export function parse_rng_word(word, opts) {
 		if (word === "") return;
 	} while (true);
 	x: if (trimmed.length !== 0) {
-		if(trimmed.length >= ll) break x;
+		if (trimmed.length >= ll) break x;
 		const vowel_word = trimmed.map((v) => v.v).join("");
 		if (random_dictionary_set.has(vowel_word)) break x;
 		random_dictionary_set.add(vowel_word);

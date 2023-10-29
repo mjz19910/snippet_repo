@@ -1,4 +1,3 @@
-
 /** @arg {string} filename */
 export function deno_default_open(filename) {
 	return Deno.open(filename, {
@@ -24,6 +23,23 @@ export async function read_entire_file(file) {
 	} while (true);
 	return new TextDecoder().decode(buf);
 }
+
+/** @arg {Deno.FsFile} file */
+export function read_entire_file_sync(file) {
+	file.seekSync(0, 0);
+	let buf = new Uint8Array(0);
+	const tmp_buf = new Uint8Array(1024 * 8);
+	do {
+		const n = file.readSync(tmp_buf);
+		if (n === null) break;
+		const prev_end = buf.length;
+		const prev_data = buf;
+		buf = new Uint8Array(prev_end + n);
+		buf.set(prev_data, 0);
+		buf.set(tmp_buf.slice(0, n), prev_end);
+	} while (true);
+	return new TextDecoder().decode(buf);
+}
 /** @arg {Deno.FsFile} file @arg {unknown} obj */
 export async function write_entire_file(file, obj) {
 	const data = JSON.stringify(obj, void 0, "\t");
@@ -37,9 +53,17 @@ export async function write_entire_file(file, obj) {
 	}
 	await file.truncate(buf.length);
 }
+
 /** @template T @arg {Deno.FsFile} file @returns {Promise<T[]>} */
 export async function read_json_array_file(file) {
 	const data = await read_entire_file(file);
+	if (data === "") return [];
+	return JSON.parse(data);
+}
+
+/** @template T @arg {Deno.FsFile} file @returns {T[]} */
+export function read_json_array_file_sync(file) {
+	const data = read_entire_file_sync(file);
 	if (data === "") return [];
 	return JSON.parse(data);
 }

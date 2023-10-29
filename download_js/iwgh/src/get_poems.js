@@ -4,6 +4,7 @@ import { fetch_one_page } from "./fetch_one_page.js";
 import { random_dictionary_path } from "./file_paths.js";
 import {
 	load_dictionary,
+	load_dictionary_sync,
 	reset_words_set,
 	save_dictionary,
 } from "./parse_rng_word.js";
@@ -20,10 +21,22 @@ async function scope() {
 		}
 	}
 }
+class GetPoemsState {
+	dictionary_file;
+	constructor() {
+		this.dictionary_file = Deno.openSync(random_dictionary_path, {
+			read: true,
+			write: true,
+			create: true,
+		});
+		this.dictionary_size = load_dictionary_sync(this.dictionary_file);
+	}
+}
 /[ct]h|[bcdfkmnptvw]/;
 /[ct]h|[aeiouy]|[bcdfkmnptvw]/;
 async function main() {
 	await deno_fs_init();
+	const state = new GetPoemsState();
 	const dictionary_file = await deno_default_open(random_dictionary_path);
 	const dict_size = await load_dictionary(dictionary_file);
 	await scope();
