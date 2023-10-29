@@ -64,12 +64,12 @@ export function parse_rng_word(word, opts) {
 	const { add_new_words, destructure_word } = opts;
 	if (random_dictionary_set.has(word)) return;
 	const word_arr = [];
-	let w2 = word;
+	let v = word;
 	for (;;) {
-		const r2 = word_starts_with_consonant_seq2(w2);
+		const r2 = word_starts_with_consonant_seq2(v);
 		word_arr.push(r2.part);
 		if (r2.rest === "") break;
-		w2 = r2.rest;
+		v = r2.rest;
 	}
 	if (word_arr.length >= 4) {
 		console.log("end", word_arr.at(-2));
