@@ -47,6 +47,7 @@ export function word_starts_with_consonant_seq2(word) {
 }
 /** @type {Set<string>} */
 export const random_dictionary_set = new Set();
+/** @param {Deno.FsFile} dictionary_file @param {number} dictionary_size */
 export function save_dictionary(dictionary_file, dictionary_size) {
 	const dictionary_arr = [...random_dictionary_set.values()].sort();
 	console.log(
@@ -89,14 +90,17 @@ export function parse_rng_word(word, opts) {
 		v = r2.rest;
 	}
 	const ll = length_limit + 1;
-	if (word_arr.at(-1).type === "vowel") {
+	const r1 = word_arr.at(-1);
+	if (r1 && r1.type === "vowel") {
 		word = word.slice(0, -1);
 		word_arr.splice(-1, 1);
 	}
 	if (word === "") return;
 	if (random_dictionary_set.has(word)) return;
 	if (word_arr.length >= ll) {
-		if (word_arr.at(-2).type === "consonant") {
+		const p2 = word_arr.at(-2);
+		if (!p2) throw new Error("");
+		if (p2.type === "consonant") {
 			const truncated_word = word_arr.slice(0, -2).map((v) => v.v).join("");
 			if (word_arr.length > ll) {
 				parse_rng_word(truncated_word, opts);

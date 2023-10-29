@@ -1,3 +1,5 @@
+
+/** @arg {string} filename */
 export function deno_default_open(filename) {
 	return Deno.open(filename, {
 		read: true,

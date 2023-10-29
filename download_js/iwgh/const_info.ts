@@ -1,6 +1,6 @@
 import {RT} from "./Helpers.ts";
-import {WorkQueueItem,boiler,cowardly_dwarf,elev_boiler,elev_floorFive,elev_floorOne,elev_floorThree,elev_floorTwo,elev_uForest,elev_underworld,elevator,floorFive,floorOne,floorThree,floorTwo,redbridge,uForest,uForestEdge,underworld} from "./info.ts";
-import {something} from "./items.ts";
+import {WorkQueueItem,boiler,elev_boiler,elev_floorFive,elev_floorOne,elev_floorThree,elev_floorTwo,elev_uForest,elev_underworld,elevator,floorFive,floorOne,floorThree,floorTwo,redbridge,uForest,uForestEdge,underworld} from "./info.ts";
+import {cowardly_dwarf,something} from "./items.ts";
 //#region underworld
 const redbridge: redbridge={id: "redbridge",news: "Red bridge",action: {fn: "use",usingItem: "sword"}};
 const underworld: underworld={id: "underworld",links: [redbridge]};
@@ -8,7 +8,7 @@ const underworld: underworld={id: "underworld",links: [redbridge]};
 //#region uForest
 const uForest: uForest={
 	id: "uForest",
-	action: {fn: "use",usingItem: "QweQwe"},
+	action: {fn: "use",usingItem: "qweqwe"},
 	links: [{
 		id: "uLeafage",links: [{
 			id: "narrowHole",missing: ["uQwe"],links: [{

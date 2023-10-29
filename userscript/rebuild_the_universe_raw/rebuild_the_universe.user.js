@@ -21,9 +21,6 @@ if (typeof require === "undefined" || page_require !== __module_require__) {
 	require = __module_require__;
 	reset_require = true;
 }
-const { MulCompression, CompressionStatsCalculator } = require(
-	"../DebugApi_raw/DebugApi.user.js",
-);
 const { do_export } = require("../base_require_raw/BaseRequire.user.js");
 
 const __module_name__ = "debug$RebuildTheUniverse";
@@ -2353,8 +2350,6 @@ class AutoBuyImplR {
 		this.local_data_loader = new DataLoaderImplR(localStorage);
 		this.state = new AutoBuyStateImplR(this.root_node);
 		this.debug = this.state.debug;
-		this.compressor = new MulCompression();
-		this.stats_calculator = new CompressionStatsCalculator();
 		const history_loaded = this.local_data_loader.load_str_arr(
 			"auto_buy_history_str",
 		);
@@ -2965,9 +2960,6 @@ class AutoBuyImplR {
 		if (!value) throw new Error("Invalid state append requested");
 		const last = this.state_history_arr.at(-1);
 		this.state_history_arr.push(value);
-		this.state_history_arr = this.stats_calculator.compress_array(
-			this.state_history_arr,
-		);
 		this.update_history_element();
 		if (this.state.debug) console.log("history append", last, value);
 		log_if_impl_r(LOG_LEVEL_INFO_IMPL, "state_history_append_tag item", value);
