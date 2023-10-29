@@ -2135,3 +2135,4 @@ if(typeof exports==='object') {
 	const inject_api=window.inject_api;
 	inject_api.parse_javascript_str=parse_javascript_str;
 }
+export {parse_javascript_str};
