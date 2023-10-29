@@ -4,6 +4,7 @@ import {
 	write_entire_file,
 } from "./deno_support.js";
 
+//cspell:ignore aeiouy
 const vowel_list = "aeiouy".split("");
 
 /**
@@ -19,7 +20,6 @@ export function word_starts_with_consonant_seq(word) {
 	if (vowel_list.includes(word[0])) {
 		return ["vowel", 1];
 	}
-	//cspell:ignore aeiouy
 	//cspell:ignore bcdfkmnptvw
 	/([aeiouy]|[ct]h|[bcdfkmnptvw]){4}/;
 	switch (word[0]) {
