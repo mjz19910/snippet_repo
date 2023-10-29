@@ -16,4 +16,5 @@ clean:
 	make -C cmd_js clean
 	make -C nmap clean
 	make -C browser_js clean
+	rm -r .z_dist
 	printf "cleaned \"%s\"\n" $$PWD
