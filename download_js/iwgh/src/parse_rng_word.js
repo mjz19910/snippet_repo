@@ -73,12 +73,13 @@ export function parse_rng_word(word, opts) {
 		v = r2.rest;
 	}
 	if (word_arr.length >= 4) {
-		x: if (word_arr.at(-2).type === "consonant") {
+		if (word_arr.at(-2).type === "consonant") {
+			const truncated_word = word_arr.slice(0, -2).map((v) => v.v).join("");
 			if (word_arr.length > 5) {
-				parse_rng_word(word_arr.slice(0, -2).map((v) => v.v).join(""), opts);
-				break x;
+				parse_rng_word(truncated_word, opts);
+			} else {
+				partial_words.add(truncated_word);
 			}
-			partial_words.add(word);
 		} else {
 			parse_rng_word(word_arr.slice(0, -1).map((v) => v.v).join(""), opts);
 		}
