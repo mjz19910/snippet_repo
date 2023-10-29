@@ -58,7 +58,7 @@ export function save_dictionary(dictionary_file, dictionary_words_arr) {
 }
 export const new_words_set = new Set();
 export const partial_words = new Set();
-const length_limit = 3;
+const length_limit = 4;
 /**
  * @param {string} word
  * @param {{add_new_words:boolean;destructure_word:boolean}} opts
