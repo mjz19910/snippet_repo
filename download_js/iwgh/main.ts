@@ -1,6 +1,6 @@
 import {Do} from "./Helpers.ts";
 import * as Items from "./items.ts";
-import {wall,faq,rozenbom,picQ,readyRoom,sickbay,sickbay_has_dead_klingon,v_10forward,after_lockdown,uQuarters,oLounge,hypospray,uSuddEnd,uFridgeOpen,burrow,larder,larRiver,larBoat,larDark,deathDome,grave,o,zbrogjdnfhvyensocuiehw,cosmology,pattern,pcnt,v_25_of_shares,on,off,keycard,members,green,red,picTable,picCup,picRef,larLake,larFm,larStairs,keep,floorFive,elevator,elev_boiler,boiler,mechanic,piping,pipe1,something,someone} from "./info.ts";
+import {wall,faq,rozenbom,picQ,readyRoom,sickbay,sickbay_has_dead_klingon,v_10forward,after_lockdown,uQuarters,oLounge,hypospray,uSuddEnd,uFridgeOpen,burrow,larder,larRiver,larBoat,larDark,deathDome,grave,o,zbrogjdnfhvyensocuiehw,cosmology,pattern,pcnt,v_25_of_shares,on,off,keycard,members,green,red,picTable,picCup,picRef,larLake,larFm,larStairs,keep,floorFive,elevator,elev_boiler,boiler,mechanic,piping,pipe1,something,someone,pipe3,pipe6,pipe7} from "./info.ts";
 
 export type main={
 	id: "main";
@@ -56,7 +56,7 @@ export type main={
 		mechanic,
 		Do.UseAction<mechanic,hypospray>,
 		piping,
-		pipe2,
+		pipe3,pipe6,pipe7,
 		Do.ActivateRoom<something>,
 		Do.RunTakeAct<something,Items.something>,
 		Do.ActivateRoom<someone>,
