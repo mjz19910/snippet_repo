@@ -382,7 +382,7 @@ export type piping={
 		pipe13,
 	],
 };
-export type pipe1={
+type pipe1={
 	news: "Pipe passage 1",
 };
 type pipe5={
