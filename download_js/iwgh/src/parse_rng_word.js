@@ -78,6 +78,10 @@ export function parse_rng_word(word, opts) {
 		v = r2.rest;
 	}
 	const ll = length_limit + 1;
+	if (word_arr.at(-1).type === "vowel") {
+		word = word.slice(0, -1);
+		word_arr.splice(-1, 1);
+	}
 	if (word_arr.length >= ll) {
 		if (word_arr.at(-2).type === "consonant") {
 			const truncated_word = word_arr.slice(0, -2).map((v) => v.v).join("");
