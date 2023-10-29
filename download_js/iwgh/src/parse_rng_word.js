@@ -145,7 +145,6 @@ export function parse_rng_word(word, opts) {
 		} else {
 			parse_rng_word(word_arr.slice(0, -1).map((v) => v.v).join(""), opts);
 		}
-		// parse_rng_word(word_arr.slice(0, -1).join(""), opts);
 		parse_rng_word(word_arr.slice(1).map((v) => v.v).join(""), opts);
 		return;
 	}
