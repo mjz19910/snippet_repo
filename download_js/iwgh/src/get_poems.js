@@ -43,7 +43,7 @@ async function scope(state) {
 			reset_words_set(par);
 			await state.save();
 			// pause so we don't overload the ddos protection
-			await delay(5 * lim * 1000);
+			await delay(8 * 1000);
 		}
 	}
 }
