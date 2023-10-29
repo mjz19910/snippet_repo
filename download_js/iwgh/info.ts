@@ -290,6 +290,7 @@ type u_page={
 		"The best way to get rid of an angry mosquito is to hide from it!",
 		// SilentLake,
 		"The underground river from the castle larder leads to the Silent Lake... that is, if you do not drown!",
+		// [?]
 		"Whenever in doubt - consult a wise book",
 	],
 	hint_refs: {
