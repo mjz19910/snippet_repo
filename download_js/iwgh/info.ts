@@ -247,23 +247,35 @@ type caramel={
 	id: "caramel";
 	news: "This is a secret communication room. Please, use it with care.";
 };
+type herculepoirot={
+	id: "herculepoirot";
+	news: "This is the Poirot page.";
+};
 // cspell:ignore zbrogjdnfhvyensocuiehw
 type u_page={
 	id: "zbrogjdnfhvyensocuiehw",
 	rid: "u",
 	news_str: "This is the U page.",
 	hints: [
+		Items.genie,
 		"A maze is less confusing if you try to conquer it with a friend who lives in a lamp",
+		floorFive,
 		"An absense of a fourth floor does not mean there is no fifth",
 		// cosmology -> pattern -> pcnt
+		pcnt,
 		"An hourglass is more than it seems",
-		// dwarfName
+		// dwarfName -> rozenbom -> small_green_lamp
+		Items.small_green_lamp,
 		"Be sure to find small green lamp - otherwise lots of locations would be too dark for you to explore!",
+		// b
 		"Bee yourself",
+		// [?]
 		"Beware!",
 		// library
 		"Books are typically kept in the library",
+		// [?]
 		"Cross the road only when you see green light",
+		// [?]
 		"If something is mentioned twice, chances are it hints to a room",
 		"Keyword: <b>74stars</b>",
 		"Keyword: <b>bridge</b>",
@@ -280,15 +292,20 @@ type u_page={
 		"Whenever in doubt - consult a wise book",
 	],
 	hint_refs: {
+		genie: [floorThree,Items.genie];
+		floorFive: floorFive,
+		pcnt: [cosmology,pattern,pcnt],
+		small_green_lamp: [dwarfName,rozenbom,Items.small_green_lamp],
+		b: b;
 		"74stars": v_74stars,
 		bridge: bridge,
 		caramel: caramel,
 		cosmology: cosmology,
 		flatJoke: flatJoke,
-		herculepoirot: "herculepoirot",
 		jrrtgandalf: jrrtgandalf,
 		library: library,
 		selldome: selldome,
+		herculepoirot: herculepoirot,
 	};
 	quests: {
 		cosmology: cosmology["quest_chain"];
@@ -424,7 +441,7 @@ type inventory={
 		"screwdriver": Items.screwdriver,
 		"fui": Items.fui,
 		"piece of paper": piece_of_paper_inv,
-		"small green lamp": null,
+		"small green lamp": Items.small_green_lamp,
 		"egg": Items.egg,
 		"mosquito disinterest": null,
 		"hypospray": hypospray,
