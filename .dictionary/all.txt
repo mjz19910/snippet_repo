@@ -191,6 +191,7 @@ heaudio
 herculepoirot
 hidestream
 histfile
+homeworld
 hostch
 hovercard
 howto
