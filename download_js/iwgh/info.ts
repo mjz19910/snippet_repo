@@ -46,7 +46,7 @@ type armour={
 	news: "Knight's armour",
 	action: H.ActionArr<[
 		unscrew_armor,
-		take_piece_of_paper,
+		H.TakeActionR<{item: Items.piece_of_paper,required: unscrew_armor;}>,
 	]>,
 };
 type larStairs={
