@@ -83,6 +83,7 @@ export function parse_rng_word(word, opts) {
 		word = word.slice(0, -1);
 		word_arr.splice(-1, 1);
 	}
+	if (word === "") return;
 	if (random_dictionary_set.has(word)) return;
 	if (word_arr.length >= ll) {
 		if (word_arr.at(-2).type === "consonant") {
