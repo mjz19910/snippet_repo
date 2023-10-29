@@ -285,9 +285,13 @@ type u_page={
 		"Keyword: <b>flatJoke</b>",
 		"Keyword: <b>jrrtgandalf</b>",
 		"Selldome page: <b>selldome</b>",
+		// [?]
 		"Stay alert!",
 		"The Poirot page: <b>herculepoirot</b>",
+		// ut1 -> Items.screwdriver -> armour
+		ut1,armour,
 		"The best way to get rid of an angry mosquito is to hide from it!",
+		// SilentLake,
 		"The underground river from the castle larder leads to the Silent Lake... that is, if you do not drown!",
 		"Whenever in doubt - consult a wise book",
 	],
