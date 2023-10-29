@@ -861,6 +861,8 @@ type main={
 	quest_chain: [
 		Do.ActivateRoom<faq>,
 		Do.RunTakeAct<faq,Items.gandalf_magic_book>,
+		Do.ActivateRoom<rozenbom>,
+		Do.RunTakeAct<rozenbom,Items.small_green_lamp>,
 		Do.ActivateRoom<picQ>,
 		Do.RunTakeAct<picQ,Items.dead_klingon>,
 		Do.ActivateRoom<readyRoom>,
