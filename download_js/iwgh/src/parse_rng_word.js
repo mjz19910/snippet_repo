@@ -72,12 +72,6 @@ export function parse_rng_word(word, opts) {
 		v = r2.rest;
 	}
 	if (word_arr.length >= 4) {
-		console.log("end", word_arr.at(-2));
-		if (word_arr.at(-2).type === "consonant") {
-			parse_rng_word(word_arr.slice(0, -2).map((v) => v.v).join(""), opts);
-		}
-		// parse_rng_word(word_arr.slice(0, -1).join(""), opts);
-		// parse_rng_word(word_arr.slice(1).join(""), opts);
 		return;
 	}
 	if (destructure_word) show_word_parts(word_arr);
