@@ -1,4 +1,4 @@
-import { write_entire_file } from "./deno_support.js";
+import { read_json_array_file, write_entire_file } from "./deno_support.js";
 
 /**
  * @param {string} word
