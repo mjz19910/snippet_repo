@@ -560,12 +560,17 @@ type orb_book_inv={
 	links: [kukiOrbs];
 	item: Items.orb_book;
 };
+type h={
+	id: "h";
+	news: "This is the H page.";
+};
 type all_pages={
 	generic: {
 		links: [
 			inventory,
 			o,
 			u_page,
+			h,
 		],
 	},
 	menu: {
