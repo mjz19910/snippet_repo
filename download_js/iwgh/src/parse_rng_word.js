@@ -41,8 +41,8 @@ export function word_starts_with_consonant_seq(word) {
  * @returns {{part:{type:"consonant"|"vowel",v:string},rest:string}}
  */
 export function word_starts_with_consonant_seq2(word) {
-	const [type, seq_len] = word_starts_with_consonant_seq(word);
-	const part = word.slice(0, seq_len), rest = word.slice(seq_len);
+	const [type, idx] = word_starts_with_consonant_seq(word);
+	const part = word.slice(0, idx), rest = word.slice(idx);
 	return { part: { type, v: part }, rest };
 }
 /** @type {Set<string>} */
@@ -58,6 +58,16 @@ export function save_dictionary(dictionary_file, dictionary_words_arr) {
 }
 export const new_words_set = new Set();
 export const partial_words = new Set();
+/** @param {Deno.FsFile} file  */
+export async function load_dictionary(file) {
+	/** @type {string[]} */
+	const dictionary_words_arr = await read_json_array_file(file);
+	for (const word of dictionary_words_arr) {
+		if (word === "") continue;
+		random_dictionary_set.add(word);
+	}
+	return dictionary_words_arr.length;
+}
 const length_limit = 2;
 /**
  * @param {string} word
@@ -110,11 +120,10 @@ export function parse_rng_word(word, opts) {
  * @param {ReturnType<typeof word_starts_with_consonant_seq2>["part"][]} word_arr
  */
 function show_word_parts(word_arr) {
-	const len = word_arr.length;
-	if (len > 3) return;
+	if (word_arr.length > 3) return;
 	const wj = word_arr.map((v) => v.v).join(""),
 		tj = word_arr.map((v) => v.type == "vowel" ? "v" : "c").join("");
-	console.log("W:", wj, "T:", tj, [".parts", len]);
+	console.log("W:", wj, "T:", tj, [".parts", word_arr.length]);
 }
 
 export function reset_words_set() {
