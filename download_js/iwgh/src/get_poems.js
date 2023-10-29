@@ -36,7 +36,7 @@ async function scope(state) {
 			console.log("enter", Math.floor(i / lim));
 		}
 		const arr = [];
-		const par = 2 + Math.floor(i / 4) - 1;
+		const par = 1 + Math.floor(i / 4);
 		for (let j = 0; j < (10 + par); j++) {
 			arr.push(fetch_one_page("poems"));
 		}
