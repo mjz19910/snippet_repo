@@ -66,6 +66,9 @@ const length_limit = 3;
 export function parse_rng_word(word, opts) {
 	const { add_new_words, destructure_word } = opts;
 	if (random_dictionary_set.has(word)) return;
+	if (!add_new_words) {
+		partial_words.add(word.slice(0, -1));
+	}
 	const word_arr = [];
 	let v = word;
 	for (;;) {
