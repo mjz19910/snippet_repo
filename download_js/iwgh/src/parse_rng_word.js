@@ -99,7 +99,7 @@ export function parse_rng_word(opts) {
 /** @typedef {{type: "consonant" | "vowel";v: string;}} WordArrItem */
 /** @typedef {{word:string; add_new_words:boolean; destructure_word:boolean; word_arr?: WordArrItem[]}} ParseRngOpts */
 
-const length_limit = 4;
+const length_limit = 3;
 /**
  * @param {string} word
  * @param {ParseRngOpts} opts
