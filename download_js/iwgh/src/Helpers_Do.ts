@@ -14,7 +14,10 @@ export type ActivateRoom<Room extends {
 	id: string;
 	action: H.TakeAction<H.ItemShape>|
 	H.StoryEvent<{
-		required: H.ItemShape;
+		required: H.ItemShape|{
+			type: "story_pos";
+			pos: "after lockdown";
+		};
 	}>|
 	H.ActionArr<(
 		H.TakeAction<H.ItemShape>|

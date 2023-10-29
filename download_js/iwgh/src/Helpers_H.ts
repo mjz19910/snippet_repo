@@ -87,7 +87,10 @@ export type ActionArrExt<T>={
 export type ActionArrExt2<T>=PageWithActShape<ActionArrExt<T>>;
 export type ActionArr<T extends ActionShape[]>=ActionArrExt<T>;
 export type StoryEvent<ActionProps extends {
-	required: ItemShape;
+	required: ItemShape|{
+		type: "story_pos";
+		pos: "after lockdown";
+	};
 }>={
 	type: "story";
 	activate: "load";
