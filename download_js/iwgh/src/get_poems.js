@@ -6,6 +6,31 @@ import {
 	reset_words_set,
 	save_dictionary,
 } from "./parse_rng_word.js";
+
+const global_abort = new AbortController();
+
+function delay(ms) {
+	return new Promise(function (accept, reject) {
+		const signal = global_abort.signal;
+		const listener = () => {
+			reject(signal.reason);
+			abort();
+		};
+		const done = () => {
+			signal.removeEventListener("abort", listener);
+		};
+		const abort = () => {
+			done();
+			clearTimeout(interval);
+		};
+		const interval = setTimeout(() => {
+			accept();
+			done();
+		}, ms);
+		signal.addEventListener("abort", listener);
+	});
+}
+
 /** @param {GetPoemsState} state */
 async function scope(state) {
 	const lim = 4;
@@ -21,6 +46,8 @@ async function scope(state) {
 			reset_words_set(par);
 			await state.save();
 		}
+		// pause so we don't overload the ddos protection
+		await delay(5 * 1000);
 	}
 }
 class GetPoemsState {
