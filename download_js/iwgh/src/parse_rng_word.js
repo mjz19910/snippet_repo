@@ -69,7 +69,7 @@ export async function load_dictionary(file) {
 	}
 	return dictionary_words_arr.length;
 }
-const length_limit = 2;
+const length_limit = 3;
 /**
  * @param {string} word
  * @param {{add_new_words:boolean;destructure_word:boolean}} opts
