@@ -151,24 +151,24 @@ export function parse_rng_word2(word, opts) {
 	word_arr.push(v_obj);
 	for (const v_end of vowel_list) {
 		v_obj.v = v_end;
-		add_word_to_cache(opts, word + v_end, word_arr);
+		add_word_to_cache(opts, word + v_end, word_arr, { generated: true });
 	}
 }
 
-/** @param {ParseRngOpts} opts @param {string} word @param {WordArrItem} word_arr */
-function add_word_to_cache(opts, word, word_arr) {
+/** @param {{generated: boolean}} word_opts @param {ParseRngOpts} opts @param {string} word @param {WordArrItem} word_arr */
+function add_word_to_cache(opts, word, word_arr, word_opts) {
 	if (random_dictionary_set.has(word)) return;
 	random_dictionary_set.add(word);
-	if (opts.add_new_words) {
-		new_words_set.add(word);
-	}
-	if (opts.destructure_word) show_word_parts(opts, word_arr);
+	if (word_opts.generated) return;
+	if (opts.add_new_words) new_words_set.add(word);
+	show_word_parts(opts, word_arr);
 }
 
 /**
  * @param {ParseRngOpts} opts @param {WordArrItem[]} word_arr
  */
 function show_word_parts(opts, word_arr) {
+	if (!opts.destructure_word) return;
 	const wj = word_arr.map((v) => v.v).join(""),
 		tj1 = word_arr.map((v) => v.type == "vowel" ? "v" : "c").join(""),
 		tj2 = opts.word_arr.map((v) => v.type == "vowel" ? "v" : "c").join("");
