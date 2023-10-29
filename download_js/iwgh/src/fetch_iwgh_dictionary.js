@@ -31,7 +31,7 @@ async function run() {
 		await write_entire_file(description_file, description_arr);
 	}
 	description_file.close();
-	await save_dictionary(dictionary_file);
+	await save_dictionary(dictionary_file,dictionary_size);
 	dictionary_file.close();
 }
 await run();

@@ -47,11 +47,11 @@ export function word_starts_with_consonant_seq2(word) {
 }
 /** @type {Set<string>} */
 export const random_dictionary_set = new Set();
-export function save_dictionary(dictionary_file, dictionary_words_arr) {
+export function save_dictionary(dictionary_file, dictionary_size) {
 	const dictionary_arr = [...random_dictionary_set.values()].sort();
 	console.log(
 		"diff(dictionary.length,dictionary_words.length)",
-		dictionary_arr.length - dictionary_words_arr.length,
+		dictionary_arr.length - dictionary_size,
 	);
 	console.log(partial_words);
 	return write_entire_file(dictionary_file, dictionary_arr);
