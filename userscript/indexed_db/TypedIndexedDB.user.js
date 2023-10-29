@@ -24,7 +24,7 @@ if (typeof require === "undefined" || page_require !== __module_require__) {
 	reset_require = true;
 }
 // indexed_db/TypedIndexedDB(3) => BaseRequire(1)
-const { do_export } = require("../../base_require_raw/BaseRequire.user.js");
+const { do_export } = require("../base_require_raw/BaseRequire.user.js");
 // priority indexed_db/TypedIndexedDB(3)
 const __module_name__ = "mod$TypedIndexedDB";
 /** @private @arg {(x:typeof exports)=>void} fn */

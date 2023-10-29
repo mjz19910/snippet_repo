@@ -4,9 +4,10 @@
 			"ESNext",
 			"DOM"
 		],
-		"module": "ESNext",
+		"module": "Node16",
 		"outDir": "./dist",
 		"target": "ESNext",
+		"moduleResolution": "Node16",
 		"allowImportingTsExtensions": true,
 		"allowJs": true,
 		"allowSyntheticDefaultImports": true,
