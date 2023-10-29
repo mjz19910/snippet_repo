@@ -13,7 +13,7 @@ function delay(ms) {
 	return new Promise(function (accept, reject) {
 		const signal = global_abort.signal;
 		const listener = () => {
-			reject(signal.reason);
+			done();
 			abort();
 		};
 		signal.addEventListener("abort", listener);
@@ -21,8 +21,8 @@ function delay(ms) {
 			signal.removeEventListener("abort", listener);
 		};
 		const abort = () => {
-			done();
 			clearTimeout(interval);
+			reject(signal.reason);
 		};
 		const complete = () => {
 			done();
