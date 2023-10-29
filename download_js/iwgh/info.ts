@@ -226,22 +226,18 @@ type piece_of_paper_inv={
 	links: [dwarfName],
 	item: Items.piece_of_paper;
 };
-export type keycard={
-	type: "item",
-	id: "keycard",
-};
 export type on={
 	id: "on",
 	links: [off],
 };
 export type v_25_of_shares={
-	type: "item";
 	id: "25% of shares";
+	item: Items.v_25_of_shares;
 	links: [on];
 	quest_chain: [
 		on,
 		Do.ActivateRoom<off>,
-		Do.RunTakeAct<off,keycard>,
+		Do.RunTakeAct<off,Items.keycard>,
 	];
 };
 type caramel={
@@ -331,10 +327,6 @@ type missions={
 };
 type d_essay={
 	news: "An essay explaining why IWGH has no D page",
-};
-export type hypospray={
-	type: "item",
-	id: "hypospray",
 };
 export type enterprise={
 	links: [
@@ -449,7 +441,7 @@ type inventory={
 		"small green lamp": Items.small_green_lamp,
 		"egg": Items.egg,
 		"mosquito disinterest": null,
-		"hypospray": hypospray,
+		"hypospray": Items.hypospray,
 		"broken water filter": Items.broken_water_filter,
 		"Fake Orb": Items.fake_orb,
 		"Orb Book": orb_book_inv,
@@ -713,7 +705,7 @@ export type picQ={
 	id: "picQ";
 	links: [picTable],
 	action: H.TakeActionR<{
-		required: keycard;
+		required: Items.keycard;
 		item: Items.dead_klingon;
 	}>;
 };
@@ -758,7 +750,7 @@ export type rozenbom={
 };
 export type off={
 	id: "off",
-	action: H.TakeAction<keycard>;
+	action: H.TakeAction<Items.keycard>;
 };
 export type something={
 	id: "something";
@@ -788,7 +780,7 @@ export type sickbay={
 		}>,
 		H.TakeActionR<{
 			required: Items.dead_romulan;
-			item: hypospray,
+			item: Items.hypospray,
 		}>,
 	]>;
 };
@@ -814,7 +806,7 @@ export type grave={
 export type mechanic={
 	id: "mechanic";
 	news: "Mechanic in the boiler room";
-	action: H.UseAction<hypospray>;
+	action: H.UseAction<Items.hypospray>;
 };
 export type pipe3={
 	news: "Pipe passage 3",
@@ -853,5 +845,5 @@ type characteristics={
 };
 export type pcnt={
 	id: "pcnt";
-	action: H.TakeAction<v_25_of_shares>;
+	action: H.TakeAction<Items.v_25_of_shares>;
 };

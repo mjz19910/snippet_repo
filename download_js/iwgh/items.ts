@@ -40,11 +40,11 @@ export type fui={
 };
 export type orb_book={
 	type: "item";
-	id: "Orb Book",
+	id: "Orb Book";
 };
 export type screwdriver={
 	type: "item";
-	id: "screwdriver",
+	id: "screwdriver";
 };
 export type egg={
 	type: "item";
@@ -64,7 +64,7 @@ export type fat_worm={
 };
 export type philosophical_principles={
 	type: "item";
-	id: "philosophical principles",
+	id: "philosophical principles";
 };
 export type broken_water_filter={
 	type: "item";
@@ -72,7 +72,7 @@ export type broken_water_filter={
 };
 export type fake_orb={
 	type: "item";
-	id: "Fake Orb",
+	id: "Fake Orb";
 };
 export type glass_orb={
 	type: "item";
@@ -85,4 +85,16 @@ export type mosquitoZ={
 export type small_green_lamp={
 	type: "item";
 	id: "small green lamp";
+};
+export type keycard={
+	type: "item";
+	id: "keycard";
+};
+export type v_25_of_shares={
+	type: "item";
+	id: "25% of shares";
+};
+export type hypospray={
+	type: "item",
+	id: "hypospray",
 };

@@ -1,6 +1,6 @@
 import {Do} from "./Helpers.ts";
 import * as Items from "./items.ts";
-import {wall,faq,rozenbom,picQ,readyRoom,sickbay,sickbay_has_dead_klingon,v_10forward,after_lockdown,uQuarters,oLounge,hypospray,uSuddEnd,uFridgeOpen,burrow,larder,larRiver,larBoat,larDark,deathDome,grave,o,zbrogjdnfhvyensocuiehw,cosmology,pattern,pcnt,v_25_of_shares,on,off,keycard,members,green,red,picTable,picCup,picRef,larLake,larFm,larStairs,keep,floorFive,elevator,elev_boiler,boiler,mechanic,piping,something,someone,pipe3,pipe6,pipe7} from "./info.ts";
+import {wall,faq,rozenbom,picQ,readyRoom,sickbay,sickbay_has_dead_klingon,v_10forward,after_lockdown,uQuarters,oLounge,uSuddEnd,uFridgeOpen,burrow,larder,larRiver,larBoat,larDark,deathDome,grave,o,zbrogjdnfhvyensocuiehw,cosmology,pattern,pcnt,on,off,members,green,red,picTable,picCup,picRef,larLake,larFm,larStairs,keep,floorFive,elevator,elev_boiler,boiler,mechanic,piping,something,someone,pipe3,pipe6,pipe7} from "./info.ts";
 
 export type main={
 	id: "main";
@@ -23,7 +23,7 @@ export type main={
 		Do.RunTakeAct<uQuarters,Items.dead_romulan>,
 		oLounge,
 		Do.ActivateRoom<sickbay>,
-		Do.RunTakeAct2<sickbay,2,hypospray>,
+		Do.RunTakeAct2<sickbay,2,Items.hypospray>,
 		uSuddEnd,
 		Do.ActivateRoom<uFridgeOpen>,
 		Do.RunTakeAct<uFridgeOpen,Items.hand_press>,
@@ -38,11 +38,11 @@ export type main={
 		cosmology,
 		pattern,
 		pcnt,
-		Do.RunTakeAct<pcnt,v_25_of_shares>,
-		Do.UseInventory<v_25_of_shares>,
+		Do.RunTakeAct<pcnt,Items.v_25_of_shares>,
+		Do.UseInventory<Items.v_25_of_shares>,
 		on,
 		off,
-		Do.RunTakeAct<off,keycard>,
+		Do.RunTakeAct<off,Items.keycard>,
 		Do.UseMenu<members>,
 		members,green,red,
 		picQ,
@@ -54,7 +54,7 @@ export type main={
 		picQ,
 		picTable,picCup,picRef,burrow,larder,larStairs,keep,floorFive,elevator,elev_boiler,boiler,
 		mechanic,
-		Do.UseAction<mechanic,hypospray>,
+		Do.UseAction<mechanic,Items.hypospray>,
 		piping,
 		pipe3,pipe6,pipe7,
 		Do.ActivateRoom<something>,
