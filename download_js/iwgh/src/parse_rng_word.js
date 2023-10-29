@@ -139,7 +139,7 @@ export function parse_rng_word2(word, opts) {
 		add_word_to_cache(opts, vowel_word, vowel_word_arr);
 	}
 	if (random_dictionary_set.has(word)) return;
-	if (word_arr.length >= ll) {
+	if (word_arr.length > ll) {
 		const p2 = word_arr.at(-2);
 		if (!p2) throw new Error("");
 		if (p2.type === "consonant") {
