@@ -441,7 +441,6 @@ type uQuarters={
 		required: after_lockdown;
 		item: Items.dead_romulan;
 	}>;
-	quest_chain_part: readyRoom["story"]["dead_klingon"];
 };
 type v_10forward={
 	id: "10forward",
