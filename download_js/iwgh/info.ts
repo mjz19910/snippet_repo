@@ -96,11 +96,11 @@ export type picTable={
 	id: "picTable",
 	links: [picCup],
 };
-type good={
+export type good={
 	id: "good",
 	news: "Good page.",
 };
-type read={
+export type read={
 	id: "read",
 	links: [good],
 };
