@@ -90,12 +90,16 @@ export function parse_rng_word(word, opts) {
 		v = r2.rest;
 	}
 	const ll = length_limit + 1;
-	const r1 = word_arr.at(-1);
-	if (r1 && r1.type === "vowel") {
-		word = word.slice(0, -1);
-		word_arr.splice(-1, 1);
-	}
-	if (word === "") return;
+	do {
+		const r1 = word_arr.at(-1);
+		if (r1 && r1.type === "vowel") {
+			word = word.slice(0, -1);
+			word_arr.splice(-1, 1);
+		} else {
+			break;
+		}
+		if (word === "") return;
+	} while (true);
 	if (random_dictionary_set.has(word)) return;
 	if (word_arr.length >= ll) {
 		const p2 = word_arr.at(-2);
