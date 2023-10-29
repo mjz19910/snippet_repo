@@ -33,7 +33,7 @@ async function scope(state) {
 	const lim = 4;
 	for (let i = 0; i < (4 * 6); i++) {
 		if (i % lim == 0) {
-			console.log("start", Math.floor(i / lim));
+			console.log("enter", Math.floor(i / lim));
 		}
 		const arr = [];
 		const par = 2 + Math.floor(i / 4) - 1;
@@ -43,6 +43,7 @@ async function scope(state) {
 		await Promise.all(arr);
 		arr.length = 0;
 		if (i % lim == lim - 1) {
+			console.log("leave", Math.floor(i / lim));
 			reset_words_set(par);
 			await state.save();
 			// pause so we don't overload the ddos protection
