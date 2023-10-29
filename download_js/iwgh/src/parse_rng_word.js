@@ -168,7 +168,8 @@ function show_word_parts(word_arr) {
 	console.log("W:", wj, "T:", tj, [".parts", word_arr.length]);
 }
 
-export function reset_words_set() {
-	console.log("dict word num", new_words_set.size);
+/** @param {number} par */
+export function reset_words_set(par) {
+	console.log("dict word num", new_words_set.size, "par", par);
 	new_words_set.clear();
 }
