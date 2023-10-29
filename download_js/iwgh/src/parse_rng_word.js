@@ -134,6 +134,7 @@ export function parse_rng_word2(word, opts) {
 		if (word === "") return;
 	} while (true);
 	x: if (vowel_word_arr.length !== 0) {
+		if (vowel_word_arr.length > ll) break x;
 		const vowel_word = vowel_word_arr.map((v) => v.v).join("");
 		add_word_to_cache(opts, vowel_word, vowel_word_arr, opt_not_gen);
 		const v_obj = vowel_word_arr.at(-1);
