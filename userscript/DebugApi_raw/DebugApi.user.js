@@ -254,12 +254,12 @@ class ClientSocket extends SocketBase {
 		}
 		this.post_wrapped(data, server_port);
 	}
-	/** @arg {ConnectionMessage} data @arg {MessagePort} server_port */
-	post_wrapped(data, server_port) {
+	/** @arg {ConnectionMessage} tcp @arg {MessagePort} server_port */
+	post_wrapped(tcp, server_port) {
 		/** @type {import("./a/WrappedMessage.ts").WrappedMessage<ConnectionMessage>} */
 		const msg = {
-			type: "WindowSocket",
-			data,
+			target: "ServerSocket",
+			message: tcp,
 		};
 		this.m_remote_target.postMessage(msg, "*", [server_port]);
 	}
@@ -492,7 +492,7 @@ class WindowSocket extends SocketBase {
 		console.log(event_0.data);
 		if (!this.is_connection_message(event_0)) return;
 		const wrapped_msg = event_0.data;
-		if (wrapped_msg.type !== "WindowSocket") return;
+		if (wrapped_msg.target !== "WindowSocket") return;
 		const client_id = this.m_client_max_id++;
 		const connection_port = event_0.ports[0];
 		if (!event_0.source) throw new Error("No event source");
@@ -505,7 +505,7 @@ class WindowSocket extends SocketBase {
 		const prev_connection_index = this.m_connections.findIndex((e) => {
 			return e.event_source === event_source;
 		});
-		const data = wrapped_msg.data;
+		const data = wrapped_msg.message;
 		if (testing_tcp) {
 			this.open_group("rx-window", data);
 			console.log(".on_message_event ->");
@@ -528,7 +528,7 @@ class WindowSocket extends SocketBase {
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<import("./a/WrappedMessage.ts").WrappedMessage<ConnectionMessage>>} */
 	is_connection_message(event) {
 		if (!this.is_wrapped_message(event)) return false;
-		const data_record = cast_to_event_like_CM(wrap_CM(event.data.data));
+		const data_record = cast_to_event_like_CM(wrap_CM(event.data.message));
 		if (!data_record) return false;
 		if (data_record.data.type !== "tcp") return false;
 		return true;

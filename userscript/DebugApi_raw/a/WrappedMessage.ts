@@ -1,4 +1,4 @@
 export type WrappedMessage<T>={
-	type: string;
-	data: T;
+	target: string;
+	message: T;
 };
