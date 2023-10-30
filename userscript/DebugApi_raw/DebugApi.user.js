@@ -436,11 +436,13 @@ class ServerSocket extends SocketBase {
 		}
 		this.handle_tcp_data(tcp);
 	}
+	m_current_ack = 0;
+	m_current_seq = 0;
 	/** @arg {ConnectionMessage} tcp */
 	handle_tcp_data(tcp) {
 		const f = new FlagHandler(tcp.flags);
-		this.m_current_seq = tcp.seq;
 		this.m_current_ack = tcp.ack;
+		this.m_current_seq = tcp.seq;
 		if ((f.is_syn() && !f.is_ack()) || f.is_none()) {
 			this.push_tcp_message(this.make_ack_message(tcp));
 		}
