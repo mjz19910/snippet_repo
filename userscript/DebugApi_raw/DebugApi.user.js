@@ -239,17 +239,15 @@ class ClientSocket extends SocketBase {
 		this.init_handler();
 		this.send_init_request(this.make_syn(), server_port);
 	}
-	/** @arg {ConnectionMessage} data @arg {MessagePort} server_port */
-	send_init_request(data, server_port) {
+	/** @arg {ConnectionMessage} tcp @arg {MessagePort} server_port */
+	send_init_request(tcp, server_port) {
 		if (this.m_debug) console.log("post request ConnectOverPostMessage");
 		if (testing_tcp) {
-			this.open_group("tx-client", data);
-			console.log("client.send_init_request ->");
-			console.log(".handleEvent ->");
-			console.log("<remote window>", data);
+			this.open_group("tx-client", tcp);
+			this.flat_log(".send_init_request -> to_server", tcp);
 			this.close_group();
 		}
-		this.post_wrapped(data, server_port);
+		this.post_wrapped(tcp, server_port);
 	}
 	/** @arg {ConnectionMessage} tcp @arg {MessagePort} server_port */
 	post_wrapped(tcp, server_port) {
@@ -263,16 +261,11 @@ class ClientSocket extends SocketBase {
 	postMessage(msg) {
 		this.m_remote_target.postMessage(msg, "*", [msg.port]);
 	}
-	/** @override @arg {ServerSocket} socket @arg {ConnectionMessage} tcp */
-	push_tcp_message(socket, tcp) {
+	/** @arg {ConnectionMessage} tcp */
+	push_tcp_message(tcp) {
 		if (testing_tcp) {
 			this.open_group("tx-client", tcp);
-			this.flat_log(
-				".push_tcp_message -> to_server",
-				"client_id",
-				socket.client_id(),
-				tcp,
-			);
+			this.flat_log(".push_tcp_message -> to_server", tcp);
 			this.close_group();
 		}
 		this.m_port.postMessage(tcp);
@@ -415,7 +408,7 @@ class ServerSocket extends SocketBase {
 			console.groupEnd();
 		});
 	}
-	/** @arg {MessageType} tcp */
+	/** @arg {ConnectionMessage} tcp */
 	handle_client_data(tcp) {
 		cur_module.socket.push_tcp_message(this, tcp);
 		if (testing_tcp) {
@@ -534,9 +527,9 @@ class WindowSocket extends SocketBase {
 		if (!is_obj_with_property(data.data, "data")) return false;
 		return true;
 	}
-	/** @override @arg {ServerSocket} socket @arg {ConnectionMessage} message */
-	push_tcp_message(socket, message) {
-		this.m_local_handler.push_tcp_message(socket, message);
+	/** @arg {ConnectionMessage} tcp */
+	push_tcp_message(tcp) {
+		this.m_local_handler.push_tcp_message(tcp);
 	}
 	/** @arg {MessageEvent<unknown>} event */
 	handleEvent(event) {
