@@ -448,16 +448,8 @@ class ServerSocket extends SocketBase {
 	disconnected() {
 		this.push_tcp_message(this.make_message(0, 0, { type: "disconnected" }));
 	}
-	/** @arg {boolean} can_reconnect */
-	will_disconnect(can_reconnect) {
-		this.push_tcp_message(this.make_message(
-			0,
-			0,
-			{
-				type: "will_disconnect",
-				can_reconnect,
-			},
-		));
+	will_disconnect() {
+		this.push_tcp_message(this.make_message(0, 0, { type: "will_disconnect" }));
 	}
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
