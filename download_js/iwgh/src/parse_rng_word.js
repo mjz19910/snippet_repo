@@ -93,7 +93,6 @@ export class ParseRngOpts {
 	destructure_word = true;
 }
 
-const opt_was_gen = { generated: true };
 const opt_not_gen = { generated: false };
 /**
  * @param {string} word
@@ -116,45 +115,7 @@ export function parse_rng_word2(word, opts) {
 	if (opts.word_arr.length === 0) {
 		opts.word_arr = word_arr.slice();
 	}
-	const ll = opts.length_limit;
-	const vowel_word_arr = [];
-	do {
-		const r1 = word_arr.at(-1);
-		if (r1 && r1.type === "vowel") {
-			word = word.slice(0, -1);
-			const del = word_arr.splice(-1, 1);
-			vowel_word_arr.unshift(...del);
-		} else {
-			break;
-		}
-		if (word === "") return;
-	} while (true);
-	x: if (vowel_word_arr.length !== 0) {
-		if (vowel_word_arr.length > ll) break x;
-		const vowel_word = vowel_word_arr.map((v) => v.v).join("");
-		add_word_to_cache(opts, vowel_word, vowel_word_arr, opt_not_gen);
-		const v_obj = vowel_word_arr.at(-1);
-		if (!v_obj) break x;
-		for (const v_end of vowel_list) {
-			v_obj.v = v_end;
-			const gen_word = vowel_word_arr.map((v) => v.v).join("");
-			if (gen_word === vowel_word) continue;
-			add_word_to_cache(opts, gen_word, vowel_word_arr, opt_was_gen);
-		}
-	}
-	if (word_arr.length > ll) {
-		parse_rng_word2(word_arr.slice(0, -1).map((v) => v.v).join(""), opts);
-		parse_rng_word2(word_arr.slice(1).map((v) => v.v).join(""), opts);
-		return;
-	}
 	add_word_to_cache(opts, word, word_arr, opt_not_gen);
-	/** @type {WordArrItem} */
-	const v_obj = { type: "vowel", v: "" };
-	word_arr.push(v_obj);
-	for (const v_end of vowel_list) {
-		v_obj.v = v_end;
-		add_word_to_cache(opts, word + v_end, word_arr, opt_was_gen);
-	}
 }
 
 /** @param {{generated: boolean}} word_opts @param {ParseRngOpts} opts @param {string} word @param {WordArrItem} word_arr */
