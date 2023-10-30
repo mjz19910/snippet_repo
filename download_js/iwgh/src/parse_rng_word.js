@@ -173,6 +173,14 @@ export function parse_rng_word2(word, opts) {
 			add_word_to_cache(opts, word + v_end1 + v_end2, word_arr, opt_was_gen);
 		}
 	}
+	v_obj1.type = "vowel";
+	for (const v_end1 of vowel_list) {
+		v_obj1.v = v_end1;
+		for (const v_end2 of vowel_list) {
+			v_obj2.v = v_end2;
+			add_word_to_cache(opts, word + v_end1 + v_end2, word_arr, opt_was_gen);
+		}
+	}
 }
 
 /** @param {{generated: boolean}} word_opts @param {ParseRngOpts} opts @param {string} word @param {WordArrItem} word_arr */
