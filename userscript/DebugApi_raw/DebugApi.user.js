@@ -505,7 +505,7 @@ class WindowSocket extends SocketBase {
 		const prev_connection_index = this.m_connections.findIndex((e) => {
 			return e.event_source === event_source;
 		});
-		const data = event_0.data.data;
+		const data = wrapped_msg.data;
 		if (testing_tcp) {
 			this.open_group("rx-window", data);
 			console.log(".on_message_event ->");
