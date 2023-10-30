@@ -717,7 +717,12 @@ type armour={
 	news: "Knight's armour",
 	action: H.ActionArr<[
 		unscrew_armor,
-		H.TakeActionR<{item: Items.piece_of_paper,required: unscrew_armor;}>,
+		H.TakeActionR<{
+			item: Items.piece_of_paper,required: {
+				fn: "use";
+				usingItem: Items.screwdriver;
+			};
+		}>,
 	]>,
 };
 export type larFm={

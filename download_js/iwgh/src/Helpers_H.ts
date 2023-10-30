@@ -57,11 +57,7 @@ type StoryPosShape={
 };
 export type TakeActionR<ActionProps extends {
 	item: ItemShape;
-	required: ItemShape|StoryEventShape|StoryPosShape|{
-		id: string;
-		fn: "use";
-		usingItem: ItemShape;
-	};
+	required: ItemShape|StoryEventShape|StoryPosShape|UseActionShape;
 }>={
 	fn: "take";
 	item: ActionProps["item"];
