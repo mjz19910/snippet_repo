@@ -285,10 +285,7 @@ class ClientSocket extends SocketBase {
 			console.log("server", tcp);
 			this.close_group();
 		}
-		if (ServerSocket.direct_message) {
-			const p = ServerSocket.prototype;
-			p.handleEvent(new MessageEvent("message", { data: tcp }));
-		} else this.m_port.postMessage(tcp);
+		this.m_port.postMessage(tcp);
 	}
 	/** @arg {ConnectionMessage} tcp */
 	client_connect(tcp) {
