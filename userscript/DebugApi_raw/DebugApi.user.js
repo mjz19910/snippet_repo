@@ -489,6 +489,7 @@ class WindowSocket extends SocketBase {
 		if (!this.is_connection_message(event_0)) return;
 		const client_id = this.m_client_max_id++;
 		const connection_port = event_0.ports[0];
+		const wrapped_msg = event_0.data;
 		if (!event_0.source) throw new Error("No event source");
 		const event_source = event_0.source;
 		const handler = new ServerSocket(
@@ -499,7 +500,6 @@ class WindowSocket extends SocketBase {
 		const prev_connection_index = this.m_connections.findIndex((e) => {
 			return e.event_source === event_source;
 		});
-		const wrapped_msg = event_0.data;
 		const tcp = wrapped_msg.message;
 		if (testing_tcp) {
 			this.open_group("rx-window", tcp);
