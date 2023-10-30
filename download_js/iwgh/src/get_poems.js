@@ -38,7 +38,7 @@ class GetPoemsState {
 	async step(i) {
 		const lim = 4;
 		if (i % lim == 0) {
-			console.log("enter", Math.floor(i / lim));
+			console.log("enter", Math.floor(i / lim) + 1);
 		}
 		const arr = [];
 		const par = 40;
@@ -51,7 +51,7 @@ class GetPoemsState {
 		if (i % lim == lim - 1) {
 			reset_words_set(par);
 			await this.save();
-			console.log("leave", Math.floor(i / lim));
+			console.log("leave", Math.floor(i / lim) + 1);
 		}
 	}
 }
