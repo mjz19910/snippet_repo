@@ -185,19 +185,20 @@ export function parse_rng_word2(word, opts) {
 function add_word_to_cache(opts, word, word_arr, word_opts) {
 	if (random_dictionary_set.has(word)) return;
 	random_dictionary_set.add(word);
-	if (word_opts.generated) return;
 	if (opts.add_new_words) new_words_set.add(word);
-	show_word_parts(opts, word_arr);
+	show_word_parts(opts, word_arr, word_opts);
 }
 
 /**
  * @param {ParseRngOpts} opts @param {WordArrItem[]} word_arr
+ * @param {{generated: boolean}} word_opts
  */
-function show_word_parts(opts, word_arr) {
+function show_word_parts(opts, word_arr, word_opts) {
 	if (!opts.destructure_word) return;
 	const wj = word_arr.map((v) => v.v).join(""),
 		tj1 = word_arr.map((v) => v.type == "vowel" ? "v" : "c").join(""),
 		tj2 = opts.word_arr.map((v) => v.type == "vowel" ? "v" : "c").join("");
+	if (word_opts.generated) return;
 	console.log("W:", wj, [".parts", word_arr.length], "T:", tj2, "->", tj1);
 }
 
