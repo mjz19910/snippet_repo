@@ -259,7 +259,10 @@ class ClientSocket extends SocketBase {
 	}
 	/** @arg {MessagePort} server_port */
 	send_syn(server_port) {
-		if (this.m_remote_target === window) return;
+		if (this.m_remote_target === window) {
+			this.disconnectMessagePort();
+			return;
+		}
 		const tcp = this.make_syn();
 		if (testing_tcp) {
 			// <group syn>
@@ -294,7 +297,7 @@ class ClientSocket extends SocketBase {
 		this.m_port.postMessage(tcp);
 	}
 	/** @arg {ConnectionMessage} tcp */
-	client_connect(tcp) {
+	clientConnected(tcp) {
 		if (testing_tcp) {
 			const flags = this.stringify_flags(tcp.flags);
 			const socket_fmt = this.fmt_tag + `<${tcp.seq},${tcp.ack},"${flags}">`;
@@ -309,34 +312,34 @@ class ClientSocket extends SocketBase {
 		if (testing_tcp) {
 			this.log_tcp_message("rx-client", "handleEvent", tcp);
 		}
-		this.handle_tcp_data(tcp);
+		this.handleTCPMessage(tcp);
 	}
 	/** @arg {ConnectionMessage} tcp */
-	handle_tcp_data(tcp) {
+	handleTCPMessage(tcp) {
 		const f = new FlagHandler(tcp.flags);
 		if (this.m_local_log) console.log("client", tcp);
 		if ((f.is_syn() && f.is_ack()) || f.is_none()) {
 			this.push_tcp_message(this.make_ack_message(tcp));
 		}
 		if (!tcp.data) return;
-		const tcp_data = tcp.data;
-		switch (tcp_data.type) {
+		const msg = tcp.data;
+		switch (msg.type) {
 			case "connected":
 				this.m_connected = true;
-				this.client_connect(tcp);
+				this.clientConnected(tcp);
 				break;
 			case "disconnected":
-				this.client_disconnect(tcp);
+				this.clientDisconnect(tcp);
 				break;
 			default:
 				if (testing_tcp) {
-					console.log("handle_tcp_data unexpected tcp_data", tcp_data);
+					console.log("handleTCPMessage unexpected content", msg);
 				}
 				break;
 		}
 	}
 	/** @arg {ConnectionMessage} message */
-	client_disconnect(message) {
+	clientDisconnect(message) {
 		if (testing_tcp) console.log("on_client_disconnect", message);
 		this.m_connected = false;
 		if (!this.m_port) {
@@ -344,9 +347,12 @@ class ClientSocket extends SocketBase {
 				"missing connection port, and disconnect was still called",
 			);
 		}
+		this.disconnectMessagePort();
+		setTimeout(this.reconnect.bind(this), 20);
+	}
+	disconnectMessagePort() {
 		this.m_port.removeEventListener("message", this);
 		this.m_port.close();
-		setTimeout(this.reconnect.bind(this), 20);
 	}
 }
 export_((exports) => {
@@ -440,12 +446,12 @@ class ServerSocket extends SocketBase {
 		if (testing_tcp) {
 			this.log_tcp_message("rx-server", "handleEvent", tcp);
 		}
-		this.handle_tcp_data(tcp);
+		this.handleTCPMessage(tcp);
 	}
 	m_current_ack = 0;
 	m_current_seq = 0;
 	/** @arg {ConnectionMessage} tcp */
-	handle_tcp_data(tcp) {
+	handleTCPMessage(tcp) {
 		const f = new FlagHandler(tcp.flags);
 		this.m_current_ack = tcp.ack;
 		this.m_current_seq = tcp.seq;
@@ -500,7 +506,7 @@ class WindowSocket extends SocketBase {
 			event_source,
 		);
 		this.append_connection(socket);
-		socket.handle_tcp_data(tcp);
+		socket.handleTCPMessage(tcp);
 	}
 	/** @arg {ServerSocket} socket */
 	append_connection(socket) {
