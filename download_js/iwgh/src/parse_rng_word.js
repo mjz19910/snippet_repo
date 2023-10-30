@@ -87,11 +87,6 @@ export class ParseRngOpts {
 	 * @param {number} options.length_limit  */
 	constructor(word, { length_limit }) {
 		this.word = word;
-		for (; word.length > 0;) {
-			const r2 = word_starts_with_consonant_seq2(word);
-			this.word_arr.push(r2.item);
-			word = r2.rest;
-		}
 		this.length_limit = length_limit;
 	}
 	add_new_words = true;
@@ -119,7 +114,9 @@ export function parse_rng_word2(word, opts) {
 		if (r2.rest === "") break;
 		v = r2.rest;
 	}
-	opts.word_arr = word_arr.slice();
+	if (opts.word_arr.length === 0) {
+		opts.word_arr = word_arr.slice();
+	}
 	const ll = opts.length_limit;
 	const vowel_word_arr = [];
 	do {
