@@ -269,7 +269,7 @@ class ClientSocket extends SocketBase {
 			this.open_group("tx-client", tcp);
 			this.flat_log(
 				".push_tcp_message -> to_server",
-				"id",
+				"client_id",
 				socket.client_id(),
 				tcp,
 			);
