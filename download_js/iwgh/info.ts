@@ -688,7 +688,7 @@ export type uQuarters={
 export type v_10forward={
 	id: "10forward",
 	news: "Enterprise NCC-1701-D: Ten Forward";
-	action: H.StoryEvent<{required: {type: "story_pos",pos: "after lockdown";};}>;
+	action: H.StoryEvent<{required: after_lockdown;}>;
 };
 type engineering={
 	links: [cDisruptor];
