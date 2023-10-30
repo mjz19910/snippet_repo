@@ -171,11 +171,6 @@ class SocketBase {
 	make_syn() {
 		return TCPMessage.make_syn();
 	}
-	/** @arg {ConnectionMessage["data"]} data @returns {ConnectionMessage} */
-	make_message(data) {
-		const seq = this.m_current_seq, ack = this.m_current_ack;
-		return TCPMessage.make_message(seq, ack, data);
-	}
 	/** @arg {import("./a/ConnectFlag.ts").ConnectFlag} flags */
 	stringify_flags(flags) {
 		let ret = "";
@@ -395,6 +390,11 @@ class ServerSocket extends SocketBase {
 			this.close_group();
 		}
 		this.m_port.postMessage(tcp);
+	}
+	/** @arg {ConnectionMessage["data"]} data @returns {ConnectionMessage} */
+	make_message(data) {
+		const seq = this.m_current_seq, ack = this.m_current_ack;
+		return TCPMessage.make_message(seq, ack, data);
 	}
 	on_socket_connected() {
 		if (testing_tcp) {
