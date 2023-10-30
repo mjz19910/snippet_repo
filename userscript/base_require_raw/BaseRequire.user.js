@@ -57,6 +57,15 @@ function resolve_path_to_userscript_dir(x) {
 							break m;
 					}
 			}
+		case "..":
+			switch (parts[1]) {
+				case "base_require_raw":
+					switch (parts[2]) {
+						case "BaseRequire.user.js":
+							resolved_path = `./${parts[1]}/${parts[2]}`;
+							break m;
+					}
+			}
 	}
 	if (resolved_path) {
 		if (log_path_resolve) console.log("resolved path", x, "->", resolved_path);

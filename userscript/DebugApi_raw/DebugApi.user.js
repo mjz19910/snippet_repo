@@ -38,10 +38,16 @@ const cur_module = export_((v) => v);
 /** @template T @typedef {import("./a/CM.ts").CM<T>} CM */
 /** @template T @typedef {import("./a/TargetedMessage.ts").TargetedMessage<T>} TargetedMessage */
 /** @template {{}|null} T @template {string} U @arg {CM<T>|null} x @arg {U} k @returns {x is CM<T&Record<U,string>>} */
-function is_obj_with_property_CM(x, k) {
+function is_CM_property_string_CM(x, k) {
 	if (!x?.data) return false;
 	if (!is_obj_with_property(x.data, k)) return false;
 	if (typeof x.data[k] !== "string") return false;
+	return true;
+}
+/** @template {{}|null} T @template {string} U @arg {CM<T>|null} x @arg {U} k @returns {x is CM<T&Record<U,unknown>>} */
+function is_CM_property_unknown_CM(x, k) {
+	if (!x?.data) return false;
+	if (!is_obj_with_property(x.data, k)) return false;
 	return true;
 }
 /** @template {{}|null} T @template {string} U @template {string} V @arg {V} v @arg {CM<T>|null} x @arg {U} k @returns {x is CM<Record<U,V>>} */
@@ -84,7 +90,7 @@ function cast_to_object_CM(x) {
 /** @template T @arg {CM<T>} x @returns {CM<T&{type:string}>|null} */
 function cast_to_event_like_CM(x) {
 	const cast_result = cast_to_object_CM(x);
-	if (!is_obj_with_property_CM(cast_result, "type")) return null;
+	if (!is_CM_property_string_CM(cast_result, "type")) return null;
 	return cast_result;
 }
 /** @template T @arg {T} v @returns {v is MessagePort} */
@@ -97,7 +103,7 @@ function cast_to_CM_TargetedMessage(x) {
 	if (
 		!is_obj_with_value_at_property_CM(cast_result, "target", "ServerSocket")
 	) return null;
-	if (!is_obj_with_property_CM(cast_result, "message")) return null;
+	if (!is_CM_property_unknown_CM(cast_result, "message")) return null;
 	if (!is_CM_with_property_message_port(cast_result, "port")) return null;
 	return cast_result;
 }
