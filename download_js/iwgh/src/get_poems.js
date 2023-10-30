@@ -54,7 +54,7 @@ class GetPoemsState {
 			await this.save();
 			console.log("leave", Math.floor(i / lim) + 1);
 		}
-		await delay(1 * 1000);
+		await delay(par * 200);
 	}
 }
 /[ct]h|[bcdfkmnptvw]/;
