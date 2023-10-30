@@ -152,14 +152,17 @@ export function parse_rng_word2(word, opts) {
 		parse_rng_word2(word_arr.slice(1).map((v) => v.v).join(""), opts);
 		return;
 	}
-	const v_word = word + word_arr[word.length].v;
+	const v_word = word + opts.word_arr[word.length].v;
 	add_word_to_cache(opts, v_word, word_arr, opt_not_gen);
-	const v_obj1 = word_arr.at(-1);
-	if (!v_obj1) throw new Error();
-	if (v_obj1.type !== "consonant") throw new Error();
+	/** @type {WordArrItem} */
+	const v_obj1 = { type: "consonant", v: "" };
 	/** @type {WordArrItem} */
 	const v_obj2 = { type: "vowel", v: "" };
-	word_arr.push(v_obj2);
+	const end_item = word_arr.pop();
+	if (end_item.type === "vowel") {
+		word_arr.push(end_item);
+	}
+	word_arr.push(v_obj1, v_obj2);
 	for (const v_end2 of vowel_list) {
 		v_obj2.v = v_end2;
 		add_word_to_cache(opts, word + v_end2, word_arr, opt_was_gen);
