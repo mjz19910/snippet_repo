@@ -152,8 +152,7 @@ export function parse_rng_word2(word, opts) {
 		parse_rng_word2(word_arr.slice(1).map((v) => v.v).join(""), opts);
 		return;
 	}
-	const v_word = word + opts.word_arr[word.length].v;
-	add_word_to_cache(opts, v_word, word_arr, opt_not_gen);
+	add_word_to_cache(opts, word, word_arr, opt_not_gen);
 	/** @type {WordArrItem} */
 	const v_obj1 = { type: "consonant", v: "" };
 	/** @type {WordArrItem} */
