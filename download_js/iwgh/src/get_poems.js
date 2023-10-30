@@ -63,7 +63,7 @@ class GetPoemsState {
 		const arr = [];
 		const par_base = Math.floor(i / 4) * 5;
 		const par = 50 + par_base;
-		const length_limit = 3;
+		const length_limit = 4;
 		for (let j = 0; j < par; j++) {
 			arr.push(fetch_one_page("poems", length_limit));
 		}
