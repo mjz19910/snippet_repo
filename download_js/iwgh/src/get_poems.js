@@ -28,39 +28,6 @@ function delay(ms) {
 	});
 }
 
-/** @param {GetPoemsState} state */
-async function scope(state) {
-	const lim = 4;
-	for (let i = 0; i < (4 * 8); i++) {
-		if (i % lim == 0) {
-			console.log("enter", Math.floor(i / lim));
-		}
-		const arr = [];
-		const par_base = Math.floor(i / 4) * 5;
-		const par = 50 + par_base;
-		for (let j = 0; j < par; j++) {
-			arr.push(fetch_one_page("poems", 3));
-		}
-		await Promise.all(arr);
-		arr.length = 0;
-		if (i % lim == lim - 1) {
-			reset_words_set(par);
-			await state.save();
-			const resume_delay = 1 * 1000 + 200 * par_base;
-			console.log(
-				"leave",
-				Math.floor(i / lim),
-				"resume in",
-				resume_delay / 1000,
-				"seconds",
-			);
-			// pause so we don't overload the ddos protection
-			await delay(resume_delay);
-		} else {
-			await delay(200 * par_base);
-		}
-	}
-}
 class GetPoemsState {
 	dictionary_file;
 	dictionary_size;
@@ -83,13 +50,48 @@ class GetPoemsState {
 		await save_dictionary(this.dictionary_file, this.dictionary_size);
 		this.dictionary_file.close();
 	}
+	async run() {
+		for (let i = 0; i < (4 * 8); i++) {
+			await this.step(i);
+		}
+	}
+	async step(i) {
+		const lim = 4;
+		if (i % lim == 0) {
+			console.log("enter", Math.floor(i / lim));
+		}
+		const arr = [];
+		const par_base = Math.floor(i / 4) * 5;
+		const par = 50 + par_base;
+		for (let j = 0; j < par; j++) {
+			arr.push(fetch_one_page("poems", 3));
+		}
+		await Promise.all(arr);
+		arr.length = 0;
+		if (i % lim == lim - 1) {
+			reset_words_set(par);
+			await this.save();
+			const resume_delay = 1 * 1000 + 200 * par_base;
+			console.log(
+				"leave",
+				Math.floor(i / lim),
+				"resume in",
+				resume_delay / 1000,
+				"seconds",
+			);
+			// pause so we don't overload the ddos protection
+			await delay(resume_delay);
+		} else {
+			await delay(200 * par_base);
+		}
+	}
 }
 /[ct]h|[bcdfkmnptvw]/;
 /[ct]h|[aeiouy]|[bcdfkmnptvw]/;
 async function main() {
 	await deno_fs_init();
 	const state = new GetPoemsState();
-	await scope(state);
+	await state.run();
 	await state.dispose();
 }
 await main();
