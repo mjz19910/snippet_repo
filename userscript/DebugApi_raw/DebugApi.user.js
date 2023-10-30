@@ -185,7 +185,7 @@ class SocketBase {
 		if (tcp.data !== null) {
 			console.log(fmt, tcp, tcp.data);
 		} else {
-			console.log(fmt, tcp, null);
+			console.log(fmt, tcp);
 		}
 	}
 	/** @arg {ConnectionMessage} tcp */
@@ -490,7 +490,7 @@ class WindowSocket extends SocketBase {
 	}
 	/** @arg {MessageEvent<unknown>} event_0 */
 	on_message_event(event_0) {
-		console.log("window message event", { data: event_0.data });
+		console.log("window message event data:", event_0.data);
 		if (!this.is_connection_message(event_0)) return;
 		const wrapped_msg = event_0.data;
 		const tcp = wrapped_msg.message;
