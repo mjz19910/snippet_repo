@@ -319,11 +319,10 @@ class ClientSocket extends SocketBase {
 		const tcp_data = tcp.data;
 		switch (tcp_data.type) {
 			case "connected":
-				this.client_connect(tcp);
 				this.m_connected = true;
+				this.client_connect(tcp);
 				break;
 			case "will_disconnect":
-				this.m_can_reconnect = tcp_data.can_reconnect;
 				this.m_disconnect_start = performance.now();
 				break;
 			case "disconnected": {
