@@ -172,12 +172,13 @@ class SocketBase {
 	}
 	/**
 	 * @param {string} dir
+	 * @param {string} fn_name
 	 * @param {ConnectionMessage} tcp
 	 */
-	log_tcp_message(dir, tcp) {
+	log_tcp_message(dir, fn_name, tcp) {
 		const socket_fmt = this.fmt_tag + "<" + tcp.seq + "," + tcp.ack + ">";
-		const flags = this.stringify_flags(tcp.flags);
-		console.log("-" + dir + "-" + flags + "-> " + socket_fmt);
+		const flags_fmt = "-" + dir + "-" + this.stringify_flags(tcp.flags);
+		console.log(flags_fmt + " -> " + socket_fmt + " (" + fn_name + ")");
 	}
 	/** @arg {string} fmt @arg {ConnectionMessage} tcp */
 	flat_log(fmt, tcp) {
@@ -266,11 +267,6 @@ class ClientSocket extends SocketBase {
 	}
 	/** @arg {ConnectionMessage} tcp @arg {MessagePort} server_port */
 	send_init_request(tcp, server_port) {
-		if (testing_tcp) {
-			this.log_tcp_message("tx-client", tcp);
-			this.flat_log(".send_init_request -> to_server", tcp);
-			this.close_group();
-		}
 		this.post_wrapped(tcp, server_port);
 	}
 	/** @arg {ConnectionMessage} tcp @arg {MessagePort} server_port */
@@ -283,14 +279,15 @@ class ClientSocket extends SocketBase {
 	}
 	/** @arg {import("./a/TargetedMessage.ts").TargetedMessage<ConnectionMessage>} msg */
 	postMessage(msg) {
+		if (testing_tcp) {
+			this.log_tcp_message("tx-client", "postMessage", msg.message);
+		}
 		this.m_remote_target.postMessage(msg, "*", [msg.port]);
 	}
 	/** @arg {ConnectionMessage} tcp */
 	push_tcp_message(tcp) {
 		if (testing_tcp) {
-			this.log_tcp_message("tx-client", tcp);
-			this.flat_log(".push_tcp_message -> to_server", tcp);
-			this.close_group();
+			this.log_tcp_message("tx-client", "push_tcp_message", tcp);
 		}
 		this.m_port.postMessage(tcp);
 	}
@@ -309,9 +306,7 @@ class ClientSocket extends SocketBase {
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
 		if (testing_tcp) {
-			this.log_tcp_message("rx-client", tcp);
-			this.flat_log(".handleEvent -> to_server", tcp);
-			this.close_group();
+			this.log_tcp_message("rx-client", "handleEvent", tcp);
 		}
 		this.handle_tcp_data(event.data);
 	}
@@ -404,9 +399,7 @@ class ServerSocket extends SocketBase {
 	/** @arg {ConnectionMessage} tcp */
 	push_tcp_message(tcp) {
 		if (testing_tcp) {
-			this.log_tcp_message("tx-server", tcp);
-			this.flat_log(".push_tcp_message -> to_client", tcp);
-			this.close_group();
+			this.log_tcp_message("tx-server", "push_tcp_message", tcp);
 		}
 		this.m_port.postMessage(tcp);
 	}
@@ -444,9 +437,7 @@ class ServerSocket extends SocketBase {
 			return;
 		}
 		if (testing_tcp) {
-			this.log_tcp_message("rx-server", tcp);
-			this.flat_log(".handleEvent -> to_client", tcp);
-			this.close_group();
+			this.log_tcp_message("rx-server", "handleEvent", tcp);
 		}
 		this.handle_tcp_data(tcp);
 	}
@@ -494,9 +485,13 @@ class WindowSocket extends SocketBase {
 	on_message_event(event_0) {
 		console.log(event_0.data);
 		if (!this.is_connection_message(event_0)) return;
-		const client_id = this.m_client_max_id++;
 		const wrapped_msg = event_0.data;
+		const tcp = wrapped_msg.message;
 		if (!event_0.source) throw new Error("No event source");
+		if (testing_tcp) {
+			this.log_tcp_message("rx-create", "on_message_event", tcp);
+		}
+		const client_id = this.m_client_max_id++;
 		const event_source = event_0.source;
 		const socket = new ServerSocket(
 			client_id,
@@ -504,12 +499,6 @@ class WindowSocket extends SocketBase {
 			event_source,
 		);
 		this.append_connection(socket);
-		const tcp = wrapped_msg.message;
-		if (testing_tcp) {
-			this.log_tcp_message("rx-window", tcp);
-			this.flat_log(".on_message_event -> to_client", tcp);
-			this.close_group();
-		}
 		socket.handle_tcp_data(tcp);
 	}
 	/** @arg {ServerSocket} socket */
