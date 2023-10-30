@@ -128,15 +128,7 @@ export function parse_rng_word2(word, opts) {
 	if (!add_new_words) {
 		partial_words.add(word.slice(0, -1));
 	}
-	const word_arr = [];
-	let v = word;
-	for (;;) {
-		const r2 = word_starts_with_consonant_seq2(v);
-		word_arr.push(r2.item);
-		if (r2.rest === "") break;
-		v = r2.rest;
-	}
-	opts.word_arr = word_arr.slice();
+	const word_arr = opts.word_arr.slice();
 	const ll = length_limit;
 	const vowel_word_arr = [];
 	do {
