@@ -256,12 +256,15 @@ class ClientSocket extends SocketBase {
 	}
 	/** @arg {ConnectionMessage} tcp @arg {MessagePort} server_port */
 	post_wrapped(tcp, server_port) {
-		/** @type {import("./a/WrappedMessage.ts").WrappedMessage<ConnectionMessage>} */
-		const msg = {
+		this.postMessage({
 			target: "ServerSocket",
 			message: tcp,
-		};
-		this.m_remote_target.postMessage(msg, "*", [server_port]);
+			port: server_port,
+		});
+	}
+	/** @arg {import("./a/TargetedMessage.ts").TargetedMessage<ConnectionMessage>} msg */
+	postMessage(msg) {
+		this.m_remote_target.postMessage(msg, "*", [msg.port]);
 	}
 	/** @override @arg {ServerSocket} socket @arg {ConnectionMessage} tcp */
 	push_tcp_message(socket, tcp) {
@@ -519,13 +522,13 @@ class WindowSocket extends SocketBase {
 		}
 		this.m_connections.push(handler);
 	}
-	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<import("./a/WrappedMessage.ts").WrappedMessage<unknown>>} */
+	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<import("./a/TargetedMessage.ts").TargetedMessage<unknown>>} */
 	is_wrapped_message(event) {
 		const data = cast_to_event_like_CM(wrap_CM(event.data));
 		if (!data) return false;
 		return data.data.type === "WindowSocket";
 	}
-	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<import("./a/WrappedMessage.ts").WrappedMessage<ConnectionMessage>>} */
+	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<import("./a/TargetedMessage.ts").TargetedMessage<ConnectionMessage>>} */
 	is_connection_message(event) {
 		if (!this.is_wrapped_message(event)) return false;
 		const data_record = cast_to_event_like_CM(wrap_CM(event.data.message));
