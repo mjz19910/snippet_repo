@@ -233,6 +233,7 @@ class ClientSocket extends SocketBase {
 		this.m_event_source = remote_target;
 		const { server_port, client_port } = this.init_syn_data();
 		this.m_port = client_port;
+		this.init_handler();
 		this.send_syn(server_port);
 	}
 	event_source() {
@@ -249,6 +250,7 @@ class ClientSocket extends SocketBase {
 	reconnect() {
 		const { server_port, client_port } = this.init_syn_data();
 		this.m_port = client_port;
+		this.init_handler();
 		this.send_syn(server_port);
 	}
 	init_handler() {
@@ -258,12 +260,12 @@ class ClientSocket extends SocketBase {
 	/** @arg {MessagePort} server_port */
 	send_syn(server_port) {
 		if (this.m_remote_target === window) return;
+		const tcp = this.make_syn();
 		if (testing_tcp) {
 			// <group syn>
-			console.group("syn");
+			console.group("syn", tcp);
 		}
-		this.init_handler();
-		this.send_init_request(this.make_syn(), server_port);
+		this.send_init_request(tcp, server_port);
 	}
 	/** @arg {ConnectionMessage} tcp @arg {MessagePort} server_port */
 	send_init_request(tcp, server_port) {
