@@ -272,6 +272,10 @@ class ClientSocket extends SocketBase {
 			const socket_fmt = this.fmt_tag + `<${tcp.seq},${tcp.ack},"${flags}">`;
 			console.log("on_client_connect", socket_fmt, tcp.data);
 		}
+		setTimeout(() => {
+			// </group syn>
+			console.groupEnd();
+		});
 	}
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
@@ -401,10 +405,6 @@ class ServerSocket extends SocketBase {
 			console.log("on_socket_connected");
 		}
 		this.push_tcp_message(this.make_message({ type: "connected" }));
-		setTimeout(() => {
-			// </group syn>
-			console.groupEnd();
-		});
 	}
 	/** @arg {ConnectionMessage} tcp */
 	handle_client_data(tcp) {
