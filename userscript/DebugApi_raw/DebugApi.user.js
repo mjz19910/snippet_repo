@@ -233,7 +233,6 @@ class ClientSocket extends SocketBase {
 		this.m_event_source = remote_target;
 		const { server_port, client_port } = this.init_syn_data();
 		this.m_port = client_port;
-		this.init_handler();
 		this.send_syn(server_port);
 	}
 	event_source() {
@@ -245,17 +244,18 @@ class ClientSocket extends SocketBase {
 			port1: server_port,
 			port2: client_port,
 		} = new MessageChannel();
+		this.init_handler(client_port);
 		return { server_port, client_port };
 	}
 	reconnect() {
 		const { server_port, client_port } = this.init_syn_data();
 		this.m_port = client_port;
-		this.init_handler();
 		this.send_syn(server_port);
 	}
-	init_handler() {
-		this.m_port.addEventListener("message", this);
-		this.m_port.start();
+	/** @param {MessagePort} port */
+	init_handler(port) {
+		port.addEventListener("message", this);
+		port.start();
 	}
 	/** @arg {MessagePort} server_port */
 	send_syn(server_port) {
