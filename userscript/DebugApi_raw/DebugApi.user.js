@@ -26,13 +26,14 @@ if (typeof require === "undefined" || page_require !== __module_require__) {
 const { do_export } = require("../base_require_raw/BaseRequire.user.js");
 /** @typedef {(import("./a/ConnectionMessage.ts") .ConnectionMessage)} ConnectionMessage */
 const __module_name__ = "DebugApi";
-/** @private @arg {(x:typeof exports)=>void} fn */
+/** @private @template T @arg {(x:typeof exports)=>T} fn @returns {T} */
 function export_(fn, flags = { global: false }) {
-	do_export(fn, flags, exports, __module_name__);
+	return do_export(fn, flags, exports, __module_name__);
 }
 export_((exports) => {
 	exports.__is_module_flag__ = true;
 });
+const module = export_((v) => v);
 //#region is_helpers
 /** @template T @typedef {import("./a/CM.ts").CM<T>} CM */
 /** @template {{}|null} T @template {string} U @arg {CM<T>|null} x @arg {U} k @returns {x is CM<T&Record<U,string>>} */
@@ -424,14 +425,12 @@ class ServerSocket extends SocketBase {
 			console.groupEnd();
 		});
 	}
-	/** @arg {ConnectionMessage} info */
-	downstream_handle_event(info) {
-		if (!info.data) return;
-		export_((exports) => {
-			exports.socket.push_tcp_message(info);
-		});
+	/** @arg {ConnectionMessage} tcp */
+	downstream_handle_event(tcp) {
+		if (!tcp.data) return;
+		module.socket.push_tcp_message(tcp);
 		if (testing_tcp) {
-			console.log("downstream_event", info.data, info.flags);
+			console.log("downstream_event", tcp.data);
 		}
 	}
 	disconnected() {
@@ -467,13 +466,17 @@ class ServerSocket extends SocketBase {
 			// seq=number & ack=null;
 			this.send_ack(tcp);
 		}
-		if (f.is_none()) this.send_ack(tcp);
+		if (f.is_none()) {
+			this.send_ack(tcp);
+		}
 		if (f.is_ack() && !f.is_syn() && this.m_is_connecting) {
 			this.m_is_connecting = false;
 			this.m_connected = true;
 			this.on_socket_connected();
 		}
-		this.downstream_handle_event(tcp);
+		if (!f.is_ack()) {
+			this.downstream_handle_event(tcp);
+		}
 	}
 }
 class WindowSocket extends SocketBase {
