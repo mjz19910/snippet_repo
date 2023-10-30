@@ -31,7 +31,7 @@ function delay(ms) {
 /** @param {GetPoemsState} state */
 async function scope(state) {
 	const lim = 4;
-	for (let i = 0; i < (4 * 6); i++) {
+	for (let i = 0; i < (4 * 8); i++) {
 		if (i % lim == 0) {
 			console.log("enter", Math.floor(i / lim));
 		}
@@ -46,7 +46,7 @@ async function scope(state) {
 		if (i % lim == lim - 1) {
 			reset_words_set(par);
 			await state.save();
-			const resume_delay = 8 * 1000 + 200 * par_base;
+			const resume_delay = 1 * 1000 + 200 * par_base;
 			console.log(
 				"leave",
 				Math.floor(i / lim),
@@ -56,6 +56,8 @@ async function scope(state) {
 			);
 			// pause so we don't overload the ddos protection
 			await delay(resume_delay);
+		} else {
+			await delay(200 * par_base);
 		}
 	}
 }
