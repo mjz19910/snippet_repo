@@ -388,7 +388,7 @@ class ServerSocket extends SocketBase {
 	m_event_source;
 	/** @arg {MessagePort} connection_port @arg {number} client_id @arg {MessageEventSource} event_source */
 	constructor(client_id, connection_port, event_source) {
-		super("ListenSocket", client_id);
+		super("ServerSocket", client_id);
 		this.m_event_source = event_source;
 		this.m_port = connection_port;
 		this.m_port.addEventListener("message", this);
