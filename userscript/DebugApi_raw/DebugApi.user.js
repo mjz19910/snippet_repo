@@ -131,7 +131,8 @@ class SocketBase {
 		this.fmt_tag = fmt_tag;
 		this.m_client_id = client_id;
 	}
-	client_id() {
+	/** @deprecated */
+	get client_id() {
 		return this.m_client_id;
 	}
 	/**
