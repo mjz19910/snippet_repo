@@ -149,12 +149,12 @@ class SocketBase {
 		console.groupEnd();
 		console.log("-?>");
 	}
-	/** @arg {ConnectionMessage} tcp */
+	/** @arg {string} fmt @arg {ConnectionMessage} tcp */
 	flat_log(fmt, tcp) {
 		if (tcp.data !== null) {
 			console.log(fmt, tcp, tcp.data);
 		} else {
-			console.log(fmt, tcp);
+			console.log(fmt, tcp, null);
 		}
 	}
 	/** @arg {ConnectionMessage} tcp */
@@ -500,9 +500,7 @@ class WindowSocket extends SocketBase {
 		const tcp = wrapped_msg.message;
 		if (testing_tcp) {
 			this.open_group("rx-window", tcp);
-			console.log(".on_message_event ->");
-			console.log("server.handle_tcp_data ->");
-			console.log("client", tcp);
+			this.flat_log(".on_message_event -> to_client", tcp);
 			this.close_group();
 		}
 		socket.handle_tcp_data(tcp);
