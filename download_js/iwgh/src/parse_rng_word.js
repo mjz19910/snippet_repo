@@ -140,8 +140,7 @@ export function parse_rng_word2(word, opts) {
 		} else {
 			break;
 		}
-		if (word === "") return;
-	} while (true);
+	} while (word_arr.length > 0);
 	x: if (vowel_word_arr.length !== 0) {
 		if (vowel_word_arr.length > ll) break x;
 		const vowel_word = vowel_word_arr.map((v) => v.v).join("");
