@@ -579,11 +579,6 @@ class WindowSocket extends SocketBase {
 				break;
 			case "beforeunload":
 				for (const connection of this.m_connections) {
-					connection.will_disconnect();
-				}
-				break;
-			case "unload":
-				for (const connection of this.m_connections) {
 					connection.disconnected();
 				}
 				this.m_connections.length = 0;
@@ -593,7 +588,6 @@ class WindowSocket extends SocketBase {
 	start_root_server() {
 		self.addEventListener("message", this);
 		self.addEventListener("beforeunload", this);
-		self.addEventListener("unload", this);
 	}
 }
 export_((exports) => {
