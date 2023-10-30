@@ -122,6 +122,14 @@ const testing_tcp = true;
 const console = { ...self.console };
 console.log = console.log.bind(console);
 class SocketBase {
+	/** @arg {ConnectionMessage} tcp */
+	flat_log(fmt, tcp) {
+		if (tcp.data !== null) {
+			console.log(fmt, tcp, tcp.data);
+		} else {
+			console.log(fmt, tcp);
+		}
+	}
 	fmt_tag;
 	/** @private */
 	m_client_id;
@@ -417,14 +425,6 @@ class ServerSocket extends SocketBase {
 			this.close_group();
 		}
 		this.m_port.postMessage(tcp);
-	}
-	/** @arg {ConnectionMessage} tcp */
-	flat_log(fmt, tcp) {
-		if (tcp.data !== null) {
-			console.log(fmt, tcp, tcp.data);
-		} else {
-			console.log(fmt, tcp);
-		}
 	}
 	/** @arg {ConnectionMessage} tcp */
 	downstream_connect(tcp) {
