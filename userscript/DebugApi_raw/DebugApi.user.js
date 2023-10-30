@@ -500,15 +500,15 @@ class WindowSocket extends SocketBase {
 			return e.event_source === event_source;
 		});
 		const wrapped_msg = event_0.data;
-		const data = wrapped_msg.message;
+		const tcp = wrapped_msg.message;
 		if (testing_tcp) {
-			this.open_group("rx-window", data);
+			this.open_group("rx-window", tcp);
 			console.log(".on_message_event ->");
 			console.log("server.handle_tcp_data ->");
-			console.log("client", data);
+			console.log("client", tcp);
 			this.close_group();
 		}
-		handler.handle_tcp_data(data);
+		handler.handle_tcp_data(tcp);
 		if (prev_connection_index > -1) {
 			this.m_connections.splice(prev_connection_index, 1);
 		}
