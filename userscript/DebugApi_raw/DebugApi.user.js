@@ -360,9 +360,9 @@ export_((exports) => {
 });
 class OriginState {
 	/** @private @readonly */
-	m_top = window.top;
+	m_top = self.top;
 	/** @private @readonly @type {Window|null} */
-	m_opener = window.opener;
+	m_opener = self.opener;
 	get_connect_target() {
 		if (this.m_opener) return this.m_opener;
 		if (this.m_top) return this.m_top;
