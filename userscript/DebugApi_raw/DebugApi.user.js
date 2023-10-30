@@ -178,7 +178,7 @@ class SocketBase {
 	log_tcp_message(dir, fn_name, tcp) {
 		const socket_fmt = this.fmt_tag + "<" + tcp.seq + "," + tcp.ack + ">";
 		const flags_fmt = "-" + dir + "-" + this.stringify_flags(tcp.flags);
-		console.log(flags_fmt + " -> " + socket_fmt + " (" + fn_name + ")");
+		this.flat_log(flags_fmt + " -> " + socket_fmt + " (" + fn_name + ")", tcp);
 	}
 	/** @arg {string} fmt @arg {ConnectionMessage} tcp */
 	flat_log(fmt, tcp) {
@@ -298,10 +298,8 @@ class ClientSocket extends SocketBase {
 			const socket_fmt = this.fmt_tag + `<${tcp.seq},${tcp.ack},"${flags}">`;
 			console.log("on_client_connect", socket_fmt, tcp.data);
 		}
-		setTimeout(() => {
-			// </group syn>
-			console.groupEnd();
-		});
+		// </group syn>
+		console.groupEnd();
 	}
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
