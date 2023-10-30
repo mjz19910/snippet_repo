@@ -97,7 +97,6 @@ export function parse_rng_word(opts) {
 /** @typedef {{type: "consonant" | "vowel";v: string;}} WordArrItem */
 
 export class ParseRngOpts {
-	/** @type {WordArrItem[]} */
 	word_arr = [];
 	/**
 	 * @param {string} word @param {Object} options
@@ -129,7 +128,15 @@ export function parse_rng_word2(word, opts) {
 	if (!add_new_words) {
 		partial_words.add(word.slice(0, -1));
 	}
-	const word_arr = opts.word_arr.slice();
+	const word_arr = [];
+	let v = word;
+	for (;;) {
+		const r2 = word_starts_with_consonant_seq2(v);
+		word_arr.push(r2.item);
+		if (r2.rest === "") break;
+		v = r2.rest;
+	}
+	opts.word_arr = word_arr.slice();
 	const ll = length_limit;
 	const vowel_word_arr = [];
 	do {
@@ -141,7 +148,8 @@ export function parse_rng_word2(word, opts) {
 		} else {
 			break;
 		}
-	} while (word !== "");
+		if (word === "") return;
+	} while (true);
 	x: if (vowel_word_arr.length !== 0) {
 		if (vowel_word_arr.length > ll) break x;
 		const vowel_word = vowel_word_arr.map((v) => v.v).join("");
@@ -156,7 +164,7 @@ export function parse_rng_word2(word, opts) {
 		}
 	}
 	if (random_dictionary_set.has(word)) return;
-	if (word.length > ll) {
+	if (word_arr.length > ll) {
 		parse_rng_word2(word_arr.slice(0, -1).map((v) => v.v).join(""), opts);
 		parse_rng_word2(word_arr.slice(1).map((v) => v.v).join(""), opts);
 		return;
