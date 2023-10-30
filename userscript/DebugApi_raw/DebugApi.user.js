@@ -445,7 +445,11 @@ class ServerSocket extends SocketBase {
 	handle_client_data(tcp) {
 		cur_module.socket.push_tcp_message(tcp);
 		if (testing_tcp) {
-			console.log("downstream_event", tcp.data);
+			if (tcp.data !== null) {
+				console.log("downstream_event", tcp.data);
+			} else {
+				console.log("downstream_ping", tcp);
+			}
 		}
 	}
 	disconnected() {
