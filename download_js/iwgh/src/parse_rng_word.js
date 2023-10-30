@@ -4,39 +4,23 @@ import {
 	write_entire_file,
 } from "./deno_support.js";
 
-//cspell:ignore aeiouy
+/([aeiouy]|[ct]h|[bcdfkmnptvw]){4}/;
 const vowel_list = "aeiouy".split("");
+const consonant_list = "bcdfkmnptvw".split("").concat(["ch", "th"]);
 
 /**
  * @param {string} word
  * @returns {["consonant",1|2]|["vowel",1]}
  */
 export function word_starts_with_consonant_seq(word) {
-	switch (word.slice(0, 2)) {
-		case "ch":
-		case "th":
-			return ["consonant", 2];
+	const start_consonant = consonant_list.find((v) => word.startsWith(v));
+	if (start_consonant) {
+		return ["consonant", start_consonant.length];
 	}
 	if (vowel_list.includes(word[0])) {
 		return ["vowel", 1];
 	}
-	//cspell:ignore bcdfkmnptvw
-	/([aeiouy]|[ct]h|[bcdfkmnptvw]){4}/;
-	switch (word[0]) {
-		case "b":
-		case "c":
-		case "d":
-		case "f":
-		case "k":
-		case "m":
-		case "n":
-		case "p":
-		case "t":
-		case "v":
-		case "w":
-			return ["consonant", 1];
-	}
-	throw new Error("Invalid word start '" + word.slice(0, 3) + "'");
+	throw new Error("Invalid word start '" + word[0] + "'");
 }
 /**
  * @param {string} word
@@ -170,11 +154,13 @@ export function parse_rng_word2(word, opts) {
 	}
 	add_word_to_cache(opts, word, word_arr, opt_not_gen);
 	/** @type {WordArrItem} */
-	const v_obj = { type: "vowel", v: "" };
-	word_arr.push(v_obj);
-	for (const v_end of vowel_list) {
-		v_obj.v = v_end;
-		add_word_to_cache(opts, word + v_end, word_arr, opt_was_gen);
+	const v_obj1 = { type: "consonant", v: "" };
+	/** @type {WordArrItem} */
+	const v_obj2 = { type: "vowel", v: "" };
+	word_arr.push(v_obj1, v_obj2);
+	for (const v_end2 of vowel_list) {
+		v_obj2.v = v_end2;
+		add_word_to_cache(opts, word + v_end2, word_arr, opt_was_gen);
 	}
 }
 
