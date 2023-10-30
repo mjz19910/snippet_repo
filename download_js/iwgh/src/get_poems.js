@@ -37,11 +37,11 @@ class GetPoemsState {
 	}
 	/** @param {number} i */
 	async step(i) {
-		console.log("step");
 		const lim = 4;
 		if (i % lim == 0) {
 			console.log("enter", Math.floor(i / lim) + 1);
 		}
+		console.log("step");
 		const arr = [];
 		const par = 40;
 		const length_limit = 3;
