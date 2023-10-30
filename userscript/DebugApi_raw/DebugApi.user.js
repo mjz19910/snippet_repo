@@ -423,6 +423,14 @@ class ServerSocket extends SocketBase {
 		this.m_port.postMessage(tcp);
 	}
 	/** @arg {ConnectionMessage} tcp */
+	flat_log(fmt, tcp) {
+		if (tcp.data !== null) {
+			console.log(fmt, tcp, tcp.data);
+		} else {
+			console.log(fmt, tcp);
+		}
+	}
+	/** @arg {ConnectionMessage} tcp */
 	downstream_connect(tcp) {
 		const { seq, ack } = tcp;
 		if (!ack) throw new Error("Invalid message");
