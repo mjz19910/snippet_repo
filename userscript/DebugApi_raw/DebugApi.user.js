@@ -123,14 +123,6 @@ const testing_tcp = true;
 const console = { ...self.console };
 console.log = console.log.bind(console);
 class SocketBase {
-	/** @arg {ConnectionMessage} tcp */
-	flat_log(fmt, tcp) {
-		if (tcp.data !== null) {
-			console.log(fmt, tcp, tcp.data);
-		} else {
-			console.log(fmt, tcp);
-		}
-	}
 	fmt_tag;
 	/** @private */
 	m_client_id;
@@ -139,14 +131,8 @@ class SocketBase {
 		this.fmt_tag = fmt_tag;
 		this.m_client_id = client_id;
 	}
-	/** @arg {import("./a/ConnectFlag.ts").ConnectFlag} flags */
-	stringify_flags(flags) {
-		let ret = "";
-		if ((flags & 1) == 1) ret += "S";
-		else ret += "_";
-		if ((flags & 2) == 2) ret += "A";
-		else ret += "_";
-		return ret;
+	client_id() {
+		return this.m_client_id;
 	}
 	/**
 	 * @param {string} dir
@@ -163,6 +149,14 @@ class SocketBase {
 		console.log("-?>");
 	}
 	/** @arg {ConnectionMessage} tcp */
+	flat_log(fmt, tcp) {
+		if (tcp.data !== null) {
+			console.log(fmt, tcp, tcp.data);
+		} else {
+			console.log(fmt, tcp);
+		}
+	}
+	/** @arg {ConnectionMessage} tcp */
 	make_ack_message(tcp) {
 		let { seq: ack, ack: seq, flags } = tcp;
 		if ((flags & 2) && (flags & 1) == 1) flags ^= 1;
@@ -176,13 +170,19 @@ class SocketBase {
 	make_syn() {
 		return TCPMessage.make_syn();
 	}
-	client_id() {
-		return this.m_client_id;
-	}
 	/** @arg {ConnectionMessage["data"]} data @returns {ConnectionMessage} */
 	make_message(data) {
 		const seq = this.m_current_seq, ack = this.m_current_ack;
 		return TCPMessage.make_message(seq, ack, data);
+	}
+	/** @arg {import("./a/ConnectFlag.ts").ConnectFlag} flags */
+	stringify_flags(flags) {
+		let ret = "";
+		if ((flags & 1) == 1) ret += "S";
+		else ret += "_";
+		if ((flags & 2) == 2) ret += "A";
+		else ret += "_";
+		return ret;
 	}
 }
 class ClientSocket extends SocketBase {
