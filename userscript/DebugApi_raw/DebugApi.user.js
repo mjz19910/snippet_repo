@@ -413,11 +413,7 @@ class ServerSocket extends SocketBase {
 		this.last_ack = tcp.ack;
 		if (testing_tcp) {
 			this.open_group("tx-server", tcp);
-			if (tcp.data !== null) {
-				console.log(".push_tcp_message -> to_client", tcp, tcp.data);
-			} else {
-				console.log(".push_tcp_message -> to_client", tcp);
-			}
+			this.flat_log(".push_tcp_message -> to_client", tcp);
 			this.close_group();
 		}
 		this.m_port.postMessage(tcp);
