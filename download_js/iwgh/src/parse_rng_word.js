@@ -100,10 +100,6 @@ const opt_not_gen = { generated: false };
  */
 export function parse_rng_word2(word, opts) {
 	if (word === "") return;
-	const { add_new_words } = opts;
-	if (!add_new_words) {
-		partial_words.add(word.slice(0, -1));
-	}
 	const word_arr = [];
 	let v = word;
 	for (;;) {
@@ -115,7 +111,8 @@ export function parse_rng_word2(word, opts) {
 	if (opts.word_arr.length === 0) {
 		opts.word_arr = word_arr.slice();
 	}
-	add_word_to_cache(opts, word, word_arr, opt_not_gen);
+	const cv_txt = word_arr.map((v) => v.type == "vowel" ? "v" : "c").join("");
+	add_word_to_cache(opts, cv_txt, word_arr, opt_not_gen);
 }
 
 /** @param {{generated: boolean}} word_opts @param {ParseRngOpts} opts @param {string} word @param {WordArrItem} word_arr */
