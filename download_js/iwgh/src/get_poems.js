@@ -41,7 +41,7 @@ class GetPoemsState {
 			console.log("enter", Math.floor(i / lim));
 		}
 		const arr = [];
-		const par = 20;
+		const par = 40;
 		const length_limit = 3;
 		for (let j = 0; j < par; j++) {
 			arr.push(fetch_one_page("poems", length_limit));
