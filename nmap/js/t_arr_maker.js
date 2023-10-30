@@ -1,4 +1,4 @@
-/** @type {<T>(src:T[])=>import("./t_arr_maker_impl.js").t_arr_maker_impl<T>} */
+/** @type {<T>(src:T[])=>import("./t_arr_maker_impl.ts").t_arr_maker_impl<T>} */
 export function t_arr_maker(src) {
 	class maker {
 		/** @arg {typeof src} values */

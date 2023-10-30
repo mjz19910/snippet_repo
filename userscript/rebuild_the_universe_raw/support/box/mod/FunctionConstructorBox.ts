@@ -1,6 +1,6 @@
 import {Box} from "./Box.ts";
 import {FunctionBox} from "./FunctionBox.ts";
-import {BoxMaker} from "../support.mod/BoxMaker.js";
+import {BoxMaker} from "../support.mod/BoxMaker.ts";
 import {FunctionConstructorFactory} from "../interface/FunctionConstructorFactory.ts";
 import {BoxTemplate} from "../template/BoxTemplate.ts";
 

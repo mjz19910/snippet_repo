@@ -1,3 +1,3 @@
-import {Box} from "../mod/Box.js"
+import {Box} from "../mod/Box.ts"
 
 export type BoxWithPropertiesObjType<T extends readonly string[]>={[U in T[number]]: Box}
