@@ -36,11 +36,18 @@ export_((exports) => {
 const cur_module = export_((v) => v);
 //#region is_helpers
 /** @template T @typedef {import("./a/CM.ts").CM<T>} CM */
-/** @template {{}|null} T @template {string} U @arg {CM<T>|null} x @arg {U} k @returns {x is CM<T&Record<U,string>>} */
+/** @template T @typedef {import("./a/TargetedMessage.ts").TargetedMessage<T>} TargetedMessage */
+/** @template {{}|null} T @template {string} U @arg {CM<T>|null} x @arg {U} k @returns {x is CM<T&Record<U,unknown>>} */
 function is_obj_with_property_CM(x, k) {
 	if (!x?.data) return false;
 	if (!is_obj_with_property(x.data, k)) return false;
-	if (typeof x.data[k] !== "string") return false;
+	return true;
+}
+/** @template {{}|null} T @template {string} U @template {string} V @arg {V} v @arg {CM<T>|null} x @arg {U} k @returns {x is CM<Record<U,V>>} */
+function is_obj_with_value_at_property_CM(x, k, v) {
+	if (!x?.data) return false;
+	if (!is_obj_with_property(x.data, k)) return false;
+	if (x.data[k] !== v) return false;
 	return true;
 }
 /** @template T @arg {CM<T>|null} x @returns {x is CM<T&{}>} */
@@ -70,6 +77,16 @@ function cast_to_object_CM(x) {
 function cast_to_event_like_CM(x) {
 	const cast_result = cast_to_object_CM(x);
 	if (!is_obj_with_property_CM(cast_result, "type")) return null;
+	return cast_result;
+}
+/** @template T @arg {CM<T>} x @returns {CM<T&TargetedMessage<unknown>>|null} */
+function cast_to_CM_TargetedMessage(x) {
+	const cast_result = cast_to_object_CM(x);
+	if (
+		!is_obj_with_value_at_property_CM(cast_result, "target", "ServerSocket")
+	) return null;
+	if (!is_obj_with_property_CM(cast_result, "message")) return null;
+	if (!is_obj_with_property_CM(cast_result, "port")) return null;
 	return cast_result;
 }
 //#endregion
@@ -510,9 +527,10 @@ class WindowSocket extends SocketBase {
 	}
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<import("./a/TargetedMessage.ts").TargetedMessage<unknown>>} */
 	is_wrapped_message(event) {
-		const data = cast_to_event_like_CM(wrap_CM(event.data));
+		/** @type {CM<import("./a/TargetedMessage.ts").TargetedMessage<unknown>>|null} */
+		const data = cast_to_CM_TargetedMessage(wrap_CM(event.data));
 		if (!data) return false;
-		return data.data.type === "WindowSocket";
+		return data.data.target === "ServerSocket";
 	}
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<import("./a/TargetedMessage.ts").TargetedMessage<ConnectionMessage>>} */
 	is_connection_message(event) {
