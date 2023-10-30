@@ -453,10 +453,6 @@ class ServerSocket extends SocketBase {
 	}
 	/** @arg {boolean} can_reconnect */
 	will_disconnect(can_reconnect) {
-		// <group rst>
-		if (testing_tcp) {
-			console.group("rst");
-		}
 		this.push_tcp_message(this.make_message(
 			0,
 			0,
