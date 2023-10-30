@@ -97,19 +97,21 @@ export function parse_rng_word(opts) {
 /** @typedef {{type: "consonant" | "vowel";v: string;}} WordArrItem */
 
 export class ParseRngOpts {
-	/** @param {string} word */
-	constructor(word) {
+	word_arr = [];
+	/**
+	 * @param {string} word @param {Object} options
+	 * @param {number} options.length_limit  */
+	constructor(word, { length_limit }) {
 		this.word = word;
 		for (; word.length > 0;) {
 			const r2 = word_starts_with_consonant_seq2(word);
 			this.word_arr.push(r2.item);
 			word = r2.rest;
 		}
+		this.length_limit = length_limit;
 	}
 	add_new_words = true;
 	destructure_word = true;
-	length_limit = 0;
-	word_arr = [];
 }
 
 const length_limit = 3;
