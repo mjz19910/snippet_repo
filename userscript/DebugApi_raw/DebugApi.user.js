@@ -163,7 +163,7 @@ class SocketBase {
 		console.log("-?>");
 	}
 	/** @arg {ConnectionMessage} tcp */
-	send_ack(tcp) {
+	make_ack_message(tcp) {
 		let { seq: ack, ack: seq, flags } = tcp;
 		if ((flags & 2) && (flags & 1) == 1) flags ^= 1;
 		flags |= tcp_ack;
@@ -171,11 +171,7 @@ class SocketBase {
 			seq = (Math.random() * ack_win) % ack_win | 0;
 		}
 		ack += 1;
-		this.push_tcp_message(TCPMessage.make_message2(flags, seq, ack, null));
-	}
-	/** @arg {ConnectionMessage} _data */
-	push_tcp_message(_data) {
-		throw new Error("Abstract impl");
+		return TCPMessage.make_message2(flags, seq, ack, null);
 	}
 	make_syn() {
 		return TCPMessage.make_syn();
@@ -307,7 +303,7 @@ class ClientSocket extends SocketBase {
 		const f = new FlagHandler(tcp.flags);
 		if (this.m_local_log) console.log("client", tcp);
 		if ((f.is_syn() && f.is_ack()) || f.is_none()) {
-			this.send_ack(tcp);
+			this.push_tcp_message(this.make_ack_message(tcp));
 		}
 		if (!tcp.data) return;
 		const tcp_data = tcp.data;
@@ -453,12 +449,8 @@ class ServerSocket extends SocketBase {
 		const f = new FlagHandler(tcp.flags);
 		this.m_current_seq = tcp.seq;
 		this.m_current_ack = tcp.ack;
-		if (f.is_syn() && !f.is_ack()) {
-			// seq=number & ack=null;
-			this.send_ack(tcp);
-		}
-		if (f.is_none()) {
-			this.send_ack(tcp);
+		if ((f.is_syn() && !f.is_ack()) || f.is_none()) {
+			this.push_tcp_message(this.make_ack_message(tcp));
 		}
 		if (f.is_ack() && !f.is_syn() && this.m_is_connecting) {
 			this.m_is_connecting = false;
