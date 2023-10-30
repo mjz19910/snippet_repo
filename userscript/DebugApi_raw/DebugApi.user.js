@@ -341,9 +341,6 @@ class ClientSocket extends SocketBase {
 				break;
 		}
 	}
-	client_start_connect() {
-		if (!this.m_port) throw new Error("No remote port to communicate with");
-	}
 	/** @arg {ConnectionMessage} message */
 	client_disconnect(message) {
 		if (testing_tcp) console.log("on_client_disconnect", message);
