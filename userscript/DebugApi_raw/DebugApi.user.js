@@ -425,6 +425,8 @@ class ServerSocket extends SocketBase {
 		if (testing_tcp) {
 			console.log("on_server_connect");
 		}
+		this.last_seq = seq;
+		this.last_ack = ack;
 		this.push_tcp_message(this.make_message(
 			seq,
 			ack,
