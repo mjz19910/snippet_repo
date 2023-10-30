@@ -409,11 +409,17 @@ class ServerSocket extends SocketBase {
 	}
 	/** @override @arg {ConnectionMessage} tcp */
 	push_tcp_message(tcp) {
+		this.last_seq = tcp.seq;
+		this.last_ack = tcp.ack;
 		if (testing_tcp) {
 			this.open_group("tx-server", tcp);
 			console.log(".push_tcp_message ->");
 			console.log("port.postMessage ->");
-			console.log("client", tcp, tcp.data);
+			if (tcp.data !== null) {
+				console.log("client", tcp, tcp.data);
+			} else {
+				console.log("client", tcp);
+			}
 			this.close_group();
 		}
 		this.m_port.postMessage(tcp);
@@ -425,8 +431,6 @@ class ServerSocket extends SocketBase {
 		if (testing_tcp) {
 			console.log("on_server_connect");
 		}
-		this.last_seq = seq;
-		this.last_ack = ack;
 		this.push_tcp_message(this.make_message(
 			seq,
 			ack,
