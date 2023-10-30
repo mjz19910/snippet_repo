@@ -141,7 +141,7 @@ export function parse_rng_word2(word, opts) {
 		} else {
 			break;
 		}
-	} while (word_arr.length > 0);
+	} while (word !== "");
 	x: if (vowel_word_arr.length !== 0) {
 		if (vowel_word_arr.length > ll) break x;
 		const vowel_word = vowel_word_arr.map((v) => v.v).join("");
@@ -156,13 +156,9 @@ export function parse_rng_word2(word, opts) {
 		}
 	}
 	if (random_dictionary_set.has(word)) return;
-	if (word_arr.length > ll) {
-		const prev_arr = opts.word_arr;
-		opts.word_arr = word_arr.slice(0, -1);
-		parse_rng_word2(opts.word_arr.map((v) => v.v).join(""), opts);
-		opts.word_arr = word_arr.slice(1);
+	if (word.length > ll) {
+		parse_rng_word2(word_arr.slice(0, -1).map((v) => v.v).join(""), opts);
 		parse_rng_word2(word_arr.slice(1).map((v) => v.v).join(""), opts);
-		opts.word_arr = prev_arr;
 		return;
 	}
 	add_word_to_cache(opts, word, word_arr, opt_not_gen);
