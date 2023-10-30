@@ -416,9 +416,9 @@ class ServerSocket extends SocketBase {
 			console.log(".push_tcp_message ->");
 			console.log("port.postMessage ->");
 			if (tcp.data !== null) {
-				console.log("client", tcp, tcp.data);
+				console.log("to_client", tcp, tcp.data);
 			} else {
-				console.log("client", tcp);
+				console.log("to_client", tcp);
 			}
 			this.close_group();
 		}
