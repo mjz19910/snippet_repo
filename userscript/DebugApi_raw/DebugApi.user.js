@@ -198,7 +198,6 @@ class SocketBase {
 	}
 }
 class ClientSocket extends SocketBase {
-	static direct_message = false;
 	/** @readonly */
 	m_side = "client";
 	/** @private */
@@ -417,10 +416,7 @@ class ServerSocket extends SocketBase {
 			console.log("client", tcp, tcp.data);
 			this.close_group();
 		}
-		if (ClientSocket.direct_message) {
-			const p = ClientSocket.prototype;
-			p.handleEvent(new MessageEvent("message", { data: tcp }));
-		} else this.m_port.postMessage(tcp);
+		this.m_port.postMessage(tcp);
 	}
 	/** @arg {ConnectionMessage} tcp */
 	downstream_connect(tcp) {
