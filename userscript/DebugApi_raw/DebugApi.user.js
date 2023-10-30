@@ -305,10 +305,11 @@ class ClientSocket extends SocketBase {
 	}
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
+		const tcp = event.data;
 		if (testing_tcp) {
 			this.log_tcp_message("rx-client", "handleEvent", tcp);
 		}
-		this.handle_tcp_data(event.data);
+		this.handle_tcp_data(tcp);
 	}
 	/** @arg {ConnectionMessage} tcp */
 	handle_tcp_data(tcp) {
