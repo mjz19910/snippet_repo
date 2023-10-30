@@ -188,20 +188,6 @@ class SocketBase {
 		const seq = this.m_current_seq, ack = this.m_current_ack;
 		return TCPMessage.make_message(seq, ack, data);
 	}
-	/** @type {(()=>void)|null} */
-	on_next_packet = null;
-	seen_packet() {
-		if (!this.on_next_packet) return;
-		this.on_next_packet();
-		this.on_next_packet = null;
-	}
-	/** @arg {ConnectionMessage} _ */
-	handle_tcp_data(_) {
-		this.seen_packet();
-		this.on_next_packet = () => {
-			console.groupEnd();
-		};
-	}
 }
 class ClientSocket extends SocketBase {
 	/** @readonly */
@@ -277,11 +263,16 @@ class ClientSocket extends SocketBase {
 		};
 		this.m_remote_target.postMessage(msg, "*", [server_port]);
 	}
-	/** @override @arg {ConnectionMessage} tcp */
-	push_tcp_message(tcp) {
+	/** @override @arg {ServerSocket} socket @arg {ConnectionMessage} tcp */
+	push_tcp_message(socket, tcp) {
 		if (testing_tcp) {
 			this.open_group("tx-client", tcp);
-			this.flat_log(".push_tcp_message -> to_server", tcp);
+			this.flat_log(
+				".push_tcp_message -> to_server",
+				"id",
+				socket.client_id(),
+				tcp,
+			);
 			this.close_group();
 		}
 		this.m_port.postMessage(tcp);
@@ -308,9 +299,8 @@ class ClientSocket extends SocketBase {
 		}
 		this.handle_tcp_data(tcp);
 	}
-	/** @override @arg {ConnectionMessage} tcp */
+	/** @arg {ConnectionMessage} tcp */
 	handle_tcp_data(tcp) {
-		super.handle_tcp_data(tcp);
 		const f = new FlagHandler(tcp.flags);
 		if (this.m_local_log) console.log("client", tcp);
 		if ((f.is_syn() && f.is_ack()) || f.is_none()) {
@@ -425,10 +415,9 @@ class ServerSocket extends SocketBase {
 			console.groupEnd();
 		});
 	}
-	/** @arg {ConnectionMessage} tcp */
-	downstream_handle_event(tcp) {
-		if (!tcp.data) return;
-		module.socket.push_tcp_message(tcp);
+	/** @arg {MessageType} tcp */
+	handle_client_data(tcp) {
+		module.socket.push_tcp_message(this, tcp);
 		if (testing_tcp) {
 			console.log("downstream_event", tcp.data);
 		}
@@ -456,9 +445,8 @@ class ServerSocket extends SocketBase {
 		}
 		this.handle_tcp_data(tcp);
 	}
-	/** @override @arg {ConnectionMessage} tcp */
+	/** @arg {ConnectionMessage} tcp */
 	handle_tcp_data(tcp) {
-		super.handle_tcp_data(tcp);
 		const f = new FlagHandler(tcp.flags);
 		this.m_current_seq = tcp.seq;
 		this.m_current_ack = tcp.ack;
@@ -475,7 +463,7 @@ class ServerSocket extends SocketBase {
 			this.on_socket_connected();
 		}
 		if (!f.is_ack()) {
-			this.downstream_handle_event(tcp);
+			this.handle_client_data(tcp);
 		}
 	}
 }
@@ -551,9 +539,9 @@ class WindowSocket extends SocketBase {
 		if (!is_obj_with_property(data.data, "data")) return false;
 		return true;
 	}
-	/** @override @arg {ConnectionMessage} message */
-	push_tcp_message(message) {
-		this.m_local_handler.push_tcp_message(message);
+	/** @override @arg {ServerSocket} socket @arg {ConnectionMessage} message */
+	push_tcp_message(socket, message) {
+		this.m_local_handler.push_tcp_message(socket, message);
 	}
 	/** @arg {MessageEvent<unknown>} event */
 	handleEvent(event) {
