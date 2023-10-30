@@ -1,3 +1,4 @@
+import { delay } from "./async_support.js";
 import { deno_fs_init } from "./deno_fs_init.js";
 import { fetch_one_page } from "./fetch_one_page.js";
 import { random_dictionary_path } from "./file_paths.js";
@@ -53,6 +54,7 @@ class GetPoemsState {
 			await this.save();
 			console.log("leave", Math.floor(i / lim) + 1);
 		}
+		await delay(1 * 1000);
 	}
 }
 /[ct]h|[bcdfkmnptvw]/;
