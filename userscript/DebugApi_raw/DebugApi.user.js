@@ -491,18 +491,12 @@ class WindowSocket extends SocketBase {
 		const wrapped_msg = event_0.data;
 		if (!event_0.source) throw new Error("No event source");
 		const event_source = event_0.source;
-		const handler = new ServerSocket(
+		const socket = new ServerSocket(
 			client_id,
 			wrapped_msg.port,
 			event_source,
 		);
-		const prev_connection_index = this.m_connections.findIndex((e) => {
-			return e.event_source === event_source;
-		});
-		if (prev_connection_index > -1) {
-			this.m_connections.splice(prev_connection_index, 1);
-		}
-		this.m_connections.push(handler);
+		this.append_connection(socket);
 		const tcp = wrapped_msg.message;
 		if (testing_tcp) {
 			this.open_group("rx-window", tcp);
@@ -511,7 +505,17 @@ class WindowSocket extends SocketBase {
 			console.log("client", tcp);
 			this.close_group();
 		}
-		handler.handle_tcp_data(tcp);
+		socket.handle_tcp_data(tcp);
+	}
+	/** @arg {ServerSocket} socket */
+	append_connection(socket) {
+		const prev_connection_index = this.m_connections.findIndex((e) => {
+			return e.event_source === socket.event_source;
+		});
+		if (prev_connection_index > -1) {
+			this.m_connections.splice(prev_connection_index, 1);
+		}
+		this.m_connections.push(socket);
 	}
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<import("./a/TargetedMessage.ts").TargetedMessage<unknown>>} */
 	is_wrapped_message(event) {
