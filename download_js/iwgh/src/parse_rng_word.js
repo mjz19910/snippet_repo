@@ -114,7 +114,6 @@ export class ParseRngOpts {
 	destructure_word = true;
 }
 
-const length_limit = 3;
 const opt_was_gen = { generated: true };
 const opt_not_gen = { generated: false };
 /**
@@ -137,7 +136,7 @@ export function parse_rng_word2(word, opts) {
 		v = r2.rest;
 	}
 	opts.word_arr = word_arr.slice();
-	const ll = length_limit;
+	const ll = opts.length_limit;
 	const vowel_word_arr = [];
 	do {
 		const r1 = word_arr.at(-1);
