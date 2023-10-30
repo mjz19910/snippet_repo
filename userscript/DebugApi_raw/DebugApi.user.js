@@ -426,18 +426,11 @@ class ServerSocket extends SocketBase {
 		}
 		this.m_port.postMessage(tcp);
 	}
-	/** @arg {ConnectionMessage} tcp */
-	downstream_connect(tcp) {
-		const { seq, ack } = tcp;
-		if (!ack) throw new Error("Invalid message");
+	on_socket_connected() {
 		if (testing_tcp) {
-			console.log("on_server_connect");
+			console.log("on_socket_connected");
 		}
-		this.push_tcp_message(this.make_message(
-			seq,
-			ack,
-			{ type: "connected" },
-		));
+		this.push_tcp_message(this.make_message({ type: "connected" }));
 		setTimeout(() => {
 			// </group syn>
 			console.groupEnd();
@@ -490,7 +483,7 @@ class ServerSocket extends SocketBase {
 		if (f.is_ack() && !f.is_syn() && this.m_is_connecting) {
 			this.m_is_connecting = false;
 			this.m_connected = true;
-			this.downstream_connect(tcp);
+			this.on_socket_connected();
 		}
 		this.downstream_handle_event(tcp);
 	}
