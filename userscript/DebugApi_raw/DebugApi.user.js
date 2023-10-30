@@ -182,13 +182,10 @@ class SocketBase {
 	client_id() {
 		return this.m_client_id;
 	}
-	/** @arg {ConnectionMessage["data"]} data @arg {number} seq @arg {number} ack @returns {ConnectionMessage} */
-	make_message(seq, ack, data) {
-		return TCPMessage.make_message(
-			seq,
-			ack,
-			data,
-		);
+	/** @arg {ConnectionMessage["data"]} data @returns {ConnectionMessage} */
+	make_message(data) {
+		const seq = this.m_current_seq, ack = this.m_current_ack;
+		return TCPMessage.make_message(seq, ack, data);
 	}
 	/** @type {(()=>void)|null} */
 	on_next_packet = null;
@@ -447,10 +444,10 @@ class ServerSocket extends SocketBase {
 		}
 	}
 	disconnected() {
-		this.push_tcp_message(this.make_message(0, 0, { type: "disconnected" }));
+		this.push_tcp_message(this.make_message({ type: "disconnected" }));
 	}
 	will_disconnect() {
-		this.push_tcp_message(this.make_message(0, 0, { type: "will_disconnect" }));
+		this.push_tcp_message(this.make_message({ type: "will_disconnect" }));
 	}
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
