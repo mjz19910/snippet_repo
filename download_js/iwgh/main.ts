@@ -61,7 +61,7 @@ export type main={
 		Do.RunTakeAct<something,Items.something>,
 		Do.ActivateRoom<someone>,
 		Do.UseAction2<someone,0,Items.something>,
-		Do.RunTakeAct2<someone,1,Items.glass_orb>
+		Do.RunTakeAct2<someone,1,Items.glass_orb>,
 	];
 	quest_chain2: [
 		main,
