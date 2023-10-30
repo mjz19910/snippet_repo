@@ -175,14 +175,12 @@ class SocketBase {
 	 * @param {ConnectionMessage} tcp
 	 */
 	open_group(dir, tcp) {
-		console.log("<?-");
 		const socket_fmt = this.fmt_tag + "<" + tcp.seq + "," + tcp.ack + ">";
 		const flags = this.stringify_flags(tcp.flags);
-		console.groupCollapsed("-" + dir + "-" + flags + "-> " + socket_fmt);
+		console.group("-" + dir + "-" + flags + "-> " + socket_fmt);
 	}
 	close_group() {
 		console.groupEnd();
-		console.log("-?>");
 	}
 	/** @arg {string} fmt @arg {ConnectionMessage} tcp */
 	flat_log(fmt, tcp) {
@@ -319,9 +317,7 @@ class ClientSocket extends SocketBase {
 		if (tcp.type !== "tcp") throw new Error();
 		if (testing_tcp) {
 			this.open_group("rx-client", tcp);
-			console.log(".handleEvent ->");
-			console.log(".handle_tcp_data ->");
-			console.log("server", tcp, tcp.data);
+			this.flat_log(".handleEvent -> to_server", tcp);
 			this.close_group();
 		}
 		this.handle_tcp_data(tcp);
@@ -340,18 +336,9 @@ class ClientSocket extends SocketBase {
 				this.m_connected = true;
 				this.client_connect(tcp);
 				break;
-			case "will_disconnect":
-				this.m_disconnect_start = performance.now();
-				break;
-			case "disconnected": {
-				if (!this.m_disconnect_start) {
-					throw new Error("missed will_disconnect");
-				}
-				const perf_diff = performance.now() - this.m_disconnect_start;
-				console.log("before_unload took", perf_diff);
+			case "disconnected":
 				this.client_disconnect(tcp);
 				break;
-			}
 			default:
 				if (testing_tcp) {
 					console.log("handle_tcp_data unexpected tcp_data", tcp_data);
@@ -455,9 +442,6 @@ class ServerSocket extends SocketBase {
 	disconnected() {
 		this.push_tcp_message(this.make_message({ type: "disconnected" }));
 	}
-	will_disconnect() {
-		this.push_tcp_message(this.make_message({ type: "will_disconnect" }));
-	}
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
 		const tcp = event.data;
@@ -468,9 +452,7 @@ class ServerSocket extends SocketBase {
 		}
 		if (testing_tcp) {
 			this.open_group("rx-server", tcp);
-			console.log(".handleEvent ->");
-			console.log(".handle_tcp_data ->");
-			console.log("client", tcp);
+			this.flat_log(".handleEvent -> to_client", tcp);
 			this.close_group();
 		}
 		this.handle_tcp_data(tcp);
