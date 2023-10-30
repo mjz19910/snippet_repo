@@ -158,11 +158,14 @@ export function parse_rng_word2(word, opts) {
 	if (end_item.type === "vowel") {
 		word_arr.push(end_item);
 	}
-	word_arr.push(v_obj1, v_obj2);
+	word_arr.push(v_obj2);
 	for (const v_end2 of vowel_list) {
 		v_obj2.v = v_end2;
-		add_word_to_cache(opts, word + v_end2, word_arr, opt_was_gen);
+		const new_word = word_arr.map((v) => v.v).join("");
+		add_word_to_cache(opts, new_word, word_arr, opt_was_gen);
 	}
+	word_arr.pop();
+	word_arr.push(v_obj1, v_obj2);
 	for (const v_end1 of consonant_list) {
 		v_obj1.v = v_end1;
 		for (const v_end2 of vowel_list) {
