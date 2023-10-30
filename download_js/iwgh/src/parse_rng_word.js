@@ -152,10 +152,6 @@ export function parse_rng_word2(word, opts) {
 	const v_obj1 = { type: "consonant", v: "" };
 	/** @type {WordArrItem} */
 	const v_obj2 = { type: "vowel", v: "" };
-	const end_item = word_arr.pop();
-	if (end_item.type === "vowel") {
-		word_arr.push(end_item);
-	}
 	word_arr.push(v_obj2);
 	for (const v_end2 of vowel_list) {
 		v_obj2.v = v_end2;
