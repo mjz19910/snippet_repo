@@ -36,8 +36,8 @@ function on_poem_line(line) {
 	}
 	return poem_words;
 }
-/** @param {string} v */
-function on_poems_page_text(v) {
+/** @param {string} v @param {number} length_limit  */
+function on_poems_page_text(v, length_limit) {
 	const [tbl] = string_contained_by(v, "<table ", "</table>");
 	get_news_str(tbl);
 	const row1_end = string_contained_by_end(tbl, "<tr>", "</tr>");
@@ -49,17 +49,17 @@ function on_poems_page_text(v) {
 	for (const poem_line of poem_lines) {
 		const poem_words = on_poem_line(poem_line);
 		for (const word of poem_words) {
-			parse_rng_word(new ParseRngOpts(word, { length_limit: 3 }));
+			parse_rng_word(new ParseRngOpts(word, { length_limit }));
 		}
 	}
 }
-/** @param {"poems"} target_page */
-export async function fetch_one_page(target_page) {
+/** @param {"poems"} target_page @param {number} length_limit */
+export async function fetch_one_page(target_page, length_limit) {
 	const res = await fetch(`https://louigiverona.com/iwgh/?page=${target_page}`);
 	const rt = await res.text();
 	switch (target_page) {
 		case "poems": {
-			on_poems_page_text(rt);
+			on_poems_page_text(rt, length_limit);
 			break;
 		}
 	}

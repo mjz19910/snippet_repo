@@ -39,7 +39,7 @@ async function scope(state) {
 		const par_base = Math.floor(i / 4) * 5;
 		const par = 50 + par_base;
 		for (let j = 0; j < par; j++) {
-			arr.push(fetch_one_page("poems"));
+			arr.push(fetch_one_page("poems", 3));
 		}
 		await Promise.all(arr);
 		arr.length = 0;
