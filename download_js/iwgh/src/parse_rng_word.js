@@ -6,7 +6,7 @@ import {
 
 /([aeiouy]|[ct]h|[bcdfkmnptvw]){4}/;
 const vowel_list = "aeiouy".split("");
-const consonant_list = "bcdfkmnptvw".split("").concat(["ch", "th"]);
+const consonant_list = ["ch", "th"].concat("bcdfkmnptvw".split(""));
 
 /**
  * @param {string} word
