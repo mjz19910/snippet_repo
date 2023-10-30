@@ -61,7 +61,6 @@ class GetPoemsState {
 			console.log("enter", Math.floor(i / lim));
 		}
 		const arr = [];
-		const par_base = 10;
 		const par = 20;
 		const length_limit = 3;
 		for (let j = 0; j < par; j++) {
@@ -72,18 +71,7 @@ class GetPoemsState {
 		if (i % lim == lim - 1) {
 			reset_words_set(par);
 			await this.save();
-			const resume_delay = 1 * 1000 + 200 * par;
-			console.log(
-				"leave",
-				Math.floor(i / lim),
-				"resume in",
-				resume_delay / 1000,
-				"seconds",
-			);
-			// pause so we don't overload the ddos protection
-			await delay(resume_delay);
-		} else {
-			await delay(200 * par_base);
+			console.log("leave", Math.floor(i / lim));
 		}
 	}
 }
