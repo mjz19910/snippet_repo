@@ -387,10 +387,8 @@ class ServerSocket extends SocketBase {
 	get is_connected() {
 		return this.m_is_connected;
 	}
-	/** @override @arg {ConnectionMessage} tcp */
+	/** @arg {ConnectionMessage} tcp */
 	push_tcp_message(tcp) {
-		this.last_seq = tcp.seq;
-		this.last_ack = tcp.ack;
 		if (testing_tcp) {
 			this.open_group("tx-server", tcp);
 			this.flat_log(".push_tcp_message -> to_client", tcp);
@@ -410,7 +408,7 @@ class ServerSocket extends SocketBase {
 	}
 	/** @arg {ConnectionMessage} tcp */
 	handle_client_data(tcp) {
-		cur_module.socket.push_tcp_message(this, tcp);
+		cur_module.socket.push_tcp_message(tcp);
 		if (testing_tcp) {
 			console.log("downstream_event", tcp.data);
 		}

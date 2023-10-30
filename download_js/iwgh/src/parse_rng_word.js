@@ -15,7 +15,14 @@ const consonant_list = ["ch", "th"].concat("bcdfkmnptvw".split(""));
 export function word_starts_with_consonant_seq(word) {
 	const start_consonant = consonant_list.find((v) => word.startsWith(v));
 	if (start_consonant) {
-		return ["consonant", start_consonant.length];
+		switch (start_consonant.length) {
+			case 1:
+				return ["consonant", start_consonant.length];
+			case 2:
+				return ["consonant", start_consonant.length];
+			default:
+				throw new Error("Invalid consonant length '" + start_consonant + "'");
+		}
 	}
 	if (vowel_list.includes(word[0])) {
 		return ["vowel", 1];
@@ -81,6 +88,7 @@ export function parse_rng_word(opts) {
 /** @typedef {{type: "consonant" | "vowel";v: string;}} WordArrItem */
 
 export class ParseRngOpts {
+	/** @type {WordArrItem[]} */
 	word_arr = [];
 	/**
 	 * @param {string} word @param {Object} options
