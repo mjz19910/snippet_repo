@@ -123,7 +123,7 @@ export function parse_rng_word2(word, opts) {
 	add_word_to_cache(opts, cv_txt, word_arr, opt_not_gen);
 }
 
-/** @param {{generated: boolean}} word_opts @param {ParseRngOpts} opts @param {string} word @param {WordArrItem} word_arr */
+/** @param {{generated: boolean}} word_opts @param {ParseRngOpts} opts @param {string} word @param {WordArrItem[]} word_arr */
 function add_word_to_cache(opts, word, word_arr, word_opts) {
 	if (random_dictionary_set.has(word)) return;
 	random_dictionary_set.add(word);

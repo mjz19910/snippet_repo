@@ -35,9 +35,5 @@ export async function test_javascript_parser_can_parse(ctx) {
 		},
 	});
 }
-Deno.test({
-	name: "test_javascript_parser_can_parse",
-	async fn(ctx) {
-		await test_javascript_parser_can_parse(ctx);
-	},
-});
+// @ts-ignore: typescript & deno conflict on const defined in namespaces
+Deno.test(test_javascript_parser_can_parse);

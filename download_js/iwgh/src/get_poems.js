@@ -34,6 +34,7 @@ class GetPoemsState {
 			await this.step(i);
 		}
 	}
+	/** @param {number} i */
 	async step(i) {
 		const lim = 4;
 		if (i % lim == 0) {

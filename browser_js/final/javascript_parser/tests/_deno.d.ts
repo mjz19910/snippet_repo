@@ -10,11 +10,4 @@ declare namespace Deno {
 		fn: (t: TestContext) => void|Promise<void>;
 		name: string;
 	}
-	export interface DenoTest {
-		(t: TestDefinition): void;
-	}
-	export const test: Deno.DenoTest;
-}
-export interface Deno {
-	test: Deno.DenoTest;
 }

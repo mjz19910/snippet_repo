@@ -70,11 +70,12 @@ function get_exports() {
 	window.__require_module_cache__ ??= {};
 	return window.__require_module_cache__;
 }
-/** @arg {keyof import("./RequireModuleCache.ts").RequireModuleCache} module_name @template T @arg {(x:T)=>void} fn @arg {{global:boolean}} flags @arg {T} exports */
+/** @arg {keyof import("./RequireModuleCache.ts").RequireModuleCache} module_name @template T,U @arg {(x:T)=>U} fn @arg {{global:boolean}} flags @arg {T} exports @returns {U} */
 function do_export(fn, flags, exports, module_name) {
 	/** @typedef {typeof exports} ExportsT */
-	if (typeof exports === "object") fn(exports);
-	else {
+	if (typeof exports === "object") {
+		return fn(exports);
+	} else {
 		/** @type {ExportsT} */
 		let exports;
 		if (flags.global) {
@@ -87,7 +88,7 @@ function do_export(fn, flags, exports, module_name) {
 			exports = as(all_modules[module_name] ?? {});
 			all_modules[module_name] = as(exports);
 		}
-		fn(as(exports));
+		return fn(exports);
 	}
 }
 /** @private @arg {(x:typeof exports)=>void} fn */

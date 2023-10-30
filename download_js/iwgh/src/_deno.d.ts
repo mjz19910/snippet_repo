@@ -22,11 +22,11 @@ declare namespace Deno {
 		createNew?: boolean;
 		mode?: number;
 	}
-  export interface MkdirOptions {
-    /** @default {false} */
-    recursive?: boolean;
-    mode?: number;
-  }
+	export interface MkdirOptions {
+		/** @default {false} */
+		recursive?: boolean;
+		mode?: number;
+	}
 	export interface FsFile {
 		readonly rid: number;
 		truncate(len?: number): Promise<void>;
@@ -34,6 +34,8 @@ declare namespace Deno {
 		write(p: Uint8Array): Promise<number>;
 		seek(offset: number|bigint,whence: SeekMode): Promise<number>;
 		close(): void;
+    readSync(p: Uint8Array): number | null;
+    seekSync(offset: number | bigint, whence: SeekMode): number;
 	}
 	export function open(
 		path: string|URL,
@@ -45,4 +47,5 @@ declare namespace Deno {
 	): Promise<void>;
 	export function chdir(directory: string|URL): void;
 	export function cwd(): string;
+	export function openSync(path: string|URL,options?: OpenOptions): FsFile;
 }

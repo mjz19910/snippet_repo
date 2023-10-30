@@ -18,7 +18,7 @@ export async function iwgh_dict_main() {
 		console.log("request parallelism", request_parallelism);
 		arr.length = 0;
 		if (j % request_log_interval === (request_log_interval - 1)) {
-			reset_words_set();
+			reset_words_set(request_parallelism);
 			if (j > 20) break;
 		}
 	}

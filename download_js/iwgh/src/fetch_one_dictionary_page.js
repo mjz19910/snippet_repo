@@ -1,5 +1,5 @@
 import { parse_rng_description } from "./parse_rng_description.js";
-import { parse_rng_word } from "./parse_rng_word.js";
+import { parse_rng_word, ParseRngOpts } from "./parse_rng_word.js";
 import { split_at } from "./string_helpers.js";
 
 export async function fetch_one_dictionary_page() {
@@ -14,7 +14,7 @@ export async function fetch_one_dictionary_page() {
 		let [word, description] = v.split(" - ");
 		word = word.slice(3, -4);
 		word = word.toLowerCase();
-		parse_rng_word(new ParseRngOpts(word));
+		parse_rng_word(new ParseRngOpts(word, { length_limit: 3 }));
 		parse_rng_description(description);
 	});
 }

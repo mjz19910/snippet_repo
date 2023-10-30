@@ -1,5 +1,6 @@
 export const global_abort = new AbortController();
 
+/** @param {number} ms @returns {Promise<void>} */
 export function delay(ms) {
 	return new Promise(function (accept, reject) {
 		const signal = global_abort.signal;
