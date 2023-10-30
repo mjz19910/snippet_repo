@@ -102,7 +102,6 @@ const opt_not_gen = { generated: false };
 export function parse_rng_word2(word, opts) {
 	if (word === "") return;
 	const { add_new_words } = opts;
-	if (random_dictionary_set.has(word)) return;
 	if (!add_new_words) {
 		partial_words.add(word.slice(0, -1));
 	}
@@ -143,7 +142,6 @@ export function parse_rng_word2(word, opts) {
 			add_word_to_cache(opts, gen_word, vowel_word_arr, opt_was_gen);
 		}
 	}
-	if (random_dictionary_set.has(word)) return;
 	if (word_arr.length > ll) {
 		parse_rng_word2(word_arr.slice(0, -1).map((v) => v.v).join(""), opts);
 		parse_rng_word2(word_arr.slice(1).map((v) => v.v).join(""), opts);
