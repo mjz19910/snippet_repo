@@ -33,7 +33,7 @@ function export_(fn, flags = { global: false }) {
 export_((exports) => {
 	exports.__is_module_flag__ = true;
 });
-const module = export_((v) => v);
+const cur_module = export_((v) => v);
 //#region is_helpers
 /** @template T @typedef {import("./a/CM.ts").CM<T>} CM */
 /** @template {{}|null} T @template {string} U @arg {CM<T>|null} x @arg {U} k @returns {x is CM<T&Record<U,string>>} */
@@ -420,7 +420,7 @@ class ServerSocket extends SocketBase {
 	}
 	/** @arg {MessageType} tcp */
 	handle_client_data(tcp) {
-		module.socket.push_tcp_message(this, tcp);
+		cur_module.socket.push_tcp_message(this, tcp);
 		if (testing_tcp) {
 			console.log("downstream_event", tcp.data);
 		}
