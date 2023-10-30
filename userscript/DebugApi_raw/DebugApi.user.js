@@ -490,7 +490,7 @@ class ServerSocket extends SocketBase {
 			this.m_connected = true;
 			this.on_socket_connected();
 		}
-		if (!f.is_ack()) {
+		if (!f.is_ack() && !f.is_syn()) {
 			this.handle_client_data(tcp);
 		}
 	}
