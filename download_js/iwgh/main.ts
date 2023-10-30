@@ -1,6 +1,6 @@
 import {Do} from "./Helpers.ts";
 import * as Items from "./items.ts";
-import {wall,faq,rozenbom,picQ,readyRoom,sickbay,sickbay_has_dead_klingon,v_10forward,after_lockdown,uQuarters,oLounge,uSuddEnd,uFridgeOpen,burrow,larder,larRiver,larBoat,larDark,deathDome,grave,o,zbrogjdnfhvyensocuiehw,cosmology,pattern,pcnt,on,off,members,green,red,picTable,picCup,picRef,larLake,larFm,larStairs,keep,floorFive,elevator,elev_boiler,boiler,mechanic,piping,something,someone,pipe3,pipe6,pipe7} from "./info.ts";
+import {wall,faq,rozenbom,picQ,readyRoom,sickbay,sickbay_has_dead_klingon,v_10forward,after_lockdown,uQuarters,oLounge,uSuddEnd,uFridgeOpen,burrow,larder,larriver,larBoat,lardark,deathDome,grave,o,zbrogjdnfhvyensocuiehw,cosmology,pattern,pcnt,on,off,members,green,red,picTable,picCup,picRef,larLake,larFm,larStairs,keep,floorFive,elevator,elev_boiler,boiler,mechanic,piping,something,someone,pipe3,pipe6,pipe7} from "./info.ts";
 
 export type main={
 	id: "main";
@@ -28,8 +28,8 @@ export type main={
 		Do.ActivateRoom<uFridgeOpen>,
 		Do.RunTakeAct<uFridgeOpen,Items.hand_press>,
 		burrow,
-		larder,larRiver,larBoat,larDark,
-		larDark,
+		larder,larriver,larBoat,
+		lardark,
 		deathDome,
 		grave,
 		Do.RunTakeAct<grave,Items.fui>,
@@ -47,8 +47,8 @@ export type main={
 		members,green,red,
 		picQ,
 		picTable,picCup,picRef,
-		burrow,larder,larRiver,larBoat,
-		larDark,larLake,
+		burrow,larder,larriver,larBoat,
+		lardark,larLake,
 		Do.ActivateRoom<larFm>,
 		Do.UseInventory2<[Items.hand_press,Items.fui]>,
 		picQ,

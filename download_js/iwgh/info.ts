@@ -43,7 +43,7 @@ export type larLake={
 	id: "larLake",
 	links: [larFm],
 };
-export type larDark={
+export type lardark={
 	id: "larDark",
 	links: [
 		larLake,
@@ -56,9 +56,9 @@ export type deathDome={
 };
 export type larBoat={
 	id: "larBoat",
-	links: [larDark],
+	links: [lardark],
 };
-export type larRiver={
+export type larriver={
 	id: "larRiver",
 	links: [larBoat];
 };
@@ -67,7 +67,7 @@ export type larder={
 	links: [
 		larTorch,
 		larStairs,
-		larRiver,
+		larriver,
 	],
 };
 export type burrow={
@@ -291,7 +291,7 @@ type u_page={
 		// ut1 -> Items.screwdriver -> armour
 		ut1,armour,
 		"The best way to get rid of an angry mosquito is to hide from it!",
-		larDark,
+		lardark,
 		larLake,
 		"The underground river from the castle larder leads to the Silent Lake... that is, if you do not drown!",
 		// [?]
