@@ -494,7 +494,7 @@ class WindowSocket extends SocketBase {
 		const event_source = event_0.source;
 		const handler = new ServerSocket(
 			client_id,
-			connection_port,
+			wrapped_msg.port,
 			event_source,
 		);
 		const prev_connection_index = this.m_connections.findIndex((e) => {
@@ -525,7 +525,6 @@ class WindowSocket extends SocketBase {
 		if (!this.is_wrapped_message(event)) return false;
 		const data_record = cast_to_event_like_CM(wrap_CM(event.data.message));
 		if (!data_record) return false;
-		if (data_record.data.type !== "tcp") return false;
 		return true;
 	}
 	/** @template {CM<{type:string}>} T @arg {T|null} data @returns {data is T&CM<{type:string,data:unknown}>} */
