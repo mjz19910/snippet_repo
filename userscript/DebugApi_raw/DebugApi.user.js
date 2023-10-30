@@ -177,10 +177,7 @@ class SocketBase {
 	open_group(dir, tcp) {
 		const socket_fmt = this.fmt_tag + "<" + tcp.seq + "," + tcp.ack + ">";
 		const flags = this.stringify_flags(tcp.flags);
-		console.group("-" + dir + "-" + flags + "-> " + socket_fmt);
-	}
-	close_group() {
-		console.groupEnd();
+		console.log("-" + dir + "-" + flags + "-> " + socket_fmt);
 	}
 	/** @arg {string} fmt @arg {ConnectionMessage} tcp */
 	flat_log(fmt, tcp) {
