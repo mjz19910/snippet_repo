@@ -554,7 +554,7 @@ class WindowSocket extends SocketBase {
 				break;
 			case "beforeunload":
 				for (const connection of this.m_connections) {
-					connection.will_disconnect(false);
+					connection.will_disconnect();
 				}
 				break;
 			case "unload":

@@ -1,4 +1,4 @@
 export type TargetedMessage<T>={
-	target: string;
+	target: "ServerSocket";
 	message: T;
 };
