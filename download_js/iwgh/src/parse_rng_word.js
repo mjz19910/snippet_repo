@@ -149,31 +149,12 @@ export function parse_rng_word2(word, opts) {
 	}
 	add_word_to_cache(opts, word, word_arr, opt_not_gen);
 	/** @type {WordArrItem} */
-	const v_obj1 = { type: "consonant", v: "" };
-	/** @type {WordArrItem} */
 	const v_obj2 = { type: "vowel", v: "" };
 	word_arr.push(v_obj2);
 	for (const v_end2 of vowel_list) {
 		v_obj2.v = v_end2;
 		const new_word = word_arr.map((v) => v.v).join("");
 		add_word_to_cache(opts, new_word, word_arr, opt_was_gen);
-	}
-	word_arr.pop();
-	word_arr.push(v_obj1, v_obj2);
-	for (const v_end1 of consonant_list) {
-		v_obj1.v = v_end1;
-		for (const v_end2 of vowel_list) {
-			v_obj2.v = v_end2;
-			add_word_to_cache(opts, word + v_end1 + v_end2, word_arr, opt_was_gen);
-		}
-	}
-	v_obj1.type = "vowel";
-	for (const v_end1 of vowel_list) {
-		v_obj1.v = v_end1;
-		for (const v_end2 of vowel_list) {
-			v_obj2.v = v_end2;
-			add_word_to_cache(opts, word + v_end1 + v_end2, word_arr, opt_was_gen);
-		}
 	}
 }
 
