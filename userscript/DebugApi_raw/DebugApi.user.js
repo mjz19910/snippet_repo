@@ -119,6 +119,8 @@ class TCPMessage {
 	}
 }
 const testing_tcp = true;
+const console = { ...self.console };
+console.log = console.log.bind(console);
 class SocketBase {
 	fmt_tag;
 	/** @private */
