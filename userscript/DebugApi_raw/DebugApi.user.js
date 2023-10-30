@@ -430,7 +430,10 @@ class ServerSocket extends SocketBase {
 			ack,
 			{ type: "connected" },
 		));
-		console.groupEnd();
+		setTimeout(() => {
+			// </group syn>
+			console.groupEnd();
+		});
 	}
 	/** @arg {ConnectionMessage} info */
 	downstream_handle_event(info) {
