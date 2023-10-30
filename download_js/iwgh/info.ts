@@ -32,11 +32,6 @@ export type keep={
 		keepKitchen,
 	],
 };
-type unscrew_armor={
-	id: "unscrew_armor";
-	fn: "use";
-	usingItem: Items.screwdriver;
-};
 export type larStairs={
 	id: "larStairs",
 	links: [
@@ -715,15 +710,13 @@ export type sickbay_has_dead_klingon={
 type armour={
 	id: "armour",
 	news: "Knight's armour",
-	action: H.ActionArr<[
-		unscrew_armor,
-		H.TakeActionR<{
-			item: Items.piece_of_paper,required: {
-				fn: "use";
-				usingItem: Items.screwdriver;
-			};
-		}>,
-	]>,
+	action: H.TakeActionR<{
+		item: Items.piece_of_paper;
+		required: {
+			fn: "use";
+			usingItem: Items.screwdriver;
+		};
+	}>,
 };
 export type larFm={
 	id: "larFm";
