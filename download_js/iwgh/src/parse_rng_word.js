@@ -97,6 +97,7 @@ export function parse_rng_word(opts) {
 /** @typedef {{type: "consonant" | "vowel";v: string;}} WordArrItem */
 
 export class ParseRngOpts {
+	/** @type {WordArrItem[]} */
 	word_arr = [];
 	/**
 	 * @param {string} word @param {Object} options
@@ -156,8 +157,12 @@ export function parse_rng_word2(word, opts) {
 	}
 	if (random_dictionary_set.has(word)) return;
 	if (word_arr.length > ll) {
-		parse_rng_word2(word_arr.slice(0, -1).map((v) => v.v).join(""), opts);
+		const prev_arr = opts.word_arr;
+		opts.word_arr = word_arr.slice(0, -1);
+		parse_rng_word2(opts.word_arr.map((v) => v.v).join(""), opts);
+		opts.word_arr = word_arr.slice(1);
 		parse_rng_word2(word_arr.slice(1).map((v) => v.v).join(""), opts);
+		opts.word_arr = prev_arr;
 		return;
 	}
 	add_word_to_cache(opts, word, word_arr, opt_not_gen);
