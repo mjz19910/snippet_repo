@@ -499,6 +499,10 @@ class WindowSocket extends SocketBase {
 		const prev_connection_index = this.m_connections.findIndex((e) => {
 			return e.event_source === event_source;
 		});
+		if (prev_connection_index > -1) {
+			this.m_connections.splice(prev_connection_index, 1);
+		}
+		this.m_connections.push(handler);
 		const tcp = wrapped_msg.message;
 		if (testing_tcp) {
 			this.open_group("rx-window", tcp);
@@ -508,10 +512,6 @@ class WindowSocket extends SocketBase {
 			this.close_group();
 		}
 		handler.handle_tcp_data(tcp);
-		if (prev_connection_index > -1) {
-			this.m_connections.splice(prev_connection_index, 1);
-		}
-		this.m_connections.push(handler);
 	}
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<import("./a/TargetedMessage.ts").TargetedMessage<unknown>>} */
 	is_wrapped_message(event) {
