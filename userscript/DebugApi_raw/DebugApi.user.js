@@ -414,7 +414,6 @@ class ServerSocket extends SocketBase {
 		if (testing_tcp) {
 			this.open_group("tx-server", tcp);
 			console.log(".push_tcp_message ->");
-			console.log("port.postMessage ->");
 			if (tcp.data !== null) {
 				console.log("to_client", tcp, tcp.data);
 			} else {
