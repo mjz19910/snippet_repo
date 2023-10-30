@@ -43,11 +43,17 @@ async function scope(state) {
 		await Promise.all(arr);
 		arr.length = 0;
 		if (i % lim == lim - 1) {
-			console.log("leave", Math.floor(i / lim));
 			reset_words_set(par);
 			await state.save();
+			console.log(
+				"leave",
+				Math.floor(i / lim),
+				"resume in",
+				(8 * 1000 + 200 * par) / 1000,
+				"seconds",
+			);
 			// pause so we don't overload the ddos protection
-			await delay(8 * 1000);
+			await delay(8 * 1000 + 200 * par);
 		}
 	}
 }
