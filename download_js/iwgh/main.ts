@@ -66,7 +66,7 @@ export type main={
 	quest_chain2: [
 		main,
 		faq,
-		Items.gandalf_magic_book
+		Items.gandalf_magic_book,
 	];
 	hidden: [
 		"k",
