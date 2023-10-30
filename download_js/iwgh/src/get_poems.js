@@ -71,7 +71,7 @@ class GetPoemsState {
 		if (i % lim == lim - 1) {
 			reset_words_set(par);
 			await this.save();
-			const resume_delay = 1 * 1000 + 200 * par_base;
+			const resume_delay = 1 * 1000 + 200 * par;
 			console.log(
 				"leave",
 				Math.floor(i / lim),
