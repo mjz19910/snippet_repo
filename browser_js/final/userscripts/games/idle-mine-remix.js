@@ -9,6 +9,7 @@
 // @run-at       document-start
 // ==/UserScript==
 /* eslint-disable no-undef */
+// deno-lint-ignore-file no-debugger
 
 (function() {
 	'use strict';
@@ -17,9 +18,9 @@
 		if(e.raw.length!==1) debugger;
 		return e.raw[0].trim();
 	};
-	var strcode=str_get_raw`
+	const str_code=str_get_raw`
 (function() {
-	var dofn = function(arr, p_a, p_r) {
+	var execute_fn = function(arr, p_a, p_r) {
 			var wk;
 			if (onmessage) {
 					return postMessage({
@@ -54,7 +55,7 @@
 
 					}
 					reset(wk.objs, wk.cb_t_fn, wk.cb_i_fn)
-					var odarr = []
+					var obj_arr = []
 					requestAnimationFrame(function() {
 							window.URL.revokeObjectURL(wk.bur);
 							wk.bur = ""
@@ -62,7 +63,7 @@
 							p_a(null)
 					})
 					return {
-							fn: odarr
+							fn: obj_arr
 					}
 			}
 			var blobURL = window.URL.createObjectURL(blob);
@@ -76,9 +77,9 @@
 			wk.cb_t_fn = new Map()
 			wk.cb_i_fn = new Map()
 			window.msetTimeout = function(fn, w, ...c) {
-					var cto,stid = wk.jst++;
+					var cto,timer_id = wk.jst++;
 					if (fn.apply){
-					cto = wk.cb_t_fn.set(stid, {
+					cto = wk.cb_t_fn.set(timer_id, {
 							fire: true,
 							rep: false,
 							fn: fn,
@@ -86,7 +87,7 @@
 					});
 					}else{
 					var func=new Function("",fn)
-					cto = wk.cb_t_fn.set(stid, {
+					cto = wk.cb_t_fn.set(timer_id, {
 							fire: true,
 							rep: false,
 							fn: func,
@@ -96,13 +97,13 @@
 					worker.postMessage({
 							t: 3,
 							v: {
-									id: stid,
+									id: timer_id,
 									t: w
 							}
 					});
-					return stid
+					return timer_id
 			}
-			window.mclearTimeout = function(w) {
+			window.m_clearTimeout = function(w) {
 					if (wk.cb_t_fn.has(w)) {
 							var cto = wk.cb_t_fn.get(w);
 							worker.postMessage({
@@ -113,9 +114,9 @@
 					}
 			}
 			window.msetInterval = function(fn, w, ...c) {
-					var cto,siid = wk.jsi++;
+					var cto,timer_id = wk.jsi++;
 					if (fn.apply){
-					cto = wk.cb_i_fn.set(siid, {
+					cto = wk.cb_i_fn.set(timer_id, {
 							fire: true,
 							rep: true,
 							fn: fn,
@@ -123,7 +124,7 @@
 					})
 					}else{
 					var func=new Function("",fn)
-					cto = wk.cb_i_fn.set(siid, {
+					cto = wk.cb_i_fn.set(timer_id, {
 							fire: true,
 							rep: true,
 							fn: func,
@@ -133,13 +134,13 @@
 					worker.postMessage({
 							t: 4,
 							v: {
-									id: siid,
+									id: timer_id,
 									t: w
 							}
 					});
-					return siid
+					return timer_id
 			}
-			window.mclearInterval = function(w) {
+			window.m_clearInterval = function(w) {
 					if (wk.cb_i_fn.has(w)) {
 							var cto = wk.cb_i_fn.get(w)
 							worker.postMessage({
@@ -165,14 +166,14 @@
 							rf_no()
 							break;
 					case 3:
-							// setTimeout_result (set interval id recived from worker)
-							// {v:<msg_id>,t:{v:<stid>,t:<qst>}}}
+							// setTimeout_result (set interval id received from worker)
+							// {v:<msg_id>,t:{v:<timer_id>,t:<qst>}}}
 							var cto = wk.cb_t_fn.get(m.v.t);
 							cto.w_st = m.v.v
 							break;
 					case 4:
-							// setInterval_result (set timeout id recived from worker)
-							// {v:<msg_id>,t:{v:<stid>,t:<qsi>}}}
+							// setInterval_result (set timeout id received from worker)
+							// {v:<msg_id>,t:{v:<timer_id>,t:<qsi>}}}
 							var cto = wk.cb_i_fn.get(m.v.t)
 							cto.w_si = m.v.v
 							break
@@ -208,12 +209,9 @@
 							cto.fn.apply(null, cto.args)
 							break;
 					case 11:
-							if (mnum > 0) {
-									worker.postMessage({
-											t: 11
-									})
-									mnum--
-							}
+							worker.postMessage({
+								t: 11
+							});
 							break
 					}
 			}
@@ -319,7 +317,7 @@
 							break;
 					}
 			}
-			function genworkertime(fn, t) {
+			function gen_worker_time(fn, t) {
 					if (arguments.length == 1) {
 							return {
 									f: fn,
@@ -344,11 +342,11 @@
 					v: "ex",
 					tx: worker.onmessage_w.toString()
 			})
-			wk.noframe = 0
+			wk.no_frame = 0
 			return wk
 	}
 	var wait = [];
-	var res = new Promise(dofn.bind(null, wait))
+	var res = new Promise(execute_fn.bind(null, wait))
 	var tfn = function(wk) {
 			wk.wk.postMessage({
 					t: 2,
@@ -365,21 +363,21 @@
 			}
 			setTimeout = function(fn,t,...a){
 					setTimeout=msetTimeout;
-					if(typeof window.donejs != "undefined")eval(window.donejs+"\n//# sourceURL=snippets:///$__.imr.done");a
+					if(typeof window.done_js != "undefined")eval(window.done_js+"\n//# sourceURL=snippets:///$__.imr.done");a
 					return msetTimeout(fn,a,...a);
 			};
 			setInterval = msetInterval
-			clearTimeout = mclearTimeout
-			clearInterval = mclearInterval
+			clearTimeout = m_clearTimeout
+			clearInterval = m_clearInterval
 	}
 	wait.push(tfn)
-	var dfn = function(resa) {
-			if (resa === null) {
-					res = new Promise(dofn.bind(null, wait))
+	var dfn = function(result) {
+			if (result === null) {
+					res = new Promise(execute_fn.bind(null, wait))
 					return res.then(dfn)
 			} else {
-					wk = resa;
-					return resa;
+					wk = result;
+					return result;
 			}
 	}
 	return res.then(dfn)
@@ -387,7 +385,7 @@
 )()
 //# sourceURL=snippets:///$__.imr
 `;
-	var noteval=Function("return eval")();
-	noteval(strcode);
+	const eval_fn=Function("return eval")();
+	eval_fn(str_code);
 	// Your code here...
 })();
