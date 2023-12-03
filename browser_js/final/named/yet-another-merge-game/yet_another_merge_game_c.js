@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-debugger
 import {Runner} from "../support/Runner.js";
 
 /* spell:words
@@ -5,9 +6,7 @@ import {Runner} from "../support/Runner.js";
 v1 (cur): snippet_repo/javascript/final/yet_another_merge_game.js
 */
 function main() {
-	let holder=1;
-	holder;
-	let cur=new Runner;
+	const cur=new Runner;
 	let do_cur_count=0;
 	cur.n="yet_another_merge_game";
 	cur.f=function() {
@@ -25,7 +24,6 @@ function main() {
 			console.log("Wrong frame");
 			return;
 		}
-		var lnc;
 		let cf;
 		let fi_ob;
 		if(Function.func_log.length<3&&typeof cf=='undefined') {
@@ -45,48 +43,51 @@ function main() {
 		cf=Function.func_log[Function.func_log.length-1].args[0].toString();
 		if(!cur.argv) throw 1;
 		console.log("el",cur.argv[0].split("\n")[3]);
-		var error_line=cur.argv[0].split("\n")[3];
-		var line_func_info;
+		const error_line=cur.argv[0].split("\n")[3];
+		let line_func_info;
 		if(error_line.includes("eval at createFunction")) {
 			line_func_info=error_line.split(/(\(.+\))/g)[1].slice(1,-1).split(/(\(.+\))/g)[2].slice(2).split(":");
 		} else {
 			debugger;
 		}
-		lnc=line_func_info[2]-1;
-		var line_num_idx=line_func_info[1]-1;
-		var fs_str=cf.split("\n")[line_num_idx];
-		var d_idx=fs_str.indexOf(String.fromCharCode(125),lnc)+2;
-		var t_idx=fs_str.lastIndexOf(String.fromCharCode(123),lnc)-1;
-		var e_js_call=d_idx;
+		function wb_eval(/** @type {any} */ s) {
+			eval(s);
+		}
+		const lnc=line_func_info[2]-1;
+		const line_num_idx=line_func_info[1]-1;
+		const fs_str=cf.split("\n")[line_num_idx];
+		let d_idx=fs_str.indexOf(String.fromCharCode(125),lnc)+2;
+		let t_idx=fs_str.lastIndexOf(String.fromCharCode(123),lnc)-1;
+		const e_js_call=d_idx;
 		console.log(fs_str.slice(t_idx,d_idx));
-		for(var cc=0;cc<10;cc++) {
+		let end_char;
+		function ix_pc(/** @type {string} */ n) {
+			return fs_str.indexOf(n,end_char+1);
+		}
+		for(let cc=0;cc<10;cc++) {
 			let cv=fs_str.lastIndexOf(String.fromCharCode(123),t_idx);
-			let c2=fs_str.lastIndexOf(",",t_idx);
+			const c2=fs_str.lastIndexOf(",",t_idx);
 			if(c2>cv) {
 				cv=c2;
 			}
 			console.log(t_idx,fs_str.slice(cv+1,d_idx));
-			let oi=d_idx;
+			const oi=d_idx;
 			d_idx=cv;
 			if(fs_str.slice(cv-1,d_idx)==String.fromCharCode(125)) {
-				var t_idx=fs_str.lastIndexOf(String.fromCharCode(123),d_idx)-1;
+				t_idx=fs_str.lastIndexOf(String.fromCharCode(123),d_idx)-1;
 				continue;
 			}
 			if(fs_str.slice(cv-1,d_idx)==",") {
-				let t_idx=fs_str.lastIndexOf(String.fromCharCode(123),d_idx)+1;
+				t_idx=fs_str.lastIndexOf(String.fromCharCode(123),d_idx)+1;
 				console.log(t_idx,cv+1==t_idx,fs_str.slice(t_idx,oi));
 				if(cv+1==t_idx) {
-					let c1=fs_str.lastIndexOf(String.fromCharCode(123),t_idx-1);
-					let c2=fs_str.lastIndexOf(",",t_idx-1);
-					let c3=fs_str.lastIndexOf(String.fromCharCode(40),t_idx-1);
-					let cc=Math.min(c1,c2,c3);
+					const c1=fs_str.lastIndexOf(String.fromCharCode(123),t_idx-1);
+					const c2=fs_str.lastIndexOf(",",t_idx-1);
+					const c3=fs_str.lastIndexOf(String.fromCharCode(40),t_idx-1);
+					const cc=Math.min(c1,c2,c3);
 					console.log(fs_str.slice(cc-2,e_js_call));
-					// let can_try_again=true;
-					let end_char=e_js_call;
-					function ix_pc(/** @type {string} */ n) {
-						return fs_str.indexOf(n,end_char+1);
-					}
-					var w_ext={};
+					end_char=e_js_call;
+					const w_ext={};
 					w_ext._l=function(/** @type {any[]} */ ...a) {
 						if(a.length>0) console.log("l",...a);
 						return {
@@ -134,17 +135,9 @@ function main() {
 							}
 						}
 					}
-					let wb_eval;
-					// @ts-ignore
-					with(w_ext) {
-						function wb_eval_(/** @type {any} */ s) {
-							eval(s);
-						}
-						wb_eval=wb_eval_;
-					}
-					for(var i=0;i<4;i++) {
+					for(let i=0;i<4;i++) {
 						try {
-							let events=fs_str.slice(cc-2,end_char);
+							const events=fs_str.slice(cc-2,end_char);
 							console.log(fs_str.slice(cc-2,end_char+32));
 							if(!events.includes("getQuantumFoam(matterThisPrestige).lte(0)")) {
 								debugger;
