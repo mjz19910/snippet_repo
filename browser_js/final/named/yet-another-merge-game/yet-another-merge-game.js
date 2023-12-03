@@ -18,8 +18,6 @@ function main() {
 		function getMaxObjects() {
 			return Upgrade.apply(game.upgrades.maxObjects);
 		}
-		// zero_spawn_timer ::
-		//  game.spawnTime.cd = 0;
 		if (window.__cint) {
 			clearInterval(window.__cint);
 		}
