@@ -1,11 +1,11 @@
 export function time_main() {
-	let tb=new Float64Array(1);
+	const tb=new Float64Array(1);
 	function time_base() {
-		let ps=performance.now();
+		const ps=performance.now();
 		return performance.now()-ps;
 	}
 	function time_it() {
-		let ps=performance.now();
+		const ps=performance.now();
 		for(let i=0;i<8;i++) {
 			tb[0]=0;
 		}
@@ -33,8 +33,8 @@ export function time_main() {
 	tc/=2;
 	let ct=0;
 	let cb=0;
-	let tx=7;
-	let carr=[];
+	const tx=7;
+	const carr=[];
 	for(let i=0;i<tx;i++) {
 		c=time_loop_1(tc,0);
 		console.log('time_c1',c);
@@ -53,7 +53,7 @@ export function time_main() {
 		console.log('time_cb',c);
 		cb+=c;
 	}
-	let rt=ct-cb;
+	const rt=ct-cb;
 	let ret=(rt/tx)/tc;
 	ret=ret*1000000;
 	return ret;
