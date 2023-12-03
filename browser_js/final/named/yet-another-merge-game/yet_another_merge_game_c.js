@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-debugger
-import {Runner} from "../support/Runner.js";
+import {Runner} from "../../support/Runner.js";
 
 /* spell:words
 --- version_list item 2 ---
@@ -117,8 +117,8 @@ function main() {
 					w_ext.matterThisPrestige=fi_ob[1].matterThisPrestige;
 					{
 						/** @type {["prestigeGame","formatNumber","getQFMilestoneInfo"]} */
-						let do_def=["prestigeGame","formatNumber","getQFMilestoneInfo"];
-						for(let i of do_def) {
+						const do_def=["prestigeGame","formatNumber","getQFMilestoneInfo"];
+						for(const i of do_def) {
 							switch(i) {
 								case 'formatNumber': {
 									if(!(i in w_ext)) continue;
@@ -154,19 +154,19 @@ function main() {
 								console.error(e);
 								break;
 							}
-							let is_token_error=e.message=="Invalid or unexpected token";
-							let is_eoi_error=e.message=="Unexpected end of input";
-							let aal=e.message.indexOf("after argument list")>3;
-							let kno_err=is_token_error||is_eoi_error||aal;
+							const is_token_error=e.message=="Invalid or unexpected token";
+							const is_eoi_error=e.message=="Unexpected end of input";
+							const aal=e.message.indexOf("after argument list")>3;
+							const kno_err=is_token_error||is_eoi_error||aal;
 							if(kno_err) {
 								let c1=ix_pc(String.fromCharCode(125));
-								let c2=Math.min(c1,ix_pc(String.fromCharCode(93)));
+								const c2=Math.min(c1,ix_pc(String.fromCharCode(93)));
 								c1=Math.min(c2,ix_pc(String.fromCharCode(41)));
 								end_char=c1;
 							}
-							let ndi=e.message.indexOf(" is not defined");
+							const ndi=e.message.indexOf(" is not defined");
 							if(ndi>0) {
-								var s_name=e.message.slice(0,ndi);
+								const s_name=e.message.slice(0,ndi);
 								if(fi_ob[1][s_name]) {
 									any(w_ext)[s_name]=fi_ob[1][s_name];
 									console.log("for VUE defined:",s_name);
