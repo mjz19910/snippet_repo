@@ -1,3 +1,5 @@
+// https://veprogames.github.io/idle-mine-remix/
+
 function start_slow_upgrade_auto() {
 	window.__cint2_arr.push(setInterval(function () {
 		functions.craftPick(functions.getUsedGems());
