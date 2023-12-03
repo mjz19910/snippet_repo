@@ -12,6 +12,8 @@ function start_slow_upgrade_auto() {
 		game.upgrades.idlePower.buy();
 		game.gemUpgrades.blacksmith.buy();
 		game.gemUpgrades.gemMultiply.buy();
+		game.planetCoinUpgrades.gemMultiply.buy();
+		game.planetCoinUpgrades.bulkCraft.buy();
 	}, 250));
 }
 
