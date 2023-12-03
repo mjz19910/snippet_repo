@@ -26,4 +26,6 @@ switch (window.__timer_mode) {
 		break;
 	case 4:
 		break;
+	default:
+		break;
 }
