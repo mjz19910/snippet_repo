@@ -1,4 +1,4 @@
-class MessageChannelExt {
+export class MessageChannelExt {
 	constructor() {
 		this.next_callback_id = 0;
 
@@ -18,19 +18,23 @@ class MessageChannelExt {
 		if (!cb) return;
 		this.fire(cb, callback_id);
 	}
+	/** @param {()=>void} cb @param {number} id  */
 	fire(cb, id) {
 		cb();
 		this.channel.port2.postMessage(id);
 	}
+	/** @param {()=>void} cb */
 	set(cb) {
 		const callback_id = ++this.next_callback_id;
 		this.callback_map.set(callback_id, cb);
 		this.fire(cb, callback_id);
 		return callback_id;
 	}
+	/** @param {number} callback_id  */
 	clear(callback_id) {
 		this.callback_map.delete(callback_id);
 	}
 }
 const mc = new MessageChannelExt();
-mc;
+window.__message_channel_timers = mc;
+export { mc as message_channel_timers };

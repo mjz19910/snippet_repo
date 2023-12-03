@@ -1,5 +1,5 @@
 if (window.__cint) {
-	__message_channel_timers.clear(window.__cint);
+	window.__message_channel_timers.clear(window.__cint);
 	window.__cint = void 0;
 }
 if (window.__cint2) {
@@ -9,12 +9,12 @@ if (window.__cint2) {
 window.__timer_mode = 4;
 switch (window.__timer_mode) {
 	case 1:
-		window.__cint = __message_channel_timers.set(function () {
+		window.__cint = window.__message_channel_timers.set(function () {
 			functions.clickMineObject();
 		});
 		break;
 	case 2:
-		window.__cint = __message_channel_timers.set(function () {
+		window.__cint = window.__message_channel_timers.set(function () {
 			functions.clickMineObject();
 			functions.craftPick(functions.getUsedGems());
 		});
