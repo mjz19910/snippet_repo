@@ -6,8 +6,8 @@ function start_slow_upgrade_auto() {
 		functions.craftPick(functions.getUsedGems());
 	}, 750));
 	window.__cint2_arr.push(setInterval(function () {
-		game.upgrades.blacksmith.buy();
-		game.upgrades.blacksmithSkill.buy();
+		game.upgrades.blacksmith.buy100();
+		game.upgrades.blacksmithSkill.buy10();
 		game.upgrades.activePower.buy();
 		game.upgrades.idlePower.buy();
 		game.gemUpgrades.blacksmith.buy();
