@@ -3,17 +3,36 @@ window.__timer_mode = 6;
 
 function start_slow_upgrade_auto() {
 	window.__cint2_arr.push(setInterval(function () {
-		functions.craftPick(functions.getUsedGems());
+		if (game.gems.gt(1e20)) {
+			functions.craftPick(functions.getUsedGems());
+		}
+		const highest_hit_obj = functions.getHighestDamageableMineObjectLevel();
+		if (highest_hit_obj > game.mineObjectLevel) {
+			game.mineObjectLevel += 1;
+			const newObj = functions.getMineObject(game.mineObjectLevel);
+			const hitsToBreak = Math.ceil(
+				newObj.totalHp.div(functions.getActiveDamage()),
+			);
+			if (hitsToBreak !== 1) {
+				game.mineObjectLevel -= 1;
+			}
+		}
 	}, 750));
 	window.__cint2_arr.push(setInterval(function () {
-		game.upgrades.blacksmith.buy100();
-		game.upgrades.blacksmithSkill.buy10();
-		game.upgrades.activePower.buy();
-		game.upgrades.idlePower.buy();
-		game.gemUpgrades.blacksmith.buy();
-		game.gemUpgrades.gemMultiply.buy();
-		game.planetCoinUpgrades.gemMultiply.buy();
-		game.planetCoinUpgrades.bulkCraft.buy();
+		if (game.money.gt(1e75)) {
+			game.upgrades.blacksmith.buy100();
+			game.upgrades.blacksmithSkill.buy100();
+			game.upgrades.activePower.buy100();
+			game.upgrades.idlePower.buy100();
+		}
+		if (game.gems.gt(1e50)) {
+			game.gemUpgrades.blacksmith.buy();
+			game.gemUpgrades.gemMultiply.buy();
+		}
+		if (game.planetCoins.gt(1e35)) {
+			game.planetCoinUpgrades.gemMultiply.buy();
+			game.planetCoinUpgrades.bulkCraft.buy();
+		}
 	}, 250));
 }
 
