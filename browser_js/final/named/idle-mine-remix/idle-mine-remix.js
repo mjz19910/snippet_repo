@@ -49,7 +49,7 @@ function start_slow_upgrade_auto() {
 			game.planetCoinUpgrades.gemMultiply.buy();
 			game.planetCoinUpgrades.bulkCraft.buy();
 		}
-	}, 250));
+	}, 275));
 }
 
 function im_init() {
