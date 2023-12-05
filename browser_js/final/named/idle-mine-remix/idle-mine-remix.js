@@ -100,14 +100,14 @@ function im_main() {
 			case "start_chan_repeat_click_mine_object":
 				start_chan_repeat_click_mine_object();
 				break;
-			case "start_slow_upgrade_auto":
-				start_slow_upgrade_auto();
+			case "start_chan_repeat_mine_and_craft_pick":
+				start_chan_repeat_mine_and_craft_pick();
 				break;
 			case "start_interval_click_mine_object":
 				start_interval_click_mine_object();
 				break;
-			case "start_chan_repeat_mine_and_craft_pick":
-				start_chan_repeat_mine_and_craft_pick();
+			case "start_slow_upgrade_auto":
+				start_slow_upgrade_auto();
 				break;
 		}
 	}
