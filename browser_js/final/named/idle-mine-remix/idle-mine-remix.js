@@ -1,9 +1,19 @@
 // https://veprogames.github.io/idle-mine-remix/
 window.__timer_mode = 6;
 
+function get_gems_limit(upg, factor) {
+	return upg.currentPrice().mul(factor);
+}
+
+function buy_gem_upgrade(upg, factor) {
+	if (upg.level >= upg.maxLevel) return;
+	if (game.gems.lt(get_gems_limit(upg, factor))) return;
+	upg.buy();
+}
+
 function start_slow_upgrade_auto() {
 	window.__cint2_arr.push(setInterval(function () {
-		if (game.gems.gt(1e20)) {
+		if (game.gems.gt(get_gems_limit(game.gemUpgrades.blacksmith, 20))) {
 			functions.craftPick(functions.getUsedGems());
 		}
 		const highest_hit_obj = functions.getHighestDamageableMineObjectLevel();
@@ -25,10 +35,9 @@ function start_slow_upgrade_auto() {
 			game.upgrades.activePower.buy100();
 			game.upgrades.idlePower.buy100();
 		}
-		if (game.gems.gt(1e50)) {
-			game.gemUpgrades.blacksmith.buy();
-			game.gemUpgrades.gemMultiply.buy();
-		}
+		buy_gem_upgrade(game.gemUpgrades.blacksmith, 30);
+		buy_gem_upgrade(game.gemUpgrades.gemMultiply, 20);
+		buy_gem_upgrade(game.gemUpgrades.gemChance, 6);
 		if (game.planetCoins.gt(1e35)) {
 			game.planetCoinUpgrades.gemMultiply.buy();
 			game.planetCoinUpgrades.bulkCraft.buy();
