@@ -1,5 +1,5 @@
 // https://veprogames.github.io/idle-mine-remix/
-window.__timer_mode = 7;
+window.__active_timer_modes = ["start_chan_repeat_mine_and_craft_pick"];
 im_init();
 im_reset();
 im_main();
@@ -13,6 +13,26 @@ function buy_gem_upgrade(upg, factor) {
 	if (game.gems.lt(get_gems_limit(upg, factor))) return false;
 	upg.buy();
 	return true;
+}
+
+function start_interval_click_mine_object() {
+	window.__cint2_arr.push(setInterval(function () {
+		functions.clickMineObject();
+	}, 75));
+}
+
+function start_chan_repeat_click_mine_object() {
+	const chan_timers = window.__message_channel_timers;
+	window.__cint_arr.push(chan_timers.set(function () {
+		functions.clickMineObject();
+	}));
+}
+
+function start_chan_repeat_mine_and_craft_pick() {
+	window.__cint_arr.push(chan_timers.set(function () {
+		functions.clickMineObject();
+		functions.craftPick(functions.getUsedGems());
+	}));
 }
 
 function start_slow_upgrade_auto() {
@@ -75,40 +95,20 @@ function im_reset() {
 }
 
 function im_main() {
-	const chan_timers = window.__message_channel_timers;
-	switch (window.__timer_mode) {
-		case 1:
-			window.__cint_arr.push(chan_timers.set(function () {
-				functions.clickMineObject();
-			}));
-			break;
-		case 2:
-			window.__cint_arr.push(chan_timers.set(function () {
-				functions.clickMineObject();
-				functions.craftPick(functions.getUsedGems());
-			}));
-			break;
-		case 3:
-			window.__cint2_arr.push(setInterval(function () {
-				functions.clickMineObject();
-			}, 100 / 3));
-			break;
-		case 4:
-			break;
-		case 5:
-			window.__cint_arr.push(chan_timers.set(function () {
-				functions.clickMineObject();
-			}));
-			start_slow_upgrade_auto();
-			break;
-		case 6:
-			window.__cint2_arr.push(setInterval(function () {
-				functions.clickMineObject();
-			}, 75));
-			start_slow_upgrade_auto();
-			break;
-		case 7:
-			start_slow_upgrade_auto();
-			break;
+	for (const timer_mode of window.__active_timer_modes) {
+		switch (timer_mode) {
+			case "start_chan_repeat_click_mine_object":
+				start_chan_repeat_click_mine_object();
+				break;
+			case "start_slow_upgrade_auto":
+				start_slow_upgrade_auto();
+				break;
+			case "start_interval_click_mine_object":
+				start_interval_click_mine_object();
+				break;
+			case "start_chan_repeat_mine_and_craft_pick":
+				start_chan_repeat_mine_and_craft_pick();
+				break;
+		}
 	}
 }
