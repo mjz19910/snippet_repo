@@ -1,5 +1,5 @@
 // https://veprogames.github.io/idle-mine-remix/
-window.__timer_mode = 6;
+window.__timer_mode = 7;
 im_init();
 im_reset();
 im_main();
@@ -9,15 +9,16 @@ function get_gems_limit(upg, factor) {
 }
 
 function buy_gem_upgrade(upg, factor) {
-	if (upg.level >= upg.maxLevel) return;
-	if (game.gems.lt(get_gems_limit(upg, factor))) return;
+	if (upg.level >= upg.maxLevel) return false;
+	if (game.gems.lt(get_gems_limit(upg, factor))) return false;
 	upg.buy();
+	return true;
 }
 
 function start_slow_upgrade_auto() {
 	window.__cint2_arr.push(setInterval(function () {
 		const upg = game.gemUpgrades.blacksmith;
-		if (game.gems.gt(get_gems_limit(upg, 30))) {
+		if (game.gems.gt(get_gems_limit(upg, 2))) {
 			functions.craftPick(functions.getUsedGems());
 		}
 		const highest_hit_obj = functions.getHighestDamageableMineObjectLevel();
@@ -42,8 +43,8 @@ function start_slow_upgrade_auto() {
 			game.upgrades.activePower.buy100();
 			game.upgrades.idlePower.buy100();
 		}
-		buy_gem_upgrade(game.gemUpgrades.blacksmith, 30);
-		buy_gem_upgrade(game.gemUpgrades.gemMultiply, 30);
+		buy_gem_upgrade(game.gemUpgrades.blacksmith, 6);
+		buy_gem_upgrade(game.gemUpgrades.gemMultiply, 6);
 		buy_gem_upgrade(game.gemUpgrades.gemChance, 3);
 		if (game.planetCoins.gt(1e35)) {
 			game.planetCoinUpgrades.gemMultiply.buy();
@@ -104,6 +105,9 @@ function im_main() {
 			window.__cint2_arr.push(setInterval(function () {
 				functions.clickMineObject();
 			}, 75));
+			start_slow_upgrade_auto();
+			break;
+		case 7:
 			start_slow_upgrade_auto();
 			break;
 	}
