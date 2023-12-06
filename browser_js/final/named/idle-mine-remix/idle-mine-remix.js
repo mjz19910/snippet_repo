@@ -1,5 +1,5 @@
 // https://veprogames.github.io/idle-mine-remix/
-function im_run() {
+(function () {
 	function get_gems_limit(upg, factor) {
 		return upg.currentPrice().mul(factor);
 	}
@@ -111,5 +111,4 @@ function im_run() {
 		if (!timer_modes.includes(timer_mode_fn)) continue;
 		timer_mode_fn();
 	}
-}
-im_run();
+})();
