@@ -31,26 +31,32 @@ function im_run() {
 		}));
 	}
 
+	function on_mine_object_upgrade() {
+		if (game.money.gt(1e220)) {
+			game.mineObjectLevel += 1;
+		} else {
+			const newObj = functions.getMineObject(game.mineObjectLevel + 1);
+			const min_damage = Decimal.min(
+				functions.getActiveDamage(),
+				functions.getIdleDamage(),
+			);
+			const hitsToBreak = Math.ceil(
+				newObj.totalHp.div(min_damage),
+			);
+			if (hitsToBreak === 1) {
+				game.mineObjectLevel += 1;
+			}
+		}
+	}
+
 	function start_slow_upgrade_auto() {
 		window.__cint2_arr.push(setInterval(function () {
 			const upg = game.gemUpgrades.blacksmith;
-			if (game.gems.gt(get_gems_limit(upg, 12))) {
+			if (game.gems.gt(get_gems_limit(upg, 1.3))) {
 				functions.craftPick(functions.getUsedGems());
 			}
 			const highest_hit_obj = functions.getHighestDamageableMineObjectLevel();
-			if (highest_hit_obj > game.mineObjectLevel) {
-				const newObj = functions.getMineObject(game.mineObjectLevel + 1);
-				const min_damage = Decimal.min(
-					functions.getActiveDamage(),
-					functions.getIdleDamage(),
-				);
-				const hitsToBreak = Math.ceil(
-					newObj.totalHp.div(min_damage),
-				);
-				if (hitsToBreak === 1) {
-					game.mineObjectLevel += 1;
-				}
-			}
+			if (highest_hit_obj > game.mineObjectLevel) on_mine_object_upgrade();
 		}, 750));
 		window.__cint2_arr.push(setInterval(function () {
 			if (game.money.gt(1e75)) {
