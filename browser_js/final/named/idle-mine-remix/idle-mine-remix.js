@@ -1,7 +1,5 @@
 // https://veprogames.github.io/idle-mine-remix/
 function im_run() {
-	window.__active_timer_modes = ["start_slow_upgrade_auto"];
-
 	function get_gems_limit(upg, factor) {
 		return upg.currentPrice().mul(factor);
 	}
@@ -36,7 +34,7 @@ function im_run() {
 	function start_slow_upgrade_auto() {
 		window.__cint2_arr.push(setInterval(function () {
 			const upg = game.gemUpgrades.blacksmith;
-			if (game.gems.gt(get_gems_limit(upg, 2))) {
+			if (game.gems.gt(get_gems_limit(upg, 12))) {
 				functions.craftPick(functions.getUsedGems());
 			}
 			const highest_hit_obj = functions.getHighestDamageableMineObjectLevel();
@@ -61,9 +59,9 @@ function im_run() {
 				game.upgrades.activePower.buy100();
 				game.upgrades.idlePower.buy100();
 			}
-			buy_gem_upgrade(game.gemUpgrades.blacksmith, 6);
-			buy_gem_upgrade(game.gemUpgrades.gemMultiply, 6);
-			buy_gem_upgrade(game.gemUpgrades.gemChance, 3);
+			buy_gem_upgrade(game.gemUpgrades.blacksmith, 100);
+			buy_gem_upgrade(game.gemUpgrades.gemMultiply, 100);
+			buy_gem_upgrade(game.gemUpgrades.gemChance, 90);
 			if (game.planetCoins.gt(1e35)) {
 				game.planetCoinUpgrades.gemMultiply.buy();
 				game.planetCoinUpgrades.bulkCraft.buy();
@@ -97,9 +95,13 @@ function im_run() {
 		start_interval_click_mine_object,
 		start_slow_upgrade_auto,
 	];
+	const active_modes = [];
+	// active_modes.push(start_chan_repeat_click_mine_object);
+	active_modes.push(start_slow_upgrade_auto);
+
 	im_init();
 	im_reset();
-	for (const timer_mode_fn of window.__active_timer_modes) {
+	for (const timer_mode_fn of active_modes) {
 		if (!timer_modes.includes(timer_mode_fn)) continue;
 		timer_mode_fn();
 	}
