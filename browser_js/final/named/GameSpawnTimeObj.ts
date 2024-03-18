@@ -1,3 +1,0 @@
-type GameSpawnTimeObj={
-	cd: any;
-};

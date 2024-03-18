@@ -15,9 +15,7 @@
 // ==/UserScript==
 /*eslint-disable no-undef*/
 
-const page_require = typeof require === "undefined"
-	? __module_require__
-	: require;
+const page_require = typeof require === "undefined" ? __module_require__ : require;
 let delete_require = false,
 	reset_require = false;
 if (typeof require === "undefined" || page_require !== __module_require__) {
@@ -43,7 +41,7 @@ const { do_export } = require("../base_require_raw/BaseRequire.user.js");
 	export_((exports) => exports.__module_loaded__ = true);
 })();
 if (delete_require) {
-	delete window.require;
+	delete self.require;
 } else if (reset_require) {
 	require = page_require;
 }

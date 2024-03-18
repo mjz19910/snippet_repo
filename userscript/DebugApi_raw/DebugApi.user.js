@@ -567,7 +567,7 @@ export_((exports) => {
 });
 export_((exports) => exports.__module_loaded__ = true);
 if (delete_require) {
-	delete window.require;
+	delete self.require;
 } else if (reset_require) {
 	require = page_require;
 }
