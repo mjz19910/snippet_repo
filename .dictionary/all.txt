@@ -57,6 +57,7 @@ automix
 autonav
 bgub
 bigbusiness
+bitburner
 bookitem
 botguard
 bouncingdvdlogo
